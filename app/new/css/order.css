@@ -1,0 +1,281 @@
+.datepicker .form-control{
+    width: 49%;
+    float: left;
+}
+.order-table{
+    border-top: 1px solid #DCDCDC;
+    margin: 3% 0;
+}
+.order-table td {
+    min-width: 40px;
+}
+.order-table .num-link {
+    color: #6A6A6A;
+    font-size: 15px;
+    font-weight: bold;
+}
+.order-table .num-link:hover {
+    text-decoration: underline;
+}
+.order-table .btn-holder {
+    padding: 10px 5px;
+    width: 160px;
+}
+.table .btn.order-use {
+    width: 160px;
+    line-height: 26px;
+    padding: 0 10px;
+    background: transparent;
+    font-size: 15px;
+    margin: 3px;
+    border-radius: 5px;
+}
+.table .btn.new-msg {
+    color: #5FA386;
+    box-shadow: none;
+    background: none;
+    padding: 0;
+    width: auto;
+    border: none;
+}
+.table .btn.new-msg:hover {
+    color: #E51A6C;
+}
+.table .btn.detail {
+    background: #c1c1c1;
+    color: #fff;
+    border-radius: 30px;
+    border: 1px solid #c1c1c1;
+}
+.table .btn.detail:hover {
+    background: #c9b38f;
+    border: 1px solid #c9b38f;
+}
+.table .btn.inform,
+.table .btn.go-msg {
+    border-color: #80CAA5;
+}
+.table .btn.inform:hover {
+    border-color:#B8B9AA;
+    color: #B8B9AA;
+}
+
+.table .btn.go-msg:hover {
+    border-color: #999;
+}
+.table .btn.order-use .ic {
+    vertical-align: middle;
+    font-size: 20px;
+    margin: 0 5px 3px 0;
+}
+
+.order-detail {
+    border: 1px solid #D7D7D7;
+    border-bottom: none;
+}
+.order-detail .btn-holder {
+    display: inline-block;
+}
+.order-detail .row {
+    position: relative;
+}
+.order-detail .row:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    border-left: 1px solid #ddd;
+}
+.order-detail .col {
+    float: left;
+    width: 50%;
+}
+.order-detail{
+    margin: 2% 0;
+}
+.order-id-table {
+    border-bottom: 1px solid #ddd;
+}
+.order-id-table th,
+.order-id-table td {
+    padding: 14px 20px;
+}
+
+#order-message {
+    padding-top: 10px;
+}
+.message-box {
+    border: 4px solid #70AC92;
+    background: #fff;
+    padding: 0 25px;
+}
+.message-form {
+    padding: 15px 0;
+    border-bottom: 1px solid #CACACA;
+    max-width: none;
+}
+.message-form .control-label {
+    color: #666;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+.message-form .btn-box {
+    text-align: right;
+    padding: 5px 0 0;
+}
+.message-form .btn.send .ic {
+    vertical-align: middle;
+    font-size: 12px;
+    margin: 0 0 5px 3px;
+}
+.message-item {
+    margin: 20px 0;
+    padding-top: 35px;
+}
+.message-txt {
+    border: 1px solid #DDD;
+    border-radius: 6px;
+    background: #e9f8f0;
+    color: #777;
+    padding: 0 15px;
+    cursor: pointer;
+}
+.message-txt:hover {
+    background: #EEEEEE;
+}
+.message-question {
+    position: relative;
+    padding: 10px 0;
+}
+.message-question .date {
+    position: absolute;
+    left: -10px;
+    right: -10px;
+    bottom: 100%;
+    margin-bottom: 4px;
+    color: #999;
+    font-size: 14px;
+    pointer-events: none;
+}
+.message-question .date .ic {
+    vertical-align: middle;
+    margin-right: 10px;
+    color: #7FCAA5;
+    font-size: 22px;
+}
+.message-question .status,
+.message-question .new-tag {
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+    margin: -2px 0 -2px 10px;
+    font-size: 14px;
+}
+.message-question .status {
+    background: #C0C0C0;
+    color: #fff;
+    line-height: 27px;
+    padding: 0 10px;
+    border-radius: 15px;
+}
+.message-question .status.replied {
+    background:#72B1AA;
+}
+.message-question .new-tag {
+    color: #ff9f4c;
+    line-height: 27px;
+}
+.message-answer {
+    display: none;
+    border-top: 1px solid #DCDCDC;
+    padding: 10px 0;
+}
+.message-answer .editor {
+    padding: 3px 0;
+    color: #249c61;
+}
+
+@media screen and (max-width: 1120px) {
+    .order-table .btn-holder {
+        width: auto;
+    }
+    .table .btn.order-use {
+        width: auto;
+        font-size: 14px;
+    }
+    .order-detail .table .btn.order-use {
+        width: 150px;
+    }
+}
+@media screen and (max-width: 1000px) {
+    #order-message {
+        padding-top: 50px;
+        margin-top: -40px;
+    }
+}
+@media screen and (max-width: 767px) {
+    .order-table .btn-holder {
+        display: inline-block;
+        padding: 3px;
+    }
+    .order-table .msg-holder {
+        float: right;
+    }
+    .order-id-table tr {
+        display: block;
+    }
+    .order-id-table th,
+    .order-id-table td {
+        display: inline-block;
+        vertical-align: top;
+    }
+    .order-id-table th:after {
+        top: 18px;
+        margin-top: 0;
+    }
+    .order-id-table .btn-holder {
+        display: block;
+        padding: 0 10px 10px;
+    }
+    .order-detail .row:before {
+        display: none;
+    }
+    .order-detail .col {
+        width: 100%;
+    }
+    .order-detail .col2 .table-v tr:nth-child(2n) {
+        background: #fff;
+    }
+    .order-detail .col2 .table-v tr:nth-child(2n+1) {
+        background: #F7F7F7;
+    }
+    .message-box {
+        padding: 0 15px;
+    }
+    .message-item {
+        margin: 15px 0;
+    }
+    .message-question .status,
+    .message-question .new-tag {
+        float: none;
+        margin: 0 10px 0 0;
+    }
+    .message-question .title {
+        padding-top: 10px;
+    }
+}
+@media screen and (max-width: 500px) {
+    .order-detail .col .table-v th {
+        background: #F7F7F7;
+    }
+    .order-detail .col .table-v tr:nth-child(n) {
+        background: none;
+    }
+    .order-detail .col .table-v th:after {
+        display: none;
+    }
+}

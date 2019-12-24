@@ -1,0 +1,72 @@
+*{
+	font-family: '微軟正黑體';
+}
+h4{
+	font-family: '微軟正黑體';
+	text-align: center;
+	font-weight:normal;
+}
+body {
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: #333;
+	overflow:scroll;
+	overflow-X:hidden;
+}
+button{
+	font-family: '微軟正黑體';
+}
+.middle_div {
+	height: 463px;
+	overflow: hidden;
+}
+.form-signin
+{
+	max-width: 300px;
+}
+.form-signin, .middle_div {
+	padding: 19px 29px 29px;
+	margin: 0 auto 20px;
+	background-color: rgba(255,255,255,0.5);
+	border: 1px solid rgba(255,255,255,0);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox, 
+.middle_div .middle_div-heading,
+.middle_div .checkbox {
+	margin-bottom: 10px;
+}
+.form-signin-heading {
+	text-align: center; 
+	font-size: 22px; 
+	padding-top: 10px; 
+	padding-bottom: 12px; 
+	color: #444444;
+}
+.form-signin input[type="text"],
+.form-signin input[type="password"],
+.middle_div input[type="text"],
+.middle_div input[type="password"] {
+	font-size: 16px;
+	height: auto;
+	margin-bottom: 15px;
+	padding: 7px 9px;
+}
+
+/*validate*/
+label.error {
+	display: inline;
+	padding-left: 10px;
+	font-size: 16px;
+    color: red;
+	font-family: '微軟正黑體';
+}
+label.success {
+	padding-left: 0px;
+}

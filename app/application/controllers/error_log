@@ -1,0 +1,94 @@
+[Mon Dec 18 15:03:35 2017] [notice] suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Mon Dec 18 15:03:35 2017] [notice] Digest: generating secret for digest authentication ...
+[Mon Dec 18 15:03:35 2017] [notice] Digest: done
+[Mon Dec 18 15:03:35 2017] [notice] Apache/2.2.15 (Unix) DAV/2 configured -- resuming normal operations
+[Mon Dec 18 15:05:36 2017] [error] [client 1.168.44.111] Directory index forbidden by Options directive: /var/www/html/
+[Mon Dec 18 15:05:37 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/favicon.ico, referer: http://121.43.198.177/
+[Mon Dec 18 15:18:16 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/phpmyadmin
+[Mon Dec 18 15:28:25 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/phpmyadmin
+[Mon Dec 18 15:28:27 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/phpmyadmin
+[Mon Dec 18 15:28:28 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/phpmyadmin
+[Mon Dec 18 15:28:29 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/phpmyadmin
+[Mon Dec 18 15:32:32 2017] [notice] caught SIGTERM, shutting down
+[Mon Dec 18 15:32:33 2017] [notice] suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Mon Dec 18 15:32:33 2017] [notice] Digest: generating secret for digest authentication ...
+[Mon Dec 18 15:32:33 2017] [notice] Digest: done
+[Mon Dec 18 15:32:33 2017] [notice] Apache/2.2.15 (Unix) DAV/2 PHP/5.3.3 mod_ssl/2.2.15 OpenSSL/1.0.1e-fips mod_perl/2.0.4 Perl/v5.10.1 configured -- resuming normal operations
+[Mon Dec 18 15:32:48 2017] [error] [client 1.168.44.111] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Dec 18 15:32:51 2017] [error] [client 1.168.44.111] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Dec 18 15:32:52 2017] [error] [client 1.168.44.111] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Dec 18 15:32:53 2017] [error] [client 1.168.44.111] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Dec 18 15:35:04 2017] [notice] caught SIGTERM, shutting down
+[Mon Dec 18 15:35:04 2017] [notice] suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Mon Dec 18 15:35:04 2017] [notice] Digest: generating secret for digest authentication ...
+[Mon Dec 18 15:35:04 2017] [notice] Digest: done
+[Mon Dec 18 15:35:04 2017] [notice] Apache/2.2.15 (Unix) DAV/2 PHP/5.3.3 mod_ssl/2.2.15 OpenSSL/1.0.1e-fips mod_perl/2.0.4 Perl/v5.10.1 configured -- resuming normal operations
+[Mon Dec 18 15:35:13 2017] [error] [client 1.168.44.111] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Dec 18 15:35:15 2017] [error] [client 1.168.44.111] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Dec 18 15:35:15 2017] [error] [client 1.168.44.111] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Dec 18 15:35:16 2017] [error] [client 1.168.44.111] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Dec 18 15:35:17 2017] [error] [client 1.168.44.111] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Dec 18 15:35:21 2017] [error] [client 1.168.44.111] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Dec 18 15:38:17 2017] [notice] caught SIGTERM, shutting down
+[Mon Dec 18 15:38:17 2017] [notice] suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Mon Dec 18 15:38:17 2017] [notice] Digest: generating secret for digest authentication ...
+[Mon Dec 18 15:38:17 2017] [notice] Digest: done
+[Mon Dec 18 15:38:17 2017] [notice] Apache/2.2.15 (Unix) DAV/2 PHP/5.3.3 mod_ssl/2.2.15 OpenSSL/1.0.1e-fips mod_perl/2.0.4 Perl/v5.10.1 configured -- resuming normal operations
+[Mon Dec 18 15:38:23 2017] [error] [client 1.168.44.111] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Dec 18 15:38:24 2017] [error] [client 1.168.44.111] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Dec 18 15:38:25 2017] [error] [client 1.168.44.111] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Dec 18 15:40:11 2017] [notice] caught SIGTERM, shutting down
+[Mon Dec 18 15:40:11 2017] [notice] suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Mon Dec 18 15:40:11 2017] [notice] Digest: generating secret for digest authentication ...
+[Mon Dec 18 15:40:11 2017] [notice] Digest: done
+[Mon Dec 18 15:40:11 2017] [notice] Apache/2.2.15 (Unix) DAV/2 PHP/5.3.3 mod_ssl/2.2.15 OpenSSL/1.0.1e-fips mod_perl/2.0.4 Perl/v5.10.1 configured -- resuming normal operations
+[Mon Dec 18 16:27:49 2017] [error] [client 1.168.44.111] PHP Fatal error:  Class 'MY_Controller' not found in /var/www/html/application/controllers/index.php on line 3
+[Mon Dec 18 16:27:49 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/''.base_url().substr($cpn_photo_src,, referer: http://121.43.198.177/
+[Mon Dec 18 16:27:53 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/''.$value.', referer: http://121.43.198.177/
+[Mon Dec 18 17:59:04 2017] [notice] caught SIGTERM, shutting down
+[Mon Dec 18 17:59:04 2017] [notice] suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Mon Dec 18 17:59:04 2017] [notice] Digest: generating secret for digest authentication ...
+[Mon Dec 18 17:59:04 2017] [notice] Digest: done
+[Mon Dec 18 17:59:04 2017] [notice] Apache/2.2.15 (Unix) DAV/2 PHP/5.3.3 mod_ssl/2.2.15 OpenSSL/1.0.1e-fips mod_perl/2.0.4 Perl/v5.10.1 configured -- resuming normal operations
+[Mon Dec 18 18:05:04 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/products, referer: http://121.43.198.177/
+[Mon Dec 18 18:06:29 2017] [error] [client 140.205.201.34] File does not exist: /var/www/html/rs-status, referer: http://121.43.198.177/
+[Mon Dec 18 18:07:53 2017] [error] [client 140.205.201.34] File does not exist: /var/www/html/ganglia, referer: http://121.43.198.177/
+[Mon Dec 18 18:08:31 2017] [notice] caught SIGTERM, shutting down
+[Mon Dec 18 18:11:58 2017] [notice] suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Mon Dec 18 18:11:58 2017] [notice] Digest: generating secret for digest authentication ...
+[Mon Dec 18 18:11:58 2017] [notice] Digest: done
+[Mon Dec 18 18:11:58 2017] [notice] Apache/2.2.15 (Unix) DAV/2 PHP/5.3.3 mod_ssl/2.2.15 OpenSSL/1.0.1e-fips mod_perl/2.0.4 Perl/v5.10.1 configured -- resuming normal operations
+[Mon Dec 18 18:12:04 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/images/logo.png, referer: http://121.43.198.177/css/style.css
+[Mon Dec 18 18:12:22 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 389, referer: http://121.43.198.177/products
+[Mon Dec 18 18:12:26 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 389
+[Mon Dec 18 18:12:27 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 389
+[Mon Dec 18 18:12:29 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 389
+[Mon Dec 18 18:12:38 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 389
+[Mon Dec 18 18:12:45 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/images/logo.png, referer: http://121.43.198.177/css/style.css
+[Mon Dec 18 18:12:45 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/css/bootstrap.css, referer: http://121.43.198.177/index/login
+[Mon Dec 18 18:12:45 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/css/common.css, referer: http://121.43.198.177/index/login
+[Mon Dec 18 18:12:45 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/css/bootstrap.css, referer: http://121.43.198.177/index/login
+[Mon Dec 18 18:12:45 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/css/common.css, referer: http://121.43.198.177/index/login
+[Mon Dec 18 18:12:45 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/images/web_style_images, referer: http://121.43.198.177/index/login
+[Mon Dec 18 18:13:04 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/images/logo.gif, referer: http://121.43.198.177/admin/panel
+[Mon Dec 18 18:14:21 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/images/logo.png, referer: http://121.43.198.177/css/style.css
+[Mon Dec 18 18:14:25 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/images/logo.png, referer: http://121.43.198.177/css/style.css
+[Mon Dec 18 18:14:29 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 389, referer: http://121.43.198.177/products/detail/158
+[Mon Dec 18 18:14:32 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 389
+[Mon Dec 18 18:19:24 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390, referer: http://121.43.198.177/products/detail/158
+[Mon Dec 18 18:19:31 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390, referer: http://121.43.198.177/products/detail/158
+[Mon Dec 18 18:19:34 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390
+[Mon Dec 18 18:21:18 2017] [error] [client 1.168.44.111] File does not exist: /var/www/html/images/logo.png, referer: http://121.43.198.177/css/style.css
+[Mon Dec 18 18:21:24 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390, referer: http://121.43.198.177/products
+[Mon Dec 18 18:21:27 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390
+[Mon Dec 18 18:21:29 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390
+[Mon Dec 18 18:24:01 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390
+[Mon Dec 18 18:26:20 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390
+[Mon Dec 18 18:26:21 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390
+[Mon Dec 18 18:27:04 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390
+[Mon Dec 18 18:27:05 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390
+[Mon Dec 18 18:27:35 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390
+[Mon Dec 18 18:27:36 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390
+[Mon Dec 18 18:31:02 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390
+[Mon Dec 18 18:32:45 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390
+[Mon Dec 18 18:33:53 2017] [error] [client 1.168.44.111] PHP Fatal error:  Can't use method return value in write context in /var/www/html/application/controllers/gold.php on line 390

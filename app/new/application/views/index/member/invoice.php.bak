@@ -1,0 +1,86 @@
+				<section class="content has-side">
+					<div class="title">我要請款</div>
+					<div class="table-responsive">
+						<form method="post" action="/gold/invoice_ok">
+							<input type=hidden name='total' value='<?=$dbdata['d_bonus']?>'>
+							<input type=hidden name='bank_name' value='<?=$mdata['bank_name']?>'>
+							<input type=hidden name='bank_account_name' value='<?=$mdata['bank_account_name']?>'>
+							<input type=hidden name='bank_account' value='<?=$mdata['bank_account']?>'>
+							<input type=hidden name='Fee' value='5'>
+							<table class="orga invoice-fix" width="100%" border="" cellpadding="0" cellspacing="5px" bgcolor="rgba(255,255,255,1)">
+								<thead>
+									<tr>
+										<th colspan="7">累計佣金金額</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td colspan="7"><span class="total">¥<?=number_format($dbdata['d_bonus'])?>元</span><br><span class="note">如果系統沒有收到任何申請，金額將自動累積。</span></td>
+									</tr>
+								</tbody>
+								<thead>
+									<tr>
+										<th colspan="6">1.選擇付款方式</th>
+										<th colspan="1">手續費</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td colspan="6"><input type="radio" id="pay_method" name="pay_method" value="bank" checked/>
+											<label for="radio-1">匯款</label><br>
+											<p class="invocie-p">
+												銀行名稱:<font><?=$mdata['bank_name']?></font><br>
+												帳戶名稱:<font><?=$mdata['bank_account_name']?></font><br>
+												匯款帳號:<font><?=$mdata['bank_account']?></font>
+											</p>
+										</td>
+										<td colspan="1">¥5.00元</td>
+									</tr>
+									<tr>
+										<td colspan="6">
+											<input type="radio" id="pay_method" name="pay_method" value="account"/> <label for="radio-2">轉入購物金帳戶</label><br>
+											<select class="select-id">
+												<?php if(!empty($downline)): ?>
+													<?php foreach ($downline as $key => $value): ?>
+														<option value='<?=$value['by_id']?>'><?=$value['d_account']?>(<?=$value['name']?>)</option>
+										      		<?php endforeach; ?>
+										      	<?php endif; ?>
+											</select>
+										</td>
+										<td colspan="1">¥1.00元</td>
+									</tr>
+								</tbody>
+								<thead>
+									<tr>
+										<th colspan="7">2.選擇輸入金額</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td colspan="7"><input type="radio" id="money_choice" name="money_choice" value="all" checked/> <label for="radio-3">全部</label></td>
+									</tr>
+									<tr>
+										<td colspan="7">
+											<input type="radio" id="money_choice" name="money_choice" value="inputmoney"/> <label for="radio-4">輸入金額</label><br>
+											<input type="text" name="shopping_money" id="shopping_money" value="" onKeyUp="value=value.replace(/[^\d]/g,'')" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="pagination_box">
+								<button type='submit' class="btn simple bg2" <?if($dbdata['d_bonus']<=0)echo"disabled"?>>送出</button>
+							</div>
+						</form>
+					</div>       
+                 
+					
+				</section>
+			</div>
+		</main>
+<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script>
+  $(function() {
+    $( "#datepicker" ).datepicker();
+    $( "#datepicker02" ).datepicker();
+  });
+  </script>

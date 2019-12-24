@@ -1,0 +1,42 @@
+<?
+$lang['TextColor']  ='上文字色';//上文字色
+$lang['ClassNum']  ='分类数量';//分類數量
+$lang['GlobalTimeCanNotEmpty']  ='全局时间不可空';//全局時間不可空
+$lang['GlobalTerm']  ='全局期限';//全局期限
+$lang['BottomWordCards']  ='名片底字';//名片底字
+$lang['CardLinks']  ='名片连结';//名片連結
+$lang['NumberAddresses']  ='地址数量';//地址數量
+$lang['ActionCardSystem']  ='行动名片系统';//行動名片系統
+$lang['No']  ='否';//否
+$lang['SystemName']  ='系统名称';//系統名稱
+$lang['SystemNameCard']  ='系统名称：行动名片系统';//系統名稱：行動名片系統
+$lang['SystemSettingCase']  ='系统设定档';//系統設定檔
+$lang['DomainFolder']  ='使用域名资料夹';//使用域名資料夾
+$lang['UseDefault']  ='使用预设';//使用預設
+$lang['TextBottom']  ='底部文字';//底部文字
+$lang['LongURL']  ='长网址';//長網址
+$lang['Yes']  ='是';//是
+$lang['OrderFunction']  ='订单功能';//訂單功能
+$lang['IndividualTerm']  ='个别期限';//個別期限
+$lang['UseShoppingCart']  ='授权使用购物车';//授權使用購物車
+$lang['SetOverall']  ='设为全局';//設為全局
+$lang['SetIndividual']  ='设为个别';//設為個別
+$lang['ShortURL']  ='短网址';//短網址
+$lang['RegisterEntry']  ='注册入口';//註冊入口
+$lang['RegisterLink']  ='注册连结';//註冊連結
+$lang['Open']  ='开启';//開啟
+$lang['GroupsPush']  ='群体推播';//群體推播
+$lang['PresetReferences']  ='预设引用';//預設引用
+$lang['URLNum']  ='网址数量';//網址數量
+$lang['WebBackground']  ='网页背景';//網頁背景
+$lang['WebsiteLogo']  ='网站Logo';//網站Logo
+$lang['LevelName']  ='层级数量';//層級數量
+$lang['FilmNum']  ='影片数量';//影片數量
+$lang['_Numbering']  ='编码';//編碼
+$lang['SettingPath']  ='请把对应图档丢到设定路径：/images/logo.gif';//請把對應圖檔丟到設定路徑：/images/logo.gif
+$lang['TitleNum']  ='头衔数量';//頭銜數量
+$lang['ShutDown']  ='关闭';//關閉
+$lang['CloseCar']  ='关闭购物车';//關閉購物車
+$lang['Display']  ='显示';//顯示
+
+?>

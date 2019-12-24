@@ -1,0 +1,11 @@
+project：android
+name：AppPlusNetnewsWeb
+id：37
+app_name：國鼎張詠翔
+app_icon：/images/web_style_images/gbshop.com.tw/app_welcome_page/icon.png
+project：android
+name：AppPlusNetnewsWeb
+id：37
+app_name：國鼎張詠翔
+app_icon：/images/web_style_images/gbshop.com.tw/app_welcome_page/icon.png
+app_a_wp：/images/web_style_images/gbshop.com.tw/app_welcome_page/a_wp.png

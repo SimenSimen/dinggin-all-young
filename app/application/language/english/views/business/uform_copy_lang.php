@@ -1,0 +1,50 @@
+<?
+$lang['DropVehicle']  ='[Dropdown] [field name] Example: Your vehicle';//[下拉] [欄位名稱] 例如：您的交通工具
+$lang['DropScan']  ='[Drop-down] Please enter [field name] and [option], for example:';//[下拉] 請輸入 [欄位名稱] 與 [選項]，舉例來說：
+$lang['StrCampanyPhone']  ='[Text] [field name] Example: Your phone company';//[文字] [欄位名稱] 例如：您的公司電話
+$lang['DateBirthday']  ='[Date] [field name] For example: your birthday';//[日期] [欄位名稱] 例如：您的生日
+$lang['RadioVehicle']  ='[Radio] [field name] Example: Your vehicle';//[單選] [欄位名稱] 例如：您的交通工具
+$lang['RadioScan']  ='[Radio] Please enter [field name] and [option], for example:';//[單選] 請輸入 [欄位名稱] 與 [選項]，舉例來說：
+$lang['NumberPeopleNum']  ='[Number of digits] [field name] For example: Estimated number of travelers';//[數字數量] [欄位名稱] 例如：預計同行人數
+$lang['CheckSpecialty']  ='[Check] [field name] Example: Your Expertise';//[複選] [欄位名稱] 例如：您的專長
+$lang['CheckScan']  ='[Check] enter [field name] and [option], for example:';//[複選] 請輸入 [欄位名稱] 與 [選項]，舉例來說：
+$lang['CheckLeft']  ='"Check the left" can be set to the required fields, hold down the left button';//「左側勾選」可設為必填欄位，左鍵按住
+$lang['DownloadApp']  ='Download App';//下載App
+$lang['ClassType']  ='Classified category';//分類類別
+$lang['NotAddField']  ='Also, if you do not have to fill the field name, this field will not be added';//另外，若您沒有填寫欄位名稱，此欄位也不會被新增
+$lang['CanDragSequence']  ='Draggable sorting';//可拖曳排序
+$lang['RequiredPhone']  ='Required field names, such as: mobile phone';//必填欄位名稱，例如：手機
+$lang['RequiredName']  ='Required field names, for example: Name';//必填欄位名稱，例如：姓名
+$lang['RequiredEmail']  ='Required field names, for example: Mailbox';//必填欄位名稱，例如：信箱
+$lang['NoClass']  ='uncategorized';//未分類
+$lang['FinishAction']  ='After the completion of the action';//完成後動作
+$lang['SignUpFinish']  ='For example: Congratulations, you have completed registration.';//例如：恭喜您，您已經報名完成。
+$lang['Cancle']  ='cancel';//取消
+$lang['FixedFieldName']  ='Fixed field name';//固定欄位名稱
+$lang['ActivityName']  ='Event name';//活動名稱
+$lang['ActivityEx']  ='Event Description';//活動說明
+$lang['NotFilledField']  ='You still "Missing" field, please fill in the following fields contents after retries';//您尚有「未填寫」欄位，請將以下欄位內容填妥後重試
+$lang['Vehicle']  ='Your vehicle';//您的交通工具
+$lang['Specialty']  ='Your Expertise';//您的專長
+$lang['Remove']  ='Remove';//移除
+$lang['PromptStr']  ='Text Tips';//提示文字
+$lang['FillActivityEx']  ='To remind you to fill in the event description to help people understand the activity information sheet';//提醒您，填寫活動說明可以幫助填表人了解活動相關資訊
+$lang['Add']  ='New';//新增
+$lang['SetPromptStr']  ='When filling out the user information sent, you can thus set the pop-up window prompt text';//當使用者填完資料送出後，您可由此設定彈出視窗的提示文字內容
+$lang['SaveEdit']  ='Save Edits';//儲存編輯
+$lang['ColumnPosition']  ='Field name';//欄位名稱
+$lang['CheckWebUI']  ='[Check] [options] For example: Web UI; graphic design; web writing';//[複選] [選項] 例如：網站UI 平面設計 網頁撰寫
+$lang['AddBlank']  ='Please note added between one of the options ";" to separate your content options';//請注意，任一選項之間請加入「空白」，以分隔您的選項內容
+$lang['NoSpaceAdd']  ='If you do not use any interval option ";", this field will not be added';//若您沒有使用任何選項間隔「空白」，此欄位將不會被新增
+$lang['RadioMotorcycleTaxiCar']  ='[Radio] [options] For example: locomotive; car; taxi';//[單選] [選項] 例如：機車 汽車 計程車
+$lang['DropMotorcycleTaxiCar']  ='[Dropdown] [options] For example: locomotive; car; taxi';//[下拉] [選項] 例如：機車 汽車 計程車
+$lang['WebUIValue'] = 'Website UI; graphic design; web writing';
+$lang['VehicleValue'] = 'Motorcycle; car; taxi';
+
+$lang['SureCancleCopy']='Are you sure you want to cancel the copy it?';//您確定要取消複製嗎?
+$lang['Copy']='copy';//複製
+$lang['CopySuccess']='Copied successfully';//複製成功
+$lang['CopyUpForm']='Copy entry form';//複製報名表單
+$lang['_CopyUpForm']='Copy the entry form -';//複製報名表單-
+
+?>

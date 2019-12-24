@@ -1,0 +1,103 @@
+@charset "utf-8";
+body{
+	font-family: Arial, '文泉驛正黑', 'WenQuanYi Zen Hei', '儷黑 Pro', 'LiHei Pro', '微軟正黑體', 'Microsoft JhengHei',  '微软雅黑', 'メイリオ', '맑은 고딕', sans-serif;
+    color: #666666;
+    font-size: 15px;
+	background-color: #cfcfcf;
+    background-image: linear-gradient(38deg, #cfcfcf 0%, #e1e1e1 33%);
+}
+.clearfix:after{
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: ' ';
+    clear: both;
+    height: 0;
+}
+.container{
+    padding:15px;
+    max-width: 1000px;
+    position: relative;
+    margin: 30px auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #fff;
+    box-shadow:10px 20px 20px 0px rgba(0%,0%,0%,0.1);
+}
+table{
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+table  tr td{
+	border:1px solid #d6d6d6;
+	border-right: none;
+	border-left: none;
+	padding:15px 10px;
+}
+table tbody tr:nth-child(odd){
+	background-color:#f8f8f8;
+}
+table thead{
+	text-align: center;
+	color: #fff;
+	background-color: #000000;
+	background-image: linear-gradient(0deg, #000000 0%, #222 50%);
+	border-bottom: 1px solid #fff;
+	
+}
+table thead tr td{
+	position: relative;
+	
+}
+table thead tr td:after{
+	content: "";
+	border-bottom: 1px solid #6e6e6e;
+	position: absolute;
+	bottom: 2px;
+	left: 0;
+	width: 100%;
+
+}
+.table02{
+	width: 49%;
+	float: left;
+	margin: 0 1% 0 0;
+	margin-bottom: 20px;
+}
+.table02:nth-child(odd){
+	margin: 0 0% 0 0;
+	float: right;
+}
+.table03{
+	margin-bottom: 0px;
+}
+.table03 tr:last-child td{
+	border-bottom:1px solid #000;
+}
+.table04{
+	width: 49%;
+	float: right;
+	margin-bottom: 0px;
+}
+
+.table04 tr td{
+	border:none;
+	border-top:1px solid #d6d6d6;
+	padding:10px;
+}
+.table04 tr:first-child td{
+	border-top:none;
+}
+.table04 tbody tr:nth-child(odd){
+	background:none;
+}
+.table04 .total{
+	font-weight: bold;
+	color: #000;
+}
+.table04 .total td{
+	border-top: 2px double #000;
+}
+

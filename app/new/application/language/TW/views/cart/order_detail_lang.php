@@ -1,0 +1,49 @@
+<?
+$lang['GomypayTransactionNum']  ='Gomypay 交易編號';//Gomypay 交易編號
+$lang['GomypayOrderFormNum']  ='Gomypay 訂單編號';//Gomypay 訂單編號
+$lang['Subtotal']  ='小計';//小計
+$lang['Yuan']  ='元';//元
+$lang['InstallmentPeriods']  ='分期期數';//分期期數
+$lang['Fee']  ='手續費';//手續費
+$lang['PaymentMethod']  ='付款方式';//付款方式
+$lang['PaymentStatus']  ='付款狀態';//付款狀態
+$lang['CardsEndFourNum']  ='卡片末四碼';//卡片末四碼
+$lang['CardNumber']  ='卡號';//卡號
+$lang['TransactionIdPaypal']  ='交易id (Paypal)';//交易id (Paypal)
+$lang['DealDate']  ='交易日期';//交易日期
+$lang['TradingStatus']  ='交易狀態';//交易狀態
+$lang['AmountTransaction']  ='交易金額';//交易金額
+$lang['TradingMailbox']  ='交易信箱';//交易信箱
+$lang['TransactionHour']  ='交易時間';//交易時間
+$lang['TransactionNo']  ='交易編號';//交易編號
+$lang['EachAmount']  ='各期金額';//各期金額
+$lang['_CreationDate']  ='建立日期：';//建立日期：
+$lang['OrderNo']  ='訂單 No.';//訂單 No.
+$lang['OrderStatus']  ='訂單狀態';//訂單狀態
+$lang['_Order_Details']  ='訂單詳情 - ';//訂單詳情 - 
+$lang['UsuallyPeopleAddress']  ='訂購人地址';//訂購人地址
+$lang['UsuallyPeopleName']  ='訂購人姓名';//訂購人姓名
+$lang['UsuallyPeopleMail']  ='訂購人信箱';//訂購人信箱
+$lang['UsuallyPeoplePhone']  ='訂購人電話';//訂購人電話
+$lang['OrderProductDetails']  ='訂購商品明細';//訂購商品明細
+$lang['ProductName']  ='商品名稱';//商品名稱
+$lang['AuthorizeSingle']  ='授權單號';//授權單號
+$lang['TongBian']  ='統編';//統編
+$lang['InvoiceDate']  ='發票日期';//發票日期
+$lang['InvoiceAddress']  ='發票地址';//發票地址
+$lang['InvoiceTitle']  ='發票抬頭';//發票抬頭
+$lang['InvoiceNum']  ='發票號碼';//發票號碼
+$lang['CheckoutInformation']  ='結帳資訊';//結帳資訊
+$lang['TransferTime']  ='匯款時間';//匯款時間
+$lang['Price']  ='價錢';//價錢
+$lang['Quantity']  ='數量';//數量
+$lang['Edit']  ='編輯';//編輯
+$lang['HeadOfAmount']  ='頭期金額';//頭期金額
+$lang['_TotalAmount']  ='總金額：';//總金額：
+$lang['ClickChange']  ='點此變更';//點此變更
+$lang['SignedBillNumber']  ='簽帳單序號';//簽帳單序號
+
+$lang['InvoiceInformation'] = '發票資訊';
+$lang['Remark'] = '備註';
+
+?>

@@ -1,0 +1,31 @@
+/*----自我介紹內文------*/
+.set-my-info{
+	font-size:18px;
+	/* color:#03C; */
+	color:#333;
+	font-family: "微軟正黑體";
+	padding:10px 1% 15px;
+}
+/*-------影片/相簿/文章/報名表單/附件 列表頁 的分類標題----*/
+.set-item-title{
+	font-size:24px;
+    color:#F60;
+	font-family: "微軟正黑體";
+}
+/*-------報名表單/網路連結/附件  列表頁的標題----*/
+.set-title01{
+	font-size:18px;
+    color:#000;
+	font-family: "微軟正黑體";
+}
+/*-------影片/相簿/文章/報名表單/好友分享券  內容頁的標題和內容----*/
+.set-c-title{
+	font-size:20px;
+	color:#000;
+	font-family: "微軟正黑體";
+}
+.set-c-word{
+	font-size:18px;
+	color:;
+	font-family: "微軟正黑體";
+}

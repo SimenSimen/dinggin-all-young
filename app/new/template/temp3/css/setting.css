@@ -1,0 +1,69 @@
+
+/*------------設定---------------*/
+
+/*----自我介紹內文------*/
+.set-my-info{
+	font-size:18px;
+	color:#03C;
+	font-family:"新細明體", "華康細明體";
+}
+
+/*------QR CODE 文字-------*/
+.set-qr-word{
+	color:#0C6;
+	font-family:"新細明體", "華康細明體";
+}
+/*-------影片/相簿/文章/報名表單/附件 列表頁 的分類標題----*/
+.set-item-title{
+	font-size:24px;
+    color:#F60;
+	font-family:"新細明體", "華康細明體";
+}
+
+/*-------報名表單/網路連結/附件  列表頁的標題----*/
+.set-title01{
+	font-size:20px;
+    color:#F6C;
+	font-family:"新細明體", "華康細明體";
+}
+
+/*-------影片/相簿/文章/報名表單/好友分享券  內容頁的標題和內容----*/
+.set-c-title{
+	
+	font-size:20px;
+	color:#F00;
+	font-family:"新細明體", "華康細明體";
+}
+
+.set-c-word{
+	font-size:20px;
+	color:#FF9B00;
+	font-family:"新細明體", "華康細明體";
+}
+
+
+/*----03版 下拉選單背景色--------*/
+.set-03list{
+	
+	background-color:#09F;
+
+	}
+/*----03版 header背景色--------*/
+.set-header{
+	
+	background-color:#09F;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,83 @@
+
+.new-a01, .new-a02, .new-a03, .new-a04, .new-a05{
+	width:26px;
+	height:38px;
+	position:absolute;
+	top:-8px;
+	left:5px;
+	background:red;
+	color:#fff;
+	z-index:99999;
+	background-size: 100% auto !important;
+	text-indent:-9999999999px;
+	}
+.new-a01{background:url(../img/new-1.png) no-repeat 0 0;}
+.new-a02{background:url(../img/new-2.png) no-repeat 0 0;}
+.new-a03{background:url(../img/new-3.png) no-repeat 0 0;}
+.new-a04{background:url(../img/new-4.png) no-repeat 0 0;}
+.new-a05{background:url(../img/new-5.png) no-repeat 0 0;}
+
+.new-b01, .new-b02, .new-b03, .new-b04, .new-b05{
+	width:30px;
+	height:30px;
+	line-height:30px;
+	font-size:12px;
+	position:absolute;
+	top:-8px;
+	left:5px;
+	text-align:center;
+	-webkit-border-radius: 50em;
+	-moz-border-radius: 50em;
+	-ms-border-radius: 50em;
+	-o-border-radius: 50em;
+	border-radius: 50em;	
+	font-family: 'Shadows Into Light', cursive;
+	z-index:99999;
+	}
+.new-b01{ background:#BB9C5F; color:#fff;}
+.new-b02{ background:#EC3F3B; color:#fff;}
+.new-b03{ background:#111111; color:#BA9B63;}
+.new-b04{ background:#F5EF02; color:#E67E22;}
+.new-b05{ background:#8E44AD; color:#BA9B63;}
+
+.new-c01, .new-c02, .new-c03, .new-c04, .new-c05, .new-c06, .new-c07, .new-c08{
+	width:50px;
+	height:50px;
+	position:absolute;
+	right:-2px;
+	top:-2px;
+	background-size: 100% auto !important;
+	z-index:99999;
+	text-indent:-9999999999px;
+	}
+.new-c01{background:url(../img/ribbon-1.png) no-repeat 0 0;}
+.new-c02{background:url(../img/ribbon-2.png) no-repeat 0 0;}
+.new-c03{background:url(../img/ribbon-3.png) no-repeat 0 0;}
+.new-c04{background:url(../img/ribbon-4.png) no-repeat 0 0;}
+.new-c05{background:url(../img/ribbon-5.png) no-repeat 0 0;}
+.new-c06{background:url(../img/ribbon-6.png) no-repeat 0 0;}
+.new-c07{background:url(../img/ribbon-7.png) no-repeat 0 0;}
+.new-c08{background:url(../img/ribbon-8.png) no-repeat 0 0;}
+
+
+.new-d01, .new-d02, .new-d03, .new-d04, .new-d05{
+	font-size:12px;
+	padding:0 6px;
+	margin:.5em auto;
+	display:inline-block;
+	
+	text-align:center;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+	border-radius: 2px;	
+	font-family: 'Shadows Into Light', cursive;
+	z-index:99999;
+	}
+.new-d01{ background:#BB9C5F; color:#fff;}
+.new-d02{ background:#EC3F3B; color:#fff;}
+.new-d03{ background:#111111; color:#BA9B63;}
+.new-d04{ background:#F5EF02; color:#E67E22;}
+.new-d05{ background:#8E44AD; color:#BA9B63;}
+

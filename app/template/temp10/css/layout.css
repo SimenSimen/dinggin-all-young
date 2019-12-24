@@ -1,0 +1,990 @@
+@charset "utf-8";
+
+/*CSS RESET*/
+img {
+    border: 0;
+}
+a img {
+    border: 0;
+}
+:focus {
+    outline: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+a {
+    text-decoration: none;
+    outline: none; /* for Firefox Google Chrome  */
+    behavior: expression(this.onFocus=this.blur()); /* for IE */
+    color: #333;
+}
+
+/*去除連結虛線框*/
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+/*------CSS END RESET------------------------------------------------*/
+body {
+    background-color: #fff;
+    font-family: "微軟正黑體";
+    color: #666;
+    position: relative;
+    -webkit-text-size-adjust: none;
+    font-size: 16px;
+}
+#menu {
+    background-color: #fff;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 100%;    /*overflow:auto;*/
+    z-index: 99;
+    -moz-box-shadow: 0px 0px 6px #C8C6C6;
+    -webkit-box-shadow: 0px 0px 6px #C8C6C6;
+    box-shadow: 0px 0px 6px #C8C6C6;
+}
+.menu-nav {
+    width: 100%;
+}
+.menu-nav li {
+    list-style: none;
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+.menu-nav li a {
+    width: 100%;
+    display: inline-block;
+    font-size: 14px;
+    padding: 0 0 5px 0;
+    text-decoration: none;
+    color: #7aa149;
+}
+.menu-nav li a i {
+    display: block;
+    height: 24px;
+    margin: 5px 0 0 0;
+}
+.menu-nav li:nth-child(1) a i {
+    background: url(../icon-button/icon-about-me.png) no-repeat center center;
+    background-size: auto 80%;
+}
+.menu-nav li:nth-child(2) a i {
+    background: url(../icon-button/icon-team.png) no-repeat center center;
+    background-size: auto 80%;
+}
+.menu-nav .now {
+    background-color: #006536;
+    color: #fff;
+    position: relative;
+}
+.menu-nav .now:before {
+    content: "";
+    background: url(../images/now-arrow.png) no-repeat center 0;
+    display: block;
+    background-size: 12px 5px;
+    position: absolute;
+    z-index: 1001;
+    color: #333;
+    width: 100%;
+    height: 5px;
+    margin-top: -5px;
+}
+.menu-nav li:nth-child(1) a.now i {
+    background: url(../icon-button/icon-about-me_now.png) no-repeat center center;
+    background-size: auto 100%;
+}
+.menu-nav li:nth-child(2) a.now i {
+    background: url(../icon-button/icon-team_now.png) no-repeat center center;
+    background-size: auto 100%;
+}
+
+/*--BG樣式----*/
+.bg-style {
+    background: url(../images/bg.png) no-repeat center 0px;
+    -moz-background-size: 100%;
+    -webkit-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+}
+.wrapper {
+    width: 94%;
+    margin: auto;
+    margin: 20px 3% 70px 3%;
+    text-align: justify;
+}
+
+/*------index--------*/
+.cover-img {
+    font-size: 0;
+}
+.cover-img img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    -o-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+}
+.about-i-nav {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px 0 40px;
+    overflow: hidden;
+}
+.i-button {
+    vertical-align: top;
+    float: left;
+    display: block;
+    margin: 0 0 20px 0;
+    padding: 95px 0 5px 0;
+    width: 33.3%;
+    height: 110px;
+    cursor: pointer;
+    color: #000;
+    text-align: center;
+    font-family: "微軟正黑體";
+}
+.i-button#icon-me {
+    background: url(../icon-button/icon-me.png) no-repeat 50% 15%;
+    background-size: 88px;
+}
+.i-button#icon-i-vedio {
+    background: url(../icon-button/icon-vedio.png) no-repeat 50% 15%;
+    background-size: 88px;
+}
+.i-button#icon-i-photo {
+    background: url(../icon-button/icon-photo.png) no-repeat 50% 15%;
+    background-size: 88px;
+}
+.i-button#icon-i-article {
+    background: url(../icon-button/icon-article.png) no-repeat 50% 15%;
+    background-size: 88px;
+}
+.i-button#icon-i-enroll {
+    background: url(../icon-button/icon-enroll.png) no-repeat 50% 15%;
+    background-size: 88px;
+}
+.i-button#icon-i-link {
+    background: url(../icon-button/icon-link.png) no-repeat 50% 15%;
+    background-size: 88px;
+}
+.i-button#icon-i-annex {
+    background: url(../icon-button/icon-annex.png) no-repeat 50% 15%;
+    background-size: 88px;
+}
+.i-button#icon-i-share {
+    background: url(../icon-button/icon-share.png) no-repeat 50% 15%;
+    background-size: 88px;
+}
+.i-button#icon-i-cart {
+    background: url(../icon-button/icon-cart.png) no-repeat 50% 15%;
+    background-size: 88px;
+}
+.i-button#icon-i-ask {
+    background: url(../icon-button/icon-ask.png) no-repeat 50% 15%;
+    background-size: 88px;
+}
+.i-button#icon-i-member {
+    background: url(../icon-button/icon-member.png) no-repeat 50% 15%;
+    background-size: 88px;
+}
+.i-button#icon-i-order {
+    background: url(../icon-button/icon-order.png) no-repeat 50% 15%;
+    background-size: 88px;
+}
+.i-button#icon-i-money {
+    background: url(../icon-button/icon-money.png) no-repeat 50% 15%;
+    background-size: 88px;
+}
+.i-button:hover, .i-button:active {
+    color: #006536;
+}
+
+/*-------------------------*/
+
+/*------個人資訊-----------------------------*/
+.i-photo {
+    width: 100%;
+    text-align: center;
+}
+.i-photo img {
+    width: 100%;
+    height: auto;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    -o-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border: 5px solid #fff;
+    -moz-box-shadow: 0px 0px 6px #C8C6C6;
+    -webkit-box-shadow: 0px 0px 6px #C8C6C6;
+    box-shadow: 0px 0px 6px #C8C6C6;
+}
+.my-name {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0 5px 0;
+    font-size: 20px;
+    color: #000333;
+    border-bottom: 1px solid #7aa149;
+}
+.my-name b {
+    padding-left: 10px;
+    font-weight: normal;
+}
+
+/*-----介紹 Contenedor摺疊手風琴-------*/
+.accordion {
+    width: 100%;
+    margin: 5% auto 20px;
+    background: rgba(255, 255, 255, 0.5);
+}
+.accordion li {
+    list-style: none;
+}
+.line {
+    height: 1px;
+    background-color: #7aa149;
+}
+.accordion li i {
+    position: absolute;
+    top: 16px;
+    left: 12px;
+    font-size: 18px;
+    color: #595959;
+    -webkit-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+.sub-i-content {
+    font-size: 14px;
+    padding: 10px 1% 0;
+    clear: both;
+}
+.my-title {
+
+    /*padding: 1%;*/
+}
+.my-title li {
+    background-image: url(../images/dot-title.png);
+    background-size: 16px auto;
+    background-repeat: no-repeat;
+    background-position: 2px center;
+    border-bottom: 1px dashed #ccc;
+    padding: 5px 5px 5px 25px;
+}
+.my-word {
+    padding: 20px 5px 0;
+    line-height: 1.6em;
+}
+
+/*----聯絡我-----*/
+.c-button {
+    float: left;
+    vertical-align: top;
+    display: block;
+    margin: 0 0 15px 0;
+    padding: 55px 0 5px 0;
+    width: 32.4%;
+    height: 90px;
+    cursor: pointer;
+    color: #333;
+    text-align: center;
+    font-family: "微軟正黑體";
+}
+.c-button:hover {
+    border: 1px solid #7aa149;
+    border-radius: 15px;
+    -o-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+}
+.c-button#icon-phone {
+    background: url(../icon-button/icon-phone.png) no-repeat 50% 15%;
+    background-size: 40px;
+}
+.c-button#icon-tel {
+    background: url(../icon-button/icon-tel.png) no-repeat 50% 15%;
+    background-size: 40px;
+}
+.c-button#icon-fax {
+    background: url(../icon-button/icon-fax.png) no-repeat 50% 15%;
+    background-size: 40px;
+}
+.c-button#icon-number {
+    background: url(../icon-button/icon-number.png) no-repeat 50% 15%;
+    background-size: 40px;
+}
+.c-button#icon-email {
+    background: url(../icon-button/icon-email.png) no-repeat 50% 15%;
+    background-size: 40px;
+}
+.c-button#icon-skype {
+    background: url(../icon-button/icon-skype.png) no-repeat 50% 15%;
+    background-size: 40px;
+}
+.c-button#icon-fb {
+    background: url(../icon-button/icon-fb.png) no-repeat 50% 15%;
+    background-size: 40px;
+}
+.c-button#icon-line {
+    background: url(../icon-button/icon-line.png) no-repeat 50% 15%;
+    background-size: 40px;
+}
+.c-button#icon-wechat {
+    background: url(../icon-button/icon-wechat.png) no-repeat 50% 15%;
+    background-size: 40px;
+}
+.c-button#icon-whatsapp {
+    background: url(../icon-button/icon-whatsapp.png) no-repeat 50% 15%;
+    background-size: 40px;
+}
+.c-button#icon-instagram {
+    background: url(../icon-button/icon-instagram.png) no-repeat 50% 15%;
+    background-size: 40px;
+}
+.qr-title {
+    width: 100%;
+    padding: 10px 0 5px 15px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #000333;
+    border-bottom: 1px solid #7aa149;
+}
+.qr-code {
+    font-family: "微軟正黑體";
+    font-size: 20px;
+    color: #333;
+    width: 98%;
+    text-align: center;
+    display: inline-block;
+    margin: 0 0.5% 25px 0.5%;
+}
+.qr-code img {
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+    border: 5px solid #ccc;
+}
+
+/*---分類列---- 影片/文章/相簿/表單/網路連結/附件/分享券/-----------------------------*/
+.common-item-ul {
+    width: 100%;
+    list-style: none;
+    padding: 0 0 20px;
+}
+.common-item-ul li {
+    margin-bottom: 15px;
+}
+.common-item-ul li a {
+    display: block;
+    background-image: url(../images/common-item-ul-li-bg.png);
+    background-size: 60px auto;
+    background-repeat: no-repeat;
+    background-position: 100% 0%;
+    padding: 3%;
+    min-height: 44px;
+    background-color: rgba(255, 255, 255, 1);
+    -moz-box-shadow: 0px 0px 6px #C8C6C6;
+    -webkit-box-shadow: 0px 0px 6px #C8C6C6;
+    box-shadow: 0px 0px 6px #C8C6C6;
+    border-radius: 8px;
+    -o-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    color: #000;
+}
+.common-item-ul li a:hover, .common-item-ul li a:active {
+    background-color: transparent;
+    color: #0796e5;
+}
+.common-item-ul li h2 {
+    margin-bottom: 5px;
+    width: 90%;
+}
+
+/*------列表頁-預設樣式--------------*/
+.content {
+    margin-bottom: 70px;
+    float: left;
+    clear: both;
+    width: 100%; /*保持跟底部的距離*/
+}
+.fader {
+    display: none;
+}
+.info-list {
+    width: 100%;
+    clear: both;
+    float: left;
+    padding: 0 0 70px;
+}
+.info-list ul li {
+    list-style: none;
+    width: 100%;
+    clear: both;
+    float: left;
+}
+.info-list li a {
+    padding: 3%;
+    display: block;
+    border-bottom: 1px solid #fff;
+    min-height: 45px;
+    line-height: 1.6em;
+    background-image: url(../images/line-style.png);
+    background-repeat: repeat-x;
+    background-position: left bottom;
+    float: left;
+    width: 100%;
+}
+.info-list li a:hover, .info-list li a:active {
+    background: rgba(122, 161, 73, .3);
+    color:;
+}
+.list-img {
+    width: 30%;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.list-img img {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-radius: 8px;
+    -o-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;  /*max-width:250px;*/
+}
+.fix {
+    position: relative;
+    overflow: hidden;   /* width:100%;*/
+    float: left;
+    border-radius: 8px;
+    -o-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+.fix:after {
+    padding-top: 56.25%;
+    content: "";
+    display: block;
+}
+.fix img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    max-width: 100%;
+    margin: auto;
+}
+.list-word {
+    width: 70%;
+    display: inline-block;
+    float: left;
+    padding-left: 5%;
+}
+
+/*---影片/文章/相簿/表單/網路連結/附件/分享券/-------------------------------*/
+.path-item {
+    width: 100%;
+    font-size: 16px;
+    padding: 5%;
+    padding-left: 20px;
+    background-image: url(../images/dot-title.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 16px;
+}
+.w-half {
+    width: 48%;
+    margin: 0 1%;
+}
+
+/*---------------------------------------------*/
+
+/*--內容頁----*/
+
+/*--內頁標題---*/
+.content-title {
+    text-align: left;
+    margin: 5% 0;
+    padding: 0 10px 15px 10px;
+    color: #333;
+    background-image: url(../images/content-title-bg.png);
+    background-repeat: repeat-x;
+    background-position: left bottom;
+}
+
+/*----(方法)--當圖片大小不一致的時候，讓他安安穩穩躺在你指定的div大小裡-----*/
+.item-img {
+    float: left;
+    background-color: #ccc;
+    text-align: center;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.item-img img {
+    width: 100%;
+    overflow: hidden;
+}
+.icon-go-vedio {
+    background-image: url(../images/icon-go-vedio.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 25px auto;
+    position: absolute;
+    z-index: 10;
+    display: block;
+    width: 50px;
+    height: 50px;
+}
+
+/*-----YOUTUBE影片 響應式------------------*/
+.vedio-box {
+    width: 100%;
+    text-align: center;
+    float: left;
+    clear: both;
+}
+.video-container {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border: 7px solid #fff;
+    background-color: #fff;
+}
+.video-container iframe, .video-container object, .video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/*--------相簿內頁----------*/
+.photo-word {
+    max-width: 900px;
+}
+
+/*---文章編輯器裡的圖片----*/
+.word-area img {
+    width: 100%;
+    height: auto;
+}
+
+/*-------網路連結--------*/
+.link-list li a {
+    border-bottom: 3px solid #7aa149;
+    background-image: url(../images/dot-arrow.png);
+    background-size: 24px auto;
+    background-repeat: no-repeat;
+    background-position: 95% center;
+}
+.link-list li a:hover, .link-list li a:active {
+    background-color: rgba(255, 255, 255, .1);
+    color: #fff;
+}
+
+/*---------附件---------------*/
+.annex-list ul li {
+    list-style: none;
+    width: 100%;
+}
+.annex-list li a {
+    padding: 3%;
+    padding-right: 12%;
+    display: block;
+    border-bottom: 1px dotted #ccc;
+    background-image: url(../images/dot-arrow3.png);
+    background-size: 24px auto;
+    background-repeat: no-repeat;
+    background-position: 98% center;
+    background-color: rgba(255, 255, 255, 0.8);
+    min-height: 45px;
+    line-height: 1.6em;
+}
+.annex-list li a:hover, .annex-list li a:active {
+    background-color: rgba(122, 161, 73, .5);
+    color: #fff;
+}
+
+/*-----分享券-----------*/
+.share-list {
+    float: left;
+    background-color: #fff;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    -o-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    width: 100%;
+}
+.share-list h2 {
+    font-size: 16px;
+    line-height: 1.6em;
+    clear: both;  /*height:55px; overflow:hidden;*/
+    padding: 0 10px;
+}
+.share-list a {
+    color: #333;
+}
+.share-list:hover, .share-list:active {
+    -moz-box-shadow: 0px 0px 5px #ccc;
+    -webkit-box-shadow: 0px 0px 5px #ccc;
+    box-shadow: 0px 0px 5px #ccc;
+}
+.btn-share a {
+    display: block;
+    width: 50%;
+    font-size: 18px;
+    color: #fff;
+    background-color: #7aa149;
+    margin: 25px auto 5% auto;
+    border-radius: 75px;
+    -o-border-radius: 75px;
+    -webkit-border-radius: 75px;
+    -moz-border-radius: 75px;
+    text-align: center;
+    padding: 10px;
+}
+.btn-share a:hover, .btn-share a:active {
+    background-color: #006536;
+}
+.btn-share2 {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.btn-share2 img {
+    width: 25px;
+}
+.share {
+    text-align: center;
+}
+.share img {
+    max-width: 100%;
+    height: auto;
+    width: inherit !important;
+}
+
+/*-------------------------------------------------   member2  ------------*/
+.dividend {
+    font-size: 1.1em !important;
+    color: #000;
+    clear: both;
+    display: block;
+    padding: 15px 0;
+    letter-spacing: 1px;
+    text-align: left;
+    overflow: hidden;
+}
+.dividend b {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    color: #F00;
+}
+.dividend p {
+    display: inline-block;
+    font-size: .9em;
+    color: #666;
+}
+.dividend a {
+    position: absolute;
+    right: 0;
+    font-size: .9em;
+    border: 1px #999 solid;
+    border-radius: 5px;
+    padding: 8px;
+    margin: -10px 0 0 0;
+    background: #f0f0f0;
+    background: #f0f0f0 -moz-linear-gradient(top, #f0f0f0 0%, #b9b9b9 100%); /* FF3.6+ */
+    background: #f0f0f0 -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f0f0f0), color-stop(100%, #b9b9b9)); /* Chrome,Safari4+ */
+    background: #f0f0f0 -webkit-linear-gradient(top, #f0f0f0 0%, #b9b9b9 100%); /* Chrome10+,Safari5.1+ */
+    background: #f0f0f0 -o-linear-gradient(top, #f0f0f0 0%, #b9b9b9 100%); /* Opera11.10+ */
+    background: #f0f0f0 -ms-linear-gradient(top, #f0f0f0 0%, #b9b9b9 100%); /* IE10+ */
+    background: #f0f0f0 linear-gradient(top, #f0f0f0 0%, #b9b9b9 100%); /* W3C */
+}
+
+/*------------------------------------------------   order  訂單查詢 ------------*/
+.num {
+    font-size: .9em;
+    clear: both;
+    text-align: center;
+    padding: 15px 0 0;
+}
+.num b {
+    font-size: 1.2em;
+    font-weight: normal;
+    color: #000;
+    display: block;
+}
+.order_year {
+    color: #666;
+    clear: both;
+    background: url(../images/dot-title.png) no-repeat 0 -5px;
+    padding: 0 0 0 30px;
+}
+#order_tab {
+    font-size: 1.1em;
+    width: 100%;
+    color: #000;
+    letter-spacing: -1px;
+    margin: 0 0 20px;
+    line-height: 20px;
+}
+#order_tab tr th {
+    font-size: .9em;
+    color: #333;
+    border-bottom: 1px #5e686f dashed;
+    padding: 5px 5px 5px 0;
+}
+#order_tab tr td {
+    font-size: .8em;
+    padding: 8px 0;
+    border-bottom: 1px #5e686f dashed;
+    vertical-align: middle;
+    text-align: left;
+}
+#order_tab tr td a {
+    color: #00F;
+    text-decoration: underline;
+}
+#order_tab tr td em {
+    font-style: italic;
+    color: #999;
+    padding: 0 5px 0 0;
+}
+#order_tab tr td strong {
+    font-weight: normal;
+    display: block;
+    padding: 0 20px 0 0;
+}
+#order_tab tr td span {
+    display: inline-block;
+}
+.order {
+    clear: both;
+    text-align: center;
+    display: block;
+    padding: 0 0 25px 0;
+}
+.order a {
+    display: block;
+    width: 70%;
+    margin: auto;
+    font-size: 1em;
+    border: 1px #999 solid;
+    border-radius: 5px;
+    padding: 5px 8px;
+    background: #f0f0f0;
+    background: #f0f0f0 -moz-linear-gradient(top, #f0f0f0 0%, #b9b9b9 100%); /* FF3.6+ */
+    background: #f0f0f0 -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f0f0f0), color-stop(100%, #b9b9b9)); /* Chrome,Safari4+ */
+    background: #f0f0f0 -webkit-linear-gradient(top, #f0f0f0 0%, #b9b9b9 100%); /* Chrome10+,Safari5.1+ */
+    background: #f0f0f0 -o-linear-gradient(top, #f0f0f0 0%, #b9b9b9 100%); /* Opera11.10+ */
+    background: #f0f0f0 -ms-linear-gradient(top, #f0f0f0 0%, #b9b9b9 100%); /* IE10+ */
+    background: #f0f0f0 linear-gradient(top, #f0f0f0 0%, #b9b9b9 100%); /* W3C */
+}
+
+/*------------------*/
+.order_money {
+    font-size: 1em;
+    clear: both;
+    color: #333;
+    display: block;
+    padding: 0;
+    text-align: left;
+}
+.order_money b {
+    margin: 0 0 0 3px;
+    color: #F00;
+}
+.order_money em {
+    font-size: .9em;
+    font-style: normal;
+    letter-spacing: .05em;
+    margin: 0 0 0 10px;
+}
+.order_money2 {
+    font-size: 1em;
+    clear: both;
+    color: #333;
+    display: block;
+    padding: 5px 0 20px 0;
+}
+.order_money2 b {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 2em;
+    font-style: italic;
+    color: #F00;
+}
+
+/*---------------*/
+.order_info {
+    font-size: .9em;
+    border: 2px #d0d0d0 solid;
+    background: #FFF;
+    color: #006536;
+    margin: 0 0 15px 0;
+}
+.order_info h6 {
+    font-size: 1.1em;
+    color: #fff;
+    display: block;
+    text-align: center;
+    padding: 8px 0;
+    background: #006536;
+}
+.order_info li {
+    display: block;
+    padding: 7px 9px;
+    overflow: hidden;
+    text-align: left;
+}
+.order_info li strong {
+    font-weight: normal;
+    display: inline-block;
+    min-width: 90px;
+}
+.order_info li.c1 {
+    background: #eeeeee;
+}
+.order_info li span {
+    color: #000;
+    display: inline-block;
+    width: 65%;
+}
+.order_info li.c3 {
+    background: #999;
+}
+.order_info li.c4 b {
+    float: left;
+    font-weight: normal;
+}
+.order_info li.c4 p {
+    display: inline-block;
+}
+
+/*-----------------------------------------------------
+------------------------------  投稿專區 ---------------
+-----------------------------------------------------*/
+.contribute {
+    position: absolute;
+    right: -10px;
+    top: -18px;
+    -webkit-transform: scale(0.35);
+    -moz-transform: scale(0.35);
+    -ms-transform: scale(0.35);
+    -o-transform: scale(0.35);
+    transform: scale(0.35);
+    opacity: 0.4;
+    -moz-opacity: 0.4;
+    -khtml-opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+
+/*-------------------- i-contribute2.html -------*/
+#memo {
+    font-size: 0.9em;
+    color: #666666;
+    overflow: hidden;
+    margin: auto;
+    width: 98%;
+    border-bottom: 1px #CCCCCC solid;
+    padding: 10px 0;
+    line-height: 20px;
+    justify-content: center;
+    align-items: center;
+    display: -webkit-flex;
+}
+#memo div {
+    float: left;
+    width: 78%;
+    color: #666666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#memo div h6 {
+    font-size: 1.2em;
+    color: #006536;
+}
+#memo a {
+    float: right;
+    font-size: .8em;
+    display: inline-block;
+    text-align: center;
+    color: #333;
+    padding: 5px 12px;
+    border: 1px #999 solid;
+    border-radius: 5px;
+    background: #fff;
+    background: #fff -moz-linear-gradient(top, #fff 0%, #ebebeb 100%); /* FF3.6+ */
+    background: #fff -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #ebebeb)); /* Chrome,Safari4+ */
+    background: #fff -webkit-linear-gradient(top, #fff 0%, #ebebeb 100%); /* Chrome10+,Safari5.1+ */
+    background: #fff -o-linear-gradient(top, #fff 0%, #ebebeb 100%); /* Opera11.10+ */
+    background: #fff -ms-linear-gradient(top, #fff 0%, #ebebeb 100%); /* IE10+ */
+    background: #fff linear-gradient(top, #fff 0%, #ebebeb 100%); /* W3C */
+}
+.phone {
+    float: left;
+    width: 20%;
+}
+.phone img {
+    width: 100%;
+    max-width: 60px;
+    height: auto;
+}
+
+/*-----------------------*/
+.demo {
+    font-size: 1.1em;
+    color: #333;
+    line-height: 1.5em;
+    clear: both;
+}
+.demo h3 {
+    font-size: 2em;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    padding: 15px 0;
+}
+.demo h5 {
+    display: block;
+    padding: 15px 0 0 0;
+}
+.demo h6 {
+    display: block;
+    padding: 10px 0 0 0;
+}
+.back {
+    font-size: 1.2em;
+    clear: both;
+    text-align: center;
+    padding: 20px 0 0;
+}
+.back a {
+    display: inline-block;
+    border: 1px #999 solid;
+    padding: 5px 50px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, .05);
+}

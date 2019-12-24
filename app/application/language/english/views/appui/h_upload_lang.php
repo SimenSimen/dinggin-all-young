@@ -1,0 +1,42 @@
+<?
+$lang['Jepg24Bit']  ='(JPG or 24 yuan PNG (no alpha layer), side length limit: 320px; side caps: 3840px)';//(JPEG 或 24 位元 PNG (無 alpha 透明層),邊長下限：320px；邊長上限：3840px)
+$lang['ByBuildNameLoad']  ='(This information is from "automatic packaging - Name" read, if the need to amend Go to the "automatic packing" feature page.)';//(此資料由「自動打包-姓名」讀取，若須修改請至「自動打包」功能頁。)
+$lang['Most4KChar']  ='(Maximum 4,000 characters)';//(最多4000字元)
+$lang['Most80Char']  ='(Up to 80 characters)';//(最多80字元)
+$lang['W1024_500JPG24Bit']  ='(Width 1024 x length 500, JPG, or 24 yuan PNG (no alpha layer))';//(寬 1024 x 長 500, JPG 或 24 位元 PNG (無 alpha 透明層))
+$lang['A32Bit_3']  ='32 yuan PNG (with alpha transparent layer)';//32 位元 PNG (使用 alpha 透明層)
+$lang['BriefFillIn']  ='Brief field Please fill in certain words';//Brief欄位請填入一定字數
+$lang['DescriptionFillIn']  ='Please fill in some description fields words';//description欄位請填入一定字數
+$lang['Jepg24BitPng']  ='24 yuan JPEG or PNG (no alpha layer)';//JPEG 或 24 位元 PNG (無 alpha 透明層)
+$lang['PlayStoreImage']  ='Play Store - Topics Images';//Play商店 - 主題圖片
+$lang['Size512']  ='Size: 512 x 512 pixels';//尺寸：512 x 512 像素
+$lang['PhoneAppIcon']  ='Mobile APP icon';//手機 APP圖示
+$lang['PhoneScreenshot_1']  ='Phone screen screenshot 1';//手機螢幕擷圖1
+$lang['PhoneScreenshot_2']  ='Phone screen screenshot 2';//手機螢幕擷圖2
+$lang['PhoneScreenshot_3']  ='Phone screen screenshot 3';//手機螢幕擷圖3
+$lang['PhoneScreenshot_4']  ='Phone screen screenshot 4';//手機螢幕擷圖4
+$lang['PhoneScreenshot_5']  ='Phone screen screenshot 5';//手機螢幕擷圖5
+$lang['ApplicationShelves']  ='Application shelves';//申請上架
+$lang['ReplacesAPPIcon']  ='If it is necessary to modify the picture here. Go to "automatic packing" feature replaces APP shown)';//此處圖片若須修改請至「自動打包」功能替換 APP圖示)
+$lang['Delete']  ='delete';//刪除
+$lang['FullDescription']  ='Full Description';//完整說明
+$lang['LongNotExceed']  ='The long side of the size not exceed twice the short side';//長邊的尺寸不可超過短邊的兩倍
+$lang['Provision']  ='Provision';//規定
+$lang['RemindYou512']  ='To remind you, the phone must re-upload APP illustrated 512 x 512 image, go to the "automatic packaging" change picture size';//提醒您，手機APP圖示須重新上傳 512 x 512 圖片，請至「自動打包」更換圖片尺寸
+$lang['Size3840']  ='Maximum size: 3840 pixels';//最大尺寸：3840 像素
+$lang['Size320']  ='Minimum size: 320 pixels';//最小尺寸：320 像素
+$lang['UploadPhoto']  ='Please upload photos';//請上傳圖片
+$lang['GoToBuild']  ='Please go to "automatic packaging" to update the information, before they can apply Added oh !!!';//請先至「自動打包」進行資料更新，才可以申請上架喔 !!!
+$lang['SelectClass']  ='Please select category';//請選擇類別
+$lang['FileSize1024']  ='Maximum file size: 1024KB';//檔案大小上限：1024KB
+$lang['ShortDescription']  ='Short description';//簡短說明
+$lang['TheClass']  ='Category';//類別
+$lang['DisplayLocation']  ='Display location';//顯示位置
+
+$lang['Save'] = 'Save';
+$lang['PleaseUploadAndSave'] = 'Please make your store before uploading';
+$lang['PleaseBeWritten'] = 'The above information must be filled in';
+$lang['AppUpdateAndUpload'] = 'Please APP updating, uploading';
+$lang['GoToAPPBuild'] = 'To automatically update your package APP';
+$lang['DeleteTheImage'] = 'Delete';
+?>

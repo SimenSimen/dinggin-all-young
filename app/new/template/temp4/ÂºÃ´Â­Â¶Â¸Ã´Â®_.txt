@@ -1,0 +1,50 @@
+◎ index.html 首頁 / 關於我
+	
+									
+◎ i-about.html  個人資訊
+
+
+
+◎ i-vedio.html 影片分類頁 / i-vedio2.html 列表頁 / i-vedio3.html內容頁
+
+(等同 公司影片 版型，只是上方MENU選單跟icon要換掉， 如圖解)
+
+
+
+◎ i-photo.html 相簿分類頁 / i-photo2.html 列表頁 / i-photo3.html內容頁
+
+(等同 公司相簿 版型，只是上方MENU選單跟icon要換掉， 如圖解)
+
+
+
+◎ i-article.html 文章分類頁 / i-article2.html 列表頁 / i-article3.html內容頁
+
+(等同 公司文章 版型，只是上方MENU選單跟icon要換掉， 如圖解)
+
+
+
+◎ i-enroll.html 報名表單分類頁 / i-enroll2.html 列表頁 / i-enroll3.html內容頁
+
+(等同 公司表單 版型，只是上方MENU選單跟icon要換掉， 如圖解)
+
+
+
+◎ i-link.html 網路連結 分類頁 / i-link2.html 列表頁 / i-link3.html內容頁
+
+(等同 網路連結(公)  版型，只是上方MENU選單跟icon要換掉， 如圖解)
+
+
+◎ i-annex.html 附件 分類頁 / i-annex2.html 列表頁 / i-annex3.html內容頁
+
+(等同 公司附件   版型，只是上方MENU選單跟icon要換掉， 如圖解)
+
+
+◎ i-share.html 好友分享券 列表頁 / i-share2.html 內容頁 
+
+(等同 好友分享券(公) 版型，只是上方MENU選單跟icon要換掉， 如圖解)
+
+               
+◎ team.html 團隊情報頁面      
+
+
+◎ team-article.html 公司文章分類頁(示範差別 用)        

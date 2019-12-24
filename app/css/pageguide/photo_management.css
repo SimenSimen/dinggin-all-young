@@ -1,0 +1,18 @@
+/*教學導引按鈕*/
+.modal-button-container button
+{
+	font-family: "微軟正黑體";
+}
+.tlypageguide_close
+{
+	width:100px;
+}
+.wrapper
+{
+	width: 300px;
+}
+#tlyPageGuideMessages
+{
+	font-family: "微軟正黑體";
+	text-align:left;
+}

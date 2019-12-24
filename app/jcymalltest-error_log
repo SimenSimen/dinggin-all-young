@@ -1,0 +1,4 @@
+[Wed Jan 10 17:34:18 2018] [error] [client 36.233.140.7] File does not exist: /var/www/html/jcymalltest/images/logo.png, referer: http://jcymalltest.test888.org/css/style.css
+[Wed Jan 10 17:36:02 2018] [error] [client 36.233.140.7] File does not exist: /var/www/html/jcymalltest/images/logo.png, referer: http://jcymalltest.test888.org/css/style.css
+[Wed Jan 10 17:37:56 2018] [error] [client 36.233.140.7] File does not exist: /var/www/html/jcymalltest/images/logo.png, referer: http://jcymalltest.test888.org/css/style.css
+[Wed Jan 10 17:38:10 2018] [error] [client 36.233.140.7] File does not exist: /var/www/html/jcymalltest/images/logo.gif, referer: http://jcymalltest.test888.org/index/login

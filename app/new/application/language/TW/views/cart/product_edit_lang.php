@@ -1,0 +1,42 @@
+<?
+$lang['IntroductionMovie']='介紹影片';//介紹影片
+$lang['NoClass']='未分類';//未分類
+$lang['SafetyStock']='安全庫存';//安全庫存
+$lang['AllowNumber']='每筆訂單允許的數量(預設值10)';//每筆訂單允許的數量(預設值10)
+$lang['ExYear']='例如：一年';//例如：一年
+$lang['ProductMalfunction']='例如：產品功能故障、新品瑕疵等';//例如：產品功能故障、新品瑕疵等
+$lang['Cancle']='取消';//取消
+$lang['ThereStock']='尚有庫存';//尚有庫存
+$lang['WarrantyPeriod']='保固期限';//保固期限
+$lang['WarrantyCoverage']='保固範圍';//保固範圍
+$lang['SuggestPrice']='建議售價';//建議售價
+$lang['PicSize_600']='建議圖片長寬為600px，僅允許png,jpg,gif檔上傳';//建議圖片長寬為600px，僅允許png,jpg,gif檔上傳
+$lang['StorageCapacity']='庫存數量';//庫存數量
+$lang['OffShelf']='商品下架(不顯示於購物頁面中)';//商品下架(不顯示於購物頁面中)
+$lang['ProductContent']='商品內容';//商品內容
+$lang['ProductClass']='商品分類';//商品分類
+$lang['ProductName']='商品名稱';//商品名稱
+$lang['ProductStatus']='商品狀態';//商品狀態
+$lang['ProductFeature']='商品特點';//商品特點
+$lang['ProductSpecification']='商品規格';//商品規格
+$lang['ProductReplenishment']='商品補貨(購物頁面將顯示庫存不足)';//商品補貨(購物頁面將顯示庫存不足)
+$lang['ProductPicture']='商品圖片';//商品圖片
+$lang['NotAnyClass']='您尚未建立任何分類，商品將歸類到「未分類」中';//您尚未建立任何分類，商品將歸類到「未分類」中
+$lang['SpecificationsContent']='規格內容';//規格內容
+$lang['SpecificationsName']='規格名稱';//規格名稱
+$lang['SetPrice']='設定售價';//設定售價
+$lang['LessNumEmail']='剩餘庫存低於此數量將email通知您';//剩餘庫存低於此數量將email通知您
+$lang['SinglePurchase']='單次購買數量';//單次購買數量
+$lang['New']='增加';//增加
+$lang['MovieUrl']='影片網址';//影片網址
+$lang['MovieTitle']='影片標題';//影片標題
+$lang['EditProduct']='編輯商品';//編輯商品
+$lang['_EditProduct']='編輯商品-';//編輯商品-
+$lang['Select']='請選擇';//請選擇
+$lang['ClickStatus']='請選擇變更狀態';//請選擇變更狀態
+$lang['SaveEdit']='儲存編輯';//儲存編輯
+$lang['TaiwanDollar'] = "新臺幣";
+$lang['Sequence'] = "排序";
+$lang['Remove'] = "移除";
+
+?>

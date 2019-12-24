@@ -1,0 +1,41 @@
+<?
+$lang['_SignIn']  ='(登入)';//(登入)
+$lang['MailThereafterLogin']  ='，此信箱为尔后登入帐号。';//，此信箱為爾後登入帳號。
+$lang['Subtotal']  ='小计';//小計
+$lang['Yuan']  ='元';//元
+$lang['Phone']  ='手机';//手機
+$lang['PaymentMethods']  ='付费方式';//付費方式
+$lang['DeliveryMethod']  ='交货方式';//交貨方式
+$lang['Altogether']  ='共';//共
+$lang['BackStoreHome']  ='回商店首页';//回商店首頁
+$lang['Address']  ='地址';//地址
+$lang['ReceiverInformation']  ='收件人资讯';//收件人資訊
+$lang['ThisNumberPasseword']  ='此号码为尔后登入密码。';//此號碼為爾後登入密碼。
+$lang['RemoveItem']  ='删除此项目';//刪除此項目
+$lang['FullName']  ='姓名';//姓名
+$lang['Mailbox']  ='信箱';//信箱
+$lang['MailFillInCorrect']  ='信箱请务必填写正确';//信箱請務必填寫正確
+$lang['Inventory_shortage']  ='库存不足';//庫存不足
+$lang['Commodity']  ='商品';//商品
+$lang['HistoricalOrderDeta']  ='您没有历史订购资料';//您沒有歷史訂購資料
+$lang['ExcessiveNumber']  ='您输入的数量过大，目前库存为：';//您輸入的數量過大，目前庫存為：
+$lang['TongBian']  ='统编';//統編
+$lang['UnitPrice']  ='单价';//單價
+$lang['SignIn_2']  ='登入：';//登入：
+$lang['SignOut']  ='登出';//登出
+$lang['InvoiceAddress']  ='发票地址';//發票地址
+$lang['InvoiceTitle']  ='发票抬头';//發票抬頭
+$lang['CheckoutPage']  ='结帐页面';//結帳頁面
+$lang['Item']  ='项';//項
+$lang['Shipment']  ='运费';//運費
+$lang['PreviewOrder']  ='预览订单';//預覽訂單
+$lang['Quantity']  ='数量';//數量
+$lang['QuantityNot0']  ='数量不可以是 0';//數量不可以是 0
+$lang['ScanQuantity']  ='请输入数量';//請輸入數量
+$lang['Select']  ='请选择';//請選擇
+$lang['HistoricalOrderDetails']  ='历史订购资料';//歷史訂購資料
+$lang['ShoppingDetail']  ='购物明细';//購物明細
+$lang['Change']  ='变更';//變更
+$lang['SameAddress'] = "地址同上";
+
+?>

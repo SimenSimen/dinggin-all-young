@@ -1,0 +1,170 @@
+.btn, .ibtn {
+    /* Structure */
+    display: inline-block;
+    zoom: 1;
+    line-height: normal;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    background: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+/* Firefox: Get rid of the inner focus border */
+.btn::-moz-focus-inner,
+.ibtn::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+.btn:focus, .ibtn:focus {
+    outline: none;
+}
+
+.ibtn {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0;
+    text-align: left;
+    -webkit-transition: none;
+       -moz-transition: none;
+        -ms-transition: none;
+         -o-transition: none;
+            transition: none;
+}
+.ibtn:hover {
+    background-position: 0 100%;
+}
+.share .ibtn {
+    background-image: url(../images/_icon/share.png);
+    width: 35px;
+    height: 35px;
+}
+.share .ibtn.facebook { background-position:      0 0; }
+.share .ibtn.plurk    { background-position:  -29px 0; }
+.share .ibtn.google   { background-position:  -70px 0; }
+.share .ibtn.twitter  { background-position: -35px 0; }
+.share .ibtn.facebook:hover { background-position:      0 100%; }
+.share .ibtn.plurk:hover    { background-position:  -29px 100%; }
+.share .ibtn.google:hover   { background-position:  -70px 100%; }
+.share .ibtn.twitter:hover  { background-position: -35px 100%; }
+
+.btn-box .btn{
+    background: #040a8d;
+    width: 100%;
+    line-height: 40px;
+    display: block;
+    margin: auto;
+    color: #fff;
+    letter-spacing: 1.8px;
+    -webkit-transition: background .3s ease;
+    -moz-transition: background .3s ease;
+    -ms-transition: background .3s ease;
+    -o-transition: background .3s ease;
+    transition: background .3s ease;
+}
+.btn-box .btn:hover{
+    background: #0a0fe9;
+}
+
+.btn-box .ibtn.back{
+    background: url(../images/_icon/btn-back.png);
+    width: 136px;
+    height: 36px;
+}
+.btn-box .ibtn.back:hover{
+    background-position: 0 100%;
+}
+.btn-box .ibtn.home{
+    background: url(../images/_icon/btn-home.png);
+    width: 160px;
+    height: 36px;
+}
+.btn-box .ibtn.home:hover{
+    background-position: 0 100%;
+}
+.btn-box .ibtn.message{
+    background: url(../images/_icon/message.png);
+    width: 222px;
+    height: 44px;
+}
+.btn-box .ibtn.message:hover{
+    background-position: 0 100%;
+}
+.btn.normal {
+    line-height: 30px;
+    color: #666;
+    padding: 0 15px;
+    border: 1px solid #ddd;
+    margin: 0 5px 10px;
+    -webkit-border-radius: 20px;
+            border-radius: 20px;
+}
+.btn.normal:hover {
+    color: #fff;
+    border-color: #C59B5D;
+    background: #C59B5D;
+}
+.btn.arrow {
+    color: #fff;
+    font-size: 16px;
+    line-height: 35px;
+    background: #221714;
+    width: 100%;
+    max-width: 220px;
+    border: 2px solid transparent;
+    -webkit-border-radius: 8px;
+            border-radius: 8px;
+}
+.btn.arrow:hover {
+    border-color: #BE944E;
+}
+.btn.arrow b {
+    font-size: 20px;
+}
+.btn.arrow:hover b {
+    color: #BE944E;
+}
+.btn.back {
+    background: url(../images/_icon/back.png) no-repeat;
+    line-height: 36px;
+    border: 1px solid #DCDCDC;
+    width: 108px;
+    padding-left: 42px;
+    color: #ACACAC;
+    font-size: 18px;
+    font-weight: bold;
+}
+.btn.back:hover {
+    color: #C59B5D;
+    border-color: #C59B5D;
+    background-position: 0 100%;
+}
+.btn-wrap {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    margin: 0 5px 10px;
+}
+.btn-wrap .ibtn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.btn.arrowL,
+.btn.arrowR{
+    float: left;
+    width: 50%;
+}

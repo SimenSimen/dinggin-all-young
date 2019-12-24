@@ -1,0 +1,233 @@
+				<form action="/gold/data_AED" class="j-forms" method="post" onsubmit="return check_form(this)")>
+				<section class="content has-side">
+					<div class="title"><?=$this->lang['basic'];//基本資料?></div>
+					<div class="editor mg">
+						<div class="form-box">
+							<div class="form-group">
+	                            <div class="control-box">
+	                            	<i class="icon-id"></i>
+	                            	<label class="control-label">帳號</label>
+	                                <input class="form-control" type="text" name="d_account" id="" value="<?=$dbdata['d_account']?>" disabled>
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <div class="control-box">
+	                            <i class="icon-lock"></i>
+	                            <label class="control-label">密碼</label>
+	                                <p class="form-control"><a href="/gold/member_password">修改密碼</a></p>
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <div class="control-box">
+	                            <i class="icon-name"></i>
+	                            <label class="control-label">姓名</label>
+	                                <input class="form-control" type="text" name="name" id="" value="<?=$dbdata['name']?>" disabled>
+	                            </div>
+	                        </div>
+	                        <div class="form-group name disno">
+	                        	<i class="icon-genders"></i> <label class="control-label" disabled>性別 : <?=$dbdata['sex']?></label>
+                            </div>
+	                        <div class="form-group w170">
+	                            <div class="control-box">
+	                            <i class="icon-nickname"></i>
+	                            	<label class="control-label">暱稱(最多十個字)</label>
+	                                <input class="form-control" type="text" name="nickname" id="nickname" value="<?=$dbdata['nickname']?>" maxlength="10">
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <div class="control-box">
+	                            <i class="icon-phone"></i>
+	                            <label class="control-label">手機</label>
+	                                <input class="form-control" type="text" name="mobile" id="" value="<?=$dbdata['mobile']?>" onkeyup="value=value.replace(/[^\d]/g,'')">
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <div class="control-box">
+	                            <i class="icon-phone-call"></i>
+	                            <label class="control-label">電話</label>
+	                                <input class="form-control" type="text" name="telphone" id="" value="<?=$dbdata['telphone']?>" onkeyup="value=value.replace(/[^\d]/g,'')">
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <div class="control-box">
+	                            <i class="icon-placeholder"></i>
+		                            <select name="city" onChange="sel_area(this.value,'','countory')" class="form-control">
+		                                <option value="0">請選擇城市</option>
+		                                <?foreach ($city as $cvalue):?>
+		                                    <option value="<?=$cvalue['s_id']?>" <?=($dbdata['city']==$cvalue['s_id'])?'selected':'';?>><?=$cvalue['s_name']?></option>  
+		                                <? endforeach;?>
+		                            </select>
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <div class="control-box">
+	                            <i class="icon-placeholder"></i>
+		                            <select name="countory" id="countory" class="form-control">
+		                                <option value="0">請選擇鄉鎮地區</option>
+		                            </select>
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <div class="control-box">
+	                            <i class="icon-placeholder"></i>
+	                            	<label class="control-label">地址</label>
+	                                <input class="form-control" type="text" name="address" id="" value="<?=$dbdata['address']?>">
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <div class="control-box">
+	                            <i class="icon-cake"></i>
+	                            <label class="control-label">生日</label>
+	                                <input class="form-control bar_content date-object birthday" type="text" name="birthday" id="" value="<?=$dbdata['birthday']?>">
+	                            </div>
+	                        </div>
+				            <div class="form-group">
+								<div class="control-box">
+								<i class="icon-cake"></i>
+				                	<label class="control-label">Email</label>
+				                    <input class="form-control" type="text" name="by_email" value="<?=$dbdata['by_email']?>">
+				            </div>
+	                         <div class="form-group">
+                                戶籍地址
+                                <div class="control-box">
+                                    <div class="input-group">
+                                        <div class="input-box">
+                                        	<i class="icon-placeholder"></i>
+				                            <select name="household_city" onChange="sel_area(this.value,'','household_countory')" required class="form-control">
+				                                <option value="0">請選擇城市</option>
+				                                <?foreach ($city as $cvalue):?>
+				                                    <option value="<?=$cvalue['s_id']?>" <?=($_SESSION['RT']['city']==$cvalue['s_id'])?'selected':'';?>><?=$cvalue['s_name']?></option>  
+				                                <? endforeach;?>
+				                            </select>
+                                        </div>
+                                        <div class="input-box">
+                                        	<i class="icon-placeholder"></i>
+		                            		<select name="household_countory" id="household_countory" class="form-control" required>
+		                                		<option value="0">請選擇鄉鎮地區</option>
+		                            		</select>
+                                        </div>
+                                        <div class="input-box">
+                                            <i class="icon-placeholder"></i>
+                                            <label class="control-label">地址</label>
+                                        	<input class="form-control" type="text" name="household_address" id="" value="文心路一段540號">
+                                    	</div>
+                                	</div>
+                            	</div>
+                            </div>
+
+	                        <div class="form-group w110">
+                                帳戶設定
+                                <div class="control-box">
+                                    <div class="input-group">
+                                        <div class="input-box">
+                                            <i class="icon-id"></i>
+                                            <label class="control-label">銀行名稱</label>
+                                            <input class="form-control" type="text" name="" id="" placeholder="">
+                                        </div>
+                                       <div class="input-box">
+                                            <i class="icon-id"></i>
+                                            <label class="control-label">銀行帳號</label>
+                                        	<input class="form-control" type="text" name="" id="" placeholder="">
+                                    	</div>
+                                	</div>
+                            	</div>
+                            </div>
+
+                            <div class="form-group">
+                                門市取貨地址
+                                <div class="control-box">
+                                    <div class="input-group">
+                                        <div class="input-box">
+                                        	<i class="icon-placeholder"></i>
+				                            <select name="store_city" onChange="sel_area(this.value,'','store_countory')" required class="form-control">
+				                                <option value="0">請選擇城市</option>
+				                                <?foreach ($city as $cvalue):?>
+				                                    <option value="<?=$cvalue['s_id']?>" <?=($_SESSION['RT']['city']==$cvalue['s_id'])?'selected':'';?>><?=$cvalue['s_name']?></option>  
+				                                <? endforeach;?>
+				                            </select>
+                                        </div>
+                                        <div class="input-box">
+                                        	<i class="icon-placeholder"></i>
+		                            		<select name="store_countory" id="store_countory" class="form-control" required>
+		                                		<option value="0">請選擇鄉鎮地區</option>
+		                            		</select>
+                                        </div>
+                                        <div class="input-box">
+                                            <i class="icon-placeholder"></i>
+                                            <label class="control-label">地址</label>
+                                        	<input class="form-control" type="text" name="store_address" id="" placeholder="文心路一段540號">
+                                    	</div>
+                                	</div>
+                            	</div>
+                            </div>
+                            <p >您目前有<span class="color01">1,672</span>紅利點數 <span class="color01">1,200</span>購物金</p>
+	                       
+	                        
+	                        <div class="pagination_box">
+                			<input type="hidden" name="dbname" value="<?=$dbname?>">
+                			<input type="reset" class="btn simple" value="<?=$this->lang['s_restart'];//重填?>">
+                			<input type="submit"  class="btn simple bg2" value="<?=$this->lang['s_send'];//送出?>">
+                            </div>
+
+
+					</div>
+					</div>
+				</section>
+				</form>
+			</div>
+		</main>
+<script>
+<? if($_SESSION['RT']['city']!=''):?>
+    sel_area(<?=$_SESSION['RT']['city']?>,<?=$_SESSION['RT']['countory']?>,'countory');
+<? endif;?>
+function check_form(frm)
+{
+
+    if(frm.elements['d_account'].value==''){
+        alert("<?=$this->lang['plsacc'];//請輸入帳號?>");
+        frm.elements['d_account'].focus();
+        return false;   
+    }
+    else if(frm.elements['by_pw'].value==''){
+        alert("<?=$this->lang['plspwd'];//請輸入密碼?>");
+        frm.elements['by_pw'].focus();
+        return false;   
+    }else if((frm.elements['by_pw'].value).length<5){
+        alert("<?=$this->lang['pwdfive'];//密碼至少五位數?>");
+        frm.elements['by_pw'].focus();
+        return false;   
+    }else if((frm.elements['nickname'].value).length>10){
+        alert("暱稱最多十個字");
+        frm.elements['nickname'].focus();
+        return false;   
+    }else if(frm.elements['name'].value==''){
+        alert("<?=$this->lang['plsname'];//請輸入姓名?>");
+        frm.elements['name'].focus();
+        return false;   
+    }else if(frm.elements['by_email'].value==''){
+        alert("<?=$this->lang['plsmail'];//請輸入信箱?>");
+        frm.elements['by_email'].focus();
+        return false;   
+    }else if($("input[name=chk_ok]:checked").val()!='ok'){
+        alert("<?=$this->lang['plsview'];//請勾選已詳閱條款和政策?>");
+        frm.elements['chk_ok'].focus();
+        return false;   
+    }
+    else
+        return true;    
+}
+</script>
+<script src="/js/myjava/region.js"></script>
+<link href="/js/admin_sys/jquery-ui_1_11_2/css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script src="/js/admin_sys/jquery-ui_1_11_2/jquery-ui.js"></script>
+<script src="/js/admin_sys/jquery-ui_1_11_2/lang/datepicker-zh-TW.js"></script>
+<script>
+  $(".date-object").datepicker({dateFormat: "yy-mm-dd",yearRange :"c-100:c+100"});//生日時間"年"份軸
+</script>
+<script>
+<? if($dbdata['by_id']!=''):?>
+    sel_area(<?=$dbdata['city']?>,<?=$dbdata['countory']?>,'countory');
+<? endif;if($mdbdata['city']!=''):?>
+    sel_area(<?=$mdbdata['city']?>,<?=$mdbdata['countory']?>,'countory1');
+<? endif;?>
+</script>

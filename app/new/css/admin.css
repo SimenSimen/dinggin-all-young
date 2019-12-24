@@ -1,0 +1,19 @@
+* {
+    font-family: '微軟正黑體';
+    font-size: 18px;
+}
+p {
+    font-family: '微軟正黑體';
+    font-size: 16px;
+}
+h3 {
+    font-size: 22px;
+}
+
+/*菜單欄位的連結table*/
+#menu-link-table {
+    padding: 10px;
+}
+#menu-link-table a {
+    text-decoration: none;
+}

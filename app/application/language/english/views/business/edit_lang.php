@@ -1,0 +1,64 @@
+<?
+$lang['Edit_Personal_information'] = 'Personal information';//個人資訊
+$lang['Edit_Style_Settings'] = 'Style Settings';// 樣式設定
+$lang['Edit_Cover_photo_set'] = 'Cover photo set';// 封面照設定
+$lang['Edit_Style_setting'] = 'Style settings';// 風格設定
+$lang['Edit_settings_action_Stores'] = 'Action Stores set';// 行動商店設定
+$lang['Edit_Text_classification_set'] = 'Text classification set';// 分類文字設定
+$lang['Edit_Albums_and_Accessories'] = 'Albums and Accessories';// 相簿與附件
+$lang['Edit_New_Album'] = 'New Album';// 新增相簿
+$lang['Edit_Album_Management'] = 'Album Management';// 相簿管理
+$lang['Edit_Attachment_Manager'] = 'Attachment Manager';// 附件管理
+$lang['Edit_QR_code_style'] = 'QR code style';// QRcode樣式
+$lang['Edit_APP_Edition'] = 'APP';// APP版
+$lang['Edit_Web_version'] = 'Web version';// 網頁版
+$lang['Edit_Contacts'] = 'Contacts';// 通訊錄
+$lang['Edit_Form_Tools'] = 'Form Tools';// 表單工具
+$lang['Edit_Custom_Forms'] = 'Custom Forms';// 自訂表單
+$lang['Edit_Tell_a_friend_Voucher'] = 'Tell a friend';// 好友分享券
+$lang['Edit_Action_Shop'] = 'Action Shop';// 行動商店
+$lang['Edit_Basic_settings'] = 'Basic setting';// 基本設定
+$lang['Edit_Commodity_Management'] = 'Commodity Management';// 商品管理
+$lang['Edit_Order_Management'] = 'Order Management';// 訂單管理
+$lang['Edit_Orders_Search'] = 'Orders Search/Export';// 訂單查詢/匯出
+$lang['Edit_control_center'] = 'control center';// 管理中心
+$lang['Edit_change_Password'] = 'change Password';// 修改密碼
+$lang['Edit_System_flow'] = 'System flow';// 系統流量
+$lang['Edit_Member_Management'] = 'Member Management';// 管理會員
+$lang['Edit_Key_state'] = 'Key state';// 金鑰狀態
+$lang['Edit_APP_setting'] = 'APP set';// APP設定
+$lang['Edit_Automatic_packing'] = 'Auto packing';// 自動打包
+$lang['Edit_Application_shelves'] = 'Application shelves';// 申請上架
+$lang['Edit_Push_application'] = 'Push application';// 申請推播
+$lang['Edit_Added_Management'] = 'Added Management';// 上架管理
+//title內容
+$lang['Edit_Business_Information_Systemsnt'] = 'Edit your mobile Business Information Systems';// 編輯您的行動商務系統資訊
+$lang['Edit_still_cover_formula'] = 'Edit your mobile business systems still cover formula';// 編輯您的行動商務系統封面照樣式
+$lang['Edit_commerce_system_styles'] = 'Edit your mobile commerce system styles';// 編輯您的行動商務系統風格樣式
+$lang['Edit_store_style_action'] = 'Edit your mobile business systems store style action';// 編輯您的行動商務系統行動商店樣式
+$lang['Edit_title_text_style'] = 'Edit your mobile commerce system classification title text style';// 編輯您的行動商務系統風格分類標題文字
+$lang['Edit_systems_albums_Category'] = 'Edit your mobile business systems albums Category';// 編輯您的行動商務系統相簿類別
+$lang['Edit_commerce_system_Album'] = 'Edit your mobile commerce system Album';// 編輯您的行動商務系統相簿內容
+$lang['Edit_business_systems_Accessories'] = 'Edit your mobile content business systems Accessories';// 編輯您的行動商務系統附件內容
+$lang['Edit_APP_version_QRcode'] = 'Edit your mobile commerce system APP version QRcode styles';// 編輯您的行動商務系統(APP版)QRcode風格樣式
+$lang['Edit_web_version_QRcode'] = 'Edit your mobile commerce system web version QRcode styles';// 編輯您的行動商務系統(網頁版)QRcode風格樣式
+$lang['Edit_contacts_QRcode_styles'] = 'Edit your contacts QRcode styles';// 編輯您的通訊錄QRcode風格樣式
+$lang['Edit_system_custom_form'] = 'Edit your mobile commerce system custom form';//編輯您的行動商務系統自訂表單
+$lang['Edit_commerce_system'] = 'Edit your friends to share coupons mobile commerce system';//編輯您的行動商務系統好友分享券
+$lang['Edit_APP_installer'] = 'The use of automatic packaging feature to update your APP installer';//用自動打包功能來更新您的APP安裝程式
+$lang['Edit_apply_through'] = 'Added to apply through';//透過申請上架到
+$lang['Edit_application_APP'] = 'Push lets you enjoy this feature through the application APP';//透過申請推播讓您的APP享有此功能
+$lang['Edit_URL_shelves'] = 'In this setting, the download page URL shelves';//在此設定上架網址與下載頁面
+
+$lang['Edit_Web_version'] = 'Web ';
+$lang['Edit_APP_version'] = 'APP ';
+$lang['Edit_Sign_out'] = 'Sign out';
+$lang['Edit_Signed_in'] = 'Signed in :'; 
+$lang['Edit_Maturity'] = 'Maturity (there are about';
+$lang['Edit_Day'] = 'day';
+
+$lang['Edit_Cover_photo_set'] = 'Cover photo set';
+$lang['Edit_delete'] = 'Delete';
+$lang['Edit_Please_upload_photos'] = 'Please upload photos';
+$lang['Edit_Send'] = 'Send';
+?>
