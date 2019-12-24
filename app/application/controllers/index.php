@@ -59,33 +59,23 @@ class Index extends MY_Controller
 		if(isset($_GET['utm_source']) and $_GET['utm_source']=='affiliates'){
 			setcookie("upline",'FA-AM888');
 		}
-		$this->lang=$this->lmodel->config('1',$this->setlang);
+		
+		
 		if($this->data['web_config']['is_transfer']==1){
 			$this->useful->AlertPage('/'.$this->data['web_config']['transfer']);
-		}else{
-			$data['prd_path'] = '/uploads/000/000/0000/0000000000/products/';
-			$data['prd_class_path'] = '/uploads/000/000/0000/0000000000/products_class/';
-			$data['news_path'] = '/uploads/000/000/0000/0000000000/news/';
-			$data['banner']=$this->data['banner'];
-			$data['body_class']='home';
-			$by_id		=	$_SESSION['MT']['by_id'];
-			$bdata		=	$this->mymodel->OneSearchSql('buyer','d_spec_type',array('by_id'=>$by_id));//是否VIP
-			$data['d_spec_type']=$d_spec_type=	$bdata['d_spec_type'];
-			$dbdata_arr=array('lang_type'=>$this->setlang,'prd_hot'=>'fa fa-heart','d_enable'=>'Y','prd_active'=>'1','is_bonus'=>'N');
-			if($d_spec_type<>1){//一般身分
-				$dbdata_arr['is_vip']='N';
-			}
-			$data['prd_data']=$this->mymodel->select_page_form('products','','prd_id,prd_name,prd_price00,d_mprice,prd_image',$dbdata_arr,'hot_sort');
-			//主題推薦(產品分類)
-			$data['prd_class']=$this->mymodel->select_page_form_0('product_class',' limit 0,4','prd_cid,prd_cname,prd_cimage,PID',array('lang_type'=>$this->setlang,'d_enable'=>'Y','PID'=>'0'),'prd_csort');
-			$data['news']=$news=$this->mymodel->select_page_form('auth_category','','category_id,c_name',array('lang_type'=>$this->setlang,'enable'=>'1','type'=>'2'),'category_id');
-			$data['news0'] = $this->mod_news->inner_join_order_by('enews', 'auth_category', array('enews.enews_id', 'enews.name', 'enews.filename', 'enews.content', 'enews.category_id'), array('auth_category.type' =>'2', 'auth_category.lang_type' => $this->setlang, 'enews.lang_type' => $this->setlang), 'category_id', 'enews.sort', 'asc');
-			$data['news0']=array_slice($data['news0'],0,2);
-			$data['news1']=$this->mymodel->select_page_form('ckeditor',' limit 0,7','ck_id, name, content, create_time',array('lang_type'=>$this->setlang,'enable'=>'1','type'=>3),'sort');
-			$data['news2'] = $this->mod_news->inner_join_order_by('enews', 'auth_category', array('enews.*'), array('auth_category.type' =>'3', 'auth_category.lang_type' => $this->setlang, 'enews.lang_type' =>$this->setlang,'enews.enable'=>'1'), 'category_id', 'enews.sort', 'asc');
-			$data['news2']=array_slice($data['news2'],0,5);
+		} else {
+			/**
+			 * load the languages packages
+			 */
+			$this->lang->load('views/' . $this->indexViewPath . '/index', $this->data['lang']);
+			
+			$data = [];
 
-			//view
+			$data['newProducts'] = [];
+			$data['brands'] = [];
+			$data['productCategorys'] = [];
+			$data['banners'] = [];
+			
 			$this->load->view($this->indexViewPath . '/header', $data);
 			$this->load->view($this->indexViewPath . '/index', $data);
 			$this->load->view($this->indexViewPath . '/footer', $data);

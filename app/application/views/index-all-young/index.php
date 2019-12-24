@@ -103,7 +103,7 @@
 	<div class="container-indent">
 		<div class="container container-fluid-custom-mobile-padding">
 			<div class="tt-block-title">
-				<h1 class="tt-title">New product</h1>
+				<h1 class="tt-title"><?= lang('newProduct')?></h1>
 				<!-- <div class="tt-description">New Arrival</div> -->
 			</div>
 			<div class="tt-carousel-products row arrow-location-tab arrow-location-tab01 tt-alignment-img tt-collection-listing mt0 ">
@@ -210,7 +210,7 @@
 						<div class="tt-title02">1,000 Point</div>
 					</a>
 				</div>
-
+				
 				<div class="col-6 col-sm-6 col-md-6 bonus-box">
 					<a href="#" class="tt-btn-info tt-layout-03">
 						<div class="tt-title">
@@ -226,11 +226,10 @@
 	</div>
 
 
-
 	<div class="container-indent">
 		<div class="container">
 			<div class="tt-block-title">
-				<h4 class="tt-title">Brand</h4>
+				<h4 class="tt-title"><?= lang('brand')?></h4>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-6_end-inrow-lg">
@@ -265,55 +264,10 @@
 							<a href="#" class="tt-btn-info tt-layout-03">
 								<img src="images/custom/brand-img-03.png" alt="">
 							</a>
-						</div>		
-						<!-- <div class="col-6 col-sm-4 col-md-2">
-							<a href="#" class="tt-btn-info tt-layout-03">
-								<div class="tt-title">Chevy</div>
-							</a>
-						</div> -->
-						
-												
+						</div>				
 					</div>
 
 
-					<!-- <div class="row tt-carousel-brands arrow-location-center-02  index-arrow  tt-arrow-hover slick-animated-show-js">
-						<div class="brand-name">
-							<a href="#"><img src="images/custom/brand-img-01.png" alt=""></a>
-						</div>
-						<div  class="brand-name">
-							<a href="#"><img src="images/custom/brand-img-05.png" alt=""></a>
-						</div>
-						<div  class="brand-name">
-							<a href="#"><img src="images/custom/brand-img-06.png" alt=""></a>
-						</div>
-						<div  class="brand-name">
-							<a href="#"><img src="images/custom/brand-img-02.png" alt=""></a>
-						</div>
-						<div  class="brand-name">
-							<a href="#"><img src="images/custom/brand-img-07.png" alt=""></a>
-						</div>
-						<div  class="brand-name">
-							<a href="#"><img src="images/custom/brand-img-04.png" alt=""></a>
-						</div>
-						<div  class="brand-name">
-							<a href="#"><img src="images/custom/brand-img-03.png" alt=""></a>
-						</div>
-						<div  class="brand-name">
-							<a href="#"><img src="images/custom/brand-img-08.png" alt=""></a>
-						</div>
-						<div  class="brand-name">
-							<a href="#"><img src="images/custom/brand-img-08.png" alt=""></a>
-						</div>
-						<div  class="brand-name">
-							<a href="#"><img src="images/custom/brand-img-08.png" alt=""></a>
-						</div>
-						<div  class="brand-name">
-							<a href="#"><img src="images/custom/brand-img-08.png" alt=""></a>
-						</div>
-						<div  class="brand-name">
-							<a href="#"><img src="images/custom/brand-img-08.png" alt=""></a>
-						</div>
-					</div> -->
 				</div>
 
 
@@ -328,8 +282,7 @@
 	<div class="container-indent">
 		<div class="container container-fluid-custom-mobile-padding">
 			<div class="tt-block-title">
-				<h2 class="tt-title">Product category</h2>
-				<!-- <div class="tt-description">TOP 1</div> -->
+				<h2 class="tt-title"><?= lang('productCate')?></h2>
 			</div>						
 					
 			<div class="row tt-layout-promo-box">
@@ -386,85 +339,6 @@
 		</div>
 	</div>
 
-
-	<!-- <div class="container-indent0">
-		<div class="container-fluid">
-			<div class="row tt-layout-promo-box">
-				<div class="col-sm-12 col-md-6">
-					<div class="row">
-						<div class="col-sm-6">
-							<a href="listing-left-column.html" class="tt-promo-box tt-one-child hover-type-2">
-								<img src="images/loader.svg" data-src="images/promo/index-promo-img-01.jpg" alt="">
-								<div class="tt-description">
-									<div class="tt-description-wrapper">
-										<div class="tt-background"></div>
-										<div class="tt-title-small">SALE</div>
-									</div>
-								</div>
-							</a>
-							<a href="listing-left-column.html" class="tt-promo-box tt-one-child hover-type-2">
-								<img src="images/loader.svg" data-src="images/promo/index-promo-img-02.jpg" alt="">
-								<div class="tt-description">
-									<div class="tt-description-wrapper">
-										<div class="tt-background"></div>
-										<div class="tt-title-small">NEW</div>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-sm-6">
-							<a href="listing-left-column.html" class="tt-promo-box tt-one-child hover-type-2">
-								<img src="images/loader.svg" data-src="images/promo/index-promo-img-03.jpg" alt="">
-								<div class="tt-description">
-									<div class="tt-description-wrapper">
-										<div class="tt-background"></div>
-										<div class="tt-title-small">WOMEN</div>
-									</div>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-12 col-md-6">
-					<div class="row">
-						<div class="col-sm-6">
-							<a href="listing-left-column.html" class="tt-promo-box tt-one-child hover-type-2">
-								<img src="images/loader.svg" data-src="images/promo/index-promo-img-04.jpg" alt="">
-								<div class="tt-description">
-									<div class="tt-description-wrapper">
-										<div class="tt-background"></div>
-										<div class="tt-title-small">MEN</div>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-sm-6">
-							<a href="listing-left-column.html" class="tt-promo-box tt-one-child hover-type-2">
-								<img src="images/loader.svg" data-src="images/promo/index-promo-img-05.jpg" alt="">
-								<div class="tt-description">
-									<div class="tt-description-wrapper">
-										<div class="tt-background"></div>
-										<div class="tt-title-small">ACCESSORIES</div>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-sm-12">
-							<a href="listing-left-column.html" class="tt-promo-box tt-one-child">
-								<img src="images/loader.svg" data-src="images/promo/index-promo-img-06.jpg" alt="">
-								<div class="tt-description">
-									<div class="tt-description-wrapper">
-										<div class="tt-background"></div>
-										<div class="tt-title-small">SHOES</div>
-									</div>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
 
 
 	<div class="container-indent">
