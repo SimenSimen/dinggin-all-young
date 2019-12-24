@@ -107,7 +107,7 @@
 				<!-- <div class="tt-description">New Arrival</div> -->
 			</div>
 			<div class="tt-carousel-products row arrow-location-tab arrow-location-tab01 tt-alignment-img tt-collection-listing mt0 ">
-				<?php for($i=0; $i<6; $i++) { ?>
+				<?php foreach($newProducts as $index => $product) { ?>
 				<div class="col-6 col-md-4 col-lg-3">
 					<div class="tt-product thumbprod-center">
 						<div class="tt-image-box">
@@ -115,19 +115,19 @@
 							<a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
 							<a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
 							<a href="product.html">
-								<span class="tt-img"><img src="images/loader.svg" data-src="images/product/product-01.jpg" alt=""></span>
-								<span class="tt-img-roll-over"><img src="images/loader.svg" data-src="images/product/product-01-02.jpg" alt=""></span>
+								<span class="tt-img"><img src="<?= base_url('images/loader.svg')?>" data-src="<?= base_url($product['prd_image'])?>" alt=""></span>
+								<span class="tt-img-roll-over"><img src="<?= base_url('images/loader.svg')?>" data-src="<?= base_url($product['prd_image'])?>" alt=""></span>
 							</a>
 						</div>
 						<div class="tt-description">
-							<h2 class="tt-title"><a href="product.html">Product Name</a></h2>
+							<h2 class="tt-title"><a href="product.html"><?= $product['prd_name'] ?></a></h2>
 							<div class="tt-price">
-								<span class="new-price">NT$14</span>
-								<span class="old-price">NT$24</span>
+								<span class="new-price">NT$<?= $product['prd_price00']?></span>
+								<span class="old-price">NT$<?= $product['prd_price01']?></span>
 							</div>
 							<div class="tt-product-inside-hover">
 								<div class="tt-row-btn">
-									<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>
+									<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct"><?= lang('ADD_TO_CARD')?></a>
 								</div>
 								<div class="tt-row-btn">
 									<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
@@ -210,7 +210,7 @@
 						<div class="tt-title02">1,000 Point</div>
 					</a>
 				</div>
-				
+
 				<div class="col-6 col-sm-6 col-md-6 bonus-box">
 					<a href="#" class="tt-btn-info tt-layout-03">
 						<div class="tt-title">

@@ -103,7 +103,7 @@
 			<div class="tt-header-holder">
 				<div class="tt-col-obj tt-obj-logo">
 					<!-- logo -->
-					<a class="tt-logo tt-logo-alignment" href="_inni_index-14.php"><img src="images/custom/logo_taiwan.jpg" alt=""></a>
+					<a class="tt-logo tt-logo-alignment" href="_inni_index-14.php"><img src="<?= base_url('images/custom/logo_taiwan.jpg') ?>" alt=""></a>
 					<!-- /logo -->
 				</div>
 				<div class="tt-col-obj tt-obj-menu">

@@ -39,7 +39,7 @@ class Member extends MY_Controller
 		$this->load->library('/mylib/useful');
 		$this->load->library('/mylib/comment');
 
-		$this->load->model('index_model',imodel);
+		$this->load->model('index_model','imodel');
 	}
 	//獎金首頁
 	public function index(){

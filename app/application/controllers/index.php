@@ -3,12 +3,6 @@ class Index extends MY_Controller
 {
 	public $data='';
 	public $language='';
-	
-	/**
-	 * Custom view prefix index
-	 * @var string
-	 */
-	protected $indexViewPath = 'index-all-young';
 
 	public function __construct()//初始化
 	{
@@ -64,17 +58,18 @@ class Index extends MY_Controller
 		if($this->data['web_config']['is_transfer']==1){
 			$this->useful->AlertPage('/'.$this->data['web_config']['transfer']);
 		} else {
-			/**
-			 * load the languages packages
-			 */
+			$data = [];
+			/** load the languages packages */
 			$this->lang->load('views/' . $this->indexViewPath . '/index', $this->data['lang']);
 			
-			$data = [];
+			/** turn off breadcrumbs */
+			$data['breadcrumbOff'] = true;
 
 			$data['newProducts'] = [];
 			$data['brands'] = [];
 			$data['productCategorys'] = [];
 			$data['banners'] = [];
+			$data['test'] = 12313;
 			
 			$this->load->view($this->indexViewPath . '/header', $data);
 			$this->load->view($this->indexViewPath . '/index', $data);
@@ -594,6 +589,44 @@ class Index extends MY_Controller
 		echo $ajax_data;
 	}
 
+	/**
+	 * frontend user login page
+	 *
+	 * @return void
+	 */
+	public function member_login($url=''){
+		@session_start();
+
+		/** load the languages packages */;
+		$this->lang->load('views/' . $this->indexViewPath . '/login', $this->data['lang']);
+
+		// 判斷是否登入
+		if($_SESSION['MT']['is_login']==1)
+		{
+			$this->useful->AlertPage('/gold/member');
+		}
+
+		$account = $this->input->cookie('account', TRUE);
+		$password = $this->input->cookie('password', TRUE);
+		$remember = $this->input->cookie('remember', TRUE);
+
+		if($account != ''){
+			$data['account'] = $account;
+			$data['password'] = $password;
+			$data['remember'] = $remember;
+		}
+
+		//view
+		$this->load->view($this->indexViewPath . '/header', $data);
+		$this->load->view($this->indexViewPath . '/login', $data);
+		$this->load->view($this->indexViewPath . '/footer', $data);
+	}
+
+	/**
+	 * admin console login execute
+	 *
+	 * @return void
+	 */
 	public function login()
 	{
 		//data
@@ -639,7 +672,6 @@ class Index extends MY_Controller
 				$data['register_code']=$this->encrypt->decode($data['web_config']['register_code']);
 				//view
 				$this->load->view('login', $data);
-				$this -> load -> library('session');
 			}
 			else
 			{
