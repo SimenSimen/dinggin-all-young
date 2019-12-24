@@ -3,6 +3,12 @@ class Index extends MY_Controller
 {
 	public $data='';
 	public $language='';
+	
+	/**
+	 * Custom view prefix index
+	 * @var string
+	 */
+	protected $indexViewPath = 'index-all-young';
 
 	public function __construct()//初始化
 	{
@@ -80,9 +86,9 @@ class Index extends MY_Controller
 			$data['news2']=array_slice($data['news2'],0,5);
 
 			//view
-			$this->load->view('index/header', $data);
-			$this->load->view('index/index', $data);
-			$this->load->view('index/footer', $data);
+			$this->load->view($this->indexViewPath . '/header', $data);
+			$this->load->view($this->indexViewPath . '/index', $data);
+			$this->load->view($this->indexViewPath . '/footer', $data);
 		}
 	}
 

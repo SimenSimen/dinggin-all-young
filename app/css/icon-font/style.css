@@ -9,7 +9,7 @@
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[name^="icon02"], [name*="icon02"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icon-font' !important;
   speak: none;
