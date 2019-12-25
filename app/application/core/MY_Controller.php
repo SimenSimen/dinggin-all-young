@@ -63,7 +63,7 @@ class MY_Controller extends CI_Controller {
         $this->load->model('rule_model','mod_rule');
 
 		//語言包設置
-        @session_start();
+		@session_start();
         $mdom = $this->get_host_config();
         if (preg_match('/allyoungid/', $mdom['domain'])){
 			$this->setlang=(!empty($_SESSION['lang']))?$_SESSION['lang']:'IND';//ENG
@@ -72,7 +72,13 @@ class MY_Controller extends CI_Controller {
         	$this -> set_language = $this->setlang = 'TW';
         	$_SESSION['lang'] = 'TW';
         	$_SESSION['chk_lang'] = 'zh-tw';
-        }
+		}
+		
+		
+		/** temp add */
+		$this -> session -> set_userdata('lang', 'IND');
+		$this -> set_language = $this->setlang = 'IND';
+		$_SESSION['lang'] = 'IND';
 
 		//語言包
 		$this->lang_menu=$this->lmodel->config('1',$this->setlang);

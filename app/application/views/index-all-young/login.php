@@ -1,7 +1,7 @@
 <div class="container">
 	<main class="main-content wow fadeInUp" data-wow-delay="0.4s">
 		<div class="container-indent center">
-	        <form action="" class="j-forms" method="post" onSubmit="return check_form(this)">
+	        <form action="<?= base_url('post_member_login')?>" class="j-forms" method="post" onSubmit="return check_form(this)">
 			<section class="content c_green02H">
 				<div class="title"><?= lang('title') ?></div>
 				
@@ -27,7 +27,7 @@
 							 </div>
 	                    
 						<input type="submit" class="btn normal send b_green02" value="Member login">
-	                    <p align="center"><a href="member_register" class=""><?= lang('register')?></a>  /  <a href="member_forgot" class=""><?= lang('forget') ?></a></p>
+	                    <p align="center"><a href="<?= base_url('register') ?>" class=""><?= lang('register')?></a>  /  <a href="<?= base_url('forget_pass')?>" class=""><?= lang('forget') ?></a></p>
 
 				</div>
 				</div>

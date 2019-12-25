@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------------
 | URI ROUTING
@@ -38,20 +38,27 @@
 |
 */
 
-$route['default_controller'] = "index";//index/login
+$route['default_controller'] = "index"; //index/login
 $route['404_override'] = 'index/error';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
 
-$route["products/(:num)"]												= 'products/index/$1';
-$route["products/(:num)/(:num)"]								= 'products/index/$1/$2';
-$route["index/(:num)"]													= 'index/index/$1';
-$route["(:num)"]																= 'index/index/$1';
-$route['member_register']												= 'member_register/register';
-$route['member_update']												= 'member_register/update';
-$route['member_sms_code']											= 'member_register/sms_code';
-$route['member_register_ok']										= 'member_register/register_ok';
-$route['member_register_on']										= 'member_register/register_on';
-$route['member_mobile']												= 'member_register/mobile';
-$route['sms_mobile']														= 'member_register/sms_change_mobile';
+$route["products/(:num)"]                                                = 'products/index/$1';
+$route["products/(:num)/(:num)"]                                = 'products/index/$1/$2';
+$route["index/(:num)"]                                                    = 'index/index/$1';
+$route["(:num)"]                                                                = 'index/index/$1';
+$route['member_register']                                                = 'member_register/register';
+$route['member_update']                                                = 'member_register/update';
+$route['member_sms_code']                                            = 'member_register/sms_code';
+$route['member_register_ok']                                        = 'member_register/register_ok';
+$route['member_register_on']                                        = 'member_register/register_on';
+$route['member_mobile']                                                = 'member_register/mobile';
+$route['sms_mobile']                                                        = 'member_register/sms_change_mobile';
+
+/** all-young */
+$route['login'] = 'gold/login';
+$route['register'] = 'member_register/register_on';
+$route['post_member_login'] = 'gold/login_set';
+
+$route['forget_pass'] = 'gold/forgot';

@@ -42,6 +42,7 @@ class Index extends MY_Controller
 
 		//web config
 		$this->data['web_config']=$this->get_web_config($this->data['domain_id']);
+
 	}
 	//商城首頁
 	public function index(){
@@ -587,39 +588,6 @@ class Index extends MY_Controller
 		//結果回傳
  		$ajax_data = json_encode($result);
 		echo $ajax_data;
-	}
-
-	/**
-	 * frontend user login page
-	 *
-	 * @return void
-	 */
-	public function member_login($url=''){
-		@session_start();
-
-		/** load the languages packages */;
-		$this->lang->load('views/' . $this->indexViewPath . '/login', $this->data['lang']);
-
-		// 判斷是否登入
-		if($_SESSION['MT']['is_login']==1)
-		{
-			$this->useful->AlertPage('/gold/member');
-		}
-
-		$account = $this->input->cookie('account', TRUE);
-		$password = $this->input->cookie('password', TRUE);
-		$remember = $this->input->cookie('remember', TRUE);
-
-		if($account != ''){
-			$data['account'] = $account;
-			$data['password'] = $password;
-			$data['remember'] = $remember;
-		}
-
-		//view
-		$this->load->view($this->indexViewPath . '/header', $data);
-		$this->load->view($this->indexViewPath . '/login', $data);
-		$this->load->view($this->indexViewPath . '/footer', $data);
 	}
 
 	/**
