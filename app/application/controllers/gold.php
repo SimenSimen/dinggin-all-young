@@ -320,6 +320,7 @@ class Gold extends MY_Controller
 
 		if ($dbdata['d_is_member'] == Member_model::BUYER_ROLE_SALE) {
 			$mdbdata = $this->mymodel->OneSearchSql('member', '*', array('by_id' => $dbdata['by_id']));
+
 			$data['mdbdata'] = $mdbdata;
 			//經營會員 城市撈取
 			$data['member_city']	  =	$this->mymodel->get_area_data($mdbdata['country']);
@@ -332,8 +333,6 @@ class Gold extends MY_Controller
 			$shop_city_category 	  =	$this->mymodel->OneSearchSql('`city_category`', 's_id,s_name', array('s_id' => $mdbdata['shop_city']));
 			$data['shop_countory'] =	$this->mymodel->get_area_data($shop_city_category['s_id']);
 		}
-
-
 
 		$today = date('Y-m-d');
 		$birthday = date('Y') . '-' . substr($dbdata['birthday'], -5);
@@ -355,8 +354,8 @@ class Gold extends MY_Controller
 		$data['city']	  =	$this->mymodel->get_area_data($dbdata['country']);
 		//鄉鎮countory
 		$city_category 	  =	$this->mymodel->OneSearchSql('`city_category`', 's_id,s_name', array('s_id' => $dbdata['city']));
-		$data['countory'] =	$this->mymodel->get_area_data($city_category['s_id']);
 
+		$data['countory'] =	$this->mymodel->get_area_data($city_category['s_id']);
 		//國碼撈取
 		$data['country_num'] = $this->mymodel->get_country_num();
 
@@ -1696,18 +1695,17 @@ class Gold extends MY_Controller
 				if (Comment::SetValue('new_pw') == Comment::SetValue('re_new_pw')) {
 					$new_password = $this->encrypt->encode(Comment::SetValue('new_pw'));
 					$this->mymodel->update_set('buyer', 'by_id', $_SESSION['MT']['by_id'], array('by_pw' => $new_password));
-					$this->useful->AlertPage('/gold/member_info', $this->lang['s_editsu']);		//修改完成
+					$this->useful->AlertPage('/member/info', $this->lang['s_editsu']);		//修改完成
 				} else
-					$this->useful->AlertPage('/gold/member_password', $this->lang['newreno']);	//新密碼跟再次輸入不符,請重新輸入
+					$this->useful->AlertPage('/member/change_password', $this->lang['newreno']);	//新密碼跟再次輸入不符,請重新輸入
 			} else
-				$this->useful->AlertPage('/gold/member_password', $this->lang['oldfaile']);	//舊密碼錯誤,請重新輸入
+				$this->useful->AlertPage('/member/change_password', $this->lang['oldfaile']);	//舊密碼錯誤,請重新輸入
 		}
 
 		//view
-		$this->load->view('index/header' . $this->style, $data);
-		$this->load->view('index/member/member_nav', $data);
-		$this->load->view('index/member/member_password', $data);
-		$this->load->view('index/footer' . $this->style, $data);
+		$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
+		$this->load->view($this->indexViewPath . '/members/change_pass', $data);
+		$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
 	}
 
 	//會員紅利明細
@@ -2230,7 +2228,7 @@ class Gold extends MY_Controller
 				if ($member_register == "yes")
 					$id = "";
 				$d_id = 'by_id';
-				$url = '/gold/register';
+				$url = '/register';
 				$check->fname[] = array('_CheckEmail', Comment::SetValue('by_email'), 'E-mail');
 				if ($id != '') {
 					$data = $this->useful->DB_Array($_POST);
@@ -2250,14 +2248,15 @@ class Gold extends MY_Controller
 					//	}
 					//}
 
-					$mobile_data = $this->mymodel->select_page_form('buyer', '', 'by_id', array('mobile' => Comment::SetValue('mobile')));
+					$mobile_data = !empty(Comment::SetValue('mobile')) ? $this->mymodel->select_page_form('buyer', '', 'by_id', array('mobile' => Comment::SetValue('mobile'))) : null;
+
 					if (!empty($mobile_data) and $mobile_data['0']['by_id'] <> $id) {
-						$this->useful->AlertPage('/gold/member_info', $this->lang1['somephone']/*此手機已註冊過，請重新輸入?*/);
+						$this->useful->AlertPage('/member/info', $this->lang1['somephone']/*此手機已註冊過，請重新輸入?*/);
 						return '';
 					}
 					$data = $this->useful->UnsetArray($data, array('chk_ok'));
 
-					$url = '/gold/member_info';
+					$url = '/member/info';
 					if ($data['is_member'] == 'Y') {
 						$mdata = array(
 							'country' => $data['cen_country'],
@@ -2472,6 +2471,7 @@ class Gold extends MY_Controller
 			$data = $this->useful->UnsetArray($data, array('household_city', 'household_countory', 'household_address', 'store_city', 'store_countory', 'store_address'));
 
 			if ($id != '') {
+
 				$this->mymodel->update_set($dbname, $d_id, $id, $data);
 				$msg = $check->lang['s_editsu']/*修改成功*/;
 			} else {
@@ -2488,8 +2488,9 @@ class Gold extends MY_Controller
 		//註冊成功後續動作
 		if ($dbname == 'buyer') {
 			$check->lang = $this->lmodel->config('3', $this->setlang);
+
 			if ($id != '')
-				$this->useful->AlertPage('/gold/member_info', $msg);
+				$this->useful->AlertPage('/member/info', $msg);
 			else {
 				//抓網頁設定判斷是否自動升級經營會員
 				//host
@@ -2751,6 +2752,7 @@ class Gold extends MY_Controller
 		} else
 			$this->useful->AlertPage('/gold/index/' . $upaccount . '', $this->lang['noacc']); //帳號已不存在，請重新申請
 	}
+
 	//語系切換
 	public function setlang()
 	{

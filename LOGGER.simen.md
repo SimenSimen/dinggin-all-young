@@ -2,14 +2,11 @@
 
 ## 2019-12-25
 
-My_Controller:78 上方先強制轉印尼語系
-
-|           更動檔案路徑           |            說明            |  備註  |
-| :------------------------------: | :------------------------: | :----: |
-| application/controllors/gold.php | login, login_set, register | &nbsp; |
-|  application/config/routes.php   |         增加router         | &nbsp; |
-|          css/style.css           |        修改字形路徑        | &nbsp; |
-
+|           更動檔案路徑           |                       說明                        |  備註  |
+| :------------------------------: | :-----------------------------------------------: | :----: |
+| application/controllors/gold.php | login, login_set, register, member_info, data_AED | &nbsp; |
+|  application/config/routes.php   |                    增加router                     | &nbsp; |
+|          css/style.css           |                   修改字形路徑                    | &nbsp; |
 
 ## 2019-12-24
 
@@ -48,9 +45,12 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 ## 業務邏輯
 
 會員
-- /post_member_login (gold/login_set) 處理前台會員登入
+
 - /member_sms_code (member_register/sms_code) 驗證簡訊
+- /member/change_password (member/gold/member_password) 會員修改密碼
+- /member/info/update (/gold/data_AED) 會員基本資料修改
 - /member/logout (gold/logout) 會員登出
+- /member/lopin (gold/login_set) 處理前台會員登入
 
 # 結案前整理
 

@@ -59,10 +59,15 @@ $route['sms_mobile']                                                        = 'm
 /** all-young */
 $route['login'] = 'gold/login';
 $route['register'] = 'member_register/register_on';
-$route['post_member_login'] = 'gold/login_set';
 
 $route['member'] = 'gold/member';
+
 $route['member/info'] = 'gold/member_info';
+$route['member/info/update'] = '/gold/data_AED';
+$route['member/change_password'] = '/gold/member_password';
+
 $route['member/logout'] = 'gold/logout';
+$route['member/login'] = 'gold/login_set';
+
 
 $route['forget_pass'] = 'gold/forgot';

@@ -1,7 +1,7 @@
 <div class="container">
 	<main class="main-content wow fadeInUp" data-wow-delay="0.4s">
 		<div class="container-indent center">
-	        <form action="<?= base_url('post_member_login')?>" class="j-forms" method="post" onSubmit="return check_form(this)">
+	        <form action="<?= base_url('member/login')?>" class="j-forms" method="post" onSubmit="return check_form(this)">
 			<section class="content c_green02H">
 				<div class="title"><?= lang('title') ?></div>
 				

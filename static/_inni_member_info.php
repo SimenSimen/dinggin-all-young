@@ -293,9 +293,6 @@
 										</div>
 			                        </div>
 
-
-			                       
-
 			                        <div class="form-group checbox">
 										<input type="checkbox" name="chk_sale_ok" value="ok" id="checkbox02">
 										<label for="checkbox">Agree to receive offers</label>

@@ -10,7 +10,6 @@
 							<?php $this->load->view($indexViewPath . '/members/_nav_content', ['hasIcon' => true]) ?>
 						</ul>
 					</div>
-
 				</section>
 			</form>
 		</div>

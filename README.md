@@ -37,7 +37,7 @@ static host http://st.all-young.io/
 |       |      註冊-填寫資料      |    done     | &nbsp; |
 |       |      註冊-簡訊驗證      |    done     | &nbsp; |
 |       |      註冊-註冊完成      |    done     | &nbsp; |
-|       | 基本資料(一般會員)-印尼 |   &nbsp;    | &nbsp; |
+|       | 基本資料(一般會員)-印尼 |    done     | &nbsp; |
 |       | 基本資料(經營會員)-印尼 |   &nbsp;    | &nbsp; |
 |       |    升級經營會員-印尼    |   &nbsp;    | &nbsp; |
 |       |     邀請碼分享-印尼     |   &nbsp;    | &nbsp; |
