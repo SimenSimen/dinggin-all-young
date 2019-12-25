@@ -7,7 +7,7 @@
     ['href' => base_url('member/info'), 'icon' => 'icon-information', 'text' => 'Information', 'trans' => ''],
     ['href' => "_inni_member_address.php", 'icon' => 'icon-placeholder', 'text' => 'Common Shipping Address', 'trans' => ''],
     ['href' => "_inni_member_announcement.php", 'icon' => 'icon-megaphone', 'text' => 'Member Announcement', 'trans' => ''],
-    ['href' => "_inni_member_management.php", 'icon' => 'icon-id', 'text' => 'Upgrade Management Member', 'trans' => ''],
+    ['href' => base_url('member/upgrade'), 'icon' => 'icon-id', 'text' => 'Upgrade Management Member', 'trans' => ''],
     ['href' => "_inni_member_invite_share.php", 'icon' => 'icon-megaphone', 'text' => 'Invitation Code Sharing', 'trans' => ''],
     ['href' => "_inni_member_sale.php", 'icon' => 'icon-paper', 'text' => 'Management Member Sales Order Inquiry', 'trans' => ''],
     ['href' => "_inni_member_organization.php", 'icon' => 'icon-monitor', 'text' => 'Organization Table', 'trans' => ''],

@@ -7,7 +7,7 @@
 
                     <?php $this->load->view($indexViewPath . '/members/_sidenav'); ?>
 
-                    <form action="" class="" method="post" onsubmit="" )>
+                    <form action="" class="" method="post" onsubmit="">
                         <section class="content has-side">
                             <div class="title">Change Password</div>
                             <div class="editor mg">

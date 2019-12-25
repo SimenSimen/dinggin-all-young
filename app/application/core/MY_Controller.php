@@ -35,6 +35,10 @@
 // 33.check_extend_name		上傳文件的副檔名判斷 
 // 34.script_message_close  跳出提示訊息, (及)關閉視窗
 //----------------------------------------------------------------------------------- 
+
+/** @todo 1121 remove */
+ini_set('display_errors', 1);
+
 class MY_Controller extends CI_Controller
 {
 

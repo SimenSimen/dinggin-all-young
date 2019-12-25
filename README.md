@@ -39,7 +39,7 @@ static host http://st.all-young.io/
 |       |      註冊-註冊完成      |    done     | &nbsp; |
 |       | 基本資料(一般會員)-印尼 |    done     | &nbsp; |
 |       | 基本資料(經營會員)-印尼 |   &nbsp;    | &nbsp; |
-|       |    升級經營會員-印尼    |   &nbsp;    | &nbsp; |
+|       |    升級經營會員-印尼    |    done     | &nbsp; |
 |       |     邀請碼分享-印尼     |   &nbsp;    | &nbsp; |
 
 # lang_model

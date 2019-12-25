@@ -41,20 +41,28 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 - /login (gold/login) 前台登入頁面
 - /member (gold/member) 前台會員畫面
 - /member/info (gold/member_info) 前台會員基本資料
+- /member/upgrade (gold/member_upgrade) 升級經營會員頁面
+- /member/change_password (gold/member_password) 修改密碼頁面
 
 ## 業務邏輯
 
 會員
 
 - /member_sms_code (member_register/sms_code) 驗證簡訊
-- /member/change_password (member/gold/member_password) 會員修改密碼
-- /member/info/update (/gold/data_AED) 會員基本資料修改
+- /member/change_password (gold/member_password) 會員修改密碼
+- /member/info/update (gold/data_AED) 會員基本資料修改
 - /member/logout (gold/logout) 會員登出
 - /member/lopin (gold/login_set) 處理前台會員登入
+- /member/upgrade/submit (gold/data_AED) 升級經營會員
+
+# 待辦
+
+- @todo 11020 申請經銷會員必填欄位
 
 # 結案前整理
 
 - @todo 10 註解掉 註冊成功 email 發送，因為會報錯。須復原。
 - @todo 1001 強制轉語系，須移除。
+- @todo 1121 移除開啟錯誤訊息
 - 前台 view 都放在 index-all-young 資料夾名稱可以改(須改My_controller::indexViewPath)
 

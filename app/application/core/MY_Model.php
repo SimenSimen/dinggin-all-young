@@ -159,6 +159,7 @@ class MY_Model extends CI_Model
 		$exists_check = $query->row_array();
 		if((empty($exists_check) && $data_where != '') || $data_where == '') // 存在檢查 or 不檢查
 		{
+
 			$this->db->insert($table, $data);
 			return $this->db->insert_id();
 

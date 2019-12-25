@@ -96,7 +96,7 @@ class Gold extends MY_Controller
 		if ($_SESSION['MT']['is_login'] == 1) {
 			//$this->useful->AlertPage('/gold/member_list');
 			//$this->useful->AlertPage('/products');
-			$this->useful->AlertPage('/gold/member');
+			$this->useful->AlertPage('/member');
 			//$this->useful->AlertPage("$url");
 		}
 
@@ -680,13 +680,19 @@ class Gold extends MY_Controller
 	//升級經營會員
 	public function member_upgrade()
 	{
+		@session_start();
+
 		if (empty($_SESSION['MT'])) {
 			$this->load->library('/mylib/CheckInput');
 			$check = new CheckInput;
 			$check->lang = $this->lmodel->config('9999', $this->setlang);
-			$this->useful->AlertPage('/gold/login', $check->lang['Login']); //請先登入或註冊
+			$this->useful->AlertPage('/login', $check->lang['Login']); //請先登入或註冊
 		}
-		@session_start();
+
+		/** check if the member is already not the normal member */
+		if ($_SESSION['MT']['d_is_member'] !== Member_model::BUYER_ROLE_NORMAL) {
+			$this->useful->AlertPage('/member', 'Already apply or upgraded.');
+		}
 
 		$this->DataName = 'member';
 		$this->lang = $this->lmodel->config('1', $this->setlang);
@@ -715,10 +721,9 @@ class Gold extends MY_Controller
 		$data['country'] = $this->mymodel->get_area_data();
 
 		//view
-		$this->load->view('index/header' . $this->style, $data);
-		$this->load->view('index/member/member_nav', $data);
-		$this->load->view('index/member/member_upgrade', $data);
-		$this->load->view('index/footer' . $this->style, $data);
+		$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
+		$this->load->view($this->indexViewPath . '/members/upgrade', $data);
+		$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
 	}
 
 	//組織表
@@ -2380,30 +2385,39 @@ class Gold extends MY_Controller
 			//經營會員
 			if ($dbname == 'member_apply') {
 				//語言包
+
+
 				$this->lang = $this->lmodel->config('8', $this->setlang);
 
+				/** check if the member is already not the normal member */
+				if ($_SESSION['MT']['d_is_member'] !== Member_model::BUYER_ROLE_NORMAL) {
+					$this->useful->AlertPage('/member', 'Already apply or upgraded.');
+				}
+
 				$mdata = $this->mymodel->OneSearchSql('member', 'identity_num', array('identity_num' => Comment::SetValue('identity_num')));
+
 				if (!empty($mdata)) {
 					$this->useful->AlertPage('', $this->lang['iduse']); //身份證字號已被使用
 					return '';
 				}
 
+				$check->fname[] = array('_String', Comment::SetValue('identity'), $this->lang['idnum']);	//身份證字號
 				$check->fname[] = array('_String', Comment::SetValue('identity_num'), $this->lang['idnum']);	//身份證字號
-				$check->fname[] = array('_Select', Comment::SetValue('country'), '國家地區');
-				$check->fname[] = array('_Select', Comment::SetValue('city'), '省份城市');
-				$check->fname[] = array('_Select', Comment::SetValue('countory'), '地級市鄉鎮地區');
-				$check->fname[] = array('_String', Comment::SetValue('address'), $this->lang['address']);	//地址
 				$check->fname[] = array('_String', Comment::SetValue('bank_name'), $this->lang['bname']);	//銀行名稱
-				$check->fname[] = array('_String', Comment::SetValue('bank_account_name'), $this->lang['baccname']);	//帳戶名稱
 				$check->fname[] = array('_String', Comment::SetValue('bank_account'), $this->lang['bacc']);	//銀行帳號
-				$check->fname[] = array('_String', Comment::SetValue('bank_address'), $this->lang['bacc']);	//銀行帳號
-				$check->fname[] = array('_String', Comment::SetValue('swift_code'), $this->lang['bacc']);	//銀行帳號
+
 				$data['upline'] = $_SESSION['AT']['member_id'];
 				//暫時將上線null填空白,新增member_apply會錯誤
 				if ($data['upline'] == null)
 					$data['upline'] = "";
 				$data['by_id'] = $_SESSION['MT']['by_id'];
 
+				/** added the bank info and country @todo 11020 */
+				$data['country'] = 0;
+				$data['city'] = 0;
+				$data['countory'] = 0;
+				$data['address'] = 'asdasd';
+				$data['bank_account_name'] = 'bank_account_name';
 
 				//去除陣列無用值
 				$data = $this->useful->UnsetArray($data, array('update_time', 'agree'));
@@ -2655,7 +2669,7 @@ class Gold extends MY_Controller
 			$this->mymodel->update_set('buyer', 'by_id', $_SESSION['MT']['by_id'], array('d_is_member' => 2));
 			//升級經營會員待審查
 			$_SESSION['MT']['d_is_member'] = 2;
-			$this->useful->AlertPage('/gold/member', $check->lang['applysu']);	//申請成功,請等待審核結果
+			$this->useful->AlertPage('/member', $check->lang['applysu']);	//申請成功,請等待審核結果
 			return '';
 		}
 		if ($dbname == 'address') {

@@ -68,6 +68,8 @@ $route['member/change_password'] = '/gold/member_password';
 
 $route['member/logout'] = 'gold/logout';
 $route['member/login'] = 'gold/login_set';
+$route['member/upgrade'] = 'gold/member_upgrade';
+$route['member/upgrade/submit'] = '/gold/data_AED';
 
 
 $route['forget_pass'] = 'gold/forgot';
