@@ -1,6 +1,23 @@
 # Config
 
+## php int
+
 **Need to turn on the open short tag config of php int**
+
+## Docker
+
+```
+    $ cd project_root/docker
+```
+
+```
+$ docker-compose up
+```
+
+host http://all-young.io/
+
+static host http://st.all-young.io/
+
 
 # Work to do - Simen
 
@@ -18,4 +35,11 @@
 |       |    升級經銷會員-印尼    |   &nbsp;    | &nbsp; |
 |       |     邀請碼分享-印尼     |   &nbsp;    | &nbsp; |
 
+# lang_model
+
+Depends on lapack_list d_id to get language setting
+
+```php
+    $this->lmodel->config($pageId, $lang); 
+```
 
