@@ -243,7 +243,7 @@ class Gold extends MY_Controller
 		if ($_SESSION['ssoc'] != 1) {
 			unset($_SESSION['RT']);
 		}
-		
+
 		$data['dbname'] = $dbname = 'buyer';
 		//地區撈取
 		$data['country'] = $this->mymodel->get_area_data();
@@ -287,7 +287,9 @@ class Gold extends MY_Controller
 			$check->lang = $this->lmodel->config('8', $this->setlang);
 			$this->useful->AlertPage('/gold/login', $check->lang['Login']); //請先登入或註冊
 		}
+
 		@session_start();
+
 		$this->useful->iconfig();
 
 		//非台灣則不顯示城市鄉鎮
@@ -315,7 +317,8 @@ class Gold extends MY_Controller
 
 		//抓會員資料(member)
 		$data['dbdata'] = $dbdata;
-		if ($dbdata['d_is_member'] == '1') {
+
+		if ($dbdata['d_is_member'] == Member_model::BUYER_ROLE_SALE) {
 			$mdbdata = $this->mymodel->OneSearchSql('member', '*', array('by_id' => $dbdata['by_id']));
 			$data['mdbdata'] = $mdbdata;
 			//經營會員 城市撈取
@@ -329,6 +332,7 @@ class Gold extends MY_Controller
 			$shop_city_category 	  =	$this->mymodel->OneSearchSql('`city_category`', 's_id,s_name', array('s_id' => $mdbdata['shop_city']));
 			$data['shop_countory'] =	$this->mymodel->get_area_data($shop_city_category['s_id']);
 		}
+
 
 
 		$today = date('Y-m-d');
@@ -357,10 +361,9 @@ class Gold extends MY_Controller
 		$data['country_num'] = $this->mymodel->get_country_num();
 
 		//view
-		$this->load->view('index/header' . $this->style, $data);
-		$this->load->view('index/member/member_nav', $data);
-		$this->load->view('index/member/member_info', $data);
-		$this->load->view('index/footer' . $this->style, $data);
+		$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
+		$this->load->view($this->indexViewPath . '/members/info', $data);
+		$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
 	}
 
 	//常用寄貨地址
@@ -638,10 +641,10 @@ class Gold extends MY_Controller
 		$_SESSION['url'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$data['banner'] = $this->data['banner'];
 		//view
-		$this->load->view('index/header' . $this->style, $data);
+		$this->load->view($this->indexViewPath . '/header', $data);
 		//$this->load->view('index/member/member_nav', $data);
-		$this->load->view('index/member/member' . $this->style, $data);
-		$this->load->view('index/footer' . $this->style, $data);
+		$this->load->view($this->indexViewPath . '/members/index', $data);
+		$this->load->view($this->indexViewPath . '/footer', $data);
 	}
 
 	//活躍指標

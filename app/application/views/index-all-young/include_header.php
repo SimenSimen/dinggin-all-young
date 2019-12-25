@@ -1,4 +1,3 @@
-
 <div id="loader-wrapper">
 	<div id="loader">
 		<div class="dot"></div>
@@ -103,14 +102,14 @@
 			<div class="tt-header-holder">
 				<div class="tt-col-obj tt-obj-logo">
 					<!-- logo -->
-					<a class="tt-logo tt-logo-alignment" href="_inni_index-14.php"><img src="<?= base_url('images/custom/logo_taiwan.jpg') ?>" alt=""></a>
+					<a class="tt-logo tt-logo-alignment" href="<?= base_url() ?>"><img src="<?= base_url('images/custom/logo_taiwan.jpg') ?>" alt=""></a>
 					<!-- /logo -->
 				</div>
 				<div class="tt-col-obj tt-obj-menu">
 					<!-- tt-menu -->
 					<div class="tt-desctop-parent-menu tt-parent-box">
 						<div class="tt-desctop-menu tt-hover-03">
-							
+
 							<nav>
 								<ul>
 									<li class="dropdown tt-megamenu-col-01">
@@ -120,17 +119,17 @@
 												<div class="col">
 													<ul class="tt-megamenu-submenu">
 														<li><a href="_inni_brand-store.php">Brand name1
-															<img src="images/loader.svg" data-src="images/custom/tt-layout-img-01.png" alt="Example 1">
-															<!-- <span class="tt-badge tt-fatured">Popular</span> -->
-														</a></li>
+																<img src="images/loader.svg" data-src="images/custom/tt-layout-img-01.png" alt="Example 1">
+																<!-- <span class="tt-badge tt-fatured">Popular</span> -->
+															</a></li>
 														<li><a href="_inni_brand-store.php">Brand name2 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-02.png" alt="Example 2"></a></li>
 														<li><a href="_inni_brand-store.php">Brand name3 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-03.png" alt="Example 3"></a></li>
 														<li><a href="_inni_brand-store.php">Brand name4<img src="images/loader.svg" data-src="images/custom/tt-layout-img-04.png" alt="Example 4">
-														</a></li>
+															</a></li>
 														<li><a href="_inni_brand-store.php">Brand name5 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-05.png" alt="Example 5"></a></li>
 														<li><a href="_inni_brand-store.php">Brand name6 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-06.png" alt="Example 6"></a></li>
 													</ul>
-												</div>												
+												</div>
 											</div>
 										</div>
 									</li>
@@ -239,7 +238,7 @@
 												</div>
 											</div>
 										</div> -->
-									</li>									
+									</li>
 									<li class="dropdown tt-megamenu-col-01">
 										<a href="_inni_about.php">About AllYoung</a>
 										<div class="dropdown-menu">
@@ -409,80 +408,81 @@
 										<div class="search-results">
 											<ul>
 												<li>
-										            <a href="_inni_products.php">
-										            	<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-03.jpg" alt=""></div>
-										            	<div class="tt-description">
-										            		<div class="tt-title">Product Name</div>
-										            		<div class="tt-price">
+													<a href="_inni_products.php">
+														<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-03.jpg" alt=""></div>
+														<div class="tt-description">
+															<div class="tt-title">Product Name</div>
+															<div class="tt-price">
 																<span class="new-price">$14</span>
 																<span class="old-price">$24</span>
 															</div>
-										            	</div>
-										            </a>
-										        </li>
-										        <li>
-										           <a href="_inni_products.php">
-										            	<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-02.jpg" alt=""></div>
-										            	<div class="tt-description">
-										            		<div class="tt-title">Product Name</div>
-										            		<div class="tt-price">
+														</div>
+													</a>
+												</li>
+												<li>
+													<a href="_inni_products.php">
+														<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-02.jpg" alt=""></div>
+														<div class="tt-description">
+															<div class="tt-title">Product Name</div>
+															<div class="tt-price">
 																<span class="new-price">$14</span>
 																<span class="old-price">$24</span>
 															</div>
-										            	</div>
-										            </a>
-										        </li>
-										        <li>
-										           <a href="_inni_products.php">
-										            	<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-01.jpg" alt=""></div>
-										            	<div class="tt-description">
-										            		<div class="tt-title">Product Name</div>
-										            		<div class="tt-price">
+														</div>
+													</a>
+												</li>
+												<li>
+													<a href="_inni_products.php">
+														<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-01.jpg" alt=""></div>
+														<div class="tt-description">
+															<div class="tt-title">Product Name</div>
+															<div class="tt-price">
 																<span class="new-price">$14</span>
 																<span class="old-price">$24</span>
 															</div>
-										            	</div>
-										            </a>
-										        </li>
-										        <li>
-										           <a href="_inni_products.php">
-										            	<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-04.jpg" alt=""></div>
-										            	<div class="tt-description">
-										            		<div class="tt-title">Product Name</div>
-										            		<div class="tt-price">
+														</div>
+													</a>
+												</li>
+												<li>
+													<a href="_inni_products.php">
+														<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-04.jpg" alt=""></div>
+														<div class="tt-description">
+															<div class="tt-title">Product Name</div>
+															<div class="tt-price">
 																<span class="new-price">$14</span>
 																<span class="old-price">$24</span>
 															</div>
-										            	</div>
-										            </a>
-										        </li>
-										        <li>
-										           <a href="_inni_products.php">
-										            	<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-05.jpg" alt=""></div>
-										            	<div class="tt-description">
-										            		<div class="tt-title">Product Name</div>
-										            		<div class="tt-price">
+														</div>
+													</a>
+												</li>
+												<li>
+													<a href="_inni_products.php">
+														<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-05.jpg" alt=""></div>
+														<div class="tt-description">
+															<div class="tt-title">Product Name</div>
+															<div class="tt-price">
 																<span class="new-price">$14</span>
 																<span class="old-price">$24</span>
 															</div>
-										            	</div>
-										            </a>
-										        </li>
-										        <li>
-										           <a href="_inni_products.php">
-										            	<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-06.jpg" alt=""></div>
-										            	<div class="tt-description">
-										            		<div class="tt-title">Product Name</div>
-										            		<div class="tt-price">
+														</div>
+													</a>
+												</li>
+												<li>
+													<a href="_inni_products.php">
+														<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-06.jpg" alt=""></div>
+														<div class="tt-description">
+															<div class="tt-title">Product Name</div>
+															<div class="tt-price">
 																<span class="new-price">$14</span>
 																<span class="old-price">$24</span>
 															</div>
-										            	</div>
-										            </a>
-										        </li>
+														</div>
+													</a>
+												</li>
 											</ul>
 											<button type="button" class="tt-view-all">View all products</button>
-											<?//【See All Products】連結至search-page.php//?>
+											<? //【See All Products】連結至search-page.php//
+											?>
 										</div>
 									</form>
 								</div>
@@ -513,7 +513,8 @@
 														</div>
 														<div class="tt-item-descriptions">
 															<h2 class="tt-title">Product Name</h2>
-															<div class="tt-quantity">1 X</div> <div class="tt-price">NT$12</div>
+															<div class="tt-quantity">1 X</div>
+															<div class="tt-price">NT$12</div>
 														</div>
 													</a>
 													<div class="tt-item-close">
@@ -527,7 +528,8 @@
 														</div>
 														<div class="tt-item-descriptions">
 															<h2 class="tt-title">Product Name</h2>
-															<div class="tt-quantity">1 X</div> <div class="tt-price">NT$18</div>
+															<div class="tt-quantity">1 X</div>
+															<div class="tt-price">NT$18</div>
 														</div>
 													</a>
 													<div class="tt-item-close">
@@ -557,8 +559,8 @@
 					<!-- tt-account -->
 					<div class="tt-desctop-parent-account tt-parent-box">
 						<div class="tt-account tt-dropdown-obj">
-							<a href="_inni_member.php">
-								<button class="mobile_account"  data-tooltip="Member Centre" data-tposition="bottom"><i class="icon-f-94"></i></button>
+							<a href="<?= base_url('/member') ?>">
+								<button class="mobile_account" data-tooltip="Member Centre" data-tposition="bottom"><i class="icon-f-94"></i></button>
 							</a>
 							<!-- <div class="tt-dropdown-menu">
 								<div class="tt-mobile-add">
@@ -627,4 +629,3 @@
 		</div>
 	</div>
 </header>
-

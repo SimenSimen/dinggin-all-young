@@ -8,6 +8,7 @@ My_Controller:78 上方先強制轉印尼語系
 | :------------------------------: | :------------------------: | :----: |
 | application/controllors/gold.php | login, login_set, register | &nbsp; |
 |  application/config/routes.php   |         增加router         | &nbsp; |
+|          css/style.css           |        修改字形路徑        | &nbsp; |
 
 
 ## 2019-12-24
@@ -29,19 +30,31 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 
 # Ruter
 
+路徑 (controller 路徑)
+
 ## 頁面
 
 - /index 首頁
-- /login (gold/login) 前台登入頁面
+
+會員
+
 - /register (gold/register) 註冊頁面
+- /member_sms_code (member_register/sms_code) 輸入簡訊驗證頁面
+- /member_register_ok (member_register/register_ok) 註冊成功畫面
+- /login (gold/login) 前台登入頁面
+- /member (gold/member) 前台會員畫面
+- /member/info (gold/member_info) 前台會員基本資料
 
 ## 業務邏輯
 
+會員
 - /post_member_login (gold/login_set) 處理前台會員登入
-- /post_member_login (gold/data_AED) 處理前台會員登入
+- /member_sms_code (member_register/sms_code) 驗證簡訊
+- /member/logout (gold/logout) 會員登出
 
 # 結案前整理
 
-- My_Controller:78 移除強制轉語系
+- @todo 10 註解掉 註冊成功 email 發送，因為會報錯。須復原。
+- @todo 1001 強制轉語系，須移除。
 - 前台 view 都放在 index-all-young 資料夾名稱可以改(須改My_controller::indexViewPath)
 

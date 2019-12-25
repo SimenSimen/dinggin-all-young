@@ -248,7 +248,7 @@ class member_register extends MY_Controller
 	{
 		$this->lang1 = $this->lmodel->config('3', $this->setlang);
 		if ($this->input->post('action') == 'check_code') {
-			
+
 			$user_data = $this->mymodel->select_page_form('buyer', '', 'by_id, name, check_code', array('by_id' => $this->session->userdata('create_id')));
 			if ($user_data[0]['check_code'] == $this->input->post('check_code')) {
 				//解除帳號限制
@@ -371,7 +371,9 @@ class member_register extends MY_Controller
 			"<p>客服信箱：service@supergoods.com.tw</p>";
 
 		// 寄信
-		$this->mod_index->send_mail($this->get_host_config()['domain'], '超惠購', $user_data[0]['by_email'], $subject, $message);
+		
+		/** Comment out cause email erro occur @todo 10 */
+		// $this->mod_index->send_mail($this->get_host_config()['domain'], '超惠購', $user_data[0]['by_email'], $subject, $message);
 
 		// 台灣註冊簡訊驗證 海外寄信信件驗證
 		if ($this->setlang == 'TW') {

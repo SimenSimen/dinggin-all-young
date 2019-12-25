@@ -5,7 +5,7 @@
             <main class="main-content">
                 <div class="container openside pall0">
 
-                    <?php require_once('_inni_include_sidenav.php'); ?>
+                    <?php $this->load->view($indexViewPath . '/members/_sidenav'); ?>
 
                     <form action="" class="" method="post" onsubmit="" )>
                         <section class="content has-side">

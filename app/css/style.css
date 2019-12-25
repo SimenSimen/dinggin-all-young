@@ -9772,8 +9772,8 @@ img.tp-slider-alternative-image {
 
 @font-face {
     font-family: wokiee;
-    src: url(../font/fonts/wokiee.eot?g7nf10);
-    src: url(../font/fonts/wokiee.eot?g7nf10#iefix) format("embedded-opentype"),url(../font/fonts/wokiee.ttf?g7nf10) format("truetype"),url(../font/fonts/wokiee.woff?g7nf10) format("woff"),url(../font/fonts/wokiee.svg?g7nf10#wokiee) format("svg");
+    src: url(/css/font/fonts/wokiee.eot?g7nf10);
+    src: url(/css/font/fonts/wokiee.eot?g7nf10#iefix) format("embedded-opentype"),url(/css/font/fonts/wokiee.ttf?g7nf10) format("truetype"),url(/css/font/fonts/wokiee.woff?g7nf10) format("woff"),url(/css/font/fonts/wokiee.svg?g7nf10#wokiee) format("svg");
     font-weight: 400;
     font-style: normal
 }
