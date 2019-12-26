@@ -153,10 +153,14 @@
 		    <tr id='list_title_tr'>
 		      <td><input type="checkbox" name="check_all"> 全選</td>
 		      <td>流水號</td>
-		      <?php if($type > 3 and $type!=6): ?>
+		      <?php if($type > 3 and $type!=6 and $type!=7): ?>
 		      	<td>群組</td>
-		      <?php endif; ?>
-		      <td>標題名稱</td>
+			  <?php endif; ?>
+			  <?php if($type == 7): ?>
+			  	<td>品牌名稱</td>
+			  <?php else: ?>
+			  	<td>標題名稱</td>
+			  <?php endif; ?>
 		      <td>內容</td>
 			  <td>狀態</td>
 		      <td>操作</td>
@@ -169,7 +173,7 @@
 					    	<input type="hidden" name="ck_id[]" value="<?=$value['ck_id']?>">
 					    	<td><input type="checkbox" name="check_id[]" value="<?=$value['ck_id']?>"></td>
 					    	<td><?=($key+1)?></td>
-					    	<?php if($type > 3 and $type!=6): ?>
+					    	<?php if($type > 3 and $type!=6 and $type!=7): ?>
 					    		<td><?=$value['c_name']?></td>
 					    	<?php endif; ?>
 					    	<td><?=$value['name']?></td>
@@ -184,7 +188,7 @@
 				</tbody>
 			<?php else: ?>
 				<tr>
-					<?php if($type > 1): ?>
+					<?php if($type > 1 and $type!=7): ?>
 						<td colspan="6">-</td>
 					<?php else: ?>
 						<td colspan="5">-</td>

@@ -32,6 +32,10 @@ class Corporate_model extends MY_Sql
 				$data['category'] = $category = $this -> select_from_order_limit('auth_category', array('category_id', 'c_name'), array('type' => $type, 'enable' => '1', 'lang_type' => $this -> session -> userdata('lang')), 'update_time', 'desc');
 				$data['content_placeholder'] = ($type == 4) ? 'Youtube 網址' : '網站網址';
 				break;
+			case '7':
+				$data['category_btn'] = false;
+				$data['ckeditor_btn'] = true;
+				break;
 			default:
 				$data['category_btn'] = true;
 				$data['ckeditor_btn'] = true;
@@ -61,7 +65,7 @@ class Corporate_model extends MY_Sql
 			{
 				$category = $this -> select_from('auth_category', array('c_name', 'category_id'), array('type'=>$post['type'],'c_name' => $post['add_category'], 'lang_type' => $this -> session -> userdata('lang')), 'row');
 				
-				if (empty($category) && ($post['type'] == 2 || $post['type'] == 3 || $post['type'] == 4 || $post['type'] == 5 || $post['type'] == 6))
+				if (empty($category) && ($post['type'] == 2 || $post['type'] == 3 || $post['type'] == 4 || $post['type'] == 5 || $post['type'] == 6 || $post['type'] == 7))
 					$category['category_id'] = $this -> insert_into('auth_category', array('c_name' => $post['add_category'], 'type' => $post['type'], 'update_time' => $time, 'lang_type' => $this -> session -> userdata('lang')));
 				else
 					$this -> update_set('auth_category', array('category_id' => $category['category_id']), array('update_time' => $time));
