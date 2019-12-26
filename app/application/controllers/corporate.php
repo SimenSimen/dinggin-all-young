@@ -76,6 +76,11 @@ class Corporate extends MY_Controller
 				$this->useful->CheckComp('j_annou');
 				$data['btn_name'] = '新增公告';
 				break;
+			case '7':
+				$type = '7';
+				$this->useful->CheckComp('j_brands');
+				$data['btn_name'] = '新增品牌';
+				break;
 			default:
 				$type = '1';
 				$this->useful->CheckComp('j_company');
@@ -86,7 +91,7 @@ class Corporate extends MY_Controller
 		if($type == '4' || $type == '5')
 			$data['group'] = $this -> mod_eform -> select_from_order_limit('auth_category', array('c_name', 'category_id'), array('type' => $type, 'lang_type' => $this -> session -> userdata('lang')), 'sort', 'asc');
 
-		if($type == '1' || $type == '2' || $type == '3'|| $type == '6')
+		if($type == '1' || $type == '2' || $type == '3'|| $type == '6' || $type == '7')
 			$data['texts'] = $texts = $this -> mod_cpr -> select_from_order_limit('ckeditor', array('ck_id', 'name', 'content','enable'), array('type' => $type,  'lang_type' => $this -> session -> userdata('lang')), 'sort', 'asc');
 		else
 			$data['texts'] = $texts = $this -> mod_cpr -> inner_join_order_by('ckeditor', 'auth_category',array('ckeditor.*', 'auth_category.c_name'), array('ckeditor.type' => $type,  'ckeditor.lang_type' =>  $this -> session -> userdata('lang'), 'auth_category.lang_type' => $this -> session -> userdata('lang')), 'category_id', 'ckeditor.sort', 'asc', 'array');
@@ -412,6 +417,7 @@ class Corporate extends MY_Controller
 			$data = $this -> mod_cpr -> category_chk($type);
 			$data['back_url'] =  base_url() . 'corporate/main/' . $type;
 			$data['type'] = $type;
+
 			$this -> load -> view('/admin/system_center/ckeditor_add', $data);
 		}
 		else
@@ -446,6 +452,9 @@ class Corporate extends MY_Controller
 				case '4':
 					$data['text'] = $text = $this -> mod_cpr -> inner_join('ckeditor', 'auth_category', array('ckeditor.*', 'auth_category.c_name'), array('ckeditor.ck_id' => $ck_id, 'ckeditor.type' => $type, 'auth_category.lang_type' => $this -> session -> userdata('lang')), 'category_id', 'row');
 					$data['text']['content'] = 'https://www.youtube.com/embed/' . $data['text']['content'];
+					break;
+				case '7':
+					$data['text'] = $text = $this -> mod_cpr -> select_from('ckeditor', array('*'), array('ck_id' => $ck_id));
 					break;
 				default:
 					$data['text'] = $text = $this -> mod_cpr -> inner_join('ckeditor', 'auth_category', array('ckeditor.*', 'auth_category.c_name'), array('ckeditor.ck_id' => $ck_id, 'ckeditor.type' => $type, 'auth_category.lang_type' => $this -> session -> userdata('lang')), 'category_id', 'row');

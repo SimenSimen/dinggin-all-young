@@ -6,9 +6,14 @@ logger
 
 
 
-
 #### note
 超級管理者後台menu資料表 jur_action
+內容:圖文編輯器的需求 從ckeditor資料表產list => 共用 corporate/main 
+    新的項目要使用編輯器要調整: 
+        dinggin-all-young\app\application\controllers\corporate.php
+        dinggin-all-young\app\application\models\corporate_model.php
+        table ckeditor 的 type enum
+
 
 path 
     /admin 後台登入
@@ -17,12 +22,20 @@ path
 
 <!-- add 品牌管理 to menu  編號隨資料庫狀況更動-->
 INSERT INTO `jur_action` VALUES (null, '0', 'j_brands', '品牌管理', '', '11', 'N', 'N');
-INSERT INTO `jur_action` VALUES (null, '84', 'j_brands', '品牌管理', '/brands/brands_list', '1', 'N', 'N');
-UPDATE `jurisdicer` set d_action_list = CONCAT ( d_action_list  , ',j_brands') where d_name = '給客戶展示'
+INSERT INTO `jur_action` (d_id, d_p_id, d_code, d_name, d_link, sort, is_del, is_super ) SELECT NULL AS col1 , d_id AS col2, 'j_brands' AS col3, '品牌管理' AS col4, '/corporate/main/7' AS col5, '1' AS col6, 'N' AS col7, 'N' AS col8 FROM `jur_action` WHERE d_p_id = 0 AND d_name = '品牌管理';
+UPDATE `jurisdicer` set d_action_list = CONCAT ( d_action_list  , ',j_brands') where d_name = '給客戶展示';
+ALTER TABLE `ckeditor` MODIFY COLUMN `type` enum('1','2','3','4','5','6','7');
+
 
 
 <!-- file added -->
 dinggin-all-young\app\application\controllers\brands.php
 dinggin-all-young\app\application\views\brands\
+    <!-- list data from product_brand 改成list data from ckeditor,暫不用  -->
+    brands_list_for_product_brand.php 
+
 
 <!-- file modified -->
+dinggin-all-young\app\application\controllers\corporate.php
+dinggin-all-young\app\application\models\corporate_model.php
+dinggin-all-young\app\application\views\admin\system_center\list.php
