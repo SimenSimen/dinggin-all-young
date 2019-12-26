@@ -7,7 +7,7 @@
 | application/controllors/products.php | index ,detail |        &nbsp;        |
 |   application/library/comment.php    |    params     | 增加取得數據function |
 |  application/core/My_Controller.php  | debug, isAjax |     新增function     |
-
+|  application/controllors/brands.php  | index ,detail |        &nbsp;        |
 
 
 ## 2019-12-25
@@ -53,8 +53,11 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 - /member/info (gold/member_info) 前台會員基本資料
 - /member/upgrade (gold/member_upgrade) 升級經營會員頁面
 - /member/change_password (gold/member_password) 修改密碼頁面
+
+
 - /products?providerId=供應商&maxPrise="最大價錢"&minPrise="最小價錢"&sortType="排序"&pageNumber="頁數" 所有產品列表
 - /products/{class_id}?providerId=供應商&maxPrise="最大價錢"&minPrise="最小價錢"&sortType="排序"&pageNumber="頁數" 依照產品分類列表
+- /brands 品牌頁面
 
 ## 業務邏輯
 
@@ -72,11 +75,32 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 - @todo 11020 申請經銷會員必填欄位
 
 # ajax 
-- load items /products @see:: @todo 2200 @return array
-- item quick view /products/details/(:id)
-- add item to cart = /products/ajax_car
-- del item from cart = /products/ajax_demitcar
-- add item to favirate = /products/ajax_favorite
+
+### load items /products @see:: @todo 2200 @return array
+
+參數說明
+
+providerId: 供應商ID
+
+keyword: 搜尋關鍵字
+
+maxPrice: 最大價錢 
+
+minPrice: 最小價錢
+
+sortType: 1 為 低至高 1以外為 高至低
+
+pageNumber: 頁數
+
+pageSize: 單頁筆數 預設12
+
+### item quick view /products/details/(:id)
+
+### add item to cart = /products/ajax_car
+
+### del item from cart = /products/ajax_demitcar
+
+### add item to favirate = /products/ajax_favorite
 
 # 結案前整理
 
@@ -87,3 +111,20 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 - @todo 2200 load 商品 js 有寫好的 記得請對方移過去 ajax(/products)
  
 - 前台 view 都放在 index-all-young 資料夾名稱可以改(須改My_controller::indexViewPath)。
+
+# sql
+
+- lapack_list 插入品牌頁 
+
+```sql
+INSERT INTO `lapack_list`(`d_id`, `d_title`, `d_url`, `d_sort`, `d_enable`) VALUES (50, '品牌頁面', '/brands', 50, 'Y');
+```
+
+# 須前端協助
+
+因為js是bundle的，所以ajax須前端協助處理。
+
+- 立即搜尋結果 /products?keyword ajax
+- 搜尋結果 跳 all products (/products?keyword連結即可)
+- 商品清單 load more /products?pageNumber 須
+- 各種分類篩選條件須 前端組合參數 丟入products/brand

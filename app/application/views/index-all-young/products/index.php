@@ -52,7 +52,7 @@
                     <div class="content-indent container-fluid-custom-mobile-padding-02">
                         <div class="tt-filters-options" id="js-tt-filters-options">
                             <h1 class="tt-title">
-                                <?= $keyword ? $keyword : 'All Products' ?> <span class="tt-title-total">(<?= $pageData['TotalRecord'] ?>)</span>
+                                <?= $keyword ? $keyword : 'All Products' ?> <span class="tt-title-total">(<?= $pageData['total_rows'] ?>)</span>
                             </h1>
                             <div class="tt-btn-toggle">
                                 <a href="#">FILTER</a>

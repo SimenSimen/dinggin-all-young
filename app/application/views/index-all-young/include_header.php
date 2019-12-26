@@ -14,14 +14,11 @@
 	<nav class="panel-menu mobile-main-menu">
 		<ul>
 			<li>
-				<a href="_inni_brand-store.php">Brand</a>
+				<a href="<?= base_url('/brands') ?>">Brand</a>
 				<ul>
-					<li><a href="_inni_brand-store.php">Brand name1</a></li>
-					<li><a href="_inni_brand-store.php">Brand name2</a></li>
-					<li><a href="_inni_brand-store.php">Brand name3</a></li>
-					<li><a href="_inni_brand-store.php">Brand name4</a></li>
-					<li><a href="_inni_brand-store.php">Brand name5</a></li>
-					<li><a href="_inni_brand-store.php">Brand name6</a></li>
+					<?php foreach ($brandList as $brand) : ?>
+						<li><a href="<?= base_url('/brands/') . $brand['prd_cid'] ?>"><?= $brand['d_name'] ?></a></li>
+					<?php endforeach ?>
 				</ul>
 			</li>
 			<li><a href="<?= base_url('products') ?>">All products</a></li>
@@ -113,13 +110,13 @@
 							<nav>
 								<ul>
 									<li class="dropdown tt-megamenu-col-01">
-										<a href="_inni_brand-store.php">Brand</a>
+										<a href="<?= base_url('/brands/') ?>">Brand</a>
 										<div class="dropdown-menu">
 											<div class="row tt-col-list">
 												<div class="col">
 													<ul class="tt-megamenu-submenu">
 														<?php foreach ($brandList as $brand) : ?>
-															<li><a href="_inni_brand-store.php"><?= $brand['d_name'] ?>
+															<li><a href="<?= base_url('/brands/') . $brand['prd_cid'] ?>"><?= $brand['d_name'] ?>
 																	<img src="images/loader.svg" data-src="images/custom/tt-layout-img-01.png" alt="Example 1">
 																	<!-- <span class="tt-badge tt-fatured">Popular</span> -->
 																</a></li>
