@@ -44,21 +44,21 @@ static host http://st.all-young.io/
 |              |     邀請碼分享-印尼     |   &nbsp;    | &nbsp; |
 | 前台會員專區 |                         |   &nbsp;    | &nbsp; |
 
-| Title |           item           | description | remark |
-| :---: | :----------------------: | :---------: | :----: |
-| 前台  |        品牌-商店         |   &nbsp;    | &nbsp; |
-|       |         全部商品         |   &nbsp;    | &nbsp; |
-|       |       商品頁(有貨)       |   &nbsp;    | &nbsp; |
-|       |       商品頁(缺貨)       |   &nbsp;    | &nbsp; |
-|       |         追蹤清單         |   &nbsp;    | &nbsp; |
-|       |          搜尋頁          |   &nbsp;    | &nbsp; |
-|       | 購物車 - 二聯式發票 印尼 |   &nbsp;    | &nbsp; |
-|       | 購物車 - 三聯式發票 印尼 |   &nbsp;    | &nbsp; |
-|       | 購物車 - 二聯式發票確認  |   &nbsp;    | &nbsp; |
-|       | 購物車 - 三聯式發票確認  |   &nbsp;    | &nbsp; |
-|       |    購物車 - 訂單完成     |   &nbsp;    | &nbsp; |
-|       |       紅利點數查詢       |   &nbsp;    | &nbsp; |
-|       |        購物金查詢        |   &nbsp;    | &nbsp; |
+| Title |           item           | description |            remark             |
+| :---: | :----------------------: | :---------: | :---------------------------: |
+| 前台  |        品牌-商店         |   &nbsp;    |            &nbsp;             |
+|       |         全部商品         |    done     |        參數須前端幫忙         |
+|       |       商品頁(有貨)       |   &nbsp;    |            &nbsp;             |
+|       |       商品頁(缺貨)       |   &nbsp;    |            &nbsp;             |
+|       |         追蹤清單         |   &nbsp;    |            &nbsp;             |
+|       |          搜尋頁          |    done     | 立即搜尋    \| 跳頁須前端幫忙 |
+|       | 購物車 - 二聯式發票 印尼 |   &nbsp;    |            &nbsp;             |
+|       | 購物車 - 三聯式發票 印尼 |   &nbsp;    |            &nbsp;             |
+|       | 購物車 - 二聯式發票確認  |   &nbsp;    |            &nbsp;             |
+|       | 購物車 - 三聯式發票確認  |   &nbsp;    |            &nbsp;             |
+|       |    購物車 - 訂單完成     |   &nbsp;    |            &nbsp;             |
+|       |       紅利點數查詢       |   &nbsp;    |            &nbsp;             |
+|       |        購物金查詢        |   &nbsp;    |            &nbsp;             |
 
 
 # lang_model

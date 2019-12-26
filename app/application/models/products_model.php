@@ -3,6 +3,18 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class products_model extends CI_Model
 {
+	/** sort by m price ASC */
+	const SORT_M_PRICE_ASC = 1;
+
+	/** sort by m price DESC */
+	const SORT_M_PRICE_DESC = 2;
+
+	/** sort by 00 price ASC */
+	const SORT_00_PRICE_ASC = 3;
+
+	/** sort by 00 price ASC */
+	const SORT_00_PRICE_DESC = 4;
+
 	private $_db_name, $_db_store, $_db_type;
 	public function __construct()
 	{
@@ -166,12 +178,58 @@ class products_model extends CI_Model
 		$this->db->where([
 			'lang_type' => $lang,
 			'd_enable' => 'Y',
-			'SID' => 0,
 		]);
 
 		$this->db->order_by('prd_csort', 'asc');
 		$query = $this->db->get('product_brand');
-		
+
 		return $query->result_array();
+	}
+
+	/**
+	 * get product page data
+	 *
+	 * @param array $where
+	 * @param integer $page
+	 * @param integer $pageSize
+	 * @param integer $sortType
+	 * @return array
+	 */
+	public function pageData($where = [], $page = 1, $pageSize = 10, $sortType = null)
+	{
+		$this->db->from('products')->where($where);
+		$total = $this->db->count_all_results();
+
+		$pages = ceil($total / $pageSize);
+
+		$offset = ($page - 1)  * $pageSize;
+
+		$start = $offset + 1;
+		$end = min(($offset + $pageSize), $total);
+
+		$this->db->from('products')->where($where);
+
+		switch ($sortType) {
+			case static::SORT_M_PRICE_ASC:
+				$this->db->order_by('d_mprice', 'asc');
+				break;
+			case static::SORT_M_PRICE_DESC:
+				$this->db->order_by('d_mprice', 'desc');
+				break;
+			case static::SORT_00_PRICE_ASC:
+				$this->db->order_by('prd_price00', 'asc');
+				break;
+			case static::SORT_00_PRICE_DESC:
+				$this->db->order_by('prd_price00', 'desc');
+				break;
+		}
+
+		return [
+			'start' => $start,
+			'end' => $end,
+			'total_rows' => $total,
+			'total_pages' => $pages,
+			'data' => $this->db->limit($pageSize, $offset)->get()->result_array(),
+		];
 	}
 }

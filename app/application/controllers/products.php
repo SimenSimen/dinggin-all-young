@@ -78,7 +78,7 @@ class Products extends MY_Controller
 		header("Cache-control: private");
 
 		/** extract query string to variables */
-		extract(Comment::params(['providerId', 'keyword', 'maxPrise', 'minPrise', 'sortType', 'pageNumber']));
+		extract(Comment::params(['providerId', 'keyword', 'maxPrice', 'minPrice', 'sortType', 'pageNumber', 'pageSize'], ['pageNumber' => 1, 'pageSize' => 12]));
 		$data['keyword'] = $keyword;
 
 		//語言包
@@ -151,30 +151,41 @@ class Products extends MY_Controller
 			$_POST['pid'] = (isset($_POST['pid'])) ? $_POST['pid'] : 0;
 			$pid = (($pid <> 0)) ? $pid : $_POST['pid'];
 
-			$page_limit = 12; //	每頁顯示筆數
-
+			/** Product query filter start */
 			$qpage_arr = [
 				'lang_type' => $this->setlang,
 				'd_enable' => 'Y',
-				'prd_cid' => $pid,
 				'prd_active' => 1,
 			];
 
+			$pid > 0 ? $qpage_arr['prd_cid'] = $pid : '';
+			$keyword ? $qpage_arr['prd_name like'] = ('%' . $keyword . '%') : '';
+			$providerId ? $qpage_arr['supplier_id'] = $providerId : '';
+
+			$priceColumn = 'prd_price00';
+
 			if ($d_spec_type == 1) {
 				$qpage_arr['is_bonus'] = 'N';
+				$priceColumn = 'd_mprice';
+				$sort = $sortType == 1 ? products_model::SORT_M_PRICE_ASC : products_model::SORT_M_PRICE_DESC;
 			} else {
 				$qpage_arr['is_vip'] = 'N';
 				$qpage_arr['is_bonus'] = 'N';
+				$sort = $sortType == 1 ? products_model::SORT_00_PRICE_ASC : products_model::SORT_00_PRICE_DESC;
 			}
+			$minPrice ? $qpage_arr[$priceColumn . ' >='] = $minPrice : '';
+			$maxPrice ? $qpage_arr[$priceColumn . ' <='] = $maxPrice : '';
 
-			$qpage = $this->useful->setPageJcy($dbname, $Topage, $page_limit, $qpage_arr);
+			/** Product query filter end */
 
-			$data['page'] = $this->useful->getPageJcy($qpage);
-			$data['pageData'] = $qpage;
+			$pageData = $this->products_model->pageData($qpage_arr, $pageNumber, $pageSize, $sortType ? $sort : null);
+
+			$data['pageData'] = $pageData;
 			$data['pid'] = $pid;
 			//產品列表
 			$prd_sort = $_SESSION['prd_sort'];
-			$dbdata = $this->products_model->productsList($pid, $page_limit, $Topage, $d_spec_type, $prd_sort);
+
+			$dbdata = $pageData['data'];
 		}
 
 		foreach ($dbdata as $key => &$value) {

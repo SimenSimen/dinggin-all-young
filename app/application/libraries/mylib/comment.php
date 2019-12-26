@@ -49,9 +49,10 @@ class Comment
 	 * Post data is priority
 	 *
 	 * @param array|string $key
+	 * @param array $default
 	 * @return array|string|null
 	 */
-	public static function params($keys)
+	public static function params($keys, $default = [])
 	{
 		$isArray = is_array($keys);
 		$data = [];
@@ -63,7 +64,7 @@ class Comment
 		foreach ($keys as $key) {
 			$postData = static::SetValue($key);
 			$data[$key] = $postData == '' ? static::Set_GET($key) : $postData;
-			$data[$key] = $data[$key] == '' ? null : $data[$key];
+			$data[$key] = $data[$key] == '' ? @$default[$key] : $data[$key];
 		}
 
 		return $isArray ? $data : @$data[$keys[0]];
