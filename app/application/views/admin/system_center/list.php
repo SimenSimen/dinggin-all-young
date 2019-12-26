@@ -108,7 +108,20 @@
 	      <td style="width:1%;"><button class="btn btn-info" type="button">儲存排序</button></td>
 	      <td style="width:1%;"><button class="btn btn-danger" type="button">刪除勾選</button></td>
 	    </tr>
-  	</table>
+	</table>
+
+	<!-- 品牌管理 -->
+	<?if($type==7){?>
+		<form action="/corporate/main/7" method="post">
+			<input type="text" name="content" <?=$_SESSION["brand"]["where"]['content'] ? 'value=' . $_SESSION["brand"]["where"]['content'] : 'placeholder="搜尋內容"' ?>>
+			<select name="enable">
+				<option value='1' <?=($_SESSION["brand"]["where"]['enable'] === '1')?'selected':'';?>>公開</option>
+				<option value='0' <?=($_SESSION["brand"]["where"]['enable'] === '0')?'selected':'';?>>隱藏</option>
+			</select>
+			<input type="submit" value="搜尋" style=" font-size:14px;" />
+		</form>
+	<?}?>
+	  
   	<?if($type==4 || $type==5){?>
 	<table id='list' class='table table-hover table-bordered table-condensed' style="width:80%;">
 	    <tr id='list_title_tr'>

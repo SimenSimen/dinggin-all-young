@@ -91,10 +91,31 @@ class Corporate extends MY_Controller
 		if($type == '4' || $type == '5')
 			$data['group'] = $this -> mod_eform -> select_from_order_limit('auth_category', array('c_name', 'category_id'), array('type' => $type, 'lang_type' => $this -> session -> userdata('lang')), 'sort', 'asc');
 
-		if($type == '1' || $type == '2' || $type == '3'|| $type == '6' || $type == '7')
+		if($type == '1' || $type == '2' || $type == '3'|| $type == '6')
 			$data['texts'] = $texts = $this -> mod_cpr -> select_from_order_limit('ckeditor', array('ck_id', 'name', 'content','enable'), array('type' => $type,  'lang_type' => $this -> session -> userdata('lang')), 'sort', 'asc');
 		else
 			$data['texts'] = $texts = $this -> mod_cpr -> inner_join_order_by('ckeditor', 'auth_category',array('ckeditor.*', 'auth_category.c_name'), array('ckeditor.type' => $type,  'ckeditor.lang_type' =>  $this -> session -> userdata('lang'), 'auth_category.lang_type' => $this -> session -> userdata('lang')), 'category_id', 'ckeditor.sort', 'asc', 'array');
+		
+		if($type == '7') {
+			$brand_where = ['type' => $type,  'lang_type' => $this -> session -> userdata('lang')];
+			
+			if ($_POST['enable']) {
+				$brand_where['content like \'%' . $_POST['content'] . '%\''] =  '';
+				$_SESSION["brand"]["where"]['content'] = $_POST['content'];
+			} else {
+				$_SESSION["brand"]["where"]['content'] = '';
+			}
+
+			if ($_POST['enable'] || $_POST['enable'] === '0') {
+				$brand_where['enable'] = $_POST['enable']; 
+				$_SESSION["brand"]["where"]['enable'] = $_POST['enable'];
+			} else {
+				$_SESSION["brand"]["where"]['enable'] = false;
+			}
+
+			$data['texts'] = $texts = $this -> mod_cpr -> select_from_order_limit('ckeditor', array('ck_id', 'name', 'content','enable'), $brand_where, 'sort', 'asc');
+		}
+			
 		
 		foreach($data['texts'] as $key => $val){
 			$data['texts'][$key]['enable'] = ($val['enable'] == 0)?'隱藏中':'公開中';
