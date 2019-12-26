@@ -25,6 +25,8 @@ INSERT INTO `jur_action` VALUES (null, '0', 'j_brands', '品牌管理', '', '11'
 INSERT INTO `jur_action` (d_id, d_p_id, d_code, d_name, d_link, sort, is_del, is_super ) SELECT NULL AS col1 , d_id AS col2, 'j_brands' AS col3, '品牌管理' AS col4, '/corporate/main/7' AS col5, '1' AS col6, 'N' AS col7, 'N' AS col8 FROM `jur_action` WHERE d_p_id = 0 AND d_name = '品牌管理';
 UPDATE `jurisdicer` set d_action_list = CONCAT ( d_action_list  , ',j_brands') where d_name = '給客戶展示';
 ALTER TABLE `ckeditor` MODIFY COLUMN `type` enum('1','2','3','4','5','6','7');
+<!-- 增加欄位 for product_brand 關聯 ckeditor -->
+alter table product_brand add column ck_id int(10) UNSIGNED default NULL;
 
 
 
@@ -39,3 +41,4 @@ dinggin-all-young\app\application\views\brands\
 dinggin-all-young\app\application\controllers\corporate.php
 dinggin-all-young\app\application\models\corporate_model.php
 dinggin-all-young\app\application\views\admin\system_center\list.php
+dinggin-all-young\app\application\models\product_brand_model.php

@@ -443,8 +443,20 @@ class Corporate extends MY_Controller
 		}
 		else
 		{
-			if($this -> mod_cpr -> add_action($this -> input -> post()))
+			$insert_id = $this -> mod_cpr -> add_action($this -> input -> post());
+			
+			if($insert_id)
+			{
+				if ($type == '7') 
+				{
+					$this -> load -> model('product_brand_model', 'mod_brand');
+					$this->mod_brand->addFromCkeditor($insert_id);
+
+				}
+				
 				$this -> script_message('新增成功', '/corporate/main/' . $type, 'top');
+			}
+				
 			else
 				$this -> script_message('新增失敗', '/corporate/ckeditor_add/' . $type, 'top');
 		}
@@ -486,10 +498,19 @@ class Corporate extends MY_Controller
 		}
 		else
 		{
-			if($this -> mod_cpr -> update_action($this -> input -> post(), $ck_id))
+			if($this -> mod_cpr -> update_action($this -> input -> post(), $ck_id)){
+
+				if ($type == '7') 
+				{
+					$this -> load -> model('product_brand_model', 'mod_brand');
+					$this->mod_brand->updateFromCkeditor($ck_id);
+				}
+
 				$this -> script_message('修改成功', '/corporate/main/' . $type, 'top');
-			else
+			} else {
 				$this -> script_message('修改失敗', '/corporate/ckeditor_edit/' . $type, 'top');
+			}
+				
 		}
 	}
 
@@ -499,14 +520,17 @@ class Corporate extends MY_Controller
 		$ck_array = $this -> input -> post('ck_id');
 		$del_array = $this -> input -> post('check_id');
 		$type = $this -> input -> post('type');
+		$this -> load -> model('product_brand_model', 'mod_brand');
 
 		if(is_array($ck_array) && is_array($del_array))
 		{
 			$del_data = array_intersect($del_array, $ck_array);
 			
 			foreach($del_data as $val){
-				$this -> mod_cpr -> delete_where('ckeditor',array('ck_id' => $val));
+				$this -> mod_cpr -> delete_where('ckeditor',array('ck_id' => $val));	
+				$this->mod_brand->deleteFromCkeditor($val);
 			}
+
 			$this -> script_message('刪除成功', '/corporate/main/' . $type);
 		}
 		else
