@@ -104,7 +104,7 @@ class Products extends MY_Controller
 
 		$bdata = $this->mymodel->OneSearchSql('buyer', 'd_spec_type', array('by_id' => $by_id)); //是否VIP
 
-		$data['d_spec_type'] =	$d_spec_type	=	$bdata['d_spec_type'];
+		$data['d_spec_type'] = $d_spec_type = $bdata['d_spec_type'];
 
 		/** product class list */
 		$data['productClasses'] = $this->classModel->getList($this->setlang);
@@ -113,8 +113,9 @@ class Products extends MY_Controller
 		/** supplier list */
 		$data['suppliers'] = $this->mymodel->select_page_form('providers', '', 'id,english_name,is_provider', array());
 
+		$data['ToPage'] = $Topage = intval($pageNumber) > 0 ? intval($pageNumber) : 1;
+
 		if ($this->data['web_config']['product_home'] == 1 and empty($pid)) { //後台選擇商品首頁為熱銷商品排序
-			$data['ToPage'] = $Topage = !empty($_POST['ToPage']) ? $_POST['ToPage'] : 1;
 			if ($d_spec_type == 1) { //特殊身分
 				$qpage_arr = array('lang_type' => $this->setlang, 'prd_hot' => 'fa fa-heart', 'd_enable' => 'Y', 'prd_active' => '1', 'is_bonus' => 'N');
 				$dbdata_arr = array('lang_type' => $this->setlang, 'prd_hot' => 'fa fa-heart', 'd_enable' => 'Y', 'prd_active' => '1', 'is_bonus' => 'N');
@@ -129,6 +130,8 @@ class Products extends MY_Controller
 			$dbdata = $this->mymodel->select_page_form($dbname, $qpage['result'], '*', $dbdata_arr, 'hot_sort');
 			$data['path_title'] = '<li><a href="/' . $this->DataName . '/"><span>' . $this->lang_menu["$this->DataName"] . '</span></a></li>';
 		} else { //後台選擇商品首頁為最新商品排序	,or 選擇某一分類
+
+			/** breadcrumb maybe I guess */
 			if (!empty($pid)) {
 				//先找出這個分類有沒有上層
 				$path = $this->mymodel->OneSearchSql($dbname_class, 'PID, prd_cname', array('prd_cid' => $pid));
@@ -144,16 +147,26 @@ class Products extends MY_Controller
 			} else {
 				$data['path_title'] = '<li><a href="/' . $this->DataName . '"><span>' . $this->lang_menu["$this->DataName"] . '</span></a></li>';
 			}
+
 			$_POST['pid'] = (isset($_POST['pid'])) ? $_POST['pid'] : 0;
 			$pid = (($pid <> 0)) ? $pid : $_POST['pid'];
-			//分頁
-			$data['ToPage'] = $Topage = !empty($_POST['ToPage']) ? $_POST['ToPage'] : 1;
-			$page_limit 	= 	12; //	每頁顯示筆數
+
+			$page_limit = 12; //	每頁顯示筆數
+
+			$qpage_arr = [
+				'lang_type' => $this->setlang,
+				'd_enable' => 'Y',
+				'prd_cid' => $pid,
+				'prd_active' => 1,
+			];
+
 			if ($d_spec_type == 1) {
-				$qpage_arr = array('lang_type' => $this->setlang, 'd_enable' => Y, 'prd_cid' => $pid, 'prd_active' => 1, 'is_bonus' => N);
+				$qpage_arr['is_bonus'] = 'N';
 			} else {
-				$qpage_arr = array('lang_type' => $this->setlang, 'd_enable' => Y, 'prd_cid' => $pid, 'prd_active' => 1, 'is_vip' => N, 'is_bonus' => N);
+				$qpage_arr['is_vip'] = 'N';
+				$qpage_arr['is_bonus'] = 'N';
 			}
+
 			$qpage = $this->useful->setPageJcy($dbname, $Topage, $page_limit, $qpage_arr);
 
 			$data['page'] = $this->useful->getPageJcy($qpage);
@@ -163,6 +176,7 @@ class Products extends MY_Controller
 			$prd_sort = $_SESSION['prd_sort'];
 			$dbdata = $this->products_model->productsList($pid, $page_limit, $Topage, $d_spec_type, $prd_sort);
 		}
+
 		foreach ($dbdata as $key => &$value) {
 			$value['priceName']	=	($d_spec_type == 1) ? $this->lang['p_price_vip'] : $this->lang['p_price'];
 			$value['price']		=	($d_spec_type == 1) ? $value['d_mprice'] : $value['prd_price00'];
@@ -170,19 +184,31 @@ class Products extends MY_Controller
 			$image  = explode(',', $value['prd_image']);
 			$value['prd_image'] = $image[0];
 		}
+
 		$data['dbdata'] = $dbdata;
 		$data['body_class'] = 'products';
+
 		// product_type_img用
 		$data['class_name'] = $path['prd_cname'];
 		$data['class_url'] = '/' . $this->DataName . '/' . $pid;
+
 		//APP分享
 		$data['share_url'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$data['share_prd_image'] = 'http://' . $_SERVER['HTTP_HOST'] . "/images/logo_s.png";
 
 		//view
-		$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
-		$this->load->view($this->indexViewPath . '/products/index', $data);
-		$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
+
+		if ($this->isAjax()) {
+			/** return html */
+			// $this->load->view($this->indexViewPath . '/products/_item_list', $data);
+			/** return array */
+			$this->apiResponse($data['dbdata']);
+		} else {
+
+			$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
+			$this->load->view($this->indexViewPath . '/products/index', $data);
+			$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
+		}
 	}
 
 	//好物精選(熱銷產品)前台列表
@@ -518,10 +544,14 @@ class Products extends MY_Controller
 		$data['body_class'] = 'products';
 		$data['banner'] = '';
 		//view
-		$this->load->view('index/header3', $data);
-		$this->load->view('index/product/nav', $data);
-		$this->load->view('index/product/detail', $data);
-		$this->load->view('index/footer' . $this->style, $data);
+
+		if ($this->isAjax()) {
+			$this->apiResponse($data);
+		} else {
+			$this->load->view($this->indexViewPath . '/header', $data);
+			$this->load->view($this->indexViewPath . '/products/info', $data);
+			$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
+		}
 	}
 
 	//購物車

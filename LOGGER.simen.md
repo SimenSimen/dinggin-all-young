@@ -2,14 +2,13 @@
 
 ## 2019-12-26
 
-|             更動檔案路徑             |  說明  |         備註         |
-| :----------------------------------: | :----: | :------------------: |
-| application/controllors/products.php | index  |        &nbsp;        |
-|   application/library/comment.php    | params | 增加取得數據function |
+|             更動檔案路徑             |     說明      |         備註         |
+| :----------------------------------: | :-----------: | :------------------: |
+| application/controllors/products.php | index ,detail |        &nbsp;        |
+|   application/library/comment.php    |    params     | 增加取得數據function |
+|  application/core/My_Controller.php  | debug, isAjax |     新增function     |
 
-產品說明
 
-pageNumber 如果有 pageNumber參數，只會畫出商品的content並回傳 (取得更多產品)
 
 ## 2019-12-25
 
@@ -59,8 +58,6 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 
 ## 業務邏輯
 
-
-
 會員
 
 - /member_sms_code (member_register/sms_code) 驗證簡訊
@@ -70,13 +67,16 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 - /member/lopin (gold/login_set) 處理前台會員登入
 - /member/upgrade/submit (gold/data_AED) 升級經營會員
 
-商品
-
-
-
 # 待辦
 
 - @todo 11020 申請經銷會員必填欄位
+
+# ajax 
+- load items /products @see:: @todo 2200 @return array
+- item quick view /products/details/(:id)
+- add item to cart = /products/ajax_car
+- del item from cart = /products/ajax_demitcar
+- add item to favirate = /products/ajax_favorite
 
 # 結案前整理
 
@@ -84,4 +84,6 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 - @todo 1001 強制轉語系，須移除。
 - @todo 1121 移除開啟錯誤訊息。
 - @todo 3329 顯示錯誤訊息 CI loading 語言的時候會報錯 先exit，結案後移除。
+- @todo 2200 load 商品 js 有寫好的 記得請對方移過去 ajax(/products)
+ 
 - 前台 view 都放在 index-all-young 資料夾名稱可以改(須改My_controller::indexViewPath)。

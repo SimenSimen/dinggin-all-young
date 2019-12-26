@@ -118,16 +118,12 @@
 											<div class="row tt-col-list">
 												<div class="col">
 													<ul class="tt-megamenu-submenu">
-														<li><a href="_inni_brand-store.php">Brand name1
-																<img src="images/loader.svg" data-src="images/custom/tt-layout-img-01.png" alt="Example 1">
-																<!-- <span class="tt-badge tt-fatured">Popular</span> -->
-															</a></li>
-														<li><a href="_inni_brand-store.php">Brand name2 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-02.png" alt="Example 2"></a></li>
-														<li><a href="_inni_brand-store.php">Brand name3 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-03.png" alt="Example 3"></a></li>
-														<li><a href="_inni_brand-store.php">Brand name4<img src="images/loader.svg" data-src="images/custom/tt-layout-img-04.png" alt="Example 4">
-															</a></li>
-														<li><a href="_inni_brand-store.php">Brand name5 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-05.png" alt="Example 5"></a></li>
-														<li><a href="_inni_brand-store.php">Brand name6 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-06.png" alt="Example 6"></a></li>
+														<?php foreach ($brandList as $brand) : ?>
+															<li><a href="_inni_brand-store.php"><?= $brand['d_name'] ?>
+																	<img src="images/loader.svg" data-src="images/custom/tt-layout-img-01.png" alt="Example 1">
+																	<!-- <span class="tt-badge tt-fatured">Popular</span> -->
+																</a></li>
+														<?php endforeach ?>
 													</ul>
 												</div>
 											</div>

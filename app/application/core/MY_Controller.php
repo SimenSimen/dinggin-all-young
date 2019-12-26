@@ -66,6 +66,7 @@ class MY_Controller extends CI_Controller
 		$this->load->model('views_model', 'mod_views');
 		$this->load->model('lang_model', 'lmodel');
 		$this->load->model('rule_model', 'mod_rule');
+		$this->load->model('products_model', 'productModel');
 
 		//語言包設置
 		@session_start();
@@ -121,6 +122,7 @@ class MY_Controller extends CI_Controller
 
 		/** register the index path prefix */
 		$this->load->vars(['indexViewPath' => $this->indexViewPath]);
+		$this->load->vars(['brandList' => $this->productModel->brandList($this->setlang)]);
 	}
 
 	//----------------------------------------------------------------------------------- 
@@ -1851,5 +1853,15 @@ class MY_Controller extends CI_Controller
 		echo '<pre>';
 		call_user_func_array('var_dump', $params);
 		exit();
+	}
+
+	/**
+	 * Check if the request is from ajax
+	 * 
+	 * @return boolean
+	 */
+	protected function isAjax()
+	{
+		return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 	}
 }
