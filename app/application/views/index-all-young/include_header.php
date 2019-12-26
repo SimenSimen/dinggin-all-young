@@ -24,7 +24,7 @@
 					<li><a href="_inni_brand-store.php">Brand name6</a></li>
 				</ul>
 			</li>
-			<li><a href="_inni_products-list.php">All products</a></li>
+			<li><a href="<?= base_url('products') ?>">All products</a></li>
 			<li><a href="_inni_news.php">News</a></li>
 			<li><a href="_inni_blog.php">Blog</a></li>
 			<li><a href="_inni_activity.php">Activity page</a></li>
@@ -134,7 +134,7 @@
 										</div>
 									</li>
 									<li class="dropdown tt-megamenu-col-01">
-										<a href="_inni_products-list.php">All products</a>
+										<a href="<?= base_url('products') ?>">All products</a>
 										<!-- <div class="dropdown-menu">
 											<div class="row tt-col-list">
 												<div class="col">

@@ -1840,4 +1840,16 @@ class MY_Controller extends CI_Controller
 		$web_config = $this->mod_index->select_from('style_config', array('domain_id' => $domain_id));
 		return $web_config;
 	}
+
+
+	/**
+	 * Debug helper
+	 */
+	protected function debug()
+	{
+		$params = func_get_args();
+		echo '<pre>';
+		call_user_func_array('var_dump', $params);
+		exit();
+	}
 }

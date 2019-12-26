@@ -321,6 +321,12 @@ class Gold extends MY_Controller
 		if ($dbdata['d_is_member'] == Member_model::BUYER_ROLE_SALE) {
 			$mdbdata = $this->mymodel->OneSearchSql('member', '*', array('by_id' => $dbdata['by_id']));
 
+			/** Fixed the empty problems */
+			$mdbdata['country'] = @$mdbdata['country'] ? $mdbdata['country'] : 0;
+			$mdbdata['city'] = @$mdbdata['city'] ? $mdbdata['city'] : 0;
+			$mdbdata['shop_city'] = @$mdbdata['shop_city'] ? $mdbdata['shop_city'] : 0;
+			$mdbdata['shop_country'] = @$mdbdata['shop_country'] ? $mdbdata['shop_country'] : 0;
+
 			$data['mdbdata'] = $mdbdata;
 			//經營會員 城市撈取
 			$data['member_city']	  =	$this->mymodel->get_area_data($mdbdata['country']);
@@ -690,7 +696,7 @@ class Gold extends MY_Controller
 		}
 
 		/** check if the member is already not the normal member */
-		if ($_SESSION['MT']['d_is_member'] !== Member_model::BUYER_ROLE_NORMAL) {
+		if ($_SESSION['MT']['d_is_member'] != Member_model::BUYER_ROLE_NORMAL) {
 			$this->useful->AlertPage('/member', 'Already apply or upgraded.');
 		}
 

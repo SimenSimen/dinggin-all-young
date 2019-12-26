@@ -1,5 +1,16 @@
 # 紀錄
 
+## 2019-12-26
+
+|             更動檔案路徑             |  說明  |         備註         |
+| :----------------------------------: | :----: | :------------------: |
+| application/controllors/products.php | index  |        &nbsp;        |
+|   application/library/comment.php    | params | 增加取得數據function |
+
+產品說明
+
+pageNumber 如果有 pageNumber參數，只會畫出商品的content並回傳 (取得更多產品)
+
 ## 2019-12-25
 
 |           更動檔案路徑           |                       說明                        |  備註  |
@@ -43,8 +54,12 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 - /member/info (gold/member_info) 前台會員基本資料
 - /member/upgrade (gold/member_upgrade) 升級經營會員頁面
 - /member/change_password (gold/member_password) 修改密碼頁面
+- /products?providerId=供應商&maxPrise="最大價錢"&minPrise="最小價錢"&sortType="排序"&pageNumber="頁數" 所有產品列表
+- /products/{class_id}?providerId=供應商&maxPrise="最大價錢"&minPrise="最小價錢"&sortType="排序"&pageNumber="頁數" 依照產品分類列表
 
 ## 業務邏輯
+
+
 
 會員
 
@@ -55,6 +70,10 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 - /member/lopin (gold/login_set) 處理前台會員登入
 - /member/upgrade/submit (gold/data_AED) 升級經營會員
 
+商品
+
+
+
 # 待辦
 
 - @todo 11020 申請經銷會員必填欄位
@@ -63,6 +82,6 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 
 - @todo 10 註解掉 註冊成功 email 發送，因為會報錯。須復原。
 - @todo 1001 強制轉語系，須移除。
-- @todo 1121 移除開啟錯誤訊息
-- 前台 view 都放在 index-all-young 資料夾名稱可以改(須改My_controller::indexViewPath)
-
+- @todo 1121 移除開啟錯誤訊息。
+- @todo 3329 顯示錯誤訊息 CI loading 語言的時候會報錯 先exit，結案後移除。
+- 前台 view 都放在 index-all-young 資料夾名稱可以改(須改My_controller::indexViewPath)。

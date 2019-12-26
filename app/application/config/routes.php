@@ -46,6 +46,7 @@ $route['404_override'] = 'index/error';
 
 $route["products/(:num)"]                                                = 'products/index/$1';
 $route["products/(:num)/(:num)"]                                = 'products/index/$1/$2';
+
 $route["index/(:num)"]                                                    = 'index/index/$1';
 $route["(:num)"]                                                                = 'index/index/$1';
 $route['member_register']                                                = 'member_register/register';
@@ -70,6 +71,5 @@ $route['member/logout'] = 'gold/logout';
 $route['member/login'] = 'gold/login_set';
 $route['member/upgrade'] = 'gold/member_upgrade';
 $route['member/upgrade/submit'] = '/gold/data_AED';
-
 
 $route['forget_pass'] = 'gold/forgot';

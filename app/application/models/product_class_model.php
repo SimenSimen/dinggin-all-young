@@ -6,7 +6,7 @@ class Product_class_model extends My_Model
     {
         $this->load->database();
     }
-    
+
     public function enable($id, array $data)
     {
         $data['is_hot'] = 1;
@@ -30,5 +30,32 @@ class Product_class_model extends My_Model
     {
         $this->db->where('prd_cid', $id);
         $this->db->update('product_class', $data);
+    }
+
+    /**
+     * Get the product list for active
+     *
+     * @param string $lang
+     * @param boolean $deep
+     * @return array
+     */
+    public function getList($lang, $deep = false)
+    {
+
+        if ($deep) {
+            /** @todo search all and make it a deep json array */
+        } else {
+            $this->db->where([
+                'd_enable'  => 'Y',
+                'lang_type' => $lang,
+                'PID' => 0
+            ]);
+
+            $this->db->order_by("prd_csort", "asc");
+        }
+
+        $query = $this->db->get('product_class');
+
+        return $query->result_array();
     }
 }
