@@ -6,12 +6,12 @@
 
 ## Docker
 
-```
-    $ cd project_root/docker
+```bash
+cd project_root/docker
 ```
 
-```
-$ docker-compose up
+```bash
+docker-compose up
 ```
 
 ### mysql
