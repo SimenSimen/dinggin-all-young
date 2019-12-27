@@ -5,6 +5,8 @@
 |             更動檔案路徑             |          說明           |    備註    |
 | :----------------------------------: | :---------------------: | :--------: |
 | application/controllors/products.php | ajax_car ,ajax_demitcar |   &nbsp;   |
+|   application/controllors/cart.php   |          index          |   &nbsp;   |
+|  application/controllors/webpay.php  |       pay,wait()        |   &nbsp;   |
 |   application/library/comment.php    |         params          | 修正非字串 |
 
 ## 2019-12-26
@@ -61,10 +63,14 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 - /member/upgrade (gold/member_upgrade) 升級經營會員頁面
 - /member/change_password (gold/member_password) 修改密碼頁面
 
-
 - /products?providerId=供應商&maxPrise="最大價錢"&minPrise="最小價錢"&sortType="排序"&pageNumber="頁數" 所有產品列表
 - /products/{class_id}?providerId=供應商&maxPrise="最大價錢"&minPrise="最小價錢"&sortType="排序"&pageNumber="頁數" 依照產品分類列表
 - /brands 品牌頁面
+
+- /cart 購物車頁面
+- /cart/checkout (cart/cart_checkout) 結帳頁面
+- /cart/finish (/cart/cart_checkout_ok) 結帳完成
+
 
 ## 業務邏輯
 
@@ -95,7 +101,7 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 
 ### load items /products 
 
-** 取得商品資料 用來load more 或是 Filter**
+**取得商品資料 用來load more 或是 Filter**
 
 #### 參數說明
 
@@ -165,7 +171,7 @@ INSERT INTO `lapack_list`(`d_id`, `d_title`, `d_url`, `d_sort`, `d_enable`) VALU
 
 # 須前端協助
 
-因為js是bundle的，所以ajax須前端協助處理。
+因為js是bundle的，所以ajax以及畫面效果須前端協助處理。
 
 - 立即搜尋結果 /products?keyword ajax
 - 搜尋結果 跳 all products (/products?keyword連結即可)
@@ -173,7 +179,12 @@ INSERT INTO `lapack_list`(`d_id`, `d_title`, `d_url`, `d_sort`, `d_enable`) VALU
 - 各種分類篩選條件須 前端組合參數 丟入products/brand
 - 加入購物車 (加入購物車後會回傳商品資料供繪製畫面，上放數量需增加，數字tag上有存數據(data-count))
 - 移出購物車 (刪除按鍵上有存數據(data-key) 傳入api 即可刪除)
+- 上方購物車 icon 數量(.tt-badge-cart .b_green\[data-count\]) 修改
 - 加入最愛清單
-- tt-badge-cart b_green (原始數量放在data-count attr) 購物車數量增加減少
+- 購物車內商品數量修改 數量(.tt-price\[data-price\])跟價格(.tt-input-counter input)
+- 購物車內購物金檢查 (tt-input-counter\[data-amount\])
+- 購物車內紅利檢查 (tt-input-counter\[data-amount\])
+
+
 
 詳情請看 ajax 相關附件
