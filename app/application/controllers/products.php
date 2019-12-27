@@ -844,20 +844,25 @@ class Products extends MY_Controller
 	}
 
 	//產品分類內頁
-	public function product_class_info($id = '')
+	public function product_class_info($id = '', $copy = '')
 	{
-
-
 		$this->useful->CheckComp('j_comlist');
 
 		$data['dbname'] = $dbname = 'product_class';
+
 		$dbdata = $this->mmodel->select_from($dbname, array('prd_cid' => $id));
 		//20180223
 		$dbdata['prd_cimage1'] = $dbdata['prd_cimage'];
 		$dbdata['prd_cimage'] = '/uploads/000/000/0000/0000000000/products_class/' . $dbdata['prd_cimage'];
 
+		if (!empty($copy)) {
+			$dbdata['prd_cid'] = '';
+			$dbdata['prd_image'] = '';
+		}
+
 		$data['dbdata'] = $dbdata;
 
+		
 		$data['protype'] = $this->mymodel->select_page_form('product_class', '', '*', array('lang_type' => $this->session->userdata('lang'), 'PID' => 'NULL', 'd_enable' => 'Y'));
 
 		//檔案名

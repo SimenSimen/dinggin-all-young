@@ -87,6 +87,8 @@
 
 <left>
 <body background="<?=$web_config['admin_background_image']?>" bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<button type="button" id="cancel" class="btn btn-default" onclick="javascript:history.back(1);" >返回列表</button>
+
 <form method="post" action="/<?=$DataName?>/data_AED" enctype="multipart/form-data" onsubmit="return check(this)">
 
   <div class="config-div">
@@ -102,6 +104,16 @@
                   <?foreach ($protype as $pvalue):?>
                     <option value="<?=$pvalue['prd_cid']?>" <?=($dbdata['PID']==$pvalue['prd_cid'])?'selected':'';?>><?=stripslashes($pvalue['prd_cname'])?></option>  
                   <? endforeach;?>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td class='member_list_title_td'>狀態</td>
+              <td class='member_list_input_td'>
+                <select name="d_enable" id="d_enable">
+                  <option value="#">請選擇狀態</option>
+                  <option value="Y" <?=$pvalue['d_enable'] == 'Y' ? 'selected' : ''?>>公開</option>
+                  <option value="N" <?=$pvalue['d_enable'] == 'N' ? 'selected' : ''?>>隱藏</option>
                 </select>
               </td>
             </tr>

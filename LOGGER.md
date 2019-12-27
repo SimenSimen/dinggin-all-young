@@ -45,3 +45,6 @@ dinggin-all-young\app\application\controllers\corporate.php
 dinggin-all-young\app\application\models\corporate_model.php
 dinggin-all-young\app\application\views\admin\system_center\list.php
 dinggin-all-young\app\application\models\product_brand_model.php
+dinggin-all-young\app\application\controllers\products.php
+dinggin-all-young\app\application\views\products\product_class_info.php
+dinggin-all-young\app\application\views\products\product_class_list.php

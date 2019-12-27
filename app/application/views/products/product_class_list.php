@@ -110,6 +110,7 @@
       <td>搶購時間</td>
       <td>設定限時搶購</td>
       <td>修改</td>
+      <td>複製</td>
       <td>刪除</td>
     </tr>
 
@@ -192,10 +193,16 @@
               </a>
             </td>
             <td class='center_td white_td'> 
+              <a href="javascript:void(0);" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_info/<?=$value['prd_cid']?>/Y'">
+                <i class="fa fa-copy"></i>
+              </a>
+            </td>
+            <td class='center_td white_td'> 
               <a href="javascript:void(0);" onclick="del_file('<?=$value['prd_cname']?>','<?=$value['prd_cid']?>')">
                 <i class="fa fa-trash-o"></i>
               </a>
             </td>
+            
           </tr>
               <? foreach($data_sub[$prd_cid] as $key_second => $value_sub){  //第二層 ?>
               <tr style="color:#bd9595;">
@@ -226,6 +233,11 @@
                 <td class='center_td white_td'> 
                   <a href="javascript:void(0);" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_info/<?=$value_sub['prd_cid']?>'">
                     <i class="fa fa-cogs"></i>
+                  </a>
+                </td>
+                <td class='center_td white_td'> 
+                  <a href="javascript:void(0);" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_info/<?=$value_sub['prd_cid']?>/Y'">
+                    <i class="fa fa-copy"></i>
                   </a>
                 </td>
                 <td class='center_td white_td'>
