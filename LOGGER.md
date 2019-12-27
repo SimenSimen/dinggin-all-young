@@ -14,6 +14,9 @@ logger
         dinggin-all-young\app\application\models\corporate_model.php
         table ckeditor 的 type enum
 
+商品系列維護 = 商品分類管理
+商品資料維護 = 商品管理
+
 
 path 
     /admin 後台登入
