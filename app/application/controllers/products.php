@@ -567,40 +567,71 @@ class Products extends MY_Controller
 
 	//購物車
 	public function ajax_car()
-	{ //寫入購物車
+	{
+		$this->lang = $this->lmodel->config('10', $this->setlang);
+
 		if ($_SESSION['MT']['is_login'] == 1) {
-			$buyer				=	$this->mymodel->OneSearchSql('buyer', 'PID', array('by_id' => $_SESSION['MT']['by_id']));
+			$buyer = $this->mymodel->OneSearchSql('buyer', 'PID, d_spec_type', array('by_id' => $_SESSION['MT']['by_id']));
 			if ($this->data['web_config']['is_PID'] == 1 and empty($buyer['PID'])) {
-				echo '沒有推薦人';
+				return $this->apiResponse(['success' => false, 'msg' => $this->lang['norecommended']]);
 			} else {
-				$product_id	=	$_POST['product_id'];
-				$shop_count	=	$_POST['shop_count'];
-				$spec		=	$_POST['spec'];
+
+				extract(Comment::params(['product_id', 'shop_count', 'spec'], ['product_id' => 0]));
+
 				if (!empty($shop_count) and preg_match("/^[1-9][0-9]*$/", $shop_count)) {
-					if ($this->data['web_config']['cart_spec_status'] == 1) {
-						$_SESSION['join_car']["$product_id##*$spec"] = "$shop_count";
-					} else {
-						$_SESSION['join_car']["$product_id"] = "$shop_count";
+
+					$itemData = $this->products_model->productsDetail($product_id, $buyer['d_spec_type']);
+
+					if (count($itemData['data']) == 0) {
+						return $this->apiResponse(['success' => false, 'msg' => $this->lang['no_item']]);
 					}
-					echo '已加入購物車';
+
+					$_SESSION['join_car'] = !empty($_SESSION['join_car']) ? $_SESSION['join_car'] : [];
+
+					$price = ($buyer['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
+
+					$tempData = [
+						'prd_id' => $product_id,
+						'amount' => $shop_count,
+						'prd_name' => $itemData['data']['prd_name'],
+						'price' => $itemData['data'][$price],
+						'prd_image' => $itemData['data']['prd_image'],
+					];
+
+					$this->data['web_config']['cart_spec_status'] == 1 ? $tempData['spec'] = $spec : '';
+
+					$uuid = uniqid('cart_');
+					$_SESSION['join_car'][$uuid] = $tempData;
+
+					return $this->apiResponse(['success' => true, 'msg' => $this->lang['p_carok'], 'data' => [
+						'item' => $itemData['data'],
+						'uuid' => $uuid
+					]]);
 				} else {
-					echo '請選擇購買數量';
+					return $this->apiResponse(['success' => false, 'msg' => $this->lang['p_carnum']]);
 				}
 			}
 		} else {
-			echo '請登入';
+			return $this->apiResponse(['success' => false, 'msg' => $this->lang['Login']]);
 		}
 	}
 
+	/**
+	 * remove item from cart
+	 */
 	public function ajax_demitcar()
-	{ //移除購物車
-		$product_id	=	$_POST['product_id'];
-		$spec		=	$_POST['spec'];
-		if ($this->data['web_config']['cart_spec_status'] == 1) {
-			unset($_SESSION['join_car'][$product_id . '##*' . $spec]);
-		} else {
-			unset($_SESSION['join_car'][$product_id]);
+	{
+		$this->lang = $this->lmodel->config('10', $this->setlang);
+
+		extract(Comment::params(['uuid'], ['uuid' => 'there is no key']));
+
+		$uuid = is_array($uuid) ? $uuid : [$uuid];
+
+		foreach ($uuid as $id) {
+			unset($_SESSION['join_car'][$id]);
 		}
+
+		return $this->apiResponse(['success' => true, 'msg' => $this->lang['del_true']]);
 	}
 
 	//加入最愛

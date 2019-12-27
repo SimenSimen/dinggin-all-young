@@ -630,7 +630,7 @@ class Gold extends MY_Controller
 	public function member()
 	{
 		if (empty($_SESSION['MT'])) {
-			$this->useful->AlertPage('/gold/login', $this->lang_menu['Login']);
+			$this->useful->AlertPage('/login', $this->lang_menu['Login']);
 		}
 		@session_start();
 

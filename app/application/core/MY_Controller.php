@@ -122,7 +122,17 @@ class MY_Controller extends CI_Controller
 
 		/** register the index path prefix */
 		$this->load->vars(['indexViewPath' => $this->indexViewPath]);
+
+		/** nav element start*/
+		/** register the brand list */
 		$this->load->vars(['brandList' => $this->productModel->brandList($this->setlang)]);
+
+		/** register cart info */
+		$cartItems = !empty($_SESSION['join_car']) ? $_SESSION['join_car'] : [];
+
+		$this->load->vars(['cartItems' => $cartItems]);
+
+		/** nav element end */
 	}
 
 	//----------------------------------------------------------------------------------- 

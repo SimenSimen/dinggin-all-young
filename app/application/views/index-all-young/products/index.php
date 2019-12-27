@@ -87,15 +87,15 @@
 
 <script>
     /** Handle loading the items temp @todo 2200*/
-    $(document).ready(function() {
-        var loadButton = $('#load-more');
-        var currentPage = parseInt(qs('pageNumber')) || 1;
+    // $(document).ready(function() {
+    //     var loadButton = $('#load-more');
+    //     var currentPage = parseInt(qs('pageNumber')) || 1;
 
-        loadButton.on('click', function() {
-            var url = updateUrlParameter(window.location.href, 'pageNumber', currentPage += 1);
-            $.get(url, function(result) {
-                $('#items-area').append(result);
-            });
-        });
-    })
+    //     loadButton.on('click', function() {
+    //         var url = updateUrlParameter(window.location.href, 'pageNumber', currentPage += 1);
+    //         $.get(url, function(result) {
+    //             $('#items-area').append(result);
+    //         });
+    //     });
+    // })
 </script>

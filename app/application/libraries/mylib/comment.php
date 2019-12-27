@@ -15,7 +15,12 @@ class Comment
 	{
 		$string = "";
 		if (isset($_GET[$value])) {
+
+			if (!is_string($_GET[$value])) {
+				return $_GET[$value];
+			}
 			//環境配置的變量,所有的 ' (單引號), " (雙引號), \ (反斜線) and 空字符會自動轉為含有反斜線的溢出字符
+
 			if (!get_magic_quotes_gpc()) {
 				$string = addslashes($_GET[$value]);
 			} else {
@@ -30,6 +35,10 @@ class Comment
 	{ //use
 		$string = "";
 		if (isset($_POST[$value])) {
+
+			if (!is_string($_POST[$value])) {
+				return $_POST[$value];
+			}
 			//環境配置的變量,所有的 ' (單引號), " (雙引號), \ (反斜線) and 空字符會自動轉為含有反斜線的溢出字符
 			if (!get_magic_quotes_gpc() and !is_array($_POST[$value])) {
 				$string = addslashes($_POST[$value]);
