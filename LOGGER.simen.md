@@ -1,5 +1,12 @@
 # 紀錄
 
+## 2019-12-27
+
+|             更動檔案路徑             |          說明           |    備註    |
+| :----------------------------------: | :---------------------: | :--------: |
+| application/controllors/products.php | ajax_car ,ajax_demitcar |   &nbsp;   |
+|   application/library/comment.php    |         params          | 修正非字串 |
+
 ## 2019-12-26
 
 |             更動檔案路徑             |     說明      |         備註         |
@@ -74,31 +81,67 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 
 - @todo 11020 申請經銷會員必填欄位
 
-# ajax 
+# ajax 相關附件
 
-### load items /products @see:: @todo 2200 @return array
+### 基本說明
 
-參數說明
+回傳固定格式如下，資料型態為json
 
-providerId: 供應商ID
+|   參數    |   型態    |                  說明                  |
+| :-------: | :-------: | :------------------------------------: |
+| `success` | `boolean` |            ajax 成功或失敗             |
+|   `msg`   | `string`  |                拋出訊息                |
+|  `data`   |   `mix`   | 包含的資料 以下API回傳值皆為此欄位的值 |
 
-keyword: 搜尋關鍵字
+### load items /products 
 
-maxPrice: 最大價錢 
+** 取得商品資料 用來load more 或是 Filter**
 
-minPrice: 最小價錢
+#### 參數說明
 
-sortType: 1 為 低至高 1以外為 高至低
+|     參數     |   型態    |                 說明                 |
+| :----------: | :-------: | :----------------------------------: |
+| `providerId` |   `int`   |               供應商ID               |
+|  `keyword`   | `string`  |              搜尋關鍵字              |
+|  `maxPrice`  | `decimal` |               最大價錢               |
+|  `minPrice`  | `decimal` |               最小價錢               |
+|    `msg`     | `string`  |               拋出訊息               |
+|  `sortType`  |   `int`   | sortType: 1 為 低至高 1以外為 高至低 |
+| `pageNumber` |   `mix`   |                 頁數                 |
+|  `pageSize`  |   `mix`   |           單頁筆數 預設12            |
 
-pageNumber: 頁數
+#### 回傳說明
 
-pageSize: 單頁筆數 預設12
+資料庫商品資料
 
 ### item quick view /products/details/(:id)
 
-### add item to cart = /products/ajax_car
+### add item to cart /products/ajax_car
+
+#### 參數說明
+
+|     參數     |   型態   |  說明  |
+| :----------: | :------: | :----: |
+| `product_id` |  `int`   | 商品ID |
+| `shop_count` |  `int`   |  數量  |
+|    `spec`    | `string` |  規格  |
+
+#### 回傳說明
+
+錯誤的話不會有。
+資料庫商品資料。
 
 ### del item from cart = /products/ajax_demitcar
+
+#### 參數說明
+
+|  參數  |   型態   |                    說明                     |
+| :----: | :------: | :-----------------------------------------: |
+| `uuid` | `string` | 購物車keyid 會放在刪除按扭的tag上(data-key) |
+
+#### 回傳說明
+
+空值
 
 ### add item to favirate = /products/ajax_favorite
 
@@ -128,3 +171,9 @@ INSERT INTO `lapack_list`(`d_id`, `d_title`, `d_url`, `d_sort`, `d_enable`) VALU
 - 搜尋結果 跳 all products (/products?keyword連結即可)
 - 商品清單 load more /products?pageNumber 須
 - 各種分類篩選條件須 前端組合參數 丟入products/brand
+- 加入購物車 (加入購物車後會回傳商品資料供繪製畫面，上放數量需增加，數字tag上有存數據(data-count))
+- 移出購物車 (刪除按鍵上有存數據(data-key) 傳入api 即可刪除)
+- 加入最愛清單
+- tt-badge-cart b_green (原始數量放在data-count attr) 購物車數量增加減少
+
+詳情請看 ajax 相關附件
