@@ -49,13 +49,13 @@ class Cart extends MY_Controller
 		$data['pay_ls'] = $this->lmodel->config('9999', $this->setlang);
 		// 判斷是否登入
 		if ($_SESSION['MT']['is_login'] == 1) {
-			if (empty($_SESSION['join_car'])) {
-				if ((!empty($this->style == 2)) and (!empty($this->session->userdata['isapp']))) {	//版型二,且是APP裝置需到沒有商品頁面
-					$this->useful->AlertPage('/cart/nocart');
-				} else {
-					$this->useful->AlertPage($_SESSION['Url'], $this->lang['nocart']);
-				}
-			}
+			// if (empty($_SESSION['join_car'])) {
+			// 	if ((!empty($this->style == 2)) and (!empty($this->session->userdata['isapp']))) {	//版型二,且是APP裝置需到沒有商品頁面
+			// 		$this->useful->AlertPage('/cart/nocart');
+			// 	} else {
+			// 		$this->useful->AlertPage($_SESSION['Url'], $this->lang['nocart']);
+			// 	}
+			// }
 			//推薦人
 			$by_id = $_SESSION['MT']['by_id'];
 			$buyer = $this->mymodel->OneSearchSql('buyer', 'PID, d_dividend,d_shopping_money,address', array('by_id' => $by_id));
@@ -74,25 +74,30 @@ class Cart extends MY_Controller
 			$data['banner']				=	'';
 			$bdata						=	$this->mymodel->OneSearchSql('buyer', 'd_spec_type', array('by_id' => $data['by_id']));
 			$price						=	($bdata['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
+
 			//撈出購物車的商品
 			$join_car	=	$_SESSION['join_car'];
 			unset($_SESSION['join_car']['']);
-			foreach ($join_car as $key => $value) {
+
+			foreach ($join_car as $uuid => $item) {
+				$key = $item['prd_id'];
+				$value = $item['amount'];
+
 				$productsDetail 					= 	$this->products_model->productsDetail($key, $bdata['d_spec_type']);
 				$dbdata								= 	$productsDetail['data'];
-				$productList[$key]['num']			=	$value;
-				$productList[$key]['prd_id']		=	$dbdata['prd_id'];
-				$productList[$key]['prd_amount']	=	$dbdata['prd_amount'];
-				$productList[$key]['prd_lock_amount']	=	$dbdata['prd_lock_amount'];
-				$productList[$key]['spec']			=	$key;
-				$productList[$key]['spec_rename']	=	str_replace('##*', '_', $key);
-				$productList[$key]['spec_name']		=	substr($key, strpos($key, '##*') + 3);
-				$productList[$key]['prd_name']		=	str_replace("\'", "'", $dbdata['prd_name']);
+				$productList[$uuid]['num']			=	$value;
+				$productList[$uuid]['prd_id']		=	$dbdata['prd_id'];
+				$productList[$uuid]['prd_amount']	=	$dbdata['prd_amount'];
+				$productList[$uuid]['prd_lock_amount']	=	$dbdata['prd_lock_amount'];
+				$productList[$uuid]['spec']			=	$key;
+				$productList[$uuid]['spec_rename']	=	str_replace('##*', '_', $key);
+				$productList[$uuid]['spec_name']		=	substr($key, strpos($key, '##*') + 3);
+				$productList[$uuid]['prd_name']		=	str_replace("\'", "'", $dbdata['prd_name']);
 				$image = explode(',', $dbdata['prd_image']);
 				$dbdata['prd_image'] = $image[0];
-				$productList[$key]['prd_image']		=	$dbdata['prd_image'];
-				$productList[$key]['price']			=	number_format($dbdata[$price], 2);
-				$productList[$key]['total']			=	number_format($value * $dbdata[$price], 2);
+				$productList[$uuid]['prd_image']		=	$dbdata['prd_image'];
+				$productList[$uuid]['price']			=	number_format($dbdata[$price], 2);
+				$productList[$uuid]['total']			=	number_format($value * $dbdata[$price], 2);
 			}
 			//地區撈取
 			$data['country'] = $this->mymodel->get_area_data();
@@ -139,13 +144,14 @@ class Cart extends MY_Controller
 			$data['body_class']		=	'cart-check-fix';
 			//view
 			$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
-			$this->load->view($this->indexViewPath . '/cart/cart', $data);
+			$this->load->view($this->indexViewPath . '/cart/index', $data);
 			$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
 		} else {
 			$_SESSION['url']	=	'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			$this->useful->AlertPage('/gold/login', $this->lang['Login']);
 		}
 	}
+
 	//計算小計ajax
 	public function ajax_count()
 	{
@@ -204,6 +210,7 @@ class Cart extends MY_Controller
 		$dbdata['zipcode'] = $codata['s_zipcode'];
 		echo json_encode($dbdata);
 	}
+
 	//購物車 AJAX 同會員資料(地址)
 	public function ajax_area()
 	{
@@ -347,18 +354,22 @@ class Cart extends MY_Controller
 			$join_car	=	$_SESSION['join_car'];
 			$price	=	($bdata['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
 			$data['PriceSum'] = 0;
-			foreach ($join_car as $key => $value) {
+			foreach ($join_car as $uuid => $item) {
+
+				$key = $item['prd_id'];
+				$value = $item['amount'];
+
 				$productsDetail					=	$this->products_model->productsDetail($key, $bdata['d_spec_type']);
 				$dbdata							=	$productsDetail['data'];
-				$productList[$key]['num']		=	$value;
-				$productList[$key]['prd_name']	=	str_replace("\'", "'", $dbdata['prd_name']);
-				$productList[$key]['spec']		=	$key;
-				$productList[$key]['spec_name']	=	substr($key, strpos($key, '##*') + 3);
+				$productList[$uuid]['num']		=	$value;
+				$productList[$uuid]['prd_name']	=	str_replace("\'", "'", $dbdata['prd_name']);
+				$productList[$uuid]['spec']		=	$key;
+				$productList[$uuid]['spec_name']	=	substr($key, strpos($key, '##*') + 3);
 				$image = explode(',', $dbdata['prd_image']);
 				$dbdata['prd_image'] = $image[0];
-				$productList[$key]['prd_image']	=	$dbdata['prd_image'];
-				$productList[$key]['price']		=	$dbdata[$price];
-				$productList[$key]['total']		=	$value * $dbdata[$price];
+				$productList[$uuid]['prd_image']	=	$dbdata['prd_image'];
+				$productList[$uuid]['price']		=	$dbdata[$price];
+				$productList[$uuid]['total']		=	$value * $dbdata[$price];
 				$data['PriceSum']				=	$productList[$key]['total'] + $data['PriceSum'];
 			}
 			$data['productList']	=	$productList;
@@ -402,13 +413,14 @@ class Cart extends MY_Controller
 			}
 			$data['body_class']		=	'cart-check-fix';
 			//view
-			$this->load->view('index/header' . $this->style, $data);
-			$this->load->view('index/cart/cart_checkout', $data);
-			$this->load->view('index/footer' . $this->style, $data);
+			$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
+			$this->load->view($this->indexViewPath . '/cart/process', $data);
+			$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
 		} else {
 			$this->useful->AlertPage('/gold/login', $this->lang['Login']);
 		}
 	}
+
 	public function cart_checkout_ok()
 	{
 		// 判斷是否登入
@@ -435,9 +447,9 @@ class Cart extends MY_Controller
 			unset($_SESSION['join_car']);
 			unset($_SESSION['use_dividend']);
 
-			$this->load->view('index/header' . $this->style, $data);
-			$this->load->view('index/cart/cart_checkout_ok', $data);
-			$this->load->view('index/footer' . $this->style, $data);
+			$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
+			$this->load->view($this->indexViewPath . '/cart/complete', $data);
+			$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
 			$_SESSION['oid'] = '';
 		} else {
 			$this->useful->AlertPage('/gold/login', $this->lang['Login']);

@@ -29,7 +29,7 @@ class products_model extends CI_Model
 	 * @return array stdClass db
 	 */
 	public function productsType($type = 0)
-	{
+	{;
 		$sql_where = "where lang_type ='$this->setlang' and d_enable='Y' ";
 		if ($type == 0) {
 			$sql_where .= " and PID = 0";
@@ -84,7 +84,6 @@ class products_model extends CI_Model
 	 */
 	public function productsDetail($id, $d_spec_type)
 	{
-
 		if ($d_spec_type == 1) {
 			$sql_where = "where p.`prd_id`=$id and p.`lang_type` ='$this->setlang' and p.`d_enable`='Y' and p.`prd_active`='1' and p.`is_bonus`='N'";
 		} else {

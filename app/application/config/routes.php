@@ -73,3 +73,6 @@ $route['member/upgrade'] = 'gold/member_upgrade';
 $route['member/upgrade/submit'] = '/gold/data_AED';
 
 $route['forget_pass'] = 'gold/forgot';
+
+$route['cart/checkout'] = 'cart/cart_checkout';
+$route['cart/finish'] = '/cart/cart_checkout_ok';

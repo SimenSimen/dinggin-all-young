@@ -554,8 +554,8 @@ class Products extends MY_Controller
 		$data['share_prd_image'] = 'http://' . $_SERVER['HTTP_HOST'] . "/uploads/000/000/0000/0000000000/products/" . $dbdata['prd_image'];
 		$data['body_class'] = 'products';
 		$data['banner'] = '';
-		//view
 
+		//view
 		if ($this->isAjax()) {
 			$this->apiResponse($data);
 		} else {
