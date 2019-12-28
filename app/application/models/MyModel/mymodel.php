@@ -60,7 +60,7 @@ class Mymodel extends MY_Model
 	}
 
 	// 分頁專用 可like
-	public function select_page_form_like($table = "", $page = "", $filed = "*", $set = '',$like='', $order_id = "", $order_type = 'asc', $where_type = 'and')
+	public function select_page_form_like($table = "", $page = "", $filed = "*", $set = '', $like = '', $order_id = "", $order_type = 'asc', $where_type = 'and')
 	{
 		$type = $where_type;
 		$num = 0;
@@ -79,7 +79,7 @@ class Mymodel extends MY_Model
 			foreach ($like as $key => $value) {
 				if ($value <> '') {
 					$where_type = ($num == 0) ? 'where' : $type;
-					
+
 					$sql .= $where_type . ' ' . $key . ' like "%' . $value . '%"';
 					$num++;
 				}
@@ -120,7 +120,7 @@ class Mymodel extends MY_Model
 	}
 
 	// 分頁專用(where有值為0不會跳過) 可like
-	public function select_page_form_0_like($table = "", $page = "", $filed = "*", $set = '', $like='', $order_id = "", $order_type = 'asc', $where_type = 'and')
+	public function select_page_form_0_like($table = "", $page = "", $filed = "*", $set = '', $like = '', $order_id = "", $order_type = 'asc', $where_type = 'and')
 	{
 		$type = $where_type;
 		$num = 0;
@@ -139,7 +139,7 @@ class Mymodel extends MY_Model
 			foreach ($like as $key => $value) {
 				if ($value <> '') {
 					$where_type = ($num == 0) ? 'where' : $type;
-					
+
 					$sql .= $where_type . ' ' . $key . ' like "%' . $value . '%"';
 					$num++;
 				}

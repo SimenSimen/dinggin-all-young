@@ -2,10 +2,10 @@
 
 ## 2019-12-28
 
-|            更動檔案路徑            |        說明         |     備註     |
-| :--------------------------------: | :-----------------: | :----------: |
-|  application/controllors/cart.php  |                     |    &nbsp;    |
-| application/core/My_Controller.php | apiResponse,isLogin | 新增function |
+|            更動檔案路徑            |         說明         |     備註     |
+| :--------------------------------: | :------------------: | :----------: |
+|  application/controllors/cart.php  | total_all,ajax_count |    &nbsp;    |
+| application/core/My_Controller.php | apiResponse,isLogin  | 新增function |
 
 ## 2019-12-27
 
@@ -123,6 +123,14 @@
 
 ### item quick view /products/details/(:id)
 
+#### 參數說明
+
+如url 傳入id
+
+#### 回傳說明
+
+資料庫商品資料。
+
 ### add item to cart /products/ajax_car
 
 #### 參數說明
@@ -135,7 +143,6 @@
 
 #### 回傳說明
 
-錯誤的話不會有。
 資料庫商品資料。
 
 ### del item from cart = /products/ajax_demitcar
@@ -152,6 +159,8 @@
 
 ### Change the amount for the item = /products/ajax_count
 
+#### 參數說明
+
 | 參數  | 型態  |     說明      |
 | :---: | :---: | :-----------: |
 | `key` | `int` | 購物車物品key |
@@ -159,7 +168,44 @@
 
 #### 回傳說明
 
-會回傳正確修改的數量
+修改後數量
+
+### Change the amount for the item = /products/ajax_total
+
+#### 參數說明
+
+|         參數         |   型態    |    說明    |
+| :------------------: | :-------: | :--------: |
+|    `use_dividend`    | `decimal` |  紅利折抵  |
+| `use_shopping_money` | `decimal` | 使用購物金 |
+
+#### 回傳說明
+
+|     參數     |   型態    |    說明    |
+| :----------: | :-------: | :--------: |
+| `dataTotal`  |   `int`   |   總金額   |
+| `only_money` |   `int`   |    現金    |
+| `dataBonus`  | `decimal` | 可獲得紅利 |
+
+### Select the common address = /products/ajax_common_address
+
+#### 參數說明
+
+|     參數     | 型態  |  說明  |
+| :----------: | :---: | :----: |
+| `address_id` | `int` | 地址ID |
+
+#### 回傳說明
+
+|    參數    |   型態   |    說明    |
+| :--------: | :------: | :--------: |
+|   `name`   | `string` | 收件人名稱 |
+| `telphone` | `string` |    電話    |
+| `country`  |  `int`   |    國家    |
+|   `city`   |  `int`   |    城市    |
+| `countory` |  `int`   |    鄉鎮    |
+| `address`  | `string` |    地址    |
+|   `zip`    | `string` |  郵遞區號  |
 
 ### add item to favirate = /products/ajax_favorite
 

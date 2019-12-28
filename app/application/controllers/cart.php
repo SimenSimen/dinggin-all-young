@@ -48,7 +48,7 @@ class Cart extends MY_Controller
 		$this->lang = $this->lmodel->config('22', $this->setlang);
 		$data['pay_ls'] = $this->lmodel->config('9999', $this->setlang);
 		// 判斷是否登入
-		if ($_SESSION['MT']['is_login'] == 1) {
+		if ($this->isLogin()) {
 			// if (empty($_SESSION['join_car'])) {
 			// 	if ((!empty($this->style == 2)) and (!empty($this->session->userdata['isapp']))) {	//版型二,且是APP裝置需到沒有商品頁面
 			// 		$this->useful->AlertPage('/cart/nocart');
@@ -73,10 +73,10 @@ class Cart extends MY_Controller
 				$data['memberName']			=	$this->lang['yourAccount'] . '<b>' . $memberName['name'] . '</b>';
 			}
 
-			$data['by_id']				=	$_SESSION['MT']['by_id'];
-			$data['banner']				=	'';
-			$bdata						=	$this->mymodel->OneSearchSql('buyer', 'd_spec_type', array('by_id' => $data['by_id']));
-			$price						=	($bdata['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
+			$data['by_id'] =	$_SESSION['MT']['by_id'];
+
+			$bdata = $this->mymodel->OneSearchSql('buyer', 'd_spec_type', array('by_id' => $data['by_id']));
+			$price = ($bdata['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
 
 			//撈出購物車的商品
 			$join_car = !empty($_SESSION['join_car']) ? $_SESSION['join_car'] : [];
@@ -86,6 +86,8 @@ class Cart extends MY_Controller
 			}
 
 			unset($_SESSION['join_car']['']);
+
+			$cartSum = 0;
 
 			foreach ($join_car as $uuid => $item) {
 				$key = $item['prd_id'];
@@ -106,11 +108,15 @@ class Cart extends MY_Controller
 				$productList[$uuid]['prd_image']		=	$dbdata['prd_image'];
 				$productList[$uuid]['price']			=	number_format($dbdata[$price], 2);
 				$productList[$uuid]['total']			=	number_format($value * $dbdata[$price], 2);
+
+				$cartSum += $value * $dbdata[$price];
 			}
+
 			//地區撈取
 			$data['country'] = $this->mymodel->get_area_data();
 			//常用地址
 			$data['address'] = $this->mymodel->get_address_data($data['by_id']);
+
 			switch ($this->setlang) {
 				case 'ENG':
 					$lway_name = 'lway_name_2';
@@ -128,7 +134,7 @@ class Cart extends MY_Controller
 			}
 			// 運送方式
 			// logistics_way : 撈取當下能使用的物流付款方式(由超管設定)
-			$logistics_way = $this->mod_cart->select_from_order('logistics_way', 'lway_id', asc, array('active' => 1));
+			$logistics_way = $this->mod_cart->select_from_order('logistics_way', 'lway_id', 'asc', array('active' => 1));
 			foreach ($logistics_way as $key => $value) {
 				$data['logistics_way'][$key]['lway_id'] = $value['lway_id'];
 				$data['logistics_way'][$key]['lway_name'] = $value[$lway_name];
@@ -141,15 +147,19 @@ class Cart extends MY_Controller
 				$data['payment_way'][$key]['pway_name'] = $value[$pway_name];
 			}
 
-			$data['productList']	=	$productList;
-			$data['Spath']			=	$this->Spath;
-			$data['path_title']		=	'<li><a href="/' . $this->DataName . '"><span>' . $this->lang["$this->DataName"] . '</span></a></li>';
-			$data['discount']		=	$this->mymodel->GetConfig('rule', 76)['d_val'];
-			$data['maxDiscount']	=	$this->mymodel->GetConfig('rule', 5126)['d_val'];
+			$data['productList'] =	$productList;
+			$data['Spath'] =	$this->Spath;
 
-			$cost 					=	$this->mymodel->OneSearchSql('logistics_way', 'business_account', array('lway_id' => 4));
+			$data['discount'] =	$this->mymodel->GetConfig('rule', 76)['d_val'];
+			$data['maxDiscount'] = $this->mymodel->GetConfig('rule', 5126)['d_val'];
+
+			$cost =	$this->mymodel->OneSearchSql('logistics_way', 'business_account', array('lway_id' => 4));
 			$data['freeShip']		=	$cost['business_account'];
-			$data['body_class']		=	'cart-check-fix';
+
+			$config = $this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 73));
+			$config['d_val'] = ($config['d_val']) / 100;
+			$data['dataBonus'] = $cartSum * $config['d_val'];
+
 			//view
 			$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
 			$this->load->view($this->indexViewPath . '/cart/index', $data);
@@ -198,38 +208,60 @@ class Cart extends MY_Controller
 		return $this->apiResponse(['success' => true, 'data' => $cart[$key]['amount']]);
 	}
 
-	//計算總額.紅利ajax
+	/**
+	 * 計算紅利、總額
+	 *
+	 * @return void
+	 */
 	public function total_all()
 	{
-		$use_dividend	=	$_POST['use_dividend'];
-		$use_shopping_money	=	$_POST['use_shopping_money'];
-		$joinProducts	=	$_SESSION['join_car'];
-		$by_id 			=	$_SESSION['MT']['by_id'];
-		$bdata			=	$this->mymodel->OneSearchSql('buyer', 'd_spec_type', array('by_id' => $by_id));
-		$price			=	($bdata['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
-		$dataTotal		=	0;
-
-		foreach ($joinProducts as $key => $value) {
-			$productsDetail		=	$this->products_model->productsDetail($key, $bdata['d_spec_type']);
-			$totalData			=	$productsDetail['data'];
-			$dataTotal			=	($totalData[$price] * $value) + $dataTotal;
+		/** Check login */
+		if (!$this->isLogin()) {
+			return $this->apiResponse(['success' => false, 'msg' => 'Login Error']);
 		}
-		$data['dataTotal']			=	$dataTotal;
-		$config 					=	$this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 76));
-		$dividendTurn				=	(int) $config['d_val'];
-		$_SESSION['use_dividend']	=	$use_dividend;
-		$_SESSION['use_shopping_money']	=	$use_shopping_money;
-		$use_dividend_cost			=	$use_dividend / $dividendTurn;
-		$data['only_money']			=	number_format($dataTotal - $use_dividend_cost - $use_shopping_money, 2);
+
+		$this->load->library('/mylib/comment');
+
+		extract(Comment::params(['use_dividend', 'use_shopping_money']));
+
+		$joinProducts	=	$this->getCart();
+
+		$by_id = $_SESSION['MT']['by_id'];
+		$bdata = $this->mymodel->OneSearchSql('buyer', 'd_spec_type', array('by_id' => $by_id));
+		$price = ($bdata['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
+		$dataTotal = 0;
+
+		foreach ($joinProducts as $uuid => $item) {
+			$key = $item['prd_id'];
+			$value = $item['amount'];
+
+			$productsDetail = $this->products_model->productsDetail($key, $bdata['d_spec_type']);
+			$totalData = $productsDetail['data'];
+
+			$dataTotal = ($totalData[$price] * $value) + $dataTotal;
+		}
+
+		$data['dataTotal'] =	$dataTotal;
+		$config = $this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 76));
+		$dividendTurn =	(int) $config['d_val'];
+		$_SESSION['use_dividend'] =	$use_dividend;
+		$_SESSION['use_shopping_money']	= $use_shopping_money;
+		$use_dividend_cost = $use_dividend / $dividendTurn;
+		$data['only_money'] = number_format($dataTotal - $use_dividend_cost - $use_shopping_money, 2);
 
 		//紅利
-		$config 			= $this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 73));
-		$config['d_val']	= ($config['d_val']) / 100;
-		$data['dataBonus']	= $dataTotal * $config['d_val'];
-		echo json_encode($data);
+		$config = $this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 73));
+		$config['d_val'] = ($config['d_val']) / 100;
+		$data['dataBonus'] = $dataTotal * $config['d_val'];
+
+		return $this->apiResponse(['success' => true, 'data' => $data]);
 	}
 
-	//刪除商品ajax
+	/**
+	 * 刪除商品ajax 
+	 * @deprecated 用/product/ajax_demitcar
+	 * @return void
+	 */
 	public function ajax_delete()
 	{
 		$prd_id = $_POST['prd_id'];
@@ -253,6 +285,13 @@ class Cart extends MY_Controller
 	//購物車 AJAX 同會員資料(地址)
 	public function ajax_area()
 	{
+		/** Check login */
+		if (!$this->isLogin()) {
+			return $this->apiResponse(['success' => false, 'msg' => 'Login Error']);
+		}
+
+		$this->load->library('/mylib/comment');
+
 		//語言包
 		$this->lang = $this->lmodel->config('22', $this->setlang);
 		$data['country']	=	"<select name='country' id='country' onChange='";
@@ -290,47 +329,32 @@ class Cart extends MY_Controller
 		echo json_encode($data);
 	}
 
-	//選擇常用地址ajax
+	/**
+	 * 選擇常用地址ajax 
+	 * 
+	 * @return void
+	 */
 	public function ajax_common_address()
 	{
-		$address_id		=	$_POST['address_id'];
-		$address 		=	$this->mymodel->OneSearchSql('address', 'name,telphone,country,city,countory,address,zip', array('d_id' => $address_id));
-		$dataAddress['name']		=	$address['name'];
-		$dataAddress['telphone']	=	$address['telphone'];
-		$dataAddress['zip']		=	$address['zip'];
-		$dataAddress['address']		=	$address['address'];
-		$dataAddress['country']		=	"<select name='country' id='country' onChange='";
-		$dataAddress['country']		.=	'sel_area(this.value,"","city")';
-		$dataAddress['country']		.=	"' class='form-control'>";
-		$dataAddress['city']		=	"<select name='city' id='city' onChange='";
-		$dataAddress['city']		.=	'sel_area(this.value,"","countory")';
-		$dataAddress['city']		.=	"' class='form-control'>";
-		$dataAddress['countory']	=	'<select name="countory" id="countory" class="form-control">';
-		if (!empty($address['country'])) {
-			$country_arr 			=	$this->mymodel->get_area_data();
-			foreach ($country_arr as $cvalue) {
-				$selected 				=	($cvalue['s_id'] == $address['country']) ? 'selected' : '';
-				$dataAddress['country']	.=	"<option value='" . $cvalue['s_id'] . "' " . $selected . ">" . $cvalue['s_name'] . "</option>";
-			}
-			$dataAddress['country']	.= "</select>";
+		/** Check login */
+		if (!$this->isLogin()) {
+			return $this->apiResponse(['success' => false, 'msg' => 'Login Error']);
 		}
-		if (!empty($address['city'])) {
-			$city_arr 			=	$this->mymodel->get_area_data($address['country']);
-			foreach ($city_arr as $cvalue2) {
-				$selected 		=	($cvalue2['s_id'] == $address['city']) ? 'selected' : '';
-				$dataAddress['city']	.=	"<option value='" . $cvalue2['s_id'] . "' " . $selected . ">" . $cvalue2['s_name'] . "</option>";
-			}
-			$dataAddress['city']	.= "</select>";
+
+		$this->load->library('/mylib/comment');
+
+		/** set default address_id to -1 to avoid getting first row */
+		extract(Comment::params(['address_id'], ['address_id' => -1]));
+
+		$by_id = $_SESSION['MT']['by_id'];
+
+		$address = $this->mymodel->OneSearchSql('address', 'name,telphone,country,city,countory,address,zip', array('d_id' => $address_id, 'by_id' => $by_id));
+
+		if (empty($address)) {
+			return $this->apiResponse(['success' => false, 'msg' => 'No address']);
 		}
-		if (!empty($address['countory'])) {
-			$countory_arr 			=	$this->mymodel->get_area_data($address['city']);
-			foreach ($countory_arr as $cvalue3) {
-				$selected 		=	($cvalue3['s_id'] == $address['countory']) ? 'selected' : '';
-				$dataAddress['countory']	.=	"<option value='" . $cvalue3['s_id'] . "' " . $selected . ">" . $cvalue3['s_name'] . "</option>";
-			}
-			$dataAddress['countory']	.= "</select>";
-		}
-		echo json_encode($dataAddress);
+
+		return $this->apiResponse(['success' => true, 'data' => $address]);
 	}
 
 	//選擇取貨門市ajax
