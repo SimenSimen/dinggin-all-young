@@ -897,7 +897,7 @@ class Products extends MY_Controller
 		//資料庫名稱
 		$data['dbname'] = $dbname = 'products';
 
-		if ((!empty($_POST['product_class']) or !empty($_POST['product_status']) or !empty($_POST['product_hot']) or !empty($_POST['product_new'])) or !empty($_POST['prd_name']) and $_POST['product_status'] != 3) {
+		if ((!empty($_POST['product_class']) or !empty($_POST['product_status']) or !empty($_POST['product_hot']) or !empty($_POST['product_new'])) or !empty($_POST['prd_name']) and $_POST['product_status'] != 3 or !empty($_POST['prd_no'])) {
 			if ($_POST['product_status'] == 4) $_POST['product_status'] = 0;
 			$data_array = array(
 				'lang_type' => $this->session->userdata('lang'),
@@ -906,9 +906,10 @@ class Products extends MY_Controller
 				'prd_active' => $_POST['product_status'],
 				'prd_hot' => $_POST['product_hot'],
 				'prd_new' => $_POST['product_new'],
-				'prd_name' => $_POST['prd_name']
+				'prd_name' => $_POST['prd_name'],
+				'prd_no' => $_POST['prd_no']
 			);
-
+			
 			//分頁程式 start
 			$data['ToPage'] = $Topage = !empty($_POST['ToPage']) ? $_POST['ToPage'] : 1;
 			$qpage = $this->useful->SetPage($dbname, $Topage, 20, $data_array);
@@ -916,7 +917,7 @@ class Products extends MY_Controller
 			//分頁程式 end
 
 			//$dbdata = $this -> mmodel -> get_order_data($_POST['product_class'],$_POST['product_status'],$this->setlang);
-			$dbdata = $this->select_products_data($qpage['result'], $this->session->userdata('lang'), $_POST['product_class'], $_POST['product_status'], $_POST['product_hot'], $_POST['product_new'], $_POST['prd_name']);
+			$dbdata = $this->select_products_data($qpage['result'], $this->session->userdata('lang'), $_POST['product_class'], $_POST['product_status'], $_POST['product_hot'], $_POST['product_new'], $_POST['prd_name'], $_POST['prd_no']);
 			$data['product_hot'] = $_POST['product_hot'];
 			$data['product_new'] = $_POST['product_new'];
 			$data['product_class'] = $_POST['product_class'];
@@ -975,7 +976,7 @@ class Products extends MY_Controller
 		//view
 		$this->load->view('' . $this->DataName . '/product_list', $data);
 	}
-	private function select_products_data($limit = '', $lang_type = 'TW', $class = '', $status = '', $hot = '', $new = '', $name = '')
+	private function select_products_data($limit = '', $lang_type = 'TW', $class = '', $status = '', $hot = '', $new = '', $name = '', $prd_no = '')
 	{
 		$sql  = 'SELECT products.*, SUM(products_views.page_view) AS view';
 		$sql .= ' FROM products LEFT JOIN products_views ON products.prd_id = products_views.prd_id';
@@ -992,6 +993,9 @@ class Products extends MY_Controller
 		if ($name != '') {
 			$sql .= ' and products.prd_name like "%' . $name . '%"';
 		}
+		if ($prd_no != '') {
+			$sql .= ' and products.prd_no like "%' . $prd_no . '%"';
+		}
 
 		$sql .= ' and products.d_enable="Y" group by products.prd_id';
 		if (!empty($limit))
@@ -1007,7 +1011,8 @@ class Products extends MY_Controller
 		$this->useful->CheckComp('j_member');
 
 		//匯出表單的標題
-		$title_array = array("狀態", "新品推薦", "好物精選", "商品名稱", "建議售價", "設定售價", "員工價", "PV值");
+		// $title_array = array("狀態", "新品推薦", "好物精選", "商品名稱", "建議售價", "設定售價", "員工價", "PV值");
+		$title_array = array("狀態", "商品編號", "商品名稱", "庫存數");
 
 		$dbdata = $this->mymodel->select_page_form('products', '', '*');
 		foreach ($dbdata as $value) {
@@ -1020,24 +1025,22 @@ class Products extends MY_Controller
 				$status = "其他狀況";
 			}
 
-			$new = ($value['prd_new'] == 'Y') ? '是' : '否';
-			$hot = ($value['prd_hot'] == 'fa fa-heart') ? '是' : '否';
+			// $new = ($value['prd_new'] == 'Y') ? '是' : '否';
+			// $hot = ($value['prd_hot'] == 'fa fa-heart') ? '是' : '否';
+			$prd_no = $value['prd_no'];
 			$prd_name = $value['prd_name'];
-			$prd_price01 = $value['prd_price01'];
-			$prd_price00 = $value['prd_price00'];
-			$d_mprice = $value['d_mprice'];
-			$prd_pv = $value['prd_pv'];
+			$prd_amount = $value['prd_amount'];
+			// $prd_price01 = $value['prd_price01'];
+			// $prd_price00 = $value['prd_price00'];
+			// $d_mprice = $value['d_mprice'];
+			// $prd_pv = $value['prd_pv'];
 
 			//data放進array內
 			$data_array[] = array(
 				$status,
-				$new,
-				$hot,
+				$prd_no,
 				$prd_name,
-				$prd_price01,
-				$prd_price00,
-				$d_mprice,
-				$prd_pv
+				$prd_amount
 			);
 		}
 
