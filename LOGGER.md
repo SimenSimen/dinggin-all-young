@@ -3,9 +3,6 @@
 **Need to turn on the open short tag config for php int**
 logger 
 
-
-
-
 #### note
 超級管理者後台menu資料表 jur_action
 內容:圖文編輯器的需求 從ckeditor資料表產list => 共用 corporate/main 
