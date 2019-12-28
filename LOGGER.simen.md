@@ -166,7 +166,9 @@
 
 #### 回傳說明
 
-### Change the amount for the item = /products/ajax_count
+修改後數量
+
+### Change the amount for the item = /products/ajax_total
 
 |         參數         |   型態    |    說明    |
 | :------------------: | :-------: | :--------: |
