@@ -128,24 +128,27 @@
   <table >
     <tr>
       <td>
+        <input type="text" name="prd_no" placeholder="請輸入商品編號">
         <input type="text" name="prd_name" placeholder="請輸入商品名稱">
-       <select name="product_class">
+       <!-- <select name="product_class">
           <option value="">請選擇商品系列...</option>
           <? foreach ($cdata as $cvalue):?>
             <option value="<?=$cvalue['prd_cid']?>" <?=($product_class==$cvalue['prd_cid'])?'selected':'';?>><?=stripslashes($cvalue['prd_cname'])?></option>
           <?endforeach;?>
-        </select>
+        </select> -->
        <select name="product_status" >
           <option value="" <?=($product_status=='')?'selected':'';?>>請選擇商品狀態...</option>
-          <option value="1" <?=($product_status==1)?'selected':'';?>>尚有庫存</option>
-          <option value="2" <?=($product_status==2)?'selected':'';?>>商品下架</option>
+          <option value="1" <?=($product_status==1)?'selected':'';?>>上架</option>
+          <option value="2" <?=($product_status==2)?'selected':'';?>>下架</option>
+          <!-- <option value="1" <?=($product_status==1)?'selected':'';?>>尚有庫存</option>
+          <option value="2" <?=($product_status==2)?'selected':'';?>>商品下架</option> -->
           <!--<option value="1" <?=($product_status==1)?'selected':'';?>>商品補貨</option>
           <option value="3" <?=($product_status==3)?'selected':'';?>>低於庫存商品</option>-->
         </select>
         <!-- <input type="checkbox" name="">低於庫存商品
         <input type="checkbox" name="">庫存<0 -->
 		
-		<select name="product_hot">
+		<!-- <select name="product_hot">
 			<option value="" <?=($product_hot=='')?'selected':'';?>>請選擇狀態..</option>
 			<option value="fa fa-heart" <?=($product_hot=='fa fa-heart')?'selected':'';?>>好物精選</option>
 			<option value="fa fa-heart-o" <?=($product_hot=='fa fa-heart-o')?'selected':'';?>>非好物精選</option>
@@ -155,7 +158,7 @@
       <option value="" <?=($product_new=='')?'selected':'';?>>請選擇狀態..</option>
       <option value="Y" <?=($product_new=='Y')?'selected':'';?>>新品推薦</option>
       <option value="N" <?=($product_new=='N')?'selected':'';?>>非新品推薦</option>
-    </select>
+    </select> -->
 	   
         <input type="submit" value="搜尋" id="search_action" style=" font-size:14px;">
        
