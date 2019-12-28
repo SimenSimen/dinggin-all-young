@@ -123,6 +123,14 @@
 
 ### item quick view /products/details/(:id)
 
+#### 參數說明
+
+如url 傳入id
+
+#### 回傳說明
+
+資料庫商品資料。
+
 ### add item to cart /products/ajax_car
 
 #### 參數說明
@@ -135,7 +143,6 @@
 
 #### 回傳說明
 
-錯誤的話不會有。
 資料庫商品資料。
 
 ### del item from cart = /products/ajax_demitcar
@@ -159,7 +166,20 @@
 
 #### 回傳說明
 
-會回傳正確修改的數量
+### Change the amount for the item = /products/ajax_count
+
+|         參數         |   型態    |    說明    |
+| :------------------: | :-------: | :--------: |
+|    `use_dividend`    | `decimal` |  紅利折抵  |
+| `use_shopping_money` | `decimal` | 使用購物金 |
+
+#### 回傳說明
+
+|     參數     |   型態    |    說明    |
+| :----------: | :-------: | :--------: |
+| `dataTotal`  |   `int`   |   總金額   |
+| `only_money` |   `int`   |    現金    |
+| `dataBonus`  | `decimal` | 可獲得紅利 |
 
 ### add item to favirate = /products/ajax_favorite
 

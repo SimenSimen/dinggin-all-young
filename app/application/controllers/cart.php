@@ -201,35 +201,53 @@ class Cart extends MY_Controller
 	//計算總額.紅利ajax
 	public function total_all()
 	{
-		$use_dividend	=	$_POST['use_dividend'];
-		$use_shopping_money	=	$_POST['use_shopping_money'];
-		$joinProducts	=	$_SESSION['join_car'];
-		$by_id 			=	$_SESSION['MT']['by_id'];
-		$bdata			=	$this->mymodel->OneSearchSql('buyer', 'd_spec_type', array('by_id' => $by_id));
-		$price			=	($bdata['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
-		$dataTotal		=	0;
-
-		foreach ($joinProducts as $key => $value) {
-			$productsDetail		=	$this->products_model->productsDetail($key, $bdata['d_spec_type']);
-			$totalData			=	$productsDetail['data'];
-			$dataTotal			=	($totalData[$price] * $value) + $dataTotal;
+		/** Check login */
+		if (!$this->isLogin()) {
+			return $this->apiResponse(['success' => false, 'msg' => 'Login Error']);
 		}
-		$data['dataTotal']			=	$dataTotal;
-		$config 					=	$this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 76));
-		$dividendTurn				=	(int) $config['d_val'];
-		$_SESSION['use_dividend']	=	$use_dividend;
-		$_SESSION['use_shopping_money']	=	$use_shopping_money;
-		$use_dividend_cost			=	$use_dividend / $dividendTurn;
-		$data['only_money']			=	number_format($dataTotal - $use_dividend_cost - $use_shopping_money, 2);
+
+		$this->load->library('/mylib/comment');
+
+		extract(Comment::params(['use_dividend', 'use_shopping_money']));
+
+		$joinProducts	=	$this->getCart();
+
+		$by_id = $_SESSION['MT']['by_id'];
+		$bdata = $this->mymodel->OneSearchSql('buyer', 'd_spec_type', array('by_id' => $by_id));
+		$price = ($bdata['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
+		$dataTotal = 0;
+
+		foreach ($joinProducts as $uuid => $item) {
+			$key = $item['prd_id'];
+			$value = $item['amount'];
+
+			$productsDetail = $this->products_model->productsDetail($key, $bdata['d_spec_type']);
+			$totalData = $productsDetail['data'];
+
+			$dataTotal = ($totalData[$price] * $value) + $dataTotal;
+		}
+
+		$data['dataTotal'] =	$dataTotal;
+		$config = $this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 76));
+		$dividendTurn =	(int) $config['d_val'];
+		$_SESSION['use_dividend'] =	$use_dividend;
+		$_SESSION['use_shopping_money']	= $use_shopping_money;
+		$use_dividend_cost = $use_dividend / $dividendTurn;
+		$data['only_money'] = number_format($dataTotal - $use_dividend_cost - $use_shopping_money, 2);
 
 		//紅利
-		$config 			= $this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 73));
-		$config['d_val']	= ($config['d_val']) / 100;
-		$data['dataBonus']	= $dataTotal * $config['d_val'];
-		echo json_encode($data);
+		$config = $this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 73));
+		$config['d_val'] = ($config['d_val']) / 100;
+		$data['dataBonus'] = $dataTotal * $config['d_val'];
+
+		return $this->apiResponse(['success' => true, 'data' => $data]);
 	}
 
-	//刪除商品ajax
+	/**
+	 * 刪除商品ajax 
+	 * @deprecated 用/product/ajax_demitcar
+	 * @return void
+	 */
 	public function ajax_delete()
 	{
 		$prd_id = $_POST['prd_id'];
