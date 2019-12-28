@@ -95,23 +95,28 @@
         <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_info'">
           新增產品
         </button>
-        <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/products/commits'">
+        <!-- <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/products/commits'">
           商品提交紀錄
         </button>
         <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_theme_sort'">
           主題推薦排序
         </button>
+        -->
         <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_type_sort'">
-          優選好物排序
+          <!-- 優選好物排序 -->
+          排序
         </button>
+        <!--
         <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_new_sort'">
           新品推薦排序
         </button>
-        <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_sort'">
+        -->
+        <!-- <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_sort'">
           好物精選排序
-        </button><button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_prebuy_sort'">
+        </button> -->
+        <!--<button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_prebuy_sort'">
           預購商品排序
-        </button>
+        </button> -->
 		<button class="btn btn-default" type="button" onclick="window.location.href='/products/dl_products'">
           匯出
         </button>
@@ -163,15 +168,17 @@
          商品狀態
          <select name="show_num" id="show_num" >
           <option value="no">請選擇</option>
-          <option value="1" id="1">尚有庫存</option>
-          <option value="2" id="2">商品下架</option>
-          <option value="Y" id="Y">加到新品推薦</option>
+          <option value="1" id="1">上架</option>
+          <option value="2" id="2">下架</option>
+          <!-- <option value="1" id="1">尚有庫存</option>
+          <option value="2" id="2">商品下架</option> -->
+          <!-- <option value="Y" id="Y">加到新品推薦</option>
           <option value="N" id="N">移除新品推薦</option>
           <option value="L" id="L">加到好物精選</option>
           <option value="E" id="E">移除好物精選</option>
           <option value="P" id="P">加到預購商品</option>
-          <option value="B" id="B">移除預購商品</option>
-          <option value="del" id="del">刪除</option>
+          <option value="B" id="B">移除預購商品</option> -->
+          <!-- <option value="del" id="del">刪除</option> -->
           <!--<option value="1">商品補貨</option>-->
         </select>
         <input type="button" value="修改" style=" font-size:14px;"  onclick="allcheck1()"/>

@@ -801,12 +801,27 @@ class Products extends MY_Controller
 		//分頁程式 end
 		$data['total']	=	$qpage_total['TotalRecord'];
 
+		$conditionLevle1 = array(
+			'd_enable' => ($_POST['d_enable'] ? $_POST['d_enable'] : 'Y'), 
+			'lang_type' => $this->session->userdata('lang'), 
+			'PID' => "0"
+		);
+		$conditionLevle1Like = array();
+
+		if ($_POST['prd_cname']) 
+		{
+			$conditionLevle1Like['prd_cname'] = $_POST['prd_cname'];
+		} 
+
 		//第一層分類
-		$data['dbdata'] = $dbdata = $this->mymodel->select_page_form_0($dbname, $qpage['result'], '*', array('d_enable' => 'Y', 'lang_type' => $this->session->userdata('lang'), 'PID' => "0"), 'prd_cid');
+		$data['dbdata'] = $dbdata = $this->mymodel->select_page_form_0_like($dbname, $qpage['result'], '*', $conditionLevle1, $conditionLevle1Like, 'prd_cid');
+		$conditionLevle2 = $conditionLevle1;
+		unset($conditionLevle2['PID']);
 		//第二層分類
 		foreach ($dbdata as $key => $value) {
 			$prd_cid 					=	$value['prd_cid'];
-			$data['data_sub'][$prd_cid]	=	$this->mymodel->select_page_form($dbname, '', '*', array('d_enable' => 'Y', 'lang_type' => $this->session->userdata('lang'), 'PID' => $prd_cid), 'prd_cid');
+			$conditionLevle2['PID'] = $prd_cid;
+			$data['data_sub'][$prd_cid]	=	$this->mymodel->select_page_form($dbname, '', '*', $conditionLevle2, 'prd_cid');
 		}
 		//檔案名
 		$data['DataName'] = $this->DataName;
@@ -1131,6 +1146,7 @@ class Products extends MY_Controller
 		} else {
 
 			$dbdata = $this->mmodel->select_from_order($dbname, 'hot_sort', 'asc', array('prd_hot' => 'fa fa-heart', 'd_enable' => 'Y', 'lang_type' => $this->session->userdata('lang')));
+			
 			//總數
 			$data['hot_num'] = count($dbdata);
 			$img_url = '/uploads/000/000/0000/0000000000/products/';
@@ -1436,12 +1452,12 @@ class Products extends MY_Controller
 			if ($dbname == 'products') {
 				$files = [];
 				$d_id = 'prd_id';
-				if ($_POST['restrice_num'] != '0') {
-					if ($_POST['prd_lock_amount'] > $_POST['restrice_num']) {
-						echo '<script>alert("單次購買數量不得大於限購數量");history.go(-1);</script>';
-						return '';
-					}
-				}
+				// if ($_POST['restrice_num'] != '0') {
+				// 	if ($_POST['prd_lock_amount'] > $_POST['restrice_num']) {
+				// 		echo '<script>alert("單次購買數量不得大於限購數量");history.go(-1);</script>';
+				// 		return '';
+				// 	}
+				// }
 				if ($_POST['prd_pv'] < 0) {
 					$this->useful->AlertPage('', 'PV值不得小於零');
 					return '';
