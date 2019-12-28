@@ -1155,46 +1155,35 @@ class Gold extends MY_Controller
 	//購物金查詢
 	public function member_dividend_fun()
 	{
-		if (empty($_SESSION['MT'])) {
-			$this->load->library('/mylib/CheckInput');
-			$check = new CheckInput;
-			$check->lang = $this->lmodel->config('9999', $this->setlang);
-			$this->useful->AlertPage('/gold/login', $check->lang['Login']); //請先登入或註冊
+		if (!$this->isLogin()) {
+			$lang = $this->lmodel->config('9999', $this->setlang);
+			$this->useful->AlertPage('/gold/login', $lang['Login']); //請先登入或註冊
 		}
-		@session_start();
 
 		//data
 		$data = $this->data;
 
 		$this->DataName = 'member';
-		$this->lang = $this->lmodel->config('1', $this->setlang);
-		$data['path_title'] = '<li><a href="/gold/' . $this->DataName . '"><span>' . $this->lang["$this->DataName"] . '</span></a></li>';
-		$this->DataName = 'member_dividend_fun';
-		$data['path_title'] .= '<li><a href="/gold/' . $this->DataName . '"><span>' . $this->lang["$this->DataName"] . '</span></a></li>';
-		$data['banner'] = $this->data['banner'];
 
 		//語言包
 		$this->lang = $this->lmodel->config('32', $this->setlang);
 
-		// if($_SESSION['MT']['d_is_member']==1)
-		// $data['shopping_money']=$this->mymodel->get_shopping_money_data($_SESSION['MT']['by_id']);
-
-		$moneyInfo = $this->shoppingmoney_model->getShoppingHistory($_SESSION['MT']['by_id']);
+		$buyer = $_SESSION['MT']['by_id'];
+		$moneyInfo = $this->shoppingmoney_model->getShoppingHistory($buyer);
 
 		foreach ($moneyInfo as $key => $data) {
 			$moneyInfo[$key]['name'] = $data['d_member_id'] !== $data['d_guest_id'] ? $data['name'] : '';
 		}
 
 		//抓會員資料(buyer)
-		$buyerInfo = $this->mymodel->OneSearchSql('buyer', '*', ['by_id' => $_SESSION['MT']['by_id']]);
+		$buyerInfo = $this->mymodel->OneSearchSql('buyer', '*', ['by_id' => $buyer]);
 		$data['shopping_money'] = $moneyInfo;
 		$data['current_money'] = $buyerInfo['d_shopping_money'];
 
 		//view
-		$this->load->view('index/header' . $this->style, $data);
-		$this->load->view('index/member/member_nav', $data);
-		$this->load->view('index/member/member_dividend_fun', $data);
-		$this->load->view('index/footer' . $this->style, $data);
+		$this->load->view($this->indexViewPath . '/header', $data);
+		$this->load->view($this->indexViewPath . '/members/shopping_gold_list', $data);
+		$this->load->view($this->indexViewPath . '/footer', $data);
 	}
 
 	//友善連結
