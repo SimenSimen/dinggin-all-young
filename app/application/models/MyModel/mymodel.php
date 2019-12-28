@@ -59,6 +59,42 @@ class Mymodel extends MY_Model
 		return $query->result_array();
 	}
 
+	// 分頁專用 可like
+	public function select_page_form_like($table = "", $page = "", $filed = "*", $set = '',$like='', $order_id = "", $order_type = 'asc', $where_type = 'and')
+	{
+		$type = $where_type;
+		$num = 0;
+		$sql = " select " . $filed . " from " . $table . " ";
+		if ($set != '') {
+			foreach ($set as $key => $value) {
+				if (!empty($value)) {
+					$where_type = ($num == 0) ? 'where' : $type;
+					$sql .= $where_type . ' ' . $key . '="' . $value . '"';
+					$num++;
+				}
+			}
+		}
+
+		if ($like != '') {
+			foreach ($like as $key => $value) {
+				if ($value <> '') {
+					$where_type = ($num == 0) ? 'where' : $type;
+					
+					$sql .= $where_type . ' ' . $key . ' like "%' . $value . '%"';
+					$num++;
+				}
+			}
+		}
+
+		if ($order_id != '') {
+			$sql .= ' order by ' . $order_id . ' ' . $order_type;
+		}
+		$sql .= $page;
+
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
 	// 分頁專用(where有值為0不會跳過)
 	public function select_page_form_0($table = "", $page = "", $filed = "*", $set = '', $order_id = "", $order_type = 'asc', $where_type = 'and')
 	{
@@ -74,6 +110,42 @@ class Mymodel extends MY_Model
 				}
 			}
 		}
+		if ($order_id != '') {
+			$sql .= ' order by ' . $order_id . ' ' . $order_type;
+		}
+		$sql .= $page;
+
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	// 分頁專用(where有值為0不會跳過) 可like
+	public function select_page_form_0_like($table = "", $page = "", $filed = "*", $set = '', $like='', $order_id = "", $order_type = 'asc', $where_type = 'and')
+	{
+		$type = $where_type;
+		$num = 0;
+		$sql = " select " . $filed . " from " . $table . " ";
+		if ($set != '') {
+			foreach ($set as $key => $value) {
+				if ($value <> '') {
+					$where_type = ($num == 0) ? 'where' : $type;
+					$sql .= $where_type . ' ' . $key . '="' . $value . '"';
+					$num++;
+				}
+			}
+		}
+
+		if ($like != '') {
+			foreach ($like as $key => $value) {
+				if ($value <> '') {
+					$where_type = ($num == 0) ? 'where' : $type;
+					
+					$sql .= $where_type . ' ' . $key . ' like "%' . $value . '%"';
+					$num++;
+				}
+			}
+		}
+
 		if ($order_id != '') {
 			$sql .= ' order by ' . $order_id . ' ' . $order_type;
 		}
