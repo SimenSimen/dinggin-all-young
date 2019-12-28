@@ -102,7 +102,22 @@
 
   </table>
 
-  <!--會員資料列表-->
+  <!-- 搜尋 -->
+  <table >
+    <tr>
+      <td>
+        <input type="text" name="prd_cname" placeholder="請輸入分類名稱">
+        <select name="d_enable" >
+          <option value="" <?=($d_enable=='')?'selected':'';?>>請選擇狀態...</option>
+          <option value="Y" <?=($d_enable=='Y')?'selected':'';?>>公開</option>
+          <option value="N" <?=($d_enable=='N')?'selected':'';?>>隱藏</option>
+        </select>
+        <input type="submit" value="搜尋" id="search_action" style=" font-size:14px;">
+      </td>
+    </tr>
+  </table>
+
+  <!--商品類別列表-->
   <table id='member_list' class='table table-hover table-bordered table-condensed' style="width:80%;">
       
     <tr id='member_list_title_tr'>
