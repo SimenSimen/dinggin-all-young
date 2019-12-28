@@ -1874,4 +1874,29 @@ class MY_Controller extends CI_Controller
 	{
 		return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 	}
+
+	/**
+	 * response json content
+	 *
+	 * @param array $data
+	 * @param integer $statusCode
+	 * @return void
+	 */
+	protected function apiResponse(array $data, $statusCode = 200)
+	{
+		header('Content-Type: application/json');
+		http_response_code($statusCode);
+		echo json_encode($data);
+		exit;
+	}
+
+	/**
+	 * Check if the member is login
+	 *
+	 * @return boolean
+	 */
+	protected function isLogin()
+	{
+		return $_SESSION['MT']['is_login'] == 1;
+	}
 }
