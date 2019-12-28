@@ -75,7 +75,7 @@ class Cart extends MY_Controller
 
 			$data['by_id'] =	$_SESSION['MT']['by_id'];
 
-			$bdata = $this->mymodel->OneSearchSql('buyer', 'd_spec_type,', array('by_id' => $data['by_id']));
+			$bdata = $this->mymodel->OneSearchSql('buyer', 'd_spec_type', array('by_id' => $data['by_id']));
 			$price = ($bdata['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
 
 			//撈出購物車的商品
@@ -329,7 +329,11 @@ class Cart extends MY_Controller
 		echo json_encode($data);
 	}
 
-	//選擇常用地址ajax
+	/**
+	 * 選擇常用地址ajax 
+	 * 
+	 * @return void
+	 */
 	public function ajax_common_address()
 	{
 		/** Check login */
@@ -340,7 +344,7 @@ class Cart extends MY_Controller
 		$this->load->library('/mylib/comment');
 
 		/** set default address_id to -1 to avoid getting first row */
-		extract(Comment::params(['address_id'], ['address_id' => 0]));
+		extract(Comment::params(['address_id'], ['address_id' => -1]));
 
 		$by_id = $_SESSION['MT']['by_id'];
 
