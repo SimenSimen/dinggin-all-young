@@ -1146,6 +1146,7 @@ class Products extends MY_Controller
 		} else {
 
 			$dbdata = $this->mmodel->select_from_order($dbname, 'hot_sort', 'asc', array('prd_hot' => 'fa fa-heart', 'd_enable' => 'Y', 'lang_type' => $this->session->userdata('lang')));
+			
 			//總數
 			$data['hot_num'] = count($dbdata);
 			$img_url = '/uploads/000/000/0000/0000000000/products/';
@@ -1451,12 +1452,12 @@ class Products extends MY_Controller
 			if ($dbname == 'products') {
 				$files = [];
 				$d_id = 'prd_id';
-				if ($_POST['restrice_num'] != '0') {
-					if ($_POST['prd_lock_amount'] > $_POST['restrice_num']) {
-						echo '<script>alert("單次購買數量不得大於限購數量");history.go(-1);</script>';
-						return '';
-					}
-				}
+				// if ($_POST['restrice_num'] != '0') {
+				// 	if ($_POST['prd_lock_amount'] > $_POST['restrice_num']) {
+				// 		echo '<script>alert("單次購買數量不得大於限購數量");history.go(-1);</script>';
+				// 		return '';
+				// 	}
+				// }
 				if ($_POST['prd_pv'] < 0) {
 					$this->useful->AlertPage('', 'PV值不得小於零');
 					return '';

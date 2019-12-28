@@ -220,14 +220,14 @@
               </tr>
             <? } ?>
 
-            <? if (empty($_SESSION['provider'])) { ?>
+            <!-- <? if (empty($_SESSION['provider'])) { ?>
               <tr>
                   <td class='member_list_title_td'>限購數量(0為非限購品)</td>
                   <td class='member_list_input_td'>
                     <input type="number" min="0" required class="form-control" name="restrice_num" value='<?=($dbdata['restrice_num']!="")?$dbdata['restrice_num']:"0";?>'/>
                   </td>
               </tr>
-            <? } ?>
+            <? } ?> -->
 			<tr>
                 <td class='member_list_title_td'>安全庫存量</td>
                 <td class='member_list_input_td'>
@@ -266,19 +266,104 @@
               </tr>
             <? } ?>
 			<tr>
+      <!-- <tr>
+        <td class='member_list_title_td'>建議售價 (含稅價)</td>
+        <td class='member_list_input_td'>
+          <input type="number" class="form-control" min="0" name="estimated_price" value="<?=$dbdata['estimated_price']?>" required/>
+        </td>
+      </tr>
+      <tr>
+        <td class='member_list_title_td'>設定售價 (含稅價)</td>
+        <td class='member_list_input_td'>
+          <input type="number" class="form-control" min="0" name="market_price" value="<?=$dbdata['market_price']?>" required/>
+        </td>
+      </tr> -->
                 <td class='member_list_title_td'>成本</td>
                 <td class='member_list_input_td'>
                   <input type="number" min="0" step="1" required class="form-control" name="prd_cost" value='<?=($dbdata['prd_cost']!='' )?$dbdata['prd_cost']:'';?>' />
                 </td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>產品說明</td>
+                <td class='member_list_title_td'>商品內容</td>
                 <td class='member_list_input_td'>
                   <textarea name='prd_content' id=''><?=$dbdata['prd_content']?></textarea>
                 </td>
             </tr>
 
             <tr>
+                <td class='member_list_title_td'>商品特點<br><button type="button" class="btn btn-default" id='add_prd_describe_col'>增加</button></td>
+                <td class='table-cell-left' style="vertical-align: top;">
+                <table id='prd_describe_table'>
+                  <tbody id='prd_describe_table_tbody'>
+                  <?php //if ($show_describe): ?>
+                    <?php foreach ($prd_describe as $key => $value): ?>
+                      <tr>
+                        <td style="width: 441px;">
+                          <input type='text' class='form-control' style="display:inline; width:71%;" name='prd_describe[]' id='prd_describe[]' value="<?=$value?>">
+                          <button type='button' class='btn btn-danger del_prd_describe_col' onclick='javascript:void(0);'>移除</button>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
+                  <?php //endif; ?>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td class='member_list_title_td'>介紹影片<br><button type="button" class="btn btn-default" id='add_prd_video_col'>增加</button></td>
+              <td class='table-cell-left' style="vertical-align: top;">
+                  <table id='prd_video_table' style="width: 100%;">
+                    <tbody id='prd_video_table_tbody'>
+                    <?php //if ($show_video_link): ?>
+                      <?php foreach ($prd_video_link as $key => $value): ?>
+                        <tr>
+                          <td>
+                            <input type='text' placeholder='影片標題' value="<?=$prd_video_name[$key]?>" class='form-control' style='display:inline; width:26%;' name='prd_video_name[]' id='prd_video_name[]' maxlength='32'>
+                            <input placeholder='影片網址' type='text' class='form-control' value="<?=$prd_video_link[$key]?>" style='display:inline; width:40%;' name='prd_video_link[]' id='prd_video_link[]' maxlength='255'>
+                            <button type='button' class='btn btn-danger del_prd_video_col' onclick='javascript:void(0);'>移除</button>
+                          </td>
+                        </tr>
+                      <?php endforeach; ?>
+                    <?php //endif; ?>
+                    </tbody>
+                  </table>
+              </td>
+            </tr>
+
+            <tr>
+            <td class='member_list_title_td'>商品規格<br><button type="button" class="btn btn-default" id='add_prd_specification_col'>增加</button></td>
+            <td class='table-cell-left' style="vertical-align: top;">
+              <table id='prd_specification_table' style="width: 100%;">
+                <tbody id='prd_specification_table_tbody'>
+                  <?php //if ($show_specification): ?>
+                    <?php foreach ($prd_specification_content as $key => $value): ?>
+                      <tr>
+                        <td>
+                          <input type='text' placeholder='規格名稱' class='form-control' value="<?=$prd_specification_name[$key]?>" style='display:inline; width:26%;' name='prd_specification_name[]' id='prd_specification_name[]' maxlength='16'>
+                          <input placeholder='規格內容' type='text' class='form-control' value="<?=$value?>" style='display:inline; width:40%;' name='prd_specification_content[]' id='prd_specification_content[]' maxlength='128'>
+                          <button type='button' class='btn btn-danger del_prd_specification_col' onclick='javascript:void(0);'>移除</button>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
+                  <?php //endif; ?>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class='member_list_title_td'>保固範圍</td>
+            <td class='member_list_input_td'>
+              <input type="text" placeholder='例如：產品功能故障、新品瑕疵等' class="form-control" name="prd_assurance_range" value='<?=$dbdata['prd_assurance_range']?>'/>
+            </td>
+          </tr>
+          <tr>
+            <td class='member_list_title_td'>保固期限</td>
+            <td class='member_list_input_td'>
+              <input type="text"  placeholder='例如：一年' class="form-control" name="prd_assurance_date" value='<?=$dbdata['prd_assurance_date']?>'/>
+             </td>
+          </tr>
+
+            <!-- <tr>
               <td class='member_list_title_td'>商品品牌</td>
               <td class='member_list_input_td'>
                 <input type="text" class="form-control" name="brand" value="<?=$dbdata['brand']?>" required/>
@@ -290,18 +375,7 @@
                 <input type="text" class="form-control" name="country" value="<?=$dbdata['country']?>" required/>
               </td>
             </tr>
-            <tr>
-              <td class='member_list_title_td'>預計售價 (含稅價)</td>
-              <td class='member_list_input_td'>
-                <input type="number" class="form-control" min="0" name="estimated_price" value="<?=$dbdata['estimated_price']?>" required/>
-              </td>
-            </tr>
-            <tr>
-              <td class='member_list_title_td'>市場售價 (含稅價)</td>
-              <td class='member_list_input_td'>
-                <input type="number" class="form-control" min="0" name="market_price" value="<?=$dbdata['market_price']?>" required/>
-              </td>
-            </tr>
+           
             <tr>
               <td class='member_list_title_td'>進貨價格 (含稅價)</td>
               <td class='member_list_input_td'>
@@ -385,80 +459,11 @@
                   <a href="<?=base_url().'images/providers/'.$value?>"><?=$value?></a><br>
                 <?}?>
               </td>
-            </tr>
+            </tr> -->
 
 
-            <tr>
-                <td class='member_list_title_td'>商品特點<br><button type="button" class="btn btn-default" id='add_prd_describe_col'>增加</button></td>
-                <td class='table-cell-left' style="vertical-align: top;">
-                <table id='prd_describe_table'>
-                  <tbody id='prd_describe_table_tbody'>
-                  <?php //if ($show_describe): ?>
-                    <?php foreach ($prd_describe as $key => $value): ?>
-                      <tr>
-                        <td style="width: 441px;">
-                          <input type='text' class='form-control' style="display:inline; width:71%;" name='prd_describe[]' id='prd_describe[]' value="<?=$value?>">
-                          <button type='button' class='btn btn-danger del_prd_describe_col' onclick='javascript:void(0);'>移除</button>
-                        </td>
-                      </tr>
-                    <?php endforeach; ?>
-                  <?php //endif; ?>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td class='member_list_title_td'>介紹影片<br><button type="button" class="btn btn-default" id='add_prd_video_col'>增加</button></td>
-              <td class='table-cell-left' style="vertical-align: top;">
-                  <table id='prd_video_table' style="width: 100%;">
-                    <tbody id='prd_video_table_tbody'>
-                    <?php //if ($show_video_link): ?>
-                      <?php foreach ($prd_video_link as $key => $value): ?>
-                        <tr>
-                          <td>
-                            <input type='text' placeholder='影片標題' value="<?=$prd_video_name[$key]?>" class='form-control' style='display:inline; width:26%;' name='prd_video_name[]' id='prd_video_name[]' maxlength='32'>
-                            <input placeholder='影片網址' type='text' class='form-control' value="<?=$prd_video_link[$key]?>" style='display:inline; width:40%;' name='prd_video_link[]' id='prd_video_link[]' maxlength='255'>
-                            <button type='button' class='btn btn-danger del_prd_video_col' onclick='javascript:void(0);'>移除</button>
-                          </td>
-                        </tr>
-                      <?php endforeach; ?>
-                    <?php //endif; ?>
-                    </tbody>
-                  </table>
-              </td>
-            </tr>
-          <tr>
-            <td class='member_list_title_td'>商品規格<br><button type="button" class="btn btn-default" id='add_prd_specification_col'>增加</button></td>
-            <td class='table-cell-left' style="vertical-align: top;">
-              <table id='prd_specification_table' style="width: 100%;">
-                <tbody id='prd_specification_table_tbody'>
-                  <?php //if ($show_specification): ?>
-                    <?php foreach ($prd_specification_content as $key => $value): ?>
-                      <tr>
-                        <td>
-                          <input type='text' placeholder='規格名稱' class='form-control' value="<?=$prd_specification_name[$key]?>" style='display:inline; width:26%;' name='prd_specification_name[]' id='prd_specification_name[]' maxlength='16'>
-                          <input placeholder='規格內容' type='text' class='form-control' value="<?=$value?>" style='display:inline; width:40%;' name='prd_specification_content[]' id='prd_specification_content[]' maxlength='128'>
-                          <button type='button' class='btn btn-danger del_prd_specification_col' onclick='javascript:void(0);'>移除</button>
-                        </td>
-                      </tr>
-                    <?php endforeach; ?>
-                  <?php //endif; ?>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td class='member_list_title_td'>保固範圍</td>
-            <td class='member_list_input_td'>
-              <input type="text" placeholder='例如：產品功能故障、新品瑕疵等' class="form-control" name="prd_assurance_range" value='<?=$dbdata['prd_assurance_range']?>'/>
-            </td>
-          </tr>
-          <tr>
-            <td class='member_list_title_td'>保固期限</td>
-            <td class='member_list_input_td'>
-              <input type="text"  placeholder='例如：一年' class="form-control" name="prd_assurance_date" value='<?=$dbdata['prd_assurance_date']?>'/>
-             </td>
-          </tr>
+           
+         
 
           <? if (empty($_SESSION['provider'])) { ?>
             <tr>
