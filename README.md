@@ -1,3 +1,5 @@
+[前台相關資料](/LOGGER.simen.md)
+
 # Config
 
 ## php int
@@ -58,7 +60,7 @@ static host http://st.all-young.io/
 |       | 購物車 - 三聯式發票確認  |    done     |        &nbsp;        |
 |       |    購物車 - 訂單完成     |    done     |        &nbsp;        |
 |       |       紅利點數查詢       |    done     |        &nbsp;        |
-|       |        購物金查詢        |   &nbsp;    |        &nbsp;        |
+|       |        購物金查詢        |    done     |        &nbsp;        |
 
 
 # lang_model
