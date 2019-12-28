@@ -247,7 +247,7 @@
                                                 <div class="control-box">
                                                     <div class="input-group">
                                                         <div class="input-box" id="invoice_select">
-                                                            <select name="city" id="invoice" class="form-control">
+                                                            <select name="invoice_type" id="invoice" class="form-control">
                                                                 <option value="0">Electronic Invoice</option>
                                                                 <option value="1">Two-way Invoice</option>
                                                                 <option value="2">Triple Invoice</option>
@@ -263,7 +263,7 @@
                                                 <div class="control-box">
                                                     <div class="input-group">
                                                         <div class="input-box" id="invoice carrier_select">
-                                                            <select name="city" id="invoice carrier" class="form-control">
+                                                            <select name="carrier_type" id="invoice carrier" class="form-control">
                                                                 <option value="0">Member Vehicle</option>
                                                                 <option value="1">Mobile Phone Carrier</option>
                                                                 <option value="2">Natural Person Carrier</option>
@@ -279,12 +279,12 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <div class="control-box">
-                                                    <input class="form-control" type="text" name="receipt_address" id="receipt_address" placeholder="Company Letterhead">
+                                                    <input class="form-control" type="text" name="triple_letter_head" placeholder="Company Letterhead">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="control-box">
-                                                    <input class="form-control" type="text" name="receipt_address" id="receipt_address" placeholder="Uniform Numbers">
+                                                    <input class="form-control" type="text" name="triple_uniform_numbers" placeholder="Uniform Numbers">
                                                 </div>
                                             </div>
                                         </div>
@@ -292,7 +292,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <div class="control-box">
-                                                    <input class="form-control" type="text" name="receipt_address" id="receipt_address" placeholder="Enter the Vehicle Number">
+                                                    <input class="form-control" type="text" name="vehicle_number" placeholder="Enter the Vehicle Number">
                                                 </div>
                                             </div>
                                         </div>

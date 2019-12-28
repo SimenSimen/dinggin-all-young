@@ -137,31 +137,35 @@
                         </div>
 
                         <div class="title">Invoice Opening</div>
-                        <div class="invoice-info-box">
-                            <div class="invoice-info info-text">
-                                Invoice type：<span>Two-way Invoice</span>
+                        <?php $invoiceTypeArray = ['Electronic Invoice', 'Two-way Invoice', 'Triple Invoice'] ?>
+                        <?php $carrierTypeArray = ['Member Vehicle', 'Mobile Phone Carrier', 'Natural Person Carrier'] ?>
+                        <?php if ($invoice_type !== 2) : ?>
+                            <div class="invoice-info-box">
+                                <div class="invoice-info info-text">
+                                    Invoice type：<span><?= $invoiceTypeArray[$invoice_type] ?></span>
+                                </div>
+                                <div class="invoice-info info-text">
+                                    Vehicle Type：<span><?= $carrierTypeArray[$carrier_type] ?>
+                                </div>
+                                <div class="invoice-info info-text">
+                                    Mobile Phone Carrier：<span><?= $vehicle_number ?></span>
+                                </div>
                             </div>
-                            <div class="invoice-info info-text">
-                                Vehicle Type：<span>Mobile Phone Carrier</span>
-                            </div>
-                            <div class="invoice-info info-text">
-                                Mobile Phone Carrier：<span>XX34V61</span>
-                            </div>
-                        </div>
 
-                        <? // 三聯式發票填寫欄位 
-                        ?>
-                        <!-- <div class="invoice-info-box">
-                        <div class="invoice-info info-text">
-                        	Invoice type：<span>Triple Invoice</span>
-                        </div>
-                        <div class="invoice-info info-text">
-                        	Company Letterhead：<span>netnews co.</span>
-                        </div>
-                        <div class="invoice-info info-text">
-                        	Uniform Numbers：<span>89765432</span>
-                        </div> 									             
-                    </div> -->
+                        <?php else : ?>
+                            <!-- 三聯式發票填寫欄位  -->
+                            <div class="invoice-info-box">
+                                <div class="invoice-info info-text">
+                                    Invoice type：<span><?= $invoiceTypeArray[$invoice_type] ?></span>
+                                </div>
+                                <div class="invoice-info info-text">
+                                    Company Letterhead：<span><?= $triple_letter_head ?></span>
+                                </div>
+                                <div class="invoice-info info-text">
+                                    Uniform Numbers：<span><?= $triple_uniform_numbers ?></span>
+                                </div>
+                            </div>
+                        <?php endif  ?>
 
                         <div class="pagination_box">
                             <a href="<?= base_url('cart') ?>" class="btn simple en"><i name="icon02" class="icon-chevron-left"></i> BACK</a>

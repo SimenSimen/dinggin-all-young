@@ -6,6 +6,8 @@
 | :--------------------------------: | :-----------------------------------------------: | :----------: |
 |  application/controllors/cart.php  | total_all,ajax_count,cart_checkout,ajax_area_info |    &nbsp;    |
 | application/core/My_Controller.php |                apiResponse,isLogin                | 新增function |
+| application/models/gold_model.php  |            pageDividend,dividendExpire            |    &nbsp;    |
+|  application/controllors/gold.php  |           member_dividend_fun,dividend            |    &nbsp;    |
 
 ## 2019-12-27
 
@@ -63,6 +65,10 @@
 - /member/info (gold/member_info) 前台會員基本資料
 - /member/upgrade (gold/member_upgrade) 升級經營會員頁面
 - /member/change_password (gold/member_password) 修改密碼頁面
+- /member/order/{id} (gold/order_info) 訂單詳細資訊
+- /member/dividend 紅利查詢
+- /member/member_dividend_fun (gold/member_dividend_fun) 購物金查詢
+
 
 - /products?providerId=供應商&maxPrise="最大價錢"&minPrise="最小價錢"&sortType="排序"&pageNumber="頁數" 所有產品列表
 - /products/{class_id}?providerId=供應商&maxPrise="最大價錢"&minPrise="最小價錢"&sortType="排序"&pageNumber="頁數" 依照產品分類列表
@@ -234,6 +240,7 @@
 - @todo 1121 移除開啟錯誤訊息。
 - @todo 3329 顯示錯誤訊息 CI loading 語言的時候會報錯 先exit，結案後移除。
 - @todo 2200 load 商品 js 有寫好的 記得請對方移過去 ajax(/products)
+- @todo 110002 購物車送出先不檢查必填，測試用
  
 - 前台 view 都放在 index-all-young 資料夾名稱可以改(須改My_controller::indexViewPath)。
 

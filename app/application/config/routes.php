@@ -65,12 +65,17 @@ $route['member'] = 'gold/member';
 
 $route['member/info'] = 'gold/member_info';
 $route['member/info/update'] = '/gold/data_AED';
-$route['member/change_password'] = '/gold/member_password';
+$route['member/change_password'] = 'gold/member_password';
 
 $route['member/logout'] = 'gold/logout';
 $route['member/login'] = 'gold/login_set';
 $route['member/upgrade'] = 'gold/member_upgrade';
-$route['member/upgrade/submit'] = '/gold/data_AED';
+$route['member/upgrade/submit'] = 'gold/data_AED';
+
+$route['member/dividend'] = 'gold/dividend';
+$route['member/member_dividend_fun'] = 'gold/member_dividend_fun';
+
+$route['member/order/(:any)'] = 'gold/order_info/$1';
 
 $route['forget_pass'] = 'gold/forgot';
 
