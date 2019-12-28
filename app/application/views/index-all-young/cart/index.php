@@ -164,19 +164,18 @@
                                                     </div>
                                                     <div class="input-box" id="city_select">
                                                         <select name="city" id="city" onChange="sel_area(this.value,'','countory')" class="form-control">
-                                                            <option value="0"> City</option>
-                                                            <div class="city-box">
-                                                                <h4>A PHP Error was encountered</h4>
-                                                                <p>Severity: Warning</p>
-                                                                <p>Message: Invalid argument supplied for foreach()</p>
-                                                                <p>Filename: cart/cart.php</p>
-                                                                <p>Line Number: 211</p>
-                                                            </div>
+                                                            <!-- //請選擇縣市; -->
+                                                            <option value="0"><?= $this->lang["c_23"] ?></option>
+                                                            <? foreach ($city as $cvalue) : ?>
+                                                                <option value="<?= $cvalue['s_id'] ?>">
+                                                                    <?= $cvalue['s_name'] ?>
+                                                                </option>
+                                                            <? endforeach; ?>
                                                         </select>
                                                     </div>
                                                     <div class="input-box" id="countory_select">
                                                         <select name="countory" id="countory" class="form-control">
-                                                            <option value="0"> County/Region</option>
+                                                            <option value="0"><?= $this->lang["c_24"] ?></option>
                                                         </select>
                                                     </div>
                                                     <div class="input-box">
@@ -202,7 +201,11 @@
                                         <div class="form-group">
                                             <div class="input-box">
                                                 <select name="lway_id" id="lway_id" class="form-control">
-                                                    <option value="3">Mail/Home Delivery</option>
+                                                    <?php foreach ($logistics_way as $key => $value) : ?>
+                                                        <option value="<?= $value['lway_id']; ?>">
+                                                            <?= $value['lway_name']; ?>
+                                                        </option>
+                                                    <?php endforeach ?>
                                                 </select>
                                                 <div id='shop'></div>
                                             </div>
@@ -213,7 +216,11 @@
                                         <div class="form-group">
                                             <div class="input-box">
                                                 <select name="pway_id" id="" class="form-control">
-                                                    <option value="2">Online Card</option>
+                                                    <?php foreach ($payment_way as $key => $value) : ?>
+                                                        <option value="<?= $value['pway_id']; ?>">
+                                                            <?= $value['pway_name']; ?>
+                                                        </option>
+                                                    <?php endforeach ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -229,7 +236,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="title">Invoice Opening</div>
                         <div class="invoice-info-box">
@@ -259,8 +265,8 @@
                                                         <div class="input-box" id="invoice carrier_select">
                                                             <select name="city" id="invoice carrier" class="form-control">
                                                                 <option value="0">Member Vehicle</option>
-                                                                <option value="0">Mobile Phone Carrier</option>
-                                                                <option value="0">Natural Person Carrier</option>
+                                                                <option value="1">Mobile Phone Carrier</option>
+                                                                <option value="2">Natural Person Carrier</option>
                                                             </select>
                                                         </div>
                                                     </div>

@@ -2,10 +2,10 @@
 
 ## 2019-12-28
 
-|            更動檔案路徑            |         說明         |     備註     |
-| :--------------------------------: | :------------------: | :----------: |
-|  application/controllors/cart.php  | total_all,ajax_count |    &nbsp;    |
-| application/core/My_Controller.php | apiResponse,isLogin  | 新增function |
+|            更動檔案路徑            |                       說明                        |     備註     |
+| :--------------------------------: | :-----------------------------------------------: | :----------: |
+|  application/controllors/cart.php  | total_all,ajax_count,cart_checkout,ajax_area_info |    &nbsp;    |
+| application/core/My_Controller.php |                apiResponse,isLogin                | 新增function |
 
 ## 2019-12-27
 
@@ -157,7 +157,7 @@
 
 空值
 
-### Change the amount for the item = /products/ajax_count
+### Change the amount for the item = /cart/ajax_count
 
 #### 參數說明
 
@@ -170,7 +170,7 @@
 
 修改後數量
 
-### Change the amount for the item = /products/ajax_total
+### Change the amount for the item = /cart/ajax_total
 
 #### 參數說明
 
@@ -187,7 +187,7 @@
 | `only_money` |   `int`   |    現金    |
 | `dataBonus`  | `decimal` | 可獲得紅利 |
 
-### Select the common address = /products/ajax_common_address
+### Select the common address = /cart/ajax_common_address
 
 #### 參數說明
 
@@ -207,7 +207,25 @@
 | `address`  | `string` |    地址    |
 |   `zip`    | `string` |  郵遞區號  |
 
-### add item to favirate = /products/ajax_favorite
+
+### Get the area list = /cart/ajax_area_info
+
+#### 參數說明
+
+|   參數    | 型態  |  說明  |
+| :-------: | :---: | :----: |
+| `area_id` | `int` | 地區ID |
+
+#### 回傳說明
+
+回傳值為陣列，陣列內容包含json物件，物件規格如下
+
+|   參數   |   型態   |   說明   |
+| :------: | :------: | :------: |
+|  `s_id`  |  `int`   |  地區ID  |
+| `s_name` | `string` | 地區名稱 |
+
+### add item to favirate = /cart/ajax_favorite
 
 # 結案前整理
 
@@ -242,8 +260,8 @@ INSERT INTO `lapack_list`(`d_id`, `d_title`, `d_url`, `d_sort`, `d_enable`) VALU
 - 購物車內商品數量修改 uuid 放在最外層 tr 上 有加上類別 tr.cart-item\[data-uuid\]
 - 購物車內購物金檢查 (tt-input-counter\[data-amount\])
 - 購物車內紅利檢查 (tt-input-counter\[data-amount\])
-
-
+- 切換二三聯式發票 隱藏欄位
+- 選擇地區ajax 
 
 詳情請看 ajax 相關附件
 

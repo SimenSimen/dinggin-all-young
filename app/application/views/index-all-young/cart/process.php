@@ -16,41 +16,44 @@
                                         <th class="text-center">Quantity</th>
                                         <th>Subtotal</th>
                                     </tr>
-                                    <?php for ($i = 0; $i < 3; $i++) { ?>
+                                    <?php $subTotal = 0; ?>
+                                    <?php foreach ($productList as $uuid => $item) : ?>
+                                        <?php $sum = floatval($item['price']) * floatval($item['num']); ?>
+                                        <?php $subTotal += $sum; ?>
                                         <tr>
                                             <td></td>
                                             <td>
                                                 <div class="tt-product-img">
-                                                    <img src="images/loader.svg" data-src="images/product/product-01.jpg" alt="">
+                                                    <img src="images/loader.svg" data-src="<?= $item['prd_image'] ?>" alt="">
                                                 </div>
                                             </td>
                                             <td>
                                                 <h2 class="tt-title">
-                                                    <a href="#">Product Name</a>
+                                                    <a href="<?= base_url('/products/detail/' . $item['prd_id']) ?>"><?= $item['prd_name'] ?></a>
                                                 </h2>
                                                 <ul class="tt-list-parameters">
                                                     <li>
-                                                        <div class="detach-quantity-mobile">Quantity：<sapn>1</sapn>
+                                                        <div class="detach-quantity-mobile">Quantity：<sapn><?= intval($item['num']) ?></sapn>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="tt-price subtotal">Amount：NT$124</div>
+                                                        <div class="tt-price subtotal">Amount：$<?= number_format($item['total']) ?></div>
                                                     </li>
                                                 </ul>
                                             </td>
                                             <td>
-                                                <div class="tt-price">NT$124</div>
+                                                <div class="tt-price">$<?= number_format($item['price']) ?></div>
                                             </td>
                                             <td>
-                                                <div class="list-qty">1</div>
+                                                <div class="list-qty"><?= intval($item['num']) ?></div>
                                             </td>
                                             <td>
                                                 <div class="tt-price subtotal">
-                                                    $NT124
+                                                    $<?= number_format($item['total']) ?>
                                                 </div>
                                             </td>
                                         </tr>
-                                    <?php } ?>
+                                    <?php endforeach ?>
                                 </tbody>
                             </table>
                         </div>
@@ -60,22 +63,22 @@
                                 <tfoot>
                                     <tr>
                                         <td>Subtotal</td>
-                                        <td>NT$<span>24.95</span></td>
+                                        <td>$<span><?= number_format($subTotal) ?></span></td>
                                     </tr>
                                     <tr>
                                         <td>Use Bonus</td>
-                                        <td>NT$<span>0</span></td>
+                                        <td>$<?= $use_dividend ?><span></span></td>
                                     </tr>
                                     <tr>
                                         <td>Use Shopping Gold</td>
-                                        <td>NT$<span>0</span></td>
+                                        <td>$<span><?= $use_shopping_money ?></span></td>
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td class="price-b">NT$<span>24.95</span></td>
+                                        <td class="price-b">$<span><?= number_format($only_money) ?></span></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">This Purchase is Available: Bonus 0
+                                        <td colspan="2">This Purchase is Available: Bonus <?= number_format($bonus) ?>
                                             <span class="color01"><span id="total_bonus"></span>Points</span>
                                         </td>
                                     </tr>
@@ -83,7 +86,6 @@
                                 </tfoot>
                             </table>
                         </div>
-
 
                         <div class="title">Shipping & Payment Information</div>
                         <div class="shopping-form">
@@ -93,23 +95,24 @@
                                     <div class="form-box02">
                                         <div class="form-group">
                                             <label class="control-label">Name：</label>
-                                            <div class="control-box">jay</div>
+                                            <div class="control-box"><?= $buyer_name ?></div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">email：</label>
-                                            <div class="control-box">jay@netnews.com.tw</div>
+                                            <div class="control-box"><?= $buyer_email ?></div>
                                         </div>
                                         <div class="form-group address">
                                             <label class="control-label">Contact Address：</label>
+
                                             <div class="control-box">
                                                 <div class="input-group">
-                                                    <div class="input-box">台灣 新北市 三重區<br>重新路五段609巷4號8樓之8</div>
+                                                    <div class="input-box"><?= $country ?> <?= $country ?> <?= $area ?><br><?= $buyer_address ?></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Contact Phone：</label>
-                                            <div class="control-box">229956488</div>
+                                            <div class="control-box"><?= $buyer_phone ?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -117,15 +120,17 @@
                                 <div class="col col2">
                                     <div class="shopping-title">Shipping Method</div>
                                     <div class="form-box02">
-                                        <div class="input-box">Mail/Home Delivery</div>
+                                        <div class="input-box"><?= $logistics_way ?></div>
                                     </div>
                                     <div class="shopping-title">Payment Method</div>
                                     <div class="form-box02">
-                                        <div class="input-box">Online Card</div>
+                                        <div class="input-box"><?= $payment_way ?></div>
                                     </div>
                                     <div class="shopping-title">Remarks</div>
                                     <div class="form-box02">
-                                        <div class="input-box"></div>
+                                        <div class="input-box">
+                                            <?= $buyer_note ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
