@@ -1011,7 +1011,8 @@ class Products extends MY_Controller
 		$this->useful->CheckComp('j_member');
 
 		//匯出表單的標題
-		$title_array = array("狀態", "新品推薦", "好物精選", "商品名稱", "建議售價", "設定售價", "員工價", "PV值");
+		// $title_array = array("狀態", "新品推薦", "好物精選", "商品名稱", "建議售價", "設定售價", "員工價", "PV值");
+		$title_array = array("狀態", "商品編號", "商品名稱", "庫存數");
 
 		$dbdata = $this->mymodel->select_page_form('products', '', '*');
 		foreach ($dbdata as $value) {
@@ -1024,24 +1025,22 @@ class Products extends MY_Controller
 				$status = "其他狀況";
 			}
 
-			$new = ($value['prd_new'] == 'Y') ? '是' : '否';
-			$hot = ($value['prd_hot'] == 'fa fa-heart') ? '是' : '否';
+			// $new = ($value['prd_new'] == 'Y') ? '是' : '否';
+			// $hot = ($value['prd_hot'] == 'fa fa-heart') ? '是' : '否';
+			$prd_no = $value['prd_no'];
 			$prd_name = $value['prd_name'];
-			$prd_price01 = $value['prd_price01'];
-			$prd_price00 = $value['prd_price00'];
-			$d_mprice = $value['d_mprice'];
-			$prd_pv = $value['prd_pv'];
+			$prd_amount = $value['prd_amount'];
+			// $prd_price01 = $value['prd_price01'];
+			// $prd_price00 = $value['prd_price00'];
+			// $d_mprice = $value['d_mprice'];
+			// $prd_pv = $value['prd_pv'];
 
 			//data放進array內
 			$data_array[] = array(
 				$status,
-				$new,
-				$hot,
+				$prd_no,
 				$prd_name,
-				$prd_price01,
-				$prd_price00,
-				$d_mprice,
-				$prd_pv
+				$prd_amount
 			);
 		}
 
