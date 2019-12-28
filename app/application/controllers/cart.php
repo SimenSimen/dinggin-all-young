@@ -14,7 +14,7 @@ class Cart extends MY_Controller
 		$this->load->model(array('MyModel/mymodel', 'products_model', 'cart_model'));
 		$this->load->library('mylib/useful');
 		$this->load->model('cart_model', 'mod_cart');
-		$this->load->model('lang_model', lmodel);
+		$this->load->model('lang_model', 'lmodel');
 		$this->load->model('order_model', 'omodel');
 
 		//web config
@@ -59,12 +59,15 @@ class Cart extends MY_Controller
 			//推薦人
 			$by_id = $_SESSION['MT']['by_id'];
 			$buyer = $this->mymodel->OneSearchSql('buyer', 'PID, d_dividend,d_shopping_money,address', array('by_id' => $by_id));
+
 			if (empty($buyer['address'])) {
 				$this->useful->AlertPage('/member/info', $this->lang['c_63']);
 			}
+
 			$data['d_dividend']	= $buyer['d_dividend'];
 			$data['d_shopping_money'] = $buyer['d_shopping_money'];
 			$PID	=	$buyer['PID'];
+
 			if ($by_id <> 4) {
 				$memberName	= $this->mymodel->OneSearchSql('buyer', 'name', array('by_id' => $PID));
 				$data['memberName']			=	$this->lang['yourAccount'] . '<b>' . $memberName['name'] . '</b>';
@@ -76,7 +79,12 @@ class Cart extends MY_Controller
 			$price						=	($bdata['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
 
 			//撈出購物車的商品
-			$join_car	=	$_SESSION['join_car'];
+			$join_car = !empty($_SESSION['join_car']) ? $_SESSION['join_car'] : [];
+
+			if (empty($join_car)) {
+				return $this->useful->AlertPage(base_url('products'), 'No items in cart');
+			}
+
 			unset($_SESSION['join_car']['']);
 
 			foreach ($join_car as $uuid => $item) {
@@ -148,16 +156,46 @@ class Cart extends MY_Controller
 			$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
 		} else {
 			$_SESSION['url']	=	'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-			$this->useful->AlertPage('/gold/login', $this->lang['Login']);
+			$this->useful->AlertPage('/login', $this->lang['Login']);
 		}
 	}
 
 	//計算小計ajax
 	public function ajax_count()
 	{
-		$prd_id = str_replace('_', '##*', ($_POST['prd_id']));
-		$qty = $_POST['qty'];
-		$_SESSION['join_car'][$prd_id] = $qty;
+		/** Check login */
+		if (!$this->isLogin()) {
+			return $this->apiResponse(['success' => false, 'msg' => 'Login Error']);
+		}
+
+		/** Loading comment library */
+		$this->load->library('/mylib/comment');
+
+		extract(Comment::params(['key', 'qty']));
+
+		if (is_null($key) || is_null($qty)) {
+			return $this->apiResponse(['success' => false, 'msg' => 'Parameter Error']);
+		}
+
+		$cart = $this->getCart();
+
+		if (!isset($cart[$key])) {
+			return $this->apiResponse(['success' => false, 'msg' => 'Empty key']);
+		}
+
+		$bdata = $this->mymodel->OneSearchSql('buyer', 'd_spec_type', array('by_id' => $_SESSION['MT']['by_id']));
+
+		$itemDetail = $this->products_model->productsDetail($cart[$key]['prd_id'], $bdata['d_spec_type'])['data'];
+
+		$locked = isset($itemDetail['prd_lock_amount']) ? intval($itemDetail['prd_lock_amount']) : 0;
+
+		$qty = intval($qty) > 0 ? intval($qty) : 1;
+		$qty = $qty > $locked ? $locked : $qty;
+
+		$cart[$key]['amount'] = $qty;
+		$_SESSION['join_car'][$key] = $cart[$key];
+
+		return $this->apiResponse(['success' => true, 'data' => $cart[$key]['amount']]);
 	}
 
 	//計算總額.紅利ajax
@@ -170,6 +208,7 @@ class Cart extends MY_Controller
 		$bdata			=	$this->mymodel->OneSearchSql('buyer', 'd_spec_type', array('by_id' => $by_id));
 		$price			=	($bdata['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
 		$dataTotal		=	0;
+
 		foreach ($joinProducts as $key => $value) {
 			$productsDetail		=	$this->products_model->productsDetail($key, $bdata['d_spec_type']);
 			$totalData			=	$productsDetail['data'];
@@ -454,5 +493,15 @@ class Cart extends MY_Controller
 		} else {
 			$this->useful->AlertPage('/gold/login', $this->lang['Login']);
 		}
+	}
+
+	/**
+	 * get cart content
+	 *
+	 * @return array
+	 */
+	protected function getCart()
+	{
+		return !empty($_SESSION['join_car']) ? $_SESSION['join_car'] : [];
 	}
 }

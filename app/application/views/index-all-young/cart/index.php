@@ -17,8 +17,13 @@
                                         <th class="text-center">Quantity</th>
                                         <th>Subtotal</th>
                                     </tr>
+                                    <?php $subTotal = 0; ?>
                                     <?php foreach ($productList as $uuid => $item) : ?>
-                                        <tr d>
+
+                                        <?php $sum = floatval($item['price']) * floatval($item['num']); ?>
+                                        <?php $subTotal += $sum; ?>
+
+                                        <tr class="cart-item" data-uuid="<?= $uuid ?>">
                                             <td>
                                                 <a data-key="<?= $uuid ?>" href="#" class="tt-btn-close"></a>
                                             </td>
@@ -39,7 +44,7 @@
                                                         <div class="detach-quantity-mobile"></div>
                                                     </li>
                                                     <li>
-                                                        <div class="tt-price subtotal">$<?= number_format(floatval($item['price']) * floatval($item['num'])) ?></div>
+                                                        <div class="tt-price subtotal">$<?= number_format($sum) ?></div>
                                                     </li>
                                                 </ul>
                                             </td>
@@ -57,7 +62,7 @@
                                             </td>
                                             <td>
                                                 <div class="tt-price subtotal">
-                                                    $<?= number_format(floatval($item['price']) * floatval($item['num'])) ?>
+                                                    $<?= number_format($sum) ?>
                                                 </div>
                                             </td>
                                         </tr>
@@ -76,7 +81,7 @@
                                 <tfoot>
                                     <tr>
                                         <td>Subtotal</td>
-                                        <td>$<span>24.95</span></td>
+                                        <td>$<span><?= number_format($subTotal) ?></span></td>
                                     </tr>
                                     <tr>
                                         <td>Use Bonus</td>
@@ -104,7 +109,7 @@
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td class="price-b">$<span>24.95</span></td>
+                                        <td class="price-b">$<span><?= number_format($subTotal) ?></span></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">This Purchase is Available: Bonus 0

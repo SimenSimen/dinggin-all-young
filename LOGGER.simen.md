@@ -1,5 +1,12 @@
 # 紀錄
 
+## 2019-12-28
+
+|            更動檔案路徑            |        說明         |     備註     |
+| :--------------------------------: | :-----------------: | :----------: |
+|  application/controllors/cart.php  |                     |    &nbsp;    |
+| application/core/My_Controller.php | apiResponse,isLogin | 新增function |
+
 ## 2019-12-27
 
 |             更動檔案路徑             |          說明           |    備註    |
@@ -28,12 +35,6 @@
 |          css/style.css           |                   修改字形路徑                    | &nbsp; |
 
 ## 2019-12-24
-
-My controller 新增 $indexViewPath 指定前台 view 資料夾
-之後有需求修改名稱即可
-
-前台 view 放在 index-all-young 資料夾裡
-
 
 |                   更動檔案路徑                    |        說明         |                備註                |
 | :-----------------------------------------------: | :-----------------: | :--------------------------------: |
@@ -149,6 +150,17 @@ My controller 新增 $indexViewPath 指定前台 view 資料夾
 
 空值
 
+### Change the amount for the item = /products/ajax_count
+
+| 參數  | 型態  |     說明      |
+| :---: | :---: | :-----------: |
+| `key` | `int` | 購物車物品key |
+| `qty` | `int` |     數量      |
+
+#### 回傳說明
+
+會回傳正確修改的數量
+
 ### add item to favirate = /products/ajax_favorite
 
 # 結案前整理
@@ -181,10 +193,16 @@ INSERT INTO `lapack_list`(`d_id`, `d_title`, `d_url`, `d_sort`, `d_enable`) VALU
 - 移出購物車 (刪除按鍵上有存數據(data-key) 傳入api 即可刪除)
 - 上方購物車 icon 數量(.tt-badge-cart .b_green\[data-count\]) 修改
 - 加入最愛清單
-- 購物車內商品數量修改 數量(.tt-price\[data-price\])跟價格(.tt-input-counter input)
+- 購物車內商品數量修改 uuid 放在最外層 tr 上 有加上類別 tr.cart-item\[data-uuid\]
 - 購物車內購物金檢查 (tt-input-counter\[data-amount\])
 - 購物車內紅利檢查 (tt-input-counter\[data-amount\])
 
 
 
 詳情請看 ajax 相關附件
+
+# Remark
+
+- My controller 新增 $indexViewPath 指定前台 view 資料夾，之後有需求修改名稱即可
+- 前台所有 view 目前放在 index-all-young 資料夾裡
+
