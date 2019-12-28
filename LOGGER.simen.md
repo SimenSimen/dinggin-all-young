@@ -15,6 +15,7 @@
 | application/core/My_Controller.php |                apiResponse,isLogin                | 新增function |
 | application/models/gold_model.php  |            pageDividend,dividendExpire            |    &nbsp;    |
 |  application/controllors/gold.php  |           member_dividend_fun,dividend            |    &nbsp;    |
+| application/controllors/index.php  |                       index                       |    &nbsp;    |
 
 ## 2019-12-27
 
@@ -57,6 +58,7 @@
 # 待辦
 
 - @todo 11020 申請經銷會員必填欄位
+- 發票寫入
 
 # 結案前整理
 

@@ -32,9 +32,9 @@ static host http://st.all-young.io/
 
 |    Title     |          item           | description | remark |
 | :----------: | :---------------------: | :---------: | :----: |
-|     前台     |    首頁-印尼(未登入)    |   &nbsp;    | &nbsp; |
-|              |   首頁-印尼(一般會員)   |   &nbsp;    | &nbsp; |
-|              |   首頁-印尼(經銷會員)   |   &nbsp;    | &nbsp; |
+|     前台     |    首頁-印尼(未登入)    |    done;    | &nbsp; |
+|              |   首頁-印尼(一般會員)   |    done;    | &nbsp; |
+|              |   首頁-印尼(經銷會員)   |    done;    | &nbsp; |
 |              |          登入           |    done     | &nbsp; |
 |              |      註冊-填寫資料      |    done     | &nbsp; |
 |              |      註冊-簡訊驗證      |    done     | &nbsp; |
@@ -42,7 +42,6 @@ static host http://st.all-young.io/
 |              | 基本資料(一般會員)-印尼 |    done     | &nbsp; |
 |              | 基本資料(經營會員)-印尼 |   &nbsp;    | &nbsp; |
 |              |    升級經營會員-印尼    |    done     | &nbsp; |
-|              |     邀請碼分享-印尼     |   &nbsp;    | &nbsp; |
 |              |     邀請碼分享-印尼     |   &nbsp;    | &nbsp; |
 | 前台會員專區 |                         |   &nbsp;    | &nbsp; |
 

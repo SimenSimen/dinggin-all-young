@@ -17,7 +17,7 @@
 				<a href="<?= base_url('/brands') ?>">Brand</a>
 				<ul>
 					<?php foreach ($brandList as $brand) : ?>
-						<li><a href="<?= base_url('/brands/') . $brand['prd_cid'] ?>"><?= $brand['d_name'] ?></a></li>
+						<li><a href="<?= base_url('/brands\/' . $brand['prd_cid']) ?>"><?= $brand['d_name'] ?></a></li>
 					<?php endforeach ?>
 				</ul>
 			</li>
@@ -116,7 +116,7 @@
 												<div class="col">
 													<ul class="tt-megamenu-submenu">
 														<?php foreach ($brandList as $brand) : ?>
-															<li><a href="<?= base_url('/brands/') . $brand['prd_cid'] ?>"><?= $brand['d_name'] ?>
+															<li><a href="<?= base_url('/brands\/') . $brand['prd_cid'] ?>"><?= $brand['d_name'] ?>
 																	<img src="images/loader.svg" data-src="images/custom/tt-layout-img-01.png" alt="Example 1">
 																	<!-- <span class="tt-badge tt-fatured">Popular</span> -->
 																</a></li>

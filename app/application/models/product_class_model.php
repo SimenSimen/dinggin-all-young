@@ -36,10 +36,11 @@ class Product_class_model extends My_Model
      * Get the product list for active
      *
      * @param string $lang
+     * @param array $where
      * @param boolean $deep
      * @return array
      */
-    public function getList($lang, $deep = false)
+    public function getList($lang, $where = [], $deep = false)
     {
 
         if ($deep) {
@@ -50,6 +51,8 @@ class Product_class_model extends My_Model
                 'lang_type' => $lang,
                 'PID' => 0
             ]);
+            
+            $this->db->where($where);
 
             $this->db->order_by("prd_csort", "asc");
         }
