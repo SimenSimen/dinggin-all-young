@@ -112,11 +112,10 @@
                                         <td class="price-b">$<span><?= number_format($subTotal) ?></span></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">This Purchase is Available: Bonus 0
+                                        <td colspan="2">This Purchase is Available: Bonus <?= $dataBonus ?>
                                             <span class="color01"><span id="total_bonus"></span>Points</span>
                                         </td>
                                     </tr>
-
                                 </tfoot>
                             </table>
                         </div>
@@ -129,13 +128,18 @@
                                     <div class="shopping-title">Recipient information</div>
                                     <div class="form-box02">
                                         <div class="radio-box">
-                                            <label class="form-radio"><input type="checkbox" name="gender" id="somemember">Recipient and subscriber information</label>
+                                            <label class="form-radio"><input type="checkbox" name="Recipient" id="somemember">Recipient and subscriber information</label>
                                         </div>
                                         <div class="form-group">
                                             <div class="input-box">
                                                 <select name="select_address" id="select_address" class="form-control">
                                                     <option value="0">Common Address</option>
-                                                    <option value="15">台灣新北市萬里區重新路五段609巷4號8樓之8</option>
+
+                                                    <? foreach ($address as $avalue) : ?>
+                                                        <option value="<?= $avalue['d_id']; ?>">
+                                                            <?= $avalue['country'] . $avalue['city'] . $avalue['countory'] . $avalue['address'] ?>
+                                                        </option>
+                                                    <? endforeach; ?>
                                                 </select>
                                             </div>
                                         </div>
