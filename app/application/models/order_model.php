@@ -1045,13 +1045,16 @@ class Order_model extends MY_Model {
 	//訂單資料(單筆)
 	public function get_order_sign($id=''){
 		$data=array();
-		$sql="select o.*,b.name bname,b.telphone bphone,b.by_email bemail,b.zip bzip,c1.s_name bcounty,c2.s_name barea,b.address baddress from `order` o left join buyer b on b.by_id=o.by_id left join city_category c1 on b.city=c1.s_id left join city_category c2 on b.countory=c2.s_id where id=".$id;
+		$sql="select o.*,b.name bname,b.telphone bphone,b.by_email bemail,b.zip bzip,c1.s_name bcounty,c2.s_name barea,b.address baddress,b.vehicle_type,b.vehicle_no from `order` o left join buyer b on b.by_id=o.by_id left join city_category c1 on b.city=c1.s_id left join city_category c2 on b.countory=c2.s_id where id=".$id;
 		$query = $this->db->query($sql);
 		foreach($query->result_array() as $key=>$val){
 			$val["zip_buy"]				=	$val["zip"];//收件者郵遞區號
 			$val["county_buy"]			=	$val["county"];//收件者縣市
 			$val["area_buy"]			=	$val["area"];//收件者鄉鎮
 			$val["address_buy"]			=	$val["address"] ;//收件者地址
+
+			$val["vehicle_type"]		=	$val["vehicle_type"] ;//載具類型
+			$val["vehicle_no"]			=	$val["vehicle_no"] ;//載具號碼
 
 			$val["name_buy"]			=	$val["name"];//收件者名稱
 			$val["phone_buy"]			=	$val["phone"];//收件者電話

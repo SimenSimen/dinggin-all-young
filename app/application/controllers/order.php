@@ -1426,7 +1426,7 @@ class Order extends MY_Controller
 		$data['dbdata']['back_pic'] = (!empty($data['dbdata']['back_pic']))?'/uploads/000/000/0000/0000000000/back_pic/'.$data['dbdata']['back_pic']:'';
 		$data["payment_way"]=$this->omodel->get_payment_way_data('');//付款方式
 		$data["logistics_way"]=$this->omodel->get_logistics_way_data('');//寄送方式
-		$data["status"]=$this->omodel->get_status_data(); //付款狀態
+		$data["status"]=$this->omodel->get_status_data('0,1,5'); //付款狀態
 		$data["product_flow"]=$this->omodel->get_product_flow_data();  //訂單狀態
 		//詳細訂單資料
 		$data["oddata"]=$this->omodel->get_order_details_data($id);
@@ -1444,7 +1444,7 @@ class Order extends MY_Controller
 		if($dbdata['product_flow']!=4)
 			$data['subbonus']=$this->mymodel->OneSearchSql('order_sub','*',array('OID'=>$id));
 
-			
+		var_dump($data['subbonus']);
 		$shopInfo = $this->mymodel->OneSearchSql('shop_store', '*', ['shop_id' => $dbdata['shop_id']]);
 		$data['shop_address']='('.$shopInfo['shop_name'].')';
 		
@@ -1815,6 +1815,10 @@ class Order extends MY_Controller
 		$datas["note"]=Comment::SetValue("note");
 		$datas['sale_out_date'] = Comment::SetValue('sale_out_date');
 
+		// 載具
+		$datab['vehicle_type'] = Comment::SetValue('vehicle_type');
+		$datab['vehicle_no'] = Comment::SetValue('vehicle_no');
+
 		$order=$this->omodel->get_order_sign($id);
 		if($product_flow=="5" && $order["product_flow"]!="5"){
 			$datas["back_date"]=date("Y-m-d",time());
@@ -1841,6 +1845,7 @@ class Order extends MY_Controller
 		$order=$this->omodel->get_order_sign($id);//取得變更前資料
 		$this->omodel->update_set('`order`','id',$id,$datas);
 		$this->omodel->update_set('order_details','oid',$id,$data);
+		$this->omodel->update_set('`buyer`','by_id',$order['by_id'],$datab);
 
 		//寄mail
 		if($product_flow=="2" && $order["product_flow"]!="2"){

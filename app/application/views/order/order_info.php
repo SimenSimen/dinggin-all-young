@@ -98,11 +98,15 @@
               <td class='member_list_input_td'><?=$dbdata['order_id']?></td>
             </tr>
             <tr>
+              <td class='member_list_title_td'>訂單時間</td>
+              <td class='member_list_input_td'><?=$dbdata['create_time']?></td>
+            </tr>
+            <tr>
               <td class='member_list_title_td'>訂購人姓名</td>
               <td class='member_list_input_td'><?=$dbdata['bname']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>訂購人電話</td>
+              <td class='member_list_title_td'>訂購人手機</td>
               <td class='member_list_input_td'><?=$dbdata['bphone']?></td>
             </tr>
             <tr>
@@ -164,7 +168,7 @@
               <td class='member_list_input_td'><?=$dbdata['name_buy']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>收件人電話</td>
+              <td class='member_list_title_td'>收件人手機</td>
               <td class='member_list_input_td'><?=$dbdata['phone_buy']?></td>
             </tr>
             <tr>
@@ -230,6 +234,7 @@
       			<td>價錢</td>
       			<td>數量</td>
       			<td>小計</td>
+            
     		</tr>
     		<?php if (!empty($oddata)): ?>
         		<?php foreach ($oddata as $key => $value): ?>
@@ -285,6 +290,20 @@
             	<td align='center' class='center_td white_td' style='color:red;'>出貨日期</td>
             	<?$sale_out_date=!is_null($dbdata['sale_out_date']) ? $dbdata['sale_out_date'] : ''?>
             	<td colspan='2' class='center_td white_td'><input type='date' name="sale_out_date" id="sale_out_date" value="<?=$sale_out_date?>" maxlength="10"></td>
+            </tr>
+            <tr>
+              <td align='center' class='center_td white_td' style='color:red;'>會員載具</td>
+              <td colspan='2' class='member_list_input_td'>
+                  <select name='vehicle_type'  style="width: 66%;">
+                    <option>請選擇會員載具</option>
+                    <option value='0' <?=$dbdata['vehicle_type'] == '0' ? 'selected' : ''?>>手機載具</option>
+                    <option value='1' <?=$dbdata['vehicle_type'] == '1' ? 'selected' : ''?>>自然人載具</option>
+                  </select>
+                </td>
+            </tr>
+            <tr>
+              <td align='center' class='center_td white_td' style='color:red;'>載具號碼</td>
+              <td colspan='2' class='center_td white_td'><input type="text" value=<?=$dbdata['vehicle_no']?> name='vehicle_no'></input></td>
             </tr>
             <tr bgcolor='<?//=$member_auth_color[$key]?>'>
             	<td align='center' class='center_td white_td' style='color:red;'>發票日期</td>
