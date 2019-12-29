@@ -1692,7 +1692,7 @@ class Order extends MY_Controller
 		$data["payment_way"]=$this->omodel->get_payment_way_data('');//付款方式
 		$data["logistics_way"]=$this->omodel->get_logistics_way_data('');//寄送方式
 		$data["status"]=$this->omodel->get_status_data(); //付款狀態
-		$data["product_flow"]=$this->omodel->get_product_flow_data();  //訂單狀態
+		$data["product_flow"]=$this->omodel->get_product_flow_data('3,5,7,9');  //訂單狀態
 	
 		//詳細訂單資料
 		$data["oddata"]=$this->omodel->get_order_details_data($id);

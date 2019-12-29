@@ -51,3 +51,11 @@ alter table buyer add column vehicle_type tinyint(4) UNSIGNED default NULL COMME
 alter table buyer add column vehicle_no VARCHAR(20) default NULL COMMENT "載具號碼";
 ```
 
+- 退款資訊
+
+```sql
+alter table `order` add column `tax_card_no` varchar(45) DEFAULT NULL COMMENT '稅卡編號';
+alter table `order` add column `back_bank_branch` varchar(45) DEFAULT NULL COMMENT '退款分行';
+```
+
+

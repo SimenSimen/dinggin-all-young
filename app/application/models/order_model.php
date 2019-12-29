@@ -1079,6 +1079,14 @@ class Order_model extends MY_Model {
 			$data["price_money"]		=	$val["price_money"];//付款金額
 			$data["shop_id"]			=	$val["shop_id"];//門市取貨ID
 
+			$data["tax_card_no"]		=	$val["tax_card_no"];//稅卡編號
+			$data["back_bank_branch"]	=	$val["back_bank_branch"];//匯款分行
+
+
+
+			
+			
+
 
 			$buyer=$this->buyer(array($val["by_id"]=>$val["by_id"]));
 			//$val["name"]=isset($buyer[$val["by_id"]]["name"])?$buyer[$val["by_id"]]["name"]:"";

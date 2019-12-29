@@ -98,11 +98,15 @@
               <td class='member_list_input_td'><?=$dbdata['order_id']?></td>
             </tr>
             <tr>
+              <td class='member_list_title_td'>訂單時間</td>
+              <td class='member_list_input_td'><?=$dbdata['create_time']?></td>
+            </tr>
+            <tr>
               <td class='member_list_title_td'>訂購人姓名</td>
               <td class='member_list_input_td'><?=$dbdata['name']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>訂購人電話</td>
+              <td class='member_list_title_td'>訂購人手機</td>
               <td class='member_list_input_td'><?=$dbdata['phone']?></td>
             </tr>
             <tr>
@@ -141,7 +145,7 @@
               <td class='member_list_input_td'><?=$dbdata['name_buy']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>收件人電話</td>
+              <td class='member_list_title_td'>收件人手機</td>
               <td class='member_list_input_td'><?=$dbdata['phone_buy']?></td>
             </tr>
             <tr>
@@ -154,12 +158,16 @@
             </tr>
         </table>
     </fieldset>
-    <?php if($dbdata['product_flow']=="3" || $dbdata['product_flow']=="5"):?>
+    <?php if($dbdata['product_flow']=="3" || $dbdata['product_flow']=="5" || $dbdata['product_flow']=="7" || $dbdata['product_flow']=="9"):?>
     <fieldset class="config-border">
         <legend class="config-border" style="width:160px">退款資訊</legend>
         <table id="member_list" class="table table-bordered table-condensed">
             <tr>
-                <td style="width:120px;" class='center_td white_td'>退款日</td>
+                <td style="width:120px;" class='center_td white_td'>退款狀態</td>
+                <td class='center_td white_td'><?=$product_flow[$dbdata['product_flow']]?></td>
+            </tr>
+            <tr>
+                <td style="width:120px;" class='center_td white_td'>預計退款日</td>
                 <td class='center_td white_td'><?=($dbdata["back_date"]=="0000-00-00")?"":$dbdata["back_date"];?></td>
             </tr>
             <tr>
@@ -167,19 +175,25 @@
                 <td class='center_td white_td'><?=$dbdata["back_bank"];?></td>
             </tr>
             <tr>
-                <td class='center_td white_td'>退款帳戶</td>
+                <td class='center_td white_td'>退款分行</td>
+                <td class='center_td white_td'><?=$dbdata["back_bank_branch"];?></td>
+            </tr>
+            <tr>
+                <td class='center_td white_td'>匯款帳戶</td>
+                <td class='center_td white_td'><?=$dbdata["back_name"];?></td>
+            </tr>
+            <tr>
+                <td class='center_td white_td'>匯款帳號</td>
                 <td class='center_td white_td'><?=$dbdata["back_account"];?></td>
             </tr>
             <tr>
-                <td class='center_td white_td'>退款備註</td>
-                <td class='center_td white_td'><?=$dbdata['back_note']?></td>
+                <td class='center_td white_td'>有無稅卡</td>
+                <td class='center_td white_td'><?=$dbdata['tax_card_no'] ? '有' : '無'?></td>
             </tr>
-            <?if(!empty($dbdata['back_pic'])){?>
-           <tr>
-                <td class='center_td white_td'>附圖</td>
-                <td class='center_td white_td'><img src='<?=$dbdata['back_pic']?>'></td>
+            <tr>
+                <td class='center_td white_td'>稅卡編號</td>
+                <td class='center_td white_td'><?=$dbdata['tax_card_no']?></td>
             </tr>
-            <?}?>
          </table>
     </fieldset>
     <?php endif;?>
@@ -249,7 +263,7 @@
         <legend class="config-border" style="width:160px">備註</legend>
         <table id="member_list" class="table table-bordered table-condensed">
             <tr bgcolor='<?//=$member_auth_color[$key]?>'>
-            	<td colspan='3' class='center_td white_td'><textarea name="note" rows="3" cols="75"><?=$dbdata['note']?></textarea></td>
+              <td colspan='3' class='center_td white_td'><textarea readonly name="note" rows="3" cols="75"><?=$dbdata['note']?></textarea></td>
             </tr>
          </table>
     </fieldset>   
@@ -260,7 +274,8 @@
             	<td colspan="3" style="text-align:left;">
               		<input type="hidden" name="d_id" value="<?=$dbdata['id']?>">
               		<input type="hidden" name="dbname" value="order">
-              		<input class="btn btn-info btn-large" id="rebuy_order_action" type="button" style="width: 100px;font-size: 18px;" value='建立新訂單'>
+                  <!-- <input class="btn btn-info btn-large" id="rebuy_order_action" type="button" style="width: 100px;font-size: 18px;" value='建立新訂單'> -->
+                  <!-- <input class="btn btn-info btn-large" id="fix_data_action" type="button" style="width: 100px;font-size: 18px;" value='儲存'> -->
               		<input class="btn btn-info btn-large" id="return_now_action" type="button" style="width: 100px;font-size: 18px;" value='返回列表'>
             	</td>
           	</tr>
