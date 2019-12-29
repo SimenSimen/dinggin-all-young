@@ -390,7 +390,9 @@ class Order_model extends MY_Model {
 			//$objPHPExcel->getActiveSheet()->getColumnDimension($word[($i+1)])->setAutoSize(true);//自動寬度
 			//$objPHPExcel->getActiveSheet()->getColumnDimension($word[($i+1)])->setWidth(30);//設定寬度
 		}
-		$title_array=array("account" => "會員帳號", "order_id"=>"訂單編號","d_name"=>"出貨倉庫", "prd_no" => "商品編號","product_flow_txt"=>"訂單狀態","create_time"=>"訂單日期","name"=>"收件人姓名","phone"=>"收件電話","address"=>"收件地址","pay_way_txt"=>"付款方式","lway_txt"=>"寄送方式","status_txt"=>"付款狀態","atmno"=>"匯款後五碼","prd_sn"=>"商品條碼","prd_name"=>"商品名稱","number"=>"數量","price"=>"單價","total_price"=>"小計","ship_price"=>"運費","use_dividend"=>"使用紅利點數幾點","use_shopping_money"=>"使用購物金幾元","price_money"=>"實付金額","receipt_date"=>"發票日期","receipt_num"=>"發票號碼","note"=>"備註");//,"receipt_title"=>"發票抬頭","receipt_code"=>"統編","receipt_address"=>"發票地址","tracking_num"=>"物流編號","receipt_date"=>"發票日期","receipt_num"=>"發票號碼","sendapp"=>"接單APP"
+		// $title_array=array("account" => "會員帳號", "order_id"=>"訂單編號","d_name"=>"出貨倉庫", "prd_no" => "商品編號","product_flow_txt"=>"訂單狀態","create_time"=>"訂單日期","name"=>"收件人姓名","phone"=>"收件電話","address"=>"收件地址","pay_way_txt"=>"付款方式","lway_txt"=>"寄送方式","status_txt"=>"付款狀態","atmno"=>"匯款後五碼","prd_sn"=>"商品條碼","prd_name"=>"商品名稱","number"=>"數量","price"=>"單價","total_price"=>"小計","ship_price"=>"運費","use_dividend"=>"使用紅利點數幾點","use_shopping_money"=>"使用購物金幾元","price_money"=>"實付金額","receipt_date"=>"發票日期","receipt_num"=>"發票號碼","note"=>"備註");//,"receipt_title"=>"發票抬頭","receipt_code"=>"統編","receipt_address"=>"發票地址","tracking_num"=>"物流編號","receipt_date"=>"發票日期","receipt_num"=>"發票號碼","sendapp"=>"接單APP"
+		$title_array=array("account" => "會員帳號", "order_id"=>"訂單編號", "prd_no" => "商品編號","product_flow_txt"=>"訂單狀態","create_time"=>"訂單日期","name"=>"收件人姓名","phone"=>"收件電話","address"=>"收件地址","pay_way_txt"=>"付款方式","lway_txt"=>"寄送方式","status_txt"=>"付款狀態","prd_sn"=>"商品條碼","prd_name"=>"商品名稱","number"=>"數量","price"=>"單價","total_price"=>"小計","ship_price"=>"運費","use_dividend"=>"使用紅利點數幾點","use_shopping_money"=>"使用購物金幾元","price_money"=>"實付金額","cs_no"=>"超取店號","tracking_num"=>"物流編號","receipt_date"=>"發票日期","receipt_num"=>"發票號碼","receipt_code"=>"統編","note"=>"備註");//,"receipt_title"=>"發票抬頭","receipt_code"=>"統編","receipt_address"=>"發票地址","tracking_num"=>"物流編號","receipt_date"=>"發票日期","receipt_num"=>"發票號碼","sendapp"=>"接單APP"
+		
 		$i=1;
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.($i), '訂購單明細');
 		$objPHPExcel->getActiveSheet()->mergeCells('A'.$i.':'.$word[(count($title_array))].$i);//合併
@@ -1009,10 +1011,13 @@ class Order_model extends MY_Model {
 		return $data;
 	}
 	//訂單狀態*
-	public function get_product_flow_data(){
-		//$data=array('0'=>'新訂單','1'=>'處理中','2'=>'已出貨','3'=>'取消訂單','4'=>'交易完成','5'=>'已退貨','6'=>'未付款取消','7'=>'申請退貨');
+	public function get_product_flow_data($id=''){
+		//$data=array('0'=>'新訂單','1'=>'處理中','2'=>'已出貨','3'=>'取消訂單','4'=>'交易完成','5'=>'已退貨','6'=>'未付款取消','7'=>'申請退貨','8'=>'交易失敗','9'=>'退貨處理中');
 		$data=array();
 		$command="select d_val,d_title from config where d_type='orderstatus'";
+		if(!empty($id)){
+			$command.=" and d_val in (".$id.")";
+		}
 		$get_sInvoice=$this->db->query($command);
 		foreach($get_sInvoice->result_array() as $key=>$val){
 			$data[$val["d_val"]]=$val["d_title"];
@@ -1045,13 +1050,16 @@ class Order_model extends MY_Model {
 	//訂單資料(單筆)
 	public function get_order_sign($id=''){
 		$data=array();
-		$sql="select o.*,b.name bname,b.telphone bphone,b.by_email bemail,b.zip bzip,c1.s_name bcounty,c2.s_name barea,b.address baddress from `order` o left join buyer b on b.by_id=o.by_id left join city_category c1 on b.city=c1.s_id left join city_category c2 on b.countory=c2.s_id where id=".$id;
+		$sql="select o.*,b.name bname,b.telphone bphone,b.by_email bemail,b.zip bzip,c1.s_name bcounty,c2.s_name barea,b.address baddress,b.vehicle_type,b.vehicle_no from `order` o left join buyer b on b.by_id=o.by_id left join city_category c1 on b.city=c1.s_id left join city_category c2 on b.countory=c2.s_id where id=".$id;
 		$query = $this->db->query($sql);
 		foreach($query->result_array() as $key=>$val){
 			$val["zip_buy"]				=	$val["zip"];//收件者郵遞區號
 			$val["county_buy"]			=	$val["county"];//收件者縣市
 			$val["area_buy"]			=	$val["area"];//收件者鄉鎮
 			$val["address_buy"]			=	$val["address"] ;//收件者地址
+
+			$val["vehicle_type"]		=	$val["vehicle_type"] ;//載具類型
+			$val["vehicle_no"]			=	$val["vehicle_no"] ;//載具號碼
 
 			$val["name_buy"]			=	$val["name"];//收件者名稱
 			$val["phone_buy"]			=	$val["phone"];//收件者電話
