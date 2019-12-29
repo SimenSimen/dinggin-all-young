@@ -16,11 +16,11 @@
                                     <div class="managemenbox">
 
                                         <div class="form-group name">
-                                            <i name="icon02" class="icon-genders"></i> <label class="control-label">Identity</label>
+                                            <i name="icon02" class="icon-genders"></i> <label class="control-label"><?= $this->lang['identity'] ?></label>
                                             <div class="control-box">
                                                 <div class="radio-box">
-                                                    <label class="form-radio checked"><input type="radio" name="identity" checked="" value="General"> General</label>
-                                                    <label class="form-radio"><input type="radio" name="identity" value="Legal Person">Legal Person</label>
+                                                    <label class="form-radio checked"><input type="radio" name="identity" checked="" value="General"> <?= $this->lang['general'] ?></label>
+                                                    <label class="form-radio"><input type="radio" name="identity" value="Legal Person"><?= $this->lang['legal_person'] ?></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -28,19 +28,19 @@
                                         <div class="form-group">
                                             <div class="control-box">
                                                 <i name="icon02" class="icon-name"></i>
-                                                <label class="control-label">Identity Card Number</label>
+                                                <label class="control-label"><?= $this->lang['idnum'] ?></label>
                                                 <input class="form-control w200" type="text" maxlength="10" name="identity_num" value="">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="managemenbox">
-                                        <p>Account Settings</p>
+                                        <p><?= $this->lang['accconfig'] ?></p>
 
                                         <div class="form-group">
                                             <div class="control-box">
                                                 <i name="icon02" class="icon-id"></i>
-                                                <label class="control-label"><span>*</span>Bank Name</label>
+                                                <label class="control-label"><span>*</span><?= $this->lang['bname'] ?></label>
                                                 <input class="form-control w200" type="text" name="bank_name" value="">
                                             </div>
                                         </div>
@@ -48,7 +48,7 @@
                                         <div class="form-group">
                                             <div class="control-box">
                                                 <i name="icon02" class="icon-id"></i>
-                                                <label class="control-label"><span>*</span>Branch Bank</label>
+                                                <label class="control-label"><span>*</span><?= $this->lang['bank_branch'] ?></label>
                                                 <input class="form-control w200" type="text" name="" value="">
                                             </div>
                                         </div>
@@ -56,7 +56,7 @@
                                         <div class="form-group">
                                             <div class="control-box">
                                                 <i name="icon02" class="icon-id"></i>
-                                                <label class="control-label"><span>*</span>Account Title</label>
+                                                <label class="control-label"><span>*</span><?= $this->lang['accountname'] ?></label>
                                                 <input class="form-control w200" type="text" name="" value="">
                                             </div>
                                         </div>
@@ -64,40 +64,25 @@
                                         <div class="form-group">
                                             <div class="control-box">
                                                 <i name="icon02" class="icon-id"></i>
-                                                <label class="control-label"><span>*</span>Bank Account</label>
+                                                <label class="control-label"><span>*</span><?= $this->lang['bacc'] ?></label>
                                                 <input class="form-control w200" type="text" name="bank_account" value="">
                                             </div>
                                         </div>
-
-                                        <div class="form-group name">
-                                            <i name="icon02" class="icon-genders"></i> <label class="control-label">Identity</label>
-                                            <div class="control-box">
-                                                <div class="radio-box">
-                                                    <label class="form-radio checked">
-                                                        <input type="radio" name="" checked=""> General
-                                                    </label>
-                                                    <label class="form-radio">
-                                                        <input type="radio" name=""> Legal Person
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-
 
                                         <div class="managemenbox">
                                             <div class="form-group">
                                                 <div class="control-box">
                                                     <div class="radio-box">
                                                         <label class="form-radio checked">
-                                                            <input type="radio" name="" value="tax-free"> Tax-Free Card
+                                                            <input type="radio" name="" value="tax-free"> <?= $this->lang['tax_free_card'] ?>
                                                         </label>
                                                         <label class="form-radio" style="margin-left:20px;">
-                                                            <input type="radio" name="" value="tax"> Tax Card
+                                                            <input type="radio" name="" value="tax"> <?= $this->lang['tax_card'] ?>
                                                         </label>
                                                     </div>
                                                 </div>
                                                 <div class="control-box">
-                                                    <input class="form-control form-control03" type="text" name="" id="tax-number" placeholder="Please Enter the Tax Card Number">
+                                                    <input class="form-control form-control03" type="text" name="" id="tax-number" placeholder="<?= $this->lang['tax_card_num'] ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -106,15 +91,15 @@
 
                                     <div class="form-group checbox c_green02H">
                                         <input type="checkbox" name="chk_ok" value="ok" id="checkbox">
-                                        <label for="checkbox">I have read the
-                                            <a href="_inni_note-service.php" class="fancybox-share">Member Terms of Service</a>
+                                        <label for="checkbox"><?= $this->lang['I_have_read'] ?>
+                                            <a href="_inni_note-service.php" class="fancybox-share"><?= $this->lang['term'] ?></a>
                                         </label>
                                     </div>
 
                                     <div class="pagination_box">
                                         <input type="hidden" name="dbname" value="member_apply">
-                                        <input type="reset" class="btn simple" value="Refill">
-                                        <input type="submit" class="btn simple bg2 btn-green-bg" value="Send out">
+                                        <input type="reset" class="btn simple" value="<?= $this->lang['refill'] ?>">
+                                        <input type="submit" class="btn simple bg2 btn-green-bg" value="<?= $this->lang['send_out'] ?>">
                                     </div>
                                 </div>
                             </div>

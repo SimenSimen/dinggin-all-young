@@ -139,22 +139,21 @@ class products_model extends CI_Model
 	 * 取得產品,但必須檢查各店跟類別是否有開啟
 	 * 只要一個有關閉,就無法取得該資料
 	 * @param int $id
-	 * @return stdClass db
+	 * @return array|null
 	 */
 	public function productsData($id)
 	{
-		$this->db->select($this->_db_name . '.prd_id, ' . $this->_db_name . '.prd_name, ' . $this->_db_name . '.prd_image, ' . $this->_db_name . '.SID, ' . $this->_db_name . '.prd_describe');
-		$this->db->from($this->_db_name);
-		$this->db->join($this->_db_store, $this->_db_name . '.SID = ' . $this->_db_store . '.d_id', 'left');
-		$this->db->join($this->_db_type, $this->_db_name . '.prd_cid_s = ' . $this->_db_type . '.prd_cid', 'left');
-		$this->db->where($this->_db_store . '.d_enable', 'Y');
-		$this->db->where($this->_db_type . '.d_enable', 'Y');
-		$this->db->where($this->_db_type . '.lang_type', $this->session->userdata('lang'));
-		$this->db->where($this->_db_name . '.d_enable', 'Y');
-		$this->db->where($this->_db_name . '.lang_type', $this->session->userdata('lang'));
-		$this->db->where($this->_db_name . '.prd_id', $id);
+		$this->db->select($this->db_name . '.*', false);
+		$this->db->from($this->db_name);
+		$this->db->join($this->db_type, $this->db_name . '.prd_cid = ' . $this->db_type . '.prd_cid', 'left');
+		$this->db->where($this->db_type . '.d_enable', 'Y');
+		$this->db->where($this->db_type . '.lang_type', $this->session->userdata('lang'));
+		$this->db->where($this->db_name . '.d_enable', 'Y');
+		$this->db->where($this->db_name . '.lang_type', $this->session->userdata('lang'));
+		$this->db->where($this->db_name . '.prd_id', $id);
 		$query = $this->db->get();
-		return $query->row();
+
+		return @$query->result_array()[0];
 	}
 
 	/**

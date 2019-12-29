@@ -71,7 +71,7 @@ class Index extends MY_Controller
 			$this->useful->AlertPage('/' . $this->data['web_config']['transfer']);
 		} else {
 			/** load the languages packages */
-			$this->lang->load('views/' . $this->indexViewPath . '/index', $this->data['lang']);
+			$data['indexLang'] = $this->lmodel->config(1, $this->setlang);
 
 			$data['isSaleMember'] = false;
 

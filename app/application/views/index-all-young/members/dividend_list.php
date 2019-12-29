@@ -6,16 +6,16 @@
                 <div class="container openside pall0">
                     <?php $this->load->view($indexViewPath . '/members/_sidenav'); ?>
                     <section class="content has-side">
-                        <div class="title">Bonus Point Query</div>
-                        <p class="mb-3">Remaining<span class="color01"><?= $dividend; ?>point</span>Bonus points (<?= $birthday ?> Expires <?= number_format($pointsGonnaExpired, 2) ?> Points)</p>
+                        <div class="title"><?= $this->lang['bonus_query'] ?></div>
+                        <p class="mb-3"><?= $this->lang['subdivi'] ?><span class="color01"><?= $dividend; ?><?= $this->lang['pri'] ?></span><?= $this->lang['divid'] ?> (<?= $birthday ?> <?= $this->lang['expires'] ?> <?= number_format($pointsGonnaExpired, 2) ?> <?= $this->lang['pri'] ?>)</p>
                         <table class="table table-h table02 prl20">
                             <form action="" method="post" accept-charset="utf-8" enctype="" id="search_form"></form>
                             <thead>
                                 <tr>
-                                    <th>Date</th>
-                                    <th>Points</th>
-                                    <th>Source Description</th>
-                                    <th>Status</th>
+                                    <th><?= $this->lang['time'] ?></th>
+                                    <th><?= $this->lang['prinum'] ?></th>
+                                    <th><?= $this->lang['info'] ?></th>
+                                    <th><?= $this->lang['status'] ?></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,7 +32,7 @@
                         </table>
 
                         <div class="pagination_box">
-                            <p>Total <?= $pageData['total_rows'] ?> Data</p>
+                            <p><?= $this->commonsLang['total'] ?> <?= $pageData['total_rows'] ?> <?= $this->commonsLang['count'] ?></p>
                             <div class="pagination_box" id="pagination">
                                 <ul class="pagination en">
 

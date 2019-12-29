@@ -68,29 +68,29 @@
                                         </div>
                                     </div>
                                     <div class="col-item">
-                                        <a href="#" class="btn btn-lg btn-green-bg"><i class="icon-f-39"></i>ADD TO CART</a>
+                                        <a href="#" class="btn btn-lg btn-green-bg"><i class="icon-f-39"></i><?= $this->lang['p_car'] ?></a>
                                     </div>
                                 <?php else : ?>
                                     <? // 缺貨中按鈕 
                                     ?>
                                     <div class="col-item">
-                                        <span class="sold-out">Sold out</span>
+                                        <span class="sold-out"><?= $this->lang['sale_out'] ?></span>
                                     </div>
                                     <div class="col-item">
-                                        <a href="#" class="btn btn-lg btn-green-bg">Out of stock</a>
+                                        <a href="#" class="btn btn-lg btn-green-bg"><?= $this->lang['out_of_stock'] ?></a>
                                     </div>
                                 <?php endif ?>
                             </div>
                         </div>
                         <div class="tt-wrapper">
                             <ul class="tt-list-btn">
-                                <li><a class="btn-link btn-green" href="#"><i class="icon-n-072"></i>ADD TO WISH LIST</a></li>
+                                <li><a class="btn-link btn-green" href="#"><i class="icon-n-072"></i><?= $this->lang['p_unlike'] ?></a></li>
                             </ul>
                         </div>
 
                         <div class="tt-collapse-block">
                             <div class="tt-item active">
-                                <div class="tt-collapse-title">Product Desciption</div>
+                                <div class="tt-collapse-title"><?= $this->lang['p_describe'] ?></div>
                                 <div class="tt-collapse-content">
                                     <? foreach ($prd_describe as $key => $value) : ?>
                                         <?= $value ?><br>
@@ -99,7 +99,7 @@
                             </div>
 
                             <div class="tt-item active">
-                                <div class="tt-collapse-title">Product Specifications</div>
+                                <div class="tt-collapse-title"><?= $this->lang['p_spec'] ?></div>
                                 <div class="tt-collapse-content">
                                     <div class="tt-add-info">
                                         <ul>
@@ -111,13 +111,13 @@
                                 </div>
                             </div>
                             <div class="tt-item active">
-                                <div class="tt-collapse-title">Buying</div>
+                                <div class="tt-collapse-title"><?= $this->lang['p_buy'] ?></div>
                                 <div class="tt-collapse-content">
                                     <?= $buy_content; ?>
                                 </div>
                             </div>
                             <div class="tt-item active">
-                                <div class="tt-collapse-title">Shipping Specification</div>
+                                <div class="tt-collapse-title"><?= $this->lang['p_ship'] ?></div>
                                 <div class="tt-collapse-content">
                                     <?= $ship_rule; ?>
                                 </div>
@@ -132,7 +132,7 @@
 
         <div class="container container-fluid-custom-mobile-padding">
             <div class="tt-block-title">
-                <h1 class="tt-title">You May Also Like</h1>
+                <h1 class="tt-title"><?= $this->lang['p_like'] ?></h1>
                 <!-- <div class="tt-description">New Arrival</div> -->
             </div>
             <div class="tt-carousel-products row arrow-location-tab arrow-location-tab01 tt-alignment-img tt-collection-listing mt0 ">
@@ -183,9 +183,8 @@
             </script>
         </div>
 
-
         <div class="text-center tt_product_showmore">
-            <a href="#" class="btn btn-green-bg"><i name="icon02" class="icon-chevron-left" aria-hidden="true"></i>回列表</a>
+            <a href="#" class="btn btn-green-bg"><i name="icon02" class="icon-chevron-left" aria-hidden="true"></i><?= $this->lang['back'] ?></a>
         </div>
 
     </div>

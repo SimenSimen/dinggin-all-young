@@ -2,6 +2,8 @@
 class Gold extends MY_Controller
 {
 	public $web_title = '', $set_language;
+
+	public $Spath = '/uploads/000/000/0000/0000000000/products/';
 	//初始化
 	public function __construct()
 	{
@@ -83,7 +85,8 @@ class Gold extends MY_Controller
 	public function login($url = '')
 	{
 		@session_start();
-		$this->lang->load('views/' . $this->indexViewPath . '/login', $this->setlang);
+		/** load the languages packages */
+		$data['lang'] = $this->lmodel->config(2, $this->setlang);
 
 		// //初始設定
 		// $this->useful->iconfig($_SESSION['AT']['account']);
@@ -93,7 +96,7 @@ class Gold extends MY_Controller
 		$url = (!empty($_SESSION['url'])) ? $_SESSION['url'] : '/';
 		$data['burl'] = $url;
 		// 判斷是否登入
-		if ($_SESSION['MT']['is_login'] == 1) {
+		if ($this->isLogin()) {
 			//$this->useful->AlertPage('/gold/member_list');
 			//$this->useful->AlertPage('/products');
 			$this->useful->AlertPage('/member');
@@ -219,7 +222,7 @@ class Gold extends MY_Controller
 		unset($_SESSION['MT']);
 		unset($_SESSION['join_car']);
 		//$this->useful->AlertPage('/products/'.$_SESSION['AT']['account'].'','登出成功');
-		$this->useful->AlertPage('/gold/login', $this->lang['logoutsu']);
+		$this->useful->AlertPage('/login', $this->lang['logoutsu']);
 		return '';
 	}
 
@@ -228,15 +231,10 @@ class Gold extends MY_Controller
 	{
 		@session_start();
 
-		$this->lang->load('views/' . $this->indexViewPath . '/register', $this->setlang);
+		$data['lang'] = $this->lmodel->config('3', $this->setlang);
 
 		$this->DataName = 'register';
-		$lang = $this->lmodel->config('1', $this->setlang);
-		$data['path_title'] = '<li><a href="/gold/' . $this->DataName . '"><span>' . $lang["$this->DataName"] . '</span></a></li>';
-		$data['banner'] = $this->data['banner'];
 
-		//語言包
-		$lang = $this->lmodel->config('3', $this->setlang);
 		//非台灣則不顯示城市鄉鎮
 		$data['setlang'] = $this->setlang;
 
@@ -281,11 +279,9 @@ class Gold extends MY_Controller
 	//基本資料
 	public function member_info()
 	{
-		if (empty($_SESSION['MT'])) {
-			$this->load->library('/mylib/CheckInput');
-			$check = new CheckInput;
-			$check->lang = $this->lmodel->config('8', $this->setlang);
-			$this->useful->AlertPage('/gold/login', $check->lang['Login']); //請先登入或註冊
+		if (!$this->isLogin()) {
+			$lang = $this->lmodel->config('8', $this->setlang);
+			$this->useful->AlertPage('/login', $lang['Login']); //請先登入或註冊
 		}
 
 		@session_start();
@@ -294,13 +290,6 @@ class Gold extends MY_Controller
 
 		//非台灣則不顯示城市鄉鎮
 		$data['setlang'] = $this->setlang;
-
-		$this->DataName = 'member';
-		$this->lang = $this->lmodel->config('1', $this->setlang);
-		$data['path_title'] = '<li><a href="/gold/' . $this->DataName . '"><span>' . $this->lang["$this->DataName"] . '</span></a></li>';
-		$this->DataName = 'member_info';
-		$data['path_title'] .= '<li><a href="/gold/' . $this->DataName . '"><span>' . $this->lang["$this->DataName"] . '</span></a></li>';
-		$data['banner'] = $this->data['banner'];
 
 		//語言包
 		$this->lang = $this->lmodel->config('6', $this->setlang);
@@ -535,20 +524,10 @@ class Gold extends MY_Controller
 	//邀請碼分享
 	public function invite_share()
 	{
-		if (empty($_SESSION['MT'])) {
-			$this->load->library('/mylib/CheckInput');
-			$check = new CheckInput;
-			$check->lang = $this->lmodel->config('9999', $this->setlang);
-			$this->useful->AlertPage('/gold/login', $check->lang['Login']); //請先登入或註冊
+		if (!$this->isLogin()) {
+			$lang = $this->lmodel->config('9999', $this->setlang);
+			return $this->useful->AlertPage('/gold/login', $lang['Login']); //請先登入或註冊
 		}
-		@session_start();
-
-		$this->DataName = 'member';
-		$this->lang = $this->lmodel->config('1', $this->setlang);
-		$data['path_title'] = '<li><a href="/gold/' . $this->DataName . '"><span>' . $this->lang["$this->DataName"] . '</span></a></li>';
-		$this->DataName = 'invite_share';
-		$data['path_title'] .= '<li><a href="/gold/' . $this->DataName . '"><span>' . $this->lang["$this->DataName"] . '</span></a></li>';
-		$data['banner'] = $this->data['banner'];
 
 		//語言包
 		$this->lang = $this->lmodel->config('33', $this->setlang);
@@ -566,10 +545,9 @@ class Gold extends MY_Controller
 		}
 
 		//view
-		$this->load->view('index/header' . $this->style, $data);
-		$this->load->view('index/member/member_nav', $data);
-		$this->load->view('index/member/invite_share', $data);
-		$this->load->view('index/footer' . $this->style, $data);
+		$this->load->view($this->indexViewPath . '/header', $data);
+		$this->load->view($this->indexViewPath . '/members/invite_share', $data);
+		$this->load->view($this->indexViewPath . '/footer', $data);
 	}
 
 	//邀請碼分享ok
@@ -629,10 +607,9 @@ class Gold extends MY_Controller
 	//會員專區
 	public function member()
 	{
-		if (empty($_SESSION['MT'])) {
+		if (!$this->isLogin()) {
 			$this->useful->AlertPage('/login', $this->lang_menu['Login']);
 		}
-		@session_start();
 
 		$this->DataName = 'member';
 		$this->lang = $this->lmodel->config('1', $this->setlang);
@@ -686,27 +663,15 @@ class Gold extends MY_Controller
 	//升級經營會員
 	public function member_upgrade()
 	{
-		@session_start();
-
-		if (empty($_SESSION['MT'])) {
-			$this->load->library('/mylib/CheckInput');
-			$check = new CheckInput;
-			$check->lang = $this->lmodel->config('9999', $this->setlang);
-			$this->useful->AlertPage('/login', $check->lang['Login']); //請先登入或註冊
+		if (!$this->isLogin()) {
+			$lang = $this->lmodel->config('9999', $this->setlang);
+			return $this->useful->AlertPage('/login', $lang['Login']); //請先登入或註冊
 		}
 
 		/** check if the member is already not the normal member */
 		if ($_SESSION['MT']['d_is_member'] != Member_model::BUYER_ROLE_NORMAL) {
 			$this->useful->AlertPage('/member', 'Already apply or upgraded.');
 		}
-
-		$this->DataName = 'member';
-		$this->lang = $this->lmodel->config('1', $this->setlang);
-		$data['path_title'] = '<li><a href="/gold/' . $this->DataName . '"><span>' . $this->lang["$this->DataName"] . '</span></a></li>';
-		$this->DataName = 'member_upgrade';
-		$data['path_title'] .= '<li><a href="/gold/' . $this->DataName . '"><span>' . $this->lang["$this->DataName"] . '</span></a></li>';
-		//初始設定
-		// $this->useful->iconfig($_SESSION['AT']['account']);
 
 		$data['banner'] = '';
 
@@ -1157,7 +1122,7 @@ class Gold extends MY_Controller
 	{
 		if (!$this->isLogin()) {
 			$lang = $this->lmodel->config('9999', $this->setlang);
-			$this->useful->AlertPage('/gold/login', $lang['Login']); //請先登入或註冊
+			return $this->useful->AlertPage('/gold/login', $lang['Login']); //請先登入或註冊
 		}
 
 		//data
@@ -1167,6 +1132,7 @@ class Gold extends MY_Controller
 
 		//語言包
 		$this->lang = $this->lmodel->config('32', $this->setlang);
+		$this->commonsLang = $this->lmodel->config('9999', $this->setlang);
 
 		$buyer = $_SESSION['MT']['by_id'];
 		$moneyInfo = $this->shoppingmoney_model->getShoppingHistory($buyer);
@@ -1644,6 +1610,40 @@ class Gold extends MY_Controller
 
 	}
 
+	/**
+	 * 希望清單
+	 */
+	public function wishlist()
+	{
+		$this->lang = $this->lmodel->config('30', $this->setlang);
+		// 判斷是否登入
+		if ($this->isLogin()) {
+			$this->load->model('favorite_model', 'favoriteModel');
+			//推薦人
+			$data['by_id'] = $by_id = $_SESSION['MT']['by_id'];
+			$account_id = $this->mymodel->OneSearchSql('buyer', 'PID', array('by_id' => $by_id));
+			$PID	=	$account_id['PID'];
+
+			//抓資料
+			$data['favorite_data']	= $this->favoriteModel->selectFavorite($by_id);
+			$bdata				=	$this->mymodel->OneSearchSql('buyer', 'd_spec_type', array('by_id' => $by_id));
+			$d_spec_type		=	$bdata['d_spec_type'];
+
+			foreach ($data['favorite_data'] as $key => &$value) {
+				$value['price']	=	($d_spec_type == 1) ? $value['d_mprice'] : $value['prd_price00'];
+				$image  = explode(',', $value['prd_image']);
+				$value['prd_image'] = $this->Spath . $image[0];
+			}
+
+			//view
+			$this->load->view($this->indexViewPath . '/header', $data);
+			$this->load->view($this->indexViewPath . '/members/wishlist', $data);
+			$this->load->view($this->indexViewPath . '/footer', $data);
+		} else {
+			$_SESSION['url']	=	'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+			$this->useful->AlertPage('/gold/login', $this->lang['Login']);
+		}
+	}
 	/*
 	//會員功能列表
 	public function member_list(){}
@@ -1715,7 +1715,7 @@ class Gold extends MY_Controller
 	{
 		if (!$this->isLogin()) {
 			$lang = $this->lmodel->config('9999', $this->setlang);
-			$this->useful->AlertPage('/login', $lang['Login']); //請先登入或註冊
+			return $this->useful->AlertPage('/login', $lang['Login']); //請先登入或註冊
 		}
 		/** Loading comment library */
 		$this->load->library('/mylib/comment');
@@ -1725,6 +1725,7 @@ class Gold extends MY_Controller
 		$this->useful->iconfig();
 		//語言包
 		$this->lang = $this->lmodel->config('11', $this->setlang);
+		$this->commonsLang = $this->lmodel->config('9999', $this->setlang);
 
 		$buyId = $_SESSION['MT']['by_id'];
 		$this->load->model('gold_model', 'gmodel');

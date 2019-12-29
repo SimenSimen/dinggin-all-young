@@ -179,4 +179,18 @@
 
 <hr>
 
-### add item to favirate = /cart/ajax_favorite
+### 新增/移除追蹤商品 = /cart/ajax_favorite
+
+- URL: `/cart/ajax_favorite`
+
+#### 參數說明
+
+| 參數  | 型態  |  說明  |
+| :---: | :---: | :----: |
+| `id`  | `int` | 商品id |
+
+#### 回傳說明
+
+|   參數   |   型態   |          說明          |
+| :------: | :------: | :--------------------: |
+| `action` | `string` | add: 新增<br>del: 刪除 |

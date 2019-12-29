@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="tt-collapse open">
-                        <h3 class="tt-collapse-title">Categories</h3>
+                        <h3 class="tt-collapse-title"><?= $this->lang['p_type'] ?></h3>
                         <div class="tt-collapse-content">
                             <ul class="tt-list-row">
                                 <?php foreach ($productClasses as $productClasses) : ?>
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="tt-collapse open">
-                        <h3 class="tt-collapse-title">Price Range</h3>
+                        <h3 class="tt-collapse-title"><?= $this->lang['p_price'] ?></h3>
                         <div class="tt-collapse-content">
                             <ul class="tt-list-row">
                                 <li class="active"><a href="#">$0 — $50</a></li>
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="tt-collapse open">
-                        <h3 class="tt-collapse-title">Supplier</h3>
+                        <h3 class="tt-collapse-title"><?= $this->lang['supplier'] ?></h3>
                         <div class="tt-collapse-content">
                             <ul class="tt-list-row">
                                 <?php foreach ($suppliers as $supplier) : ?>
@@ -52,16 +52,16 @@
                     <div class="content-indent container-fluid-custom-mobile-padding-02">
                         <div class="tt-filters-options" id="js-tt-filters-options">
                             <h1 class="tt-title">
-                                <?= $keyword ? $keyword : 'All Products' ?> <span class="tt-title-total">(<?= $pageData['total_rows'] ?>)</span>
+                                <?= $keyword ? $keyword : $this->lang['all'] ?> <span class="tt-title-total">(<?= $pageData['total_rows'] ?>)</span>
                             </h1>
                             <div class="tt-btn-toggle">
                                 <a href="#">FILTER</a>
                             </div>
                             <div class="tt-sort">
                                 <select>
-                                    <option value="Default Sorting">Default Sorting</option>
-                                    <option value="Default Sorting">Low to High Price</option>
-                                    <option value="Default Sorting">High to Low Price</option>
+                                    <option value="Default Sorting"><?= $this->lang['d_sort'] ?></option>
+                                    <option value="Default Sorting"><?= $this->lang['p_high'] ?></option>
+                                    <option value="Default Sorting"><?= $this->lang['p_low'] ?></option>
                                 </select>
                             </div>
                             <div class="tt-quantity">
@@ -76,7 +76,7 @@
                             <?= $this->load->view($indexViewPath . '/products/_item_list', ['dbdata' => $dbdata]) ?>
                         </div>
                         <div class="text-center tt_product_showmore">
-                            <a id="load-more" href="#" class="btn btn-green">LOAD MORE</a>
+                            <a id="load-more" href="#" class="btn btn-green"><?= $this->lang['load_more'] ?></a>
                         </div>
                     </div>
                 </div>
