@@ -28,7 +28,7 @@ ALTER TABLE `ckeditor` MODIFY COLUMN `type` enum('1','2','3','4','5','6','7');
 <!-- 增加欄位 for product_brand 關聯 ckeditor -->
 alter table product_brand add column ck_id int(10) UNSIGNED default NULL;
 <!-- 增加欄位 for 超取店號 -->
-ALTER TABLE `order` ADD COLUMN cs_no VARCHAR ( 30 ) DEFAULT NULL COMMENT "超取店號"
+ALTER TABLE `order` ADD COLUMN cs_no VARCHAR ( 30 ) DEFAULT NULL COMMENT "超取店號";
 <!--for 付款狀態 -->
 INSERT INTO `config` VALUES(null, 'paystatus', '授權未成功', '5', NULL, NULL, 'TW');
 <!--for 訂單狀態 -->

@@ -1367,7 +1367,7 @@ class Order extends MY_Controller
 			}
 		$data["logistics_way"]=$this->omodel->get_logistics_way_data('');//寄送方式
 		$data["status"]=$this->omodel->get_status_data(); //付款狀態
-		$data["product_flow"]=$this->omodel->get_product_flow_data();  //訂單狀態		
+		$data["product_flow"]=$this->omodel->get_product_flow_data('1,3,4,5');  //訂單狀態		
 		$data['warehouse']=$this->mymodel->select_page_form('warehouse','','d_id,d_name',array());//出貨倉庫
 	
 		//view
