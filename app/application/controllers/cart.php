@@ -46,7 +46,7 @@ class Cart extends MY_Controller
 		$language = $this->language;
 		//語言包
 		$this->lang = $this->lmodel->config('22', $this->setlang);
-		$data['pay_ls'] = $this->lmodel->config('9999', $this->setlang);
+		$data['commonsLang'] = $this->lmodel->config('9999', $this->setlang);
 		// 判斷是否登入
 		if ($this->isLogin()) {
 			// if (empty($_SESSION['join_car'])) {
@@ -591,7 +591,6 @@ class Cart extends MY_Controller
 		}
 	}
 
-
 	/**
 	 * Get the area info
 	 *
@@ -611,6 +610,61 @@ class Cart extends MY_Controller
 
 		return $this->apiResponse(['success' => true, 'data' => $data]);
 	}
+
+	/**
+	 * 加入追蹤清單
+	 *
+	 * @return void
+	 */
+	public function ajax_favorite()
+	{
+		if (!$this->isLogin()) {
+			return $this->apiResponse(['success' => false, 'msg' => 'Login Error']);
+		}
+
+		$this->load->library('/mylib/comment');
+		$this->load->model('member_model', 'mmodel');
+
+		extract(Comment::params(['id'], ['id' => -1]));
+
+		$by_id = $_SESSION['MT']['by_id'];
+
+		$favorite = $this->mymodel->OneSearchSql('product_favorite', 'd_product_id', array('d_member_id' => $by_id, 'd_product_id' => $$id));
+
+		if (!empty($favorite['d_product_id'])) { //移除最愛
+			$this->mmodel->delete_where('product_favorite', array('d_member_id' => $by_id, 'd_product_id' => $id));
+			$action = 'del';
+		} else { //新增最愛
+			$date = date("Y-m-d h:i:sa");
+			if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+				$myip = $_SERVER['HTTP_CLIENT_IP'];
+			} else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+				$myip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+			} else {
+				$myip = $_SERVER['REMOTE_ADDR'];
+			}
+			$this->mmodel->insert_into(
+				'product_favorite',
+				array(
+					'd_createTime' => $date, 'd_edit_id' => $by_id, 'd_edit_ip' => $myip,
+					'd_member_id' => $by_id, 'd_product_id' => $id, 'd_enable' => 'N'
+				)
+			);
+			$action = 'add';
+		}
+
+		return $this->apiResponse(['success' => true, 'data' => ['action' => $action]]);
+	}
+
+	/**
+	 * 從追蹤清單移除
+	 *
+	 * @return void
+	 */
+	public function ajax_favorite_rm()
+	{
+	}
+
 	/**
 	 * get cart content
 	 *

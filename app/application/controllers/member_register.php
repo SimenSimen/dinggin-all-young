@@ -66,29 +66,30 @@ class member_register extends MY_Controller
 	public function register()
 	{
 		// 語言包
-		$this->lang1 = $this->lmodel->config('3', $this->setlang);
+		$lang = $this->lmodel->config('3', $this->setlang);
+
 		$this->_check->fname[] = array('_CheckEmail', Comment::SetValue('by_email'), 'E-mail');
 		//$this->_check->fname[] = array('_String', Comment::SetValue('mobile'), $this->lang1['mobile'] /* 帳號 */);
-		$this->_check->fname[] = array('_String', Comment::SetValue('name'), $this->lang1['dname'] /* 姓名 */);
-		$this->_check->fname[] = array('_String', Comment::SetValue('by_pw'), $this->lang1['password'] /* 密碼 */);
+		$this->_check->fname[] = array('_String', Comment::SetValue('name'), $lang['dname'] /* 姓名 */);
+		$this->_check->fname[] = array('_String', Comment::SetValue('by_pw'), $lang['password'] /* 密碼 */);
 		$buyer_data = $this->mymodel->select_page_form('buyer', '', 'by_id', array('d_account' => Comment::SetValue('d_account')));
 
 		if (!empty($buyer_data)) {
-			$this->useful->AlertPage('/register/' . Comment::SetValue('PID'), $this->lang1['someacc'] /* 已有相同帳號，請重新輸入? */);
+			$this->useful->AlertPage('/register/' . Comment::SetValue('PID'), $lang['someacc'] /* 已有相同帳號，請重新輸入? */);
 			return '';
 		}
 
 		$member_data = $this->mymodel->select_page_form('member', '', 'by_id', array('account' => Comment::SetValue('d_account')));
 
 		if (!empty($member_data)) {
-			$this->useful->AlertPage('/register/' . Comment::SetValue('PID'), $this->lang1['someacc'] /* 已有相同帳號，請重新輸入? */);
+			$this->useful->AlertPage('/register/' . Comment::SetValue('PID'), $lang['someacc'] /* 已有相同帳號，請重新輸入? */);
 			return '';
 		}
 
 		if (strlen(Comment::SetValue('by_pw')) < 5) {
 			$this->useful->AlertPage(
 				'',
-				$this->lang1['pwdfive']
+				$lang['pwdfive']
 				/** 密碼至少五位數?*/
 			);
 			return '';
@@ -286,7 +287,7 @@ class member_register extends MY_Controller
 
 	public function register_ok()
 	{
-		if (empty($this->session->userdata('create_id'))) redirect(base_url('gold/login'));
+		if (empty($this->session->userdata('create_id'))) redirect(base_url('login'));
 		$user_data = $this->mymodel->select_page_form('buyer', '', 'by_id, by_pw, d_account, by_email, name', array('by_id' => $this->session->userdata('create_id')));
 		$this->session->set_userdata('create_id', '');
 		//抓網頁設定判斷是否自動升級經營會員
@@ -371,7 +372,7 @@ class member_register extends MY_Controller
 			"<p>客服信箱：service@supergoods.com.tw</p>";
 
 		// 寄信
-		
+
 		/** Comment out cause email erro occur @todo 10 */
 		// $this->mod_index->send_mail($this->get_host_config()['domain'], '超惠購', $user_data[0]['by_email'], $subject, $message);
 
@@ -429,6 +430,9 @@ class member_register extends MY_Controller
 
 		$admin = $this->login_model->login_chekc($this->session->userdata('ld')); // 管理者登入
 
+		$data = [];
+		$data['lang'] = $this->lmodel->config(3, $this->setlang);
+
 		// 登入狀態紀錄
 		$_SESSION['MT']['is_login'] = 1;
 		$_SESSION['MT']['by_id'] = @$admin['by_id'];
@@ -437,7 +441,7 @@ class member_register extends MY_Controller
 		$_SESSION['MT']['member_id'] = @$admin['member_id'];
 
 		$this->load->view($this->indexViewPath . '/header', []);
-		$this->load->view($this->indexViewPath . '/register/register_complete', []);
+		$this->load->view($this->indexViewPath . '/register/register_complete', $data);
 		$this->load->view($this->indexViewPath . '/footer', []);
 	}
 }

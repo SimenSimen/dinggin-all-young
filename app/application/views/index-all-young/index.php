@@ -32,7 +32,7 @@
 	<div class="container-indent">
 		<div class="container container-fluid-custom-mobile-padding">
 			<div class="tt-block-title">
-				<h1 class="tt-title"><?= lang('newProduct') ?></h1>
+				<h1 class="tt-title"><?= $indexLang['products_new'] ?></h1>
 				<!-- <div class="tt-description">New Arrival</div> -->
 			</div>
 			<div class="tt-carousel-products row arrow-location-tab arrow-location-tab01 tt-alignment-img tt-collection-listing mt0 ">
@@ -57,7 +57,7 @@
 								</div>
 								<div class="tt-product-inside-hover">
 									<div class="tt-row-btn">
-										<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct"><?= lang('ADD_TO_CARD') ?></a>
+										<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct"><?= $indexLang['add_cart'] ?></a>
 									</div>
 									<div class="tt-row-btn">
 										<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
@@ -93,9 +93,9 @@
 						<a href="<?= base_url('/login') ?>" class="tt-btn-info tt-layout-03">
 							<div class="tt-title">
 								<i class="icon-h-59"></i>
-								<span>Bonus Points</span>
+								<span><?= $indexLang['dividend'] ?></span>
 							</div>
-							<div class="tt-title02">Inquire Now</div>
+							<div class="tt-title02"><?= $indexLang['inquire_now'] ?></div>
 						</a>
 					</div>
 
@@ -103,9 +103,9 @@
 						<a href="<?= base_url('/login') ?>" class="tt-btn-info tt-layout-03">
 							<div class="tt-title">
 								<i class="icon-e-47"></i>
-								<span>Bonus</span>
+								<span><?= $indexLang['bonus'] ?></span>
 							</div>
-							<div class="tt-title02">Inquire Now</div>
+							<div class="tt-title02"><?= $indexLang['inquire_now'] ?></div>
 						</a>
 					</div>
 				<? endif ?>
@@ -115,7 +115,7 @@
 						<a href="<?= base_url('/member/dividend') ?>" class="tt-btn-info tt-layout-03">
 							<div class="tt-title">
 								<i class="icon-h-59"></i>
-								<span>Bonus Points</span>
+								<span><?= $indexLang['dividend'] ?></span>
 							</div>
 							<div class="tt-title02 c_green"><?= number_format($userData['d_dividend']) ?> Point</div>
 						</a>
@@ -125,9 +125,9 @@
 						<a href="<?= base_url('/member/upgrade') ?>" class="tt-btn-info tt-layout-03">
 							<div class="tt-title">
 								<i class="icon-e-47"></i>
-								<span>Bonus</span>
+								<span><?= $indexLang['bonus'] ?></span>
 							</div>
-							<div class="tt-title02">How to Get a Bonus?</div>
+							<div class="tt-title02"><?= $indexLang['how_get_bonus'] ?></div>
 						</a>
 					</div>
 
@@ -138,7 +138,7 @@
 						<a href="<?= base_url('/member/dividend') ?>" class="tt-btn-info tt-layout-03">
 							<div class="tt-title">
 								<i class="icon-h-59"></i>
-								<span>Bonus Points</span>
+								<span><?= $indexLang['dividend'] ?></span>
 							</div>
 							<div class="tt-title02 c_green"><?= number_format($userData['d_dividend']) ?> Point</div>
 						</a>
@@ -148,7 +148,7 @@
 						<a href="<?= base_url('/member/member_dividend_fun') ?>" class="tt-btn-info tt-layout-03">
 							<div class="tt-title">
 								<i class="icon-e-47"></i>
-								<span>Bonus</span>
+								<span><?= $indexLang['bonus'] ?></span>
 							</div>
 							<div class="tt-title02">rp <?= number_format($userData['d_bonus']) ?></div>
 						</a>
@@ -163,7 +163,7 @@
 	<div class="container-indent">
 		<div class="container">
 			<div class="tt-block-title">
-				<h4 class="tt-title"><?= lang('brand') ?></h4>
+				<h4 class="tt-title"><?= $indexLang['brand'] ?></h4>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-6_end-inrow-lg">
@@ -186,7 +186,7 @@
 	<div class="container-indent">
 		<div class="container container-fluid-custom-mobile-padding">
 			<div class="tt-block-title">
-				<h2 class="tt-title"><?= lang('productCate') ?></h2>
+				<h2 class="tt-title"><?= $indexLang['products_type'] ?></h2>
 			</div>
 
 			<div class="row tt-layout-promo-box">

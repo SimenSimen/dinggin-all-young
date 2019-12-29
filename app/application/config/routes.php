@@ -59,7 +59,8 @@ $route['sms_mobile']                                                        = 'm
 
 /** all-young */
 $route['login'] = 'gold/login';
-$route['register'] = 'member_register/register_on';
+$route['register'] = 'gold/register';
+$route['register/(:any)'] = 'gold/register/$1';
 
 $route['member'] = 'gold/member';
 
@@ -73,6 +74,8 @@ $route['member/upgrade'] = 'gold/member_upgrade';
 $route['member/upgrade/submit'] = 'gold/data_AED';
 
 $route['member/dividend'] = 'gold/dividend';
+$route['member/invite'] = 'gold/invite_share';
+$route['member/wishlist'] = 'gold/wishlist';
 $route['member/member_dividend_fun'] = 'gold/member_dividend_fun';
 
 $route['member/order/(:any)'] = 'gold/order_info/$1';

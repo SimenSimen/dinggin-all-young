@@ -429,11 +429,12 @@ class Products extends MY_Controller
 	//產品前台詳細列表
 	public function detail($id)
 	{
-		if ($_SESSION['MT']['is_login'] == 1) {
+		if ($this->isLogin()) {
 			$by_id	=	$_SESSION['MT']['by_id'];
 			$account_id = $this->mymodel->OneSearchSql('buyer', 'd_account', array('by_id' => $by_id));
 			$account = $account_id['d_account'];
 		}
+
 		$_SESSION['url'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$_SESSION['shareUrl'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$insert_data = array(
@@ -802,16 +803,15 @@ class Products extends MY_Controller
 		$data['total']	=	$qpage_total['TotalRecord'];
 
 		$conditionLevle1 = array(
-			'd_enable' => ($_POST['d_enable'] ? $_POST['d_enable'] : 'Y'), 
-			'lang_type' => $this->session->userdata('lang'), 
+			'd_enable' => ($_POST['d_enable'] ? $_POST['d_enable'] : 'Y'),
+			'lang_type' => $this->session->userdata('lang'),
 			'PID' => "0"
 		);
 		$conditionLevle1Like = array();
 
-		if ($_POST['prd_cname']) 
-		{
+		if ($_POST['prd_cname']) {
 			$conditionLevle1Like['prd_cname'] = $_POST['prd_cname'];
-		} 
+		}
 
 		//第一層分類
 		$data['dbdata'] = $dbdata = $this->mymodel->select_page_form_0_like($dbname, $qpage['result'], '*', $conditionLevle1, $conditionLevle1Like, 'prd_cid');
@@ -877,7 +877,7 @@ class Products extends MY_Controller
 
 		$data['dbdata'] = $dbdata;
 
-		
+
 		$data['protype'] = $this->mymodel->select_page_form('product_class', '', '*', array('lang_type' => $this->session->userdata('lang'), 'PID' => 'NULL', 'd_enable' => 'Y'));
 
 		//檔案名
@@ -909,7 +909,7 @@ class Products extends MY_Controller
 				'prd_name' => $_POST['prd_name'],
 				'prd_no' => $_POST['prd_no']
 			);
-			
+
 			//分頁程式 start
 			$data['ToPage'] = $Topage = !empty($_POST['ToPage']) ? $_POST['ToPage'] : 1;
 			$qpage = $this->useful->SetPage($dbname, $Topage, 20, $data_array);
@@ -1149,7 +1149,7 @@ class Products extends MY_Controller
 		} else {
 
 			$dbdata = $this->mmodel->select_from_order($dbname, 'hot_sort', 'asc', array('prd_hot' => 'fa fa-heart', 'd_enable' => 'Y', 'lang_type' => $this->session->userdata('lang')));
-			
+
 			//總數
 			$data['hot_num'] = count($dbdata);
 			$img_url = '/uploads/000/000/0000/0000000000/products/';

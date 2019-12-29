@@ -8,7 +8,7 @@
     ['href' => "_inni_member_address.php", 'icon' => 'icon-placeholder', 'text' => 'Common Shipping Address', 'trans' => ''],
     ['href' => "_inni_member_announcement.php", 'icon' => 'icon-megaphone', 'text' => 'Member Announcement', 'trans' => ''],
     ['href' => base_url('member/upgrade'), 'icon' => 'icon-id', 'text' => 'Upgrade Management Member', 'trans' => ''],
-    ['href' => "_inni_member_invite_share.php", 'icon' => 'icon-megaphone', 'text' => 'Invitation Code Sharing', 'trans' => ''],
+    ['href' => base_url('member/invite'), 'icon' => 'icon-megaphone', 'text' => 'Invitation Code Sharing', 'trans' => ''],
     ['href' => "_inni_member_sale.php", 'icon' => 'icon-paper', 'text' => 'Management Member Sales Order Inquiry', 'trans' => ''],
     ['href' => "_inni_member_organization.php", 'icon' => 'icon-monitor', 'text' => 'Organization Table', 'trans' => ''],
     ['href' => "_inni_member_invoice.php", 'icon' => 'icon-credit-cards', 'text' => 'I Want to Ask for Money', 'trans' => ''],

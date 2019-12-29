@@ -17,6 +17,8 @@
 - /member/order/{id} (gold/order_info) 訂單詳細資訊
 - /member/dividend 紅利查詢
 - /member/member_dividend_fun (gold/member_dividend_fun) 購物金查詢
+- /member/invite (gold/invite_share) 邀請碼分享
+- /member/wishlist (gold/wishlist) 追蹤清單
 - /products 所有產品列表
 - /products/{class_id} 依照產品分類列表
 - /brands 品牌頁面

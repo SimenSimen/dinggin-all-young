@@ -4,8 +4,17 @@
 - [Ajax 附件](/doc/simen.ajax.md)
 - [須添加的Sql](/doc/simen.addSql.md)
 - [相關備註](/doc/simen.remark.md)
+- [語言相關](/doc/simen.lang.md)
 
 # 紀錄
+
+## 2019-12-29
+
+|             更動檔案路徑             |          說明          |  備註  |
+| :----------------------------------: | :--------------------: | :----: |
+|   application/controllors/cart.php   |     ajax_favorite      | &nbsp; |
+|   application/controllors/gold.php   | invite_share, wishlist | &nbsp; |
+| application/model/products_model.php |      productsData      | &nbsp; |
 
 ## 2019-12-28
 
@@ -59,6 +68,8 @@
 
 - @todo 11020 申請經銷會員必填欄位
 - 發票寫入
+- 註冊頁上方活動
+- 註冊驗證
 
 # 結案前整理
 
