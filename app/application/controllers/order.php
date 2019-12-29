@@ -1325,13 +1325,35 @@ class Order extends MY_Controller
 		$data['dbname']=$dbname='`order`';
 		
 		//預設查詢
-		$search_default_array=array("ToPage","select_type","txt","product_flow_select","payment_way_select","status_select","logistics_way_select","date_start","date_end","warehouse_select");
+		$search_default_array=array("ToPage","select_type","txt","txt_type","product_flow_select","payment_way_select","status_select","logistics_way_select","date_start","date_end","warehouse_select");
 		$this->omodel->search_session($search_default_array);
 	
 		$where_array=array();
-		if($_SESSION["AT"]["where"]["txt"]!=""){
-			$where_array[]="(order_id like '%".$_SESSION["AT"]["where"]["txt"]."%' or by_id in(select by_id from buyer where concat(name,'|',by_email) like '%".$_SESSION["AT"]["where"]["txt"]."%'))";
+		$join_order_detail = '';
+		$join_order_detail_group = '';
+		
+		if($_SESSION["AT"]["where"]["txt_type"]!="" && $_SESSION["AT"]["where"]["txt"]!=""){
+			
+			if ($_SESSION["AT"]["where"]["txt_type"] == 'order_id' ) {
+				$where_array[]="(order_id  like '%".$_SESSION["AT"]["where"]["txt"]."%')";
+			}
+
+			if ($_SESSION["AT"]["where"]["txt_type"] == 'prd_id' ) {
+				$where_array[]="(d.prd_id  like '%".$_SESSION["AT"]["where"]["txt"]."%')";	
+				$join_order_detail = ' left join ( SELECT `oid`, `prd_id`, `prd_name` FROM `order_details` ) d on d.oid = order.id ';
+				$join_order_detail_group = ' group by order.id ';
+			}
+
+			if ($_SESSION["AT"]["where"]["txt_type"] == 'prd_name' ) {
+				$where_array[]="(d.prd_name  like '%".$_SESSION["AT"]["where"]["txt"]."%')";
+				$join_order_detail = ' left join ( SELECT `oid`, `prd_id`, `prd_name` FROM `order_details` ) d on d.oid = order.id ';
+				$join_order_detail_group = ' group by order.id ';
+			}
+			
 		}
+		// if($_SESSION["AT"]["where"]["txt"]!=""){
+		// 	$where_array[]="(order_id like '%".$_SESSION["AT"]["where"]["txt"]."%' or by_id in(select by_id from buyer where concat(name,'|',by_email) like '%".$_SESSION["AT"]["where"]["txt"]."%'))";
+		// }
 		if($_SESSION["AT"]["where"]["product_flow_select"]!=""){
 			$where_array[]="product_flow=".$_SESSION["AT"]["where"]["product_flow_select"];
 		}
@@ -1352,22 +1374,23 @@ class Order extends MY_Controller
 		}
 		$where=!empty($where_array)?"where ".implode(" and ",$where_array):"";
 		//分頁程式 start
-
+		
 		$data['ToPage']=$Topage=!empty($_POST['ToPage'])?$_POST['ToPage']:1;
-
-		$sql="(select * from `order` ".$where." order by id ) a";
+		$sql="(select * from `order` " . $join_order_detail . $where . $join_order_detail_group . " order by order.id ) a";
+		$where = $join_order_detail . $where; 
 		$qpage=$this->useful->SetPage($sql,'',20);
 		$data['page']=$this->useful->get_page($qpage);
 		//分頁程式 end
 		//訂單資料
 		$data['dbdata']=$this->omodel->get_order_data($where,$qpage['result']);
 		$payment_way = $this->mod_cart->select_from_order('payment_way', 'sort,pway_id', 'asc', array('active'=>1));
-			foreach ($payment_way as $key => $value) {
-				$data['payment_way'][$value["pway_id"]]= $value['pway_name'];
-			}
+		foreach ($payment_way as $key => $value) {
+			$data['payment_way'][$value["pway_id"]]= $value['pway_name'];
+		}
 		$data["logistics_way"]=$this->omodel->get_logistics_way_data('');//寄送方式
-		$data["status"]=$this->omodel->get_status_data(); //付款狀態
-		$data["product_flow"]=$this->omodel->get_product_flow_data('1,3,4,5');  //訂單狀態		
+		$data["status"]=$this->omodel->get_status_data('0,1,5'); //付款狀態
+		$data["product_flow"]=$this->omodel->get_product_flow_data('1,3,4,5');  //訂單狀態
+		$data["product_flow_search"]=$this->omodel->get_product_flow_data('0,1,2,3,4,5,8,9');  //訂單狀態 查詢用		
 		$data['warehouse']=$this->mymodel->select_page_form('warehouse','','d_id,d_name',array());//出貨倉庫
 	
 		//view

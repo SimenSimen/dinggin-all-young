@@ -61,5 +61,6 @@ dinggin-all-young\app\application\views\products\product_list.php
 dinggin-all-young\app/application/controllers/order.php
 dinggin-all-young\app/application/models/order_model.php
 dinggin-all-young\app/application/views/order/order_info.php
+dinggin-all-young\app/application/views/order/order_list.php
 
 

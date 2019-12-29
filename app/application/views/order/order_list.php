@@ -103,15 +103,15 @@
   <table >
     <tr>
       <td>
-        <select name="warehouse_select">
+        <!-- <select name="warehouse_select">
           <option value="">請選擇出貨倉庫...</option>
           <?php foreach($warehouse as $val):?>
             <option value="<?=$val['d_id'];?>" <?=((string)$val['d_id']==(string)$_SESSION["AT"]["where"]["warehouse_select"])?'selected':'';?>><?=$val['d_name'];?></option>
           <?php endforeach;?>
-        </select>
+        </select> -->
        <select name="product_flow_select">
           <option value="">請選擇訂單狀態...</option>
-          <?php foreach($product_flow as $key=>$val):?>
+          <?php foreach($product_flow_search as $key=>$val):?>
           	<option value="<?=$key;?>" <?=((string)$key==(string)$_SESSION["AT"]["where"]["product_flow_select"])?'selected':'';?>><?=$val;?></option>
           <?php endforeach;?>
         </select>
@@ -121,24 +121,31 @@
           	<option value="<?=$key;?>" <?=($key==$_SESSION["AT"]["where"]["payment_way_select"])?'selected':'';?>><?=$val;?></option>
           <?php endforeach;?>
         </select>
+       
        <select name="status_select">
           <option value="">請選擇付款狀態...</option>
           <?php foreach($status as $key=>$val):?>
           	<option value="<?=$key;?>" <?=((string)$key==(string)$_SESSION["AT"]["where"]["status_select"])?'selected':'';?>><?=$val;?></option>
           <?php endforeach;?>
         </select>
-<!--
+
         <select name="logistics_way_select">
           <option value="">請選擇寄送方式...</option>
           <?php foreach($logistics_way as $key=>$val):?>
           	<option value="<?=$key;?>" <?=($key==$_SESSION["AT"]["where"]["logistics_way_select"])?'selected':'';?>><?=$val;?></option>
           <?php endforeach;?>
         </select>
--->
+
         <BR><BR>
         <a href="javascript:void(0);" title="清除起始日期" class="clear_date" rel="date_start">訂單起始日期：</a><input name="date_start" id="date_start" value="<?php echo $_SESSION["AT"]["where"]["date_start"];?>" placeholder="訂單起始日期" maxlength='10' class="date-object" type="date" readonly="true"/>
      	<a href="javascript:void(0);" title="清除結束日期" class="clear_date" rel="date_end">訂單結束日期：</a><input name="date_end" id="date_end" value="<?php echo $_SESSION["AT"]["where"]["date_end"];?>" placeholder="訂單結束日期" maxlength='10' class="date-object" type="date" readonly="true"/>
-        <input type="text" name="txt" placeholder="關鍵字" value="<?=$_SESSION["AT"]["where"]["txt"];?>">
+       <select name="txt_type">
+          <option value="">請選擇關鍵字類別...</option>
+          <option value="order_id" <?=('order_id'==$_SESSION["AT"]["where"]["txt_type"])?'selected':'';?>>訂單編號</option>
+          <option value="prd_id" <?=('prd_id'==$_SESSION["AT"]["where"]["txt_type"])?'selected':'';?>>商品編號</option>
+          <option value="prd_name" <?=('prd_name'==$_SESSION["AT"]["where"]["txt_type"])?'selected':'';?>>商品名稱</option>
+        </select> 
+       <input type="text" name="txt" placeholder="關鍵字" value="<?=$_SESSION["AT"]["where"]["txt"];?>">
         <input type="button" value="搜尋" id="search_action" style=" font-size:14px;">
         <input id="excel_action" type="button" style="font-size: 14px;" value='匯出'>
       </td>

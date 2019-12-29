@@ -1012,7 +1012,7 @@ class Order_model extends MY_Model {
 	}
 	//訂單狀態*
 	public function get_product_flow_data($id=''){
-		//$data=array('0'=>'新訂單','1'=>'處理中','2'=>'已出貨','3'=>'取消訂單','4'=>'交易完成','5'=>'已退貨','6'=>'未付款取消','7'=>'申請退貨');
+		//$data=array('0'=>'新訂單','1'=>'處理中','2'=>'已出貨','3'=>'取消訂單','4'=>'交易完成','5'=>'已退貨','6'=>'未付款取消','7'=>'申請退貨','8'=>'交易失敗','9'=>'退貨處理中');
 		$data=array();
 		$command="select d_val,d_title from config where d_type='orderstatus'";
 		if(!empty($id)){
