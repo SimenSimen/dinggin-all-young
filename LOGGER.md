@@ -29,6 +29,14 @@ ALTER TABLE `ckeditor` MODIFY COLUMN `type` enum('1','2','3','4','5','6','7');
 alter table product_brand add column ck_id int(10) UNSIGNED default NULL;
 <!-- 增加欄位 for 超取店號 -->
 ALTER TABLE `order` ADD COLUMN cs_no VARCHAR ( 30 ) DEFAULT NULL COMMENT "超取店號"
+<!--for 付款狀態 -->
+INSERT INTO `config` VALUES(null, 'paystatus', '授權未成功', '5', NULL, NULL, 'TW');
+<!--for 訂單狀態 -->
+INSERT INTO `config` VALUES(null, 'orderstatus', '退貨處理中', '9', NULL, NULL, 'TW');
+<!--for 會員載具 類型 -->
+alter table buyer add column vehicle_type tinyint(4) UNSIGNED default NULL COMMENT "載具類別, 0:手機載具 1:自然人載具";
+<!--for 載具號碼 -->
+alter table buyer add column vehicle_no VARCHAR(20) default NULL COMMENT "載具號碼";
 
 
 
@@ -50,3 +58,8 @@ dinggin-all-young\app\application\views\products\product_class_list.php
 dinggin-all-young\app\application\models\MyModel\mymodel.php
 dinggin-all-young\app\application\views\products\product_info.php
 dinggin-all-young\app\application\views\products\product_list.php
+dinggin-all-young\app/application/controllers/order.php
+dinggin-all-young\app/application/models/order_model.php
+dinggin-all-young\app/application/views/order/order_info.php
+
+
