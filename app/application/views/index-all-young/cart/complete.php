@@ -6,14 +6,14 @@
                     <div class="success-msg">Successful Transaction</div>
                     <div class="success-txt c_greenA">
                         Remember Your【Order Number】<br>Happy Shopping<br>
-                        <div class="order-id b_green">Order Number: 2019101515181878</div>
+                        <div class="order-id b_green">Order Number: <?= $order_id ?></div>
 
                         Thank You for Your Order, <br>
                         Have any questions, please use <a href="contact.php">Contact AllYoung</a> Leave a Message, We Will Contact You As Soon As We Receive Your Message.
                     </div>
                     <div class="pagination_box">
-                        <a href="_inni_index.php" class="btn simple bg2 en bg2 btn-green-bg"><i name="icon02" class="icon-chevron-left"></i> HOME</a>
-                        <a href="_inni_order.php" class="btn simple bg2 en bg2 btn-green-bg">ORDER DETAILS <i name="icon02" class="icon-chevron-right"></i></a>
+                        <a href="<?= base_url('/') ?>" class="btn simple bg2 en bg2 btn-green-bg"><i name="icon02" class="icon-chevron-left"></i> HOME</a>
+                        <a href="<?= base_url('/member/order/' . $order_id) ?>" class="btn simple bg2 en bg2 btn-green-bg">ORDER DETAILS <i name="icon02" class="icon-chevron-right"></i></a>
                     </div>
 
                 </div>

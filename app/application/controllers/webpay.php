@@ -57,6 +57,7 @@ class Webpay extends MY_Controller
 		$order_data['total_pv'] = 0;
 
 		$ids = [];  // 存放商品id
+		$priceSum = 0;
 		foreach ($join_car as $uuid => $item) {
 
 			$key = $item['prd_id'];
@@ -73,7 +74,7 @@ class Webpay extends MY_Controller
 			$productList[$uuid]['prd_id']		=	$dbdata['prd_id'];
 			$productList[$uuid]['prd_name']		=	$dbdata['prd_name'];
 			$productList[$uuid]['spec']			=	$key;
-			$productList[$uuid]['spec_name']		=	substr($key, strpos($key, '##*') + 3);
+			$productList[$uuid]['spec_name']		= substr($key, strpos($key, '##*') + 3);
 			$prd_name[]							=	$dbdata['prd_name'];
 			$productList[$uuid]['price']			=	$dbdata[$price];
 			$productList[$uuid]['total']			=	$value * $dbdata[$price];
@@ -85,7 +86,6 @@ class Webpay extends MY_Controller
 
 		if (!empty($ids)) {
 			$_SESSION['ids'] = $ids;
-			$this->useful->AlertPage('/cart');
 		} else {
 			$_SESSION['ids'] = [];
 		}

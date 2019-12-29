@@ -1155,46 +1155,35 @@ class Gold extends MY_Controller
 	//購物金查詢
 	public function member_dividend_fun()
 	{
-		if (empty($_SESSION['MT'])) {
-			$this->load->library('/mylib/CheckInput');
-			$check = new CheckInput;
-			$check->lang = $this->lmodel->config('9999', $this->setlang);
-			$this->useful->AlertPage('/gold/login', $check->lang['Login']); //請先登入或註冊
+		if (!$this->isLogin()) {
+			$lang = $this->lmodel->config('9999', $this->setlang);
+			$this->useful->AlertPage('/gold/login', $lang['Login']); //請先登入或註冊
 		}
-		@session_start();
 
 		//data
 		$data = $this->data;
 
 		$this->DataName = 'member';
-		$this->lang = $this->lmodel->config('1', $this->setlang);
-		$data['path_title'] = '<li><a href="/gold/' . $this->DataName . '"><span>' . $this->lang["$this->DataName"] . '</span></a></li>';
-		$this->DataName = 'member_dividend_fun';
-		$data['path_title'] .= '<li><a href="/gold/' . $this->DataName . '"><span>' . $this->lang["$this->DataName"] . '</span></a></li>';
-		$data['banner'] = $this->data['banner'];
 
 		//語言包
 		$this->lang = $this->lmodel->config('32', $this->setlang);
 
-		// if($_SESSION['MT']['d_is_member']==1)
-		// $data['shopping_money']=$this->mymodel->get_shopping_money_data($_SESSION['MT']['by_id']);
-
-		$moneyInfo = $this->shoppingmoney_model->getShoppingHistory($_SESSION['MT']['by_id']);
+		$buyer = $_SESSION['MT']['by_id'];
+		$moneyInfo = $this->shoppingmoney_model->getShoppingHistory($buyer);
 
 		foreach ($moneyInfo as $key => $data) {
 			$moneyInfo[$key]['name'] = $data['d_member_id'] !== $data['d_guest_id'] ? $data['name'] : '';
 		}
 
 		//抓會員資料(buyer)
-		$buyerInfo = $this->mymodel->OneSearchSql('buyer', '*', ['by_id' => $_SESSION['MT']['by_id']]);
+		$buyerInfo = $this->mymodel->OneSearchSql('buyer', '*', ['by_id' => $buyer]);
 		$data['shopping_money'] = $moneyInfo;
 		$data['current_money'] = $buyerInfo['d_shopping_money'];
 
 		//view
-		$this->load->view('index/header' . $this->style, $data);
-		$this->load->view('index/member/member_nav', $data);
-		$this->load->view('index/member/member_dividend_fun', $data);
-		$this->load->view('index/footer' . $this->style, $data);
+		$this->load->view($this->indexViewPath . '/header', $data);
+		$this->load->view($this->indexViewPath . '/members/shopping_gold_list', $data);
+		$this->load->view($this->indexViewPath . '/footer', $data);
 	}
 
 	//友善連結
@@ -1719,50 +1708,69 @@ class Gold extends MY_Controller
 		$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
 	}
 
-	//會員紅利明細
+	/**
+	 * 會員紅利明細
+	 */
 	public function dividend()
 	{
-		if (empty($_SESSION['MT'])) {
-			$this->load->library('/mylib/CheckInput');
-			$check = new CheckInput;
-			$check->lang = $this->lmodel->config('9999', $this->setlang);
-			$this->useful->AlertPage('/gold/login', $check->lang['Login']); //請先登入或註冊
+		if (!$this->isLogin()) {
+			$lang = $this->lmodel->config('9999', $this->setlang);
+			$this->useful->AlertPage('/login', $lang['Login']); //請先登入或註冊
 		}
+		/** Loading comment library */
+		$this->load->library('/mylib/comment');
+
+		extract(Comment::params(['page', 'pageSize'], ['page' => 1, 'pageSize' => 10]));
+
 		$this->useful->iconfig();
 		//語言包
 		$this->lang = $this->lmodel->config('11', $this->setlang);
 
-		$this->load->model('gold_model', gmodel);
+		$buyId = $_SESSION['MT']['by_id'];
+		$this->load->model('gold_model', 'gmodel');
 		//會員剩餘紅利
-		$bdata = $this->mymodel->OneSearchSql('buyer', 'birthday,d_dividend', array('by_id' => $_SESSION['MT']['by_id']));
+		$bdata = $this->mymodel->OneSearchSql('buyer', 'birthday,d_dividend', array('by_id' => $buyId));
 		//有效期限
 
-		$data['birthday'] = (date('Y') + 1) . '-' . date("m-d", strtotime($bdata['birthday'] . "-1 day")) . '  23:59';
+		$data['birthday'] = (date('Y') + 1) . '-' . date("m-d", strtotime($bdata['birthday'] . "-1 day"));
+
 		$data['dividend'] = ($bdata['d_dividend'] == '') ? '0' : $bdata['d_dividend'];
 		//紅利資料
 		// $dbdata=$this->mymodel->select_page_form('dividend','','update_time,d_type,d_val,d_des',array('buyer_id'=>$_SESSION['MT']['by_id']));
-		$dbirthday = (date('Y')) . '-' . substr($bdata['birthday'], 5);
 
-		$dbdata = $this->gmodel->get_dividend_data($_SESSION['MT']['by_id'], $dbirthday);
-		foreach ($dbdata as $key => $value) {
+		$data['pointsGonnaExpired'] = $this->gmodel->dividendExpire($data['birthday'], $buyId);
+
+		$dividendData = $this->gmodel->pageDividend(['buyer_id' => $buyId], $page, $pageSize);
+
+		foreach ($dividendData['data'] as $key => &$value) {
 			$dtype = $this->mymodel->GetConfig('', $value['d_type']);
-			$dbdata[$key]['contitle'] = $dtype['d_title'];
-			$dbdata[$key]['d_val'] = ($dtype['d_val'] == '+') ? '<span style="color:GREEN">+' . number_format($value['d_val']) . '</span>' : '<span style="color:RED">-' . number_format($value['d_val']) . '</span>';
-			$dbdata[$key]['update_time'] = substr($value['update_time'], 0, 10);
-			$odata = $this->mymodel->OneSearchSql('`order`', 'status,product_flow', array('id' => $value['OID']));
-			if (in_array($odata['status'], array(0, 1, 3)) and in_array($odata['product_flow'], array(0, 1, 3, 4))) {
-				if ($value['d_type'] != 20)
-					$dbdata[$key]['is_send'] = ($value['is_send'] == 'Y') ? $this->lang['sended'] : $this->lang['nosend']; //已發送 發送
-			} else
-				unset($dbdata[$key]);
-			// $dbdata[$key]['is_send']="交易失敗";
+			$signed = $dtype['d_val'] == '+' ? 1 : -1;
+			$value['d_val'] = $signed * floatval($value['d_val']);
+			$value['contitle'] = $dtype['d_title'];
+			$value['update_time'] = substr($value['update_time'], 0, 10);
 
+			$odata = $this->mymodel->OneSearchSql('`order`', 'status,product_flow', array('id' => $value['OID']));
+
+			if (in_array($odata['status'], array(0, 1, 3)) and in_array($odata['product_flow'], array(0, 1, 3, 4))) {
+				if ($value['d_type'] != 20) {
+					$dbdata[$key]['is_send'] = ($value['is_send'] == 'Y') ? $this->lang['sended'] : $this->lang['nosend']; //已發送 發送
+				}
+			} else {
+				unset($dividendData['data'][$key]);
+			}
 		}
 
-		$data['dbdata'] = $dbdata;
+		$data['pageData'] = $dividendData;
+		$data['currentPage'] = $page;
+
+		if ($pageSize != 10) {
+			$data['pageSize'] = $pageSize;
+		}
 
 		//view
-		$this->load->view('gold/dividend', $data);
+		$this->load->view($this->indexViewPath . '/header', $data);
+		$this->load->view($this->indexViewPath . '/members/dividend_list', $data);
+		$this->load->view($this->indexViewPath . '/footer', $data);
 	}
 
 	//申請經營會員
@@ -1799,8 +1807,8 @@ class Gold extends MY_Controller
 		//語言包
 		$this->lang = $this->lmodel->config('9', $this->setlang);
 
+		$this->load->model('gold_model', 'gmodel');
 
-		$this->load->model('gold_model', gmodel);
 		$this->load->library('/mylib/CheckInput');
 		$check = new CheckInput;
 		$check->lang = $this->lmodel->config('9999', $this->setlang);
@@ -1856,29 +1864,28 @@ class Gold extends MY_Controller
 		//語言包
 		$this->lang = $this->lmodel->config('10', $this->setlang);
 
-
 		$data['oid'] = $id;
 
 		if ($_POST['atmno'] != '') {
 			if (strlen($_POST['atmno']) != 5) {
-				$this->useful->AlertPage('/gold/order_info/' . $id, $this->lang['irealnum']);
+				$this->useful->AlertPage('/member/order/' . $id, $this->lang['irealnum']);
 				return '';
 			}
 
 			if (empty($_POST['atmdate'])) {
-				$this->useful->AlertPage('/gold/order_info/' . $id, $this->lang['irealdate']);
+				$this->useful->AlertPage('/member/order/' . $id, $this->lang['irealdate']);
 				return '';
 			}
 			$this->mymodel->update_set('`order`', 'id', $id, array('atmno' => $_POST['atmno'], 'atmdate' => $_POST['atmdate'], 'status' => '3', 'update_time' => time()));
-			$this->useful->AlertPage('/gold/order_info/' . $id, $this->lang['resu']);
+			$this->useful->AlertPage('/member/order/' . $id, $this->lang['resu']);
 		}
-
 
 		//訂單詳細資料
 		$details = $this->mymodel->select_page_form('order_details', '', 'prd_name,total_price', array('oid' => $id));
 		$data['details'] = $details;
+
 		//訂單資料
-		$dbdata = $this->mymodel->OneSearchSql('`order`', '*', array('id' => $id));
+		$dbdata = $this->mymodel->OneSearchSql('`order`', '*', array('order_id' => $id));
 
 		//折抵資料
 		$sdata = $this->mymodel->OneSearchSql('order_sub', '*', array('OID' => $id));
@@ -1920,7 +1927,9 @@ class Gold extends MY_Controller
 		$data['dbdata'] = $dbdata;
 
 		//view
-		$this->load->view('gold/order_info', $data);
+		$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
+		$this->load->view($this->indexViewPath . '/members/order_info', $data);
+		$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
 	}
 
 	//APP銷售訂單查詢內文

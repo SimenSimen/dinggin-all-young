@@ -1,3 +1,10 @@
+# 相關說明
+
+- [頁面路由](/doc/simen.router.md)
+- [Ajax 附件](/doc/simen.ajax.md)
+- [須添加的Sql](/doc/simen.addSql.md)
+- [相關備註](/doc/simen.remark.md)
+
 # 紀錄
 
 ## 2019-12-28
@@ -6,6 +13,9 @@
 | :--------------------------------: | :-----------------------------------------------: | :----------: |
 |  application/controllors/cart.php  | total_all,ajax_count,cart_checkout,ajax_area_info |    &nbsp;    |
 | application/core/My_Controller.php |                apiResponse,isLogin                | 新增function |
+| application/models/gold_model.php  |            pageDividend,dividendExpire            |    &nbsp;    |
+|  application/controllors/gold.php  |           member_dividend_fun,dividend            |    &nbsp;    |
+| application/controllors/index.php  |                       index                       |    &nbsp;    |
 
 ## 2019-12-27
 
@@ -45,187 +55,10 @@
 | application/language/ind/views/index-all-young/\* |       &nbsp;        |               &nbsp;               |
 |         application/controllors/index.php         | index, member_login |               &nbsp;               |
 
-# Ruter
-
-路徑 (controller 路徑)
-
-## 頁面
-
-- /index 首頁
-
-會員
-
-- /register (gold/register) 註冊頁面
-- /member_sms_code (member_register/sms_code) 輸入簡訊驗證頁面
-- /member_register_ok (member_register/register_ok) 註冊成功畫面
-- /login (gold/login) 前台登入頁面
-- /member (gold/member) 前台會員畫面
-- /member/info (gold/member_info) 前台會員基本資料
-- /member/upgrade (gold/member_upgrade) 升級經營會員頁面
-- /member/change_password (gold/member_password) 修改密碼頁面
-
-- /products?providerId=供應商&maxPrise="最大價錢"&minPrise="最小價錢"&sortType="排序"&pageNumber="頁數" 所有產品列表
-- /products/{class_id}?providerId=供應商&maxPrise="最大價錢"&minPrise="最小價錢"&sortType="排序"&pageNumber="頁數" 依照產品分類列表
-- /brands 品牌頁面
-
-- /cart 購物車頁面
-- /cart/checkout (cart/cart_checkout) 結帳頁面
-- /cart/finish (/cart/cart_checkout_ok) 結帳完成
-
-
-## 業務邏輯
-
-會員
-
-- /member_sms_code (member_register/sms_code) 驗證簡訊
-- /member/change_password (gold/member_password) 會員修改密碼
-- /member/info/update (gold/data_AED) 會員基本資料修改
-- /member/logout (gold/logout) 會員登出
-- /member/lopin (gold/login_set) 處理前台會員登入
-- /member/upgrade/submit (gold/data_AED) 升級經營會員
-
 # 待辦
 
 - @todo 11020 申請經銷會員必填欄位
-
-# ajax 相關附件
-
-### 基本說明
-
-回傳固定格式如下，資料型態為json
-
-|   參數    |   型態    |                  說明                  |
-| :-------: | :-------: | :------------------------------------: |
-| `success` | `boolean` |            ajax 成功或失敗             |
-|   `msg`   | `string`  |                拋出訊息                |
-|  `data`   |   `mix`   | 包含的資料 以下API回傳值皆為此欄位的值 |
-
-### load items /products 
-
-**取得商品資料 用來load more 或是 Filter**
-
-#### 參數說明
-
-|     參數     |   型態    |                 說明                 |
-| :----------: | :-------: | :----------------------------------: |
-| `providerId` |   `int`   |               供應商ID               |
-|  `keyword`   | `string`  |              搜尋關鍵字              |
-|  `maxPrice`  | `decimal` |               最大價錢               |
-|  `minPrice`  | `decimal` |               最小價錢               |
-|    `msg`     | `string`  |               拋出訊息               |
-|  `sortType`  |   `int`   | sortType: 1 為 低至高 1以外為 高至低 |
-| `pageNumber` |   `mix`   |                 頁數                 |
-|  `pageSize`  |   `mix`   |           單頁筆數 預設12            |
-
-#### 回傳說明
-
-資料庫商品資料
-
-### item quick view /products/details/(:id)
-
-#### 參數說明
-
-如url 傳入id
-
-#### 回傳說明
-
-資料庫商品資料。
-
-### add item to cart /products/ajax_car
-
-#### 參數說明
-
-|     參數     |   型態   |  說明  |
-| :----------: | :------: | :----: |
-| `product_id` |  `int`   | 商品ID |
-| `shop_count` |  `int`   |  數量  |
-|    `spec`    | `string` |  規格  |
-
-#### 回傳說明
-
-資料庫商品資料。
-
-### del item from cart = /products/ajax_demitcar
-
-#### 參數說明
-
-|  參數  |   型態   |                    說明                     |
-| :----: | :------: | :-----------------------------------------: |
-| `uuid` | `string` | 購物車keyid 會放在刪除按扭的tag上(data-key) |
-
-#### 回傳說明
-
-空值
-
-### Change the amount for the item = /cart/ajax_count
-
-#### 參數說明
-
-| 參數  | 型態  |     說明      |
-| :---: | :---: | :-----------: |
-| `key` | `int` | 購物車物品key |
-| `qty` | `int` |     數量      |
-
-#### 回傳說明
-
-修改後數量
-
-### Change the amount for the item = /cart/ajax_total
-
-#### 參數說明
-
-|         參數         |   型態    |    說明    |
-| :------------------: | :-------: | :--------: |
-|    `use_dividend`    | `decimal` |  紅利折抵  |
-| `use_shopping_money` | `decimal` | 使用購物金 |
-
-#### 回傳說明
-
-|     參數     |   型態    |    說明    |
-| :----------: | :-------: | :--------: |
-| `dataTotal`  |   `int`   |   總金額   |
-| `only_money` |   `int`   |    現金    |
-| `dataBonus`  | `decimal` | 可獲得紅利 |
-
-### Select the common address = /cart/ajax_common_address
-
-#### 參數說明
-
-|     參數     | 型態  |  說明  |
-| :----------: | :---: | :----: |
-| `address_id` | `int` | 地址ID |
-
-#### 回傳說明
-
-|    參數    |   型態   |    說明    |
-| :--------: | :------: | :--------: |
-|   `name`   | `string` | 收件人名稱 |
-| `telphone` | `string` |    電話    |
-| `country`  |  `int`   |    國家    |
-|   `city`   |  `int`   |    城市    |
-| `countory` |  `int`   |    鄉鎮    |
-| `address`  | `string` |    地址    |
-|   `zip`    | `string` |  郵遞區號  |
-
-
-### Get the area list = /cart/ajax_area_info
-
-#### 參數說明
-
-|   參數    | 型態  |  說明  |
-| :-------: | :---: | :----: |
-| `area_id` | `int` | 地區ID |
-
-#### 回傳說明
-
-回傳值為陣列，陣列內容包含json物件，物件規格如下
-
-|   參數   |   型態   |   說明   |
-| :------: | :------: | :------: |
-|  `s_id`  |  `int`   |  地區ID  |
-| `s_name` | `string` | 地區名稱 |
-
-### add item to favirate = /cart/ajax_favorite
+- 發票寫入
 
 # 結案前整理
 
@@ -234,36 +67,9 @@
 - @todo 1121 移除開啟錯誤訊息。
 - @todo 3329 顯示錯誤訊息 CI loading 語言的時候會報錯 先exit，結案後移除。
 - @todo 2200 load 商品 js 有寫好的 記得請對方移過去 ajax(/products)
+- @todo 110002 購物車送出先不檢查必填，測試用
  
 - 前台 view 都放在 index-all-young 資料夾名稱可以改(須改My_controller::indexViewPath)。
-
-# sql
-
-- lapack_list 插入品牌頁 
-
-```sql
-INSERT INTO `lapack_list`(`d_id`, `d_title`, `d_url`, `d_sort`, `d_enable`) VALUES (50, '品牌頁面', '/brands', 50, 'Y');
-```
-
-# 須前端協助
-
-因為js是bundle的，所以ajax以及畫面效果須前端協助處理。
-
-- 立即搜尋結果 /products?keyword ajax
-- 搜尋結果 跳 all products (/products?keyword連結即可)
-- 商品清單 load more /products?pageNumber 須
-- 各種分類篩選條件須 前端組合參數 丟入products/brand
-- 加入購物車 (加入購物車後會回傳商品資料供繪製畫面，上放數量需增加，數字tag上有存數據(data-count))
-- 移出購物車 (刪除按鍵上有存數據(data-key) 傳入api 即可刪除)
-- 上方購物車 icon 數量(.tt-badge-cart .b_green\[data-count\]) 修改
-- 加入最愛清單
-- 購物車內商品數量修改 uuid 放在最外層 tr 上 有加上類別 tr.cart-item\[data-uuid\]
-- 購物車內購物金檢查 (tt-input-counter\[data-amount\])
-- 購物車內紅利檢查 (tt-input-counter\[data-amount\])
-- 切換二三聯式發票 隱藏欄位
-- 選擇地區ajax 
-
-詳情請看 ajax 相關附件
 
 # Remark
 

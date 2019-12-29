@@ -407,10 +407,14 @@ class Cart extends MY_Controller
 			'country',
 			'city',
 			'countory',
+			'invoice_type',
+			'vehicle_number',
+			'carrier_type'
 		]));
 
-		/** check required columns */
-		$required = ['buyer_name', 'buyer_email', 'buyer_phone', 'buyer_zip', 'buyer_address', 'lway_id', 'pway_id', 'country', 'city', 'countory',];
+		/** check required columns @todo 110002 先不檢查必填*/
+		$required = ['buyer_name', 'buyer_email', 'buyer_phone', 'buyer_zip', 'buyer_address', 'lway_id', 'pway_id', 'country', 'city', 'countory'];
+		$required = [];
 
 		foreach ($required as $variable) {
 			if (is_null($$variable)) {
@@ -422,6 +426,27 @@ class Cart extends MY_Controller
 		if (empty($by_id)) {
 			$this->useful->AlertPage('/cart');
 		}
+
+		/** invoice handler start */
+		switch ($invoice_type = $data['invoice_type'] = intval($invoice_type)) {
+			case 0:
+				/** electrict invoice */
+				$data['carrier_type'] = intval($carrier_type);
+				$data['vehicle_number'] = $vehicle_number;
+				break;
+			case 1:
+				/** two-way inovice */
+				$data['carrier_type'] = intval($carrier_type);
+				$data['vehicle_number'] = $vehicle_number;
+				break;
+			case 2:
+				/** triple-way inovice */
+				extract(Comment::params(['triple_letter_head', 'triple_uniform_numbers']));
+				$data['triple_letter_head'] = $triple_letter_head;
+				$data['triple_uniform_numbers'] = $triple_uniform_numbers;
+				break;
+		}
+		/** invoice handler end */
 
 		$data['logistics_way'] = $this->mymodel->OneSearchSql('logistics_way', 'lway_name,lway_id', array('lway_id' => $lway_id))['lway_name'];
 		$data['payment_way'] = $this->mymodel->OneSearchSql('payment_way', 'pway_name,pway_id', array('pway_id' => $pway_id))['pway_name'];
@@ -516,7 +541,7 @@ class Cart extends MY_Controller
 		if ($data['only_money'] < 0.00) {
 			$this->useful->AlertPage('/cart', $this->lang['c_50']); //付款金額不得小於0
 		}
-		$data['stripe_money']		=	(($dataTotal - $use_dividend_cost - $use_shopping_money) * 100);
+		$data['stripe_money'] = (($dataTotal - $use_dividend_cost - $use_shopping_money) * 100);
 
 		//門市取貨
 		if (!empty($data['shop_id'])) {
@@ -535,10 +560,11 @@ class Cart extends MY_Controller
 		// 判斷是否登入
 		// 語言包
 		$this->lang = $this->lmodel->config('22', $this->setlang);
-		if ($_SESSION['MT']['is_login'] == 1) {
+		if ($this->isLogin()) {
 			if (empty($_SESSION['oid'])) { //防呆,直接點入此頁面會跳轉購物車
 				$this->useful->AlertPage('/index/');
 			}
+
 			$id = $_SESSION['oid'];
 			$by_id = $_SESSION['MT']['by_id'];
 			$data['oid'] = $id;

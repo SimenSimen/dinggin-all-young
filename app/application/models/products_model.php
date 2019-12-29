@@ -24,6 +24,7 @@ class products_model extends CI_Model
 		$this->db_type = 'product_class';
 		$this->load->library('session');
 	}
+
 	/**
 	 * 取得產品類別資料
 	 * @return array stdClass db
@@ -220,6 +221,13 @@ class products_model extends CI_Model
 				break;
 			case static::SORT_00_PRICE_DESC:
 				$this->db->order_by('prd_price00', 'desc');
+				break;
+			default:
+				if (isset($where['prd_new']) && $where['prd_new'] == 'Y') {
+					$this->db->order_by('new_sort', 'asc');
+				} else {
+					$this->db->order_by('prd_sort', 'asc');
+				}
 				break;
 		}
 
