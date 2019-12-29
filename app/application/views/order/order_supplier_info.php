@@ -192,7 +192,8 @@
     <fieldset class="config-border">
         <legend class="config-border" style="width:160px">訂購商品明細</legend>
         <table id="member_list" class="table table-bordered table-condensed">
-            <tr id='member_list_title_tr'>		
+            <tr id='member_list_title_tr'>	
+            <td>商品編號</td>	
       			<td>商品名稱</td>
       			<td>價錢</td>
       			<td>數量</td>
@@ -201,7 +202,10 @@
     		<?php if (!empty($oddata)): ?>
         		<?php foreach ($oddata as $key => $value): ?>
           			<tr bgcolor='<?//=$member_auth_color[$key]?>'>
-            			<td class='center_td white_td'>
+                  <td class='center_td white_td'>
+                  <?=$value['prd_id']?>
+                  </td>
+                  <td class='center_td white_td'>
                   <?=$value['prd_name']?>
                   <?=($this->data['web_config']['cart_spec_status']==1)?'('.$value['prd_spec'].')':'';?>   
                   </td>
@@ -210,7 +214,8 @@
             			<td class='center_td white_td'><?=$value['total_price']?></td>
             		</tr>
         		<?php endforeach; ?>
-        		<tr bgcolor='<?//=$member_auth_color[$key]?>'>
+            <tr bgcolor='<?//=$member_auth_color[$key]?>'>
+                <td class='center_td white_td'></td>
             		<td class='center_td white_td'><?=isset($logistics_way[$dbdata['lway_id']])?$logistics_way[$dbdata['lway_id']]:""?></td>
             		<td class='center_td white_td'><?=$dbdata['lway_price']?></td>
             		<td class='center_td white_td'>1</td>
@@ -218,7 +223,7 @@
             	</tr>
     		<?php endif; ?>
     		<tr bgcolor='<?//=$member_auth_color[$key]?>' align='right'>
-            	<td colspan="4" class='center_td white_td'>紅利折抵 <b><?=$dbdata['use_dividend'];?></b> 元，付款總金額：<span style="color:red;font-weight:bold;"><?=number_format($dbdata['price_money'])?> 元</span><br>總金額：<span style="color:red;font-weight:bold;"><?=number_format($dbdata['total_price'])?> 元</span></td>
+            	<td colspan="5" class='center_td white_td'>紅利折抵 <b><?=$dbdata['use_dividend'];?></b> 元，付款總金額：<span style="color:red;font-weight:bold;"><?=number_format($dbdata['price_money'])?> 元</span><br>總金額：<span style="color:red;font-weight:bold;"><?=number_format($dbdata['total_price'])?> 元</span></td>
             </tr>
         </table>
     </fieldset>
