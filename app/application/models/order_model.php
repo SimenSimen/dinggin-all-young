@@ -140,7 +140,7 @@ class Order_model extends MY_Model {
 			//$objPHPExcel->getActiveSheet()->getColumnDimension($word[($i+1)])->setAutoSize(true);//自動寬度
 			//$objPHPExcel->getActiveSheet()->getColumnDimension($word[($i+1)])->setWidth(30);//設定寬度
 		}
-		$title_array=array("prd_sn"=>"商品編號","prd_name"=>"產品項目","number"=>"銷量","price"=>"產品單價","total_price"=>"銷售額","total_count"=>"下單數");
+		$title_array=array("product_flow"=>"訂單狀態","order_id"=>"訂單編號","create_time"=>"訂單日期","name"=>"訂購人","pay_way_id"=>"付款方式","receipt_num"=>"發票資訊","tracking_num"=>"物流編號","tracking_name"=>"物流公司名稱","receipt_date"=>"出貨日期","status"=>"付款狀態");
 		$i=1;
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.($i), '出貨明細');
 		$objPHPExcel->getActiveSheet()->mergeCells('A'.$i.':'.$word[(count($title_array))].$i);//合併
@@ -159,12 +159,37 @@ class Order_model extends MY_Model {
 			$send_data["column"][$key]=$key;
 		}
 		$i+=1;
-		$excel=$this->get_order_sale_data($where,'');
+		
+		$excel=$this->get_order_sale_data_fix($where,'');
+		$this->load->model('cart_model', 'mod_cart');
+		$payment_way = $this->mod_cart->select_from_order('payment_way', 'sort,pway_id', 'asc', array('active'=>1));
+		$payment_way_arr = array();
+
+		foreach ($payment_way as $key => $value) {
+			$payment_way_arr[$value["pway_id"]]= $value['pway_name'];
+		}
+
+		$status_arr=$this->get_status_data(); //付款狀態
+		$product_flow_arr=$this->get_product_flow_data();  //訂單狀態	
+		
 		foreach($excel as $key=>$val){
 			$k=0;
 			foreach($title_array as $key1=>$val1){
 				$k+=1;
 				$value=$val[$key1];
+				
+				if ($key1 == 'pay_way_id') {
+					$value = $payment_way_arr[$value];
+				}
+
+				if ($key1 == 'product_flow') {
+					$value = $product_flow_arr[$value];
+				}
+
+				if ($key1 == 'status') {
+					$value = $status_arr[$value];
+				}
+
 				if(substr($value,0,1)=="0"){
 					$objPHPExcel->getActiveSheet()->setCellValueExplicit($word[$k].$i,(string)$value,PHPExcel_Cell_DataType::TYPE_STRING);//加空白可將數值轉出時轉成文字,數值欄位開頭0才不會不見//速度會變慢
 				}else{
@@ -609,6 +634,7 @@ class Order_model extends MY_Model {
 	public function get_order_sale_data($where="",$page=''){//抓取出貨訂單資料*
 		$data=array();
 		$sql="select od.prd_id,od.prd_name,sum(od.number) as number,od.price,sum(od.total_price) as total_price,count(*) as total_count,pd.prd_sn from order_details od left join products pd on od.prd_id=pd.prd_id inner join `order` o on od.oid=o.id ".$where." group by prd_id,price";
+		
 		if(!empty($_SESSION["AT"]["where"]["sort"])){
 			if($_SESSION["AT"]["where"]["sort"]=="total_count"){
 				$sql.=" order by count(*) ".$_SESSION["AT"]["where"]["sort_ad"];
@@ -619,12 +645,36 @@ class Order_model extends MY_Model {
 			}
 		}
 		$sql.=$page;
+		
 		$query = $this->db->query($sql);
 		foreach($query->result_array() as $key=>$val){
 			$data[]=$val;
 		}
 		return $data;
 	}
+	public function get_order_sale_data_fix($where="",$page=''){//抓取出貨訂單資料*
+		$data=array();
+		$sql="(select * from `order` ".$where." order by id )";
+		// $sql="select od.prd_id,od.prd_name,sum(od.number) as number,od.price,sum(od.total_price) as total_price,count(*) as total_count,pd.prd_sn from order_details od left join products pd on od.prd_id=pd.prd_id inner join `order` o on od.oid=o.id ".$where." group by prd_id,price";
+		
+		if(!empty($_SESSION["AT"]["where"]["sort"])){
+			if($_SESSION["AT"]["where"]["sort"]=="total_count"){
+				$sql.=" order by count(*) ".$_SESSION["AT"]["where"]["sort_ad"];
+			}elseif($_SESSION["AT"]["where"]["sort"]=="number"){
+				$sql.=" order by sum(number) ".$_SESSION["AT"]["where"]["sort_ad"];
+			}else{
+				$sql.=" order by sum(if(status=1,total_price,0)) ".$_SESSION["AT"]["where"]["sort_ad"];
+			}
+		}
+		$sql.=$page;
+		
+		$query = $this->db->query($sql);
+		foreach($query->result_array() as $key=>$val){
+			$data[]=$val;
+		}
+		return $data;
+	}
+	
 	public function get_order_supplier_data($where="",$page=''){//抓取銷貨(供應商)訂單資料*20171228
 		$data=array();
 		$sql="select o.prd_id,o.prd_name,sum(o.number) as number,o.price,sum(o.total_price) as total_price,count(*) as total_count, o.supplier_id ,s.d_name,pd.prd_sn

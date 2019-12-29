@@ -1,6 +1,6 @@
 # 相關說明
 
-- [須添加的Sql](/doc/jhong.addSql.md)
+- [須添加的 Sql](/doc/jhong.addSql.md)
 - [相關備註](/doc/jhong.remark.md)
 
 # 檔案新增紀錄
@@ -28,5 +28,5 @@
 |        application/models/order_model.php         |      |      |
 |      application/views/order/order_info.php       |      |      |
 |      application/views/order/order_list.php       |      |      |
-
-
+|   application/views/order/order_member_info.php   |      |      |
+|      application/views/order/order_sale.php       |      |      |

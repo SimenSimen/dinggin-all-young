@@ -744,21 +744,34 @@ class Order extends MY_Controller
 		
 		$search_default_array=array("ToPage","select_type","txt","date_start","date_end","sort","sort_ad");
 		$this->omodel->search_session($search_default_array);
-		$where_array=array();
-		$where_array[]="od.product_flow in (2,4)";
-		$where_array[]="od.status=1";
+		// $where_array=array();
+		// // $where_array[]="od.product_flow in (2,4)";
+		// // $where_array[]="od.status=1";
 		
-		if($_SESSION["AT"]["where"]["txt"]!=""){
-			$where_array[]="prd_name like '%".$_SESSION["AT"]["where"]["txt"]."%'";
-		}
+		// if($_SESSION["AT"]["where"]["txt"]!=""){
+		// 	$where_array[]="od.prd_name like '%".$_SESSION["AT"]["where"]["txt"]."%'";
+		// }
 	
-		if($_SESSION["AT"]["where"]["date_start"]!=""){
-			$where_array[]="pd.create_time between'".$_SESSION["AT"]["where"]["date_start"]."  00:00:00' and '".$_SESSION["AT"]["where"]["date_end"]." 23:59:59'";
-		}
+		// if($_SESSION["AT"]["where"]["date_start"]!=""){
+		// 	$where_array[]="pd.create_time between '".$_SESSION["AT"]["where"]["date_start"]."  00:00:00' and '".$_SESSION["AT"]["where"]["date_end"]." 23:59:59'";
+		// }
 		
-		// $where=!empty($where_array)?"where ".implode(" and ",$where_array):"";	
-		$where=!empty($where_array) ? " where ".implode(" and ",$where_array)." and lway_id = 3" : " where lway_id = 3 and od.product_flow in (2, 4) and od.status = 1 ";
+		// // $where=!empty($where_array)?"where ".implode(" and ",$where_array):"";	
+		// $where=!empty($where_array) ? " where ".implode(" and ",$where_array)." and lway_id = 3" : " where lway_id = 3 and od.product_flow in (2, 4) and od.status = 1 ";
 
+
+
+
+
+		$where_array=array();
+		if($_SESSION["AT"]["where"]["txt"]!=""){
+			$where_array[]="(order.order_id like '%".$_SESSION["AT"]["where"]["txt"]."%' or by_id in(select by_id from buyer where concat(name,'|',by_email) like '%".$_SESSION["AT"]["where"]["txt"]."%'))";
+		}
+		if($_SESSION["AT"]["where"]["date_start"]!=""){
+			$where_array[]="order.create_time between'".$_SESSION["AT"]["where"]["date_start"]."  00:00:00' and '".$_SESSION["AT"]["where"]["date_end"]." 23:59:59'";
+		}
+		$where=!empty($where_array) ? "where ".implode(" and ",$where_array)." and lway_id = 3 and product_flow in (0, 2, 4) " : " where lway_id = 3 and product_flow in (0, 2, 4) "; // lway_id=3 表示貨物需寄送
+		
 		//訂單資料
 		$data['dbdata']=$this->omodel->get_order_sale_excel($where);
 	}
