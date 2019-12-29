@@ -1444,7 +1444,6 @@ class Order extends MY_Controller
 		if($dbdata['product_flow']!=4)
 			$data['subbonus']=$this->mymodel->OneSearchSql('order_sub','*',array('OID'=>$id));
 
-		var_dump($data['subbonus']);
 		$shopInfo = $this->mymodel->OneSearchSql('shop_store', '*', ['shop_id' => $dbdata['shop_id']]);
 		$data['shop_address']='('.$shopInfo['shop_name'].')';
 		
