@@ -30,32 +30,32 @@ static host http://st.all-young.io/
 
 # Work to do - Simen
 
-|    Title     |           item           | description | remark | check again |
-| :----------: | :----------------------: | :---------: | :----: | :---------: |
-|     前台     |    首頁-印尼(未登入)     |    done     |        |   &nbsp;    |
-|              |   首頁-印尼(一般會員)    |    done     |        |   &nbsp;    |
-|              |   首頁-印尼(經銷會員)    |    done     |        |   &nbsp;    |
-|              |           登入           |    done     |        |     [x]     |
-|              |      註冊-填寫資料       |    done     |        |     [x]     |
-|              |      註冊-簡訊驗證       |    done     |        |     [x]     |
-|              |      註冊-註冊完成       |    done     |        |     [x]     |
-|              |        品牌-商店         |   &nbsp;    |        |   &nbsp;    |
-|              |         全部商品         |    done     |        |   &nbsp;    |
-|              |       商品頁(有貨)       |    done     |        |   &nbsp;    |
-|              |       商品頁(缺貨)       |    done     |        |   &nbsp;    |
-|              |          搜尋頁          |    done     |        |   &nbsp;    |
-|              | 購物車 - 二聯式發票 印尼 |    done     |        |   &nbsp;    |
-|              | 購物車 - 三聯式發票 印尼 |    done     |        |   &nbsp;    |
-|              | 購物車 - 二聯式發票確認  |    done     |        |   &nbsp;    |
-|              | 購物車 - 三聯式發票確認  |    done     |        |   &nbsp;    |
-|              |    購物車 - 訂單完成     |    done     |        |   &nbsp;    |
-| 前台會員專區 |       紅利點數查詢       |    done     |        |     [x]     |
-|              |        購物金查詢        |    done     |        |     [x]     |
-|              |         追蹤清單         |    done     |        |   &nbsp;    |
-|              | 基本資料(一般會員)-印尼  |    done     |        |     [x]     |
-|              | 基本資料(經營會員)-印尼  |    done     |        |     [x]     |
-|              |    升級經營會員-印尼     |    done     |        |     [x]     |
-|              |     邀請碼分享-印尼      |    done     |        |     [x]     |
+|    Title     |           item           | description | remark |     check again      |
+| :----------: | :----------------------: | :---------: | :----: | :------------------: |
+|     前台     |    首頁-印尼(未登入)     |    done     |        |        &nbsp;        |
+|              |   首頁-印尼(一般會員)    |    done     |        |        &nbsp;        |
+|              |   首頁-印尼(經銷會員)    |    done     |        |        &nbsp;        |
+|              |           登入           |    done     |        | <ul><li>[x]</li><li> |
+|              |      註冊-填寫資料       |    done     |        | <ul><li>[x]</li><li> |
+|              |      註冊-簡訊驗證       |    done     |        | <ul><li>[x]</li><li> |
+|              |      註冊-註冊完成       |    done     |        | <ul><li>[x]</li><li> |
+|              |        品牌-商店         |   &nbsp;    |        |        &nbsp;        |
+|              |         全部商品         |    done     |        |        &nbsp;        |
+|              |       商品頁(有貨)       |    done     |        |        &nbsp;        |
+|              |       商品頁(缺貨)       |    done     |        |        &nbsp;        |
+|              |          搜尋頁          |    done     |        |        &nbsp;        |
+|              | 購物車 - 二聯式發票 印尼 |    done     |        |        &nbsp;        |
+|              | 購物車 - 三聯式發票 印尼 |    done     |        |        &nbsp;        |
+|              | 購物車 - 二聯式發票確認  |    done     |        |        &nbsp;        |
+|              | 購物車 - 三聯式發票確認  |    done     |        |        &nbsp;        |
+|              |    購物車 - 訂單完成     |    done     |        |        &nbsp;        |
+| 前台會員專區 |       紅利點數查詢       |    done     |        | <ul><li>[x]</li><li> |
+|              |        購物金查詢        |    done     |        | <ul><li>[x]</li><li> |
+|              |         追蹤清單         |    done     |        |        &nbsp;        |
+|              | 基本資料(一般會員)-印尼  |    done     |        | <ul><li>[x]</li><li> |
+|              | 基本資料(經營會員)-印尼  |    done     |        | <ul><li>[x]</li><li> |
+|              |    升級經營會員-印尼     |    done     |        | <ul><li>[x]</li><li> |
+|              |     邀請碼分享-印尼      |    done     |        | <ul><li>[x]</li><li> |
 
 # lang_model
 
