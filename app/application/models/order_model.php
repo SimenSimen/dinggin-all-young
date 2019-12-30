@@ -677,7 +677,7 @@ class Order_model extends MY_Model {
 	
 	public function get_order_supplier_data($where="",$page=''){//抓取銷貨(供應商)訂單資料*20171228
 		$data=array();
-		$sql="select o.prd_id,o.prd_name,sum(o.number) as number,o.price,sum(o.total_price) as total_price,count(*) as total_count, o.supplier_id ,s.d_name,pd.prd_sn
+		$sql="select o.prd_id,o.prd_name,sum(o.number) as number,o.price,sum(o.total_price) as total_price,count(*) as total_count, o.supplier_id ,s.d_name,pd.prd_sn, pd.brand
 			from order_details as o
 			inner join supplier s on s.d_id=o.supplier_id
 			left join products pd on o.prd_id=pd.prd_id

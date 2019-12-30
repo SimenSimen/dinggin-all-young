@@ -111,14 +111,14 @@
 
   <!--會員資料列表-->
   <table id='member_list' class='table table-hover table-bordered table-condensed' style="width:80%;">
-      
     <tr id='member_list_title_tr'>		
-      <td>供應商姓名</td>
-      <td>產品項目</td>
-      <td class="sort" rel="number"><a href="javascript:void(0);" style="color:#FFFFFF">數量&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="number"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></a></td>
-      <td class="sort" rel="price"><a href="javascript:void(0);" style="color:#FFFFFF">產品單價&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="price"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
-      <td class="sort" rel="total_price"><a href="javascript:void(0);" style="color:#FFFFFF">退款金額&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_price"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
-      <td class="sort" rel="total_count"><a href="javascript:void(0);" style="color:#FFFFFF">下單數&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_count"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
+      <td>品牌</td>
+      <td>商品名稱</td>
+      <td class="sort" rel="price"><a href="javascript:void(0);" style="color:#FFFFFF">商品單價&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="price"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
+      <td class="sort" rel="total_count"><a href="javascript:void(0);" style="color:#FFFFFF">退單數&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_count"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
+      <td class="sort" rel="number"><a href="javascript:void(0);" style="color:#FFFFFF">退貨數&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="number"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></a></td>
+      <td class="sort" rel="total_price"><a href="javascript:void(0);" style="color:#FFFFFF">銷退總額&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_price"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
+      
     </tr>
 
     <!--for-->
@@ -126,12 +126,13 @@
 
         <?php foreach ($dbdata as $key => $value): ?>
           <tr bgcolor='<?//=$member_auth_color[$key]?>'>
-            <td class='center_td white_td'><?=$value['d_name']?></td>
+            <td class='center_td white_td'><?=$value['brand']?></td>
             <td class='center_td white_td'><?=$value['prd_name']?></td>
-            <td class='center_td white_td'><?=$value['number']?></td>
             <td class='center_td white_td'><?=$value['price']?></td>
-            <td class='center_td white_td'><?=$value['total_price']?></td>
             <td class='center_td white_td'><?=$value['total_count']?></td>
+            <td class='center_td white_td'><?=$value['number']?></td>
+            <td class='center_td white_td'><?=$value['total_price']?></td>
+            
           </tr>
         <?php endforeach; ?>
 
