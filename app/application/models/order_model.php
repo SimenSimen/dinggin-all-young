@@ -352,7 +352,7 @@ class Order_model extends MY_Model {
 			//$objPHPExcel->getActiveSheet()->getColumnDimension($word[($i+1)])->setAutoSize(true);//自動寬度
 			//$objPHPExcel->getActiveSheet()->getColumnDimension($word[($i+1)])->setWidth(30);//設定寬度
 		}
-		$title_array=array("d_name"=>"供應商姓名","prd_name"=>"產品項目","number"=>"數量","price"=>"產品單價","total_price"=>"退款金額","total_count"=>"下單數");
+		$title_array=array("brand"=>"品牌","prd_name"=>"商品名稱","price"=>"商品單價","total_count"=>"退單數","number"=>"退貨數","total_price"=>"消退總額");
 		$i=1;
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.($i), '退貨明細');
 		$objPHPExcel->getActiveSheet()->mergeCells('A'.$i.':'.$word[(count($title_array))].$i);//合併
@@ -611,7 +611,7 @@ class Order_model extends MY_Model {
 	}
 	public function get_order_back_data($where="",$page=''){//抓取退貨訂單資料*
 		$data=array();
-		$sql="select od.prd_id,od.prd_name,sum(od.number) as number,(od.price) as price,sum(od.total_price) as total_price,count(*) as total_count,pd.prd_sn
+		$sql="select od.prd_id,od.prd_name,sum(od.number) as number,(od.price) as price,sum(od.total_price) as total_price,count(*) as total_count,pd.prd_sn,pd.brand,od.prd_name
 			from `order` o
 			inner join `order_details` od on o.id=od.oid left join products pd on od.prd_id=pd.prd_id ".$where." group by od.prd_id,od.price";
 		if(!empty($_SESSION["AT"]["where"]["sort"])){

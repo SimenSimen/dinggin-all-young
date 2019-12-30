@@ -169,5 +169,8 @@ $(function() {
 		$("#search_form").submit();
 		$("#search_form").attr('action','');
 	});
+  $('#date_start','#date_end').dblclick(function(){
+		$($(this)).val("");
+	});
 });
 </script>

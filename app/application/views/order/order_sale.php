@@ -203,7 +203,7 @@ $(function() {
 		$("#"+$(this).attr("rel")).val("");
 	});
   $('#date_start','#date_end').dblclick(function(){
-		$("#"+$(this)).val("");
+		$($(this)).val("");
 	});
 	$("#excel_action").click(function(){
 		$("#search_form").attr('action','/order/order_sale_excel');
