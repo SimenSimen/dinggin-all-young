@@ -104,10 +104,10 @@
     <tr>
       <td>
         <input type="text" name="s_account" placeholder="會員帳號" value="<?=$_SESSION["AT"]["where"]['s_account']?>">
-        <input type="text" name="s_num" placeholder="編號" value="<?=$_SESSION["AT"]["where"]['s_num']?>">
-        <input type="text" name="s_name" placeholder="姓名" value="<?=$_SESSION["AT"]["where"]['s_name']?>">
-        <input type="text" name="Pname" placeholder="推薦人" value="<?=$_SESSION["AT"]["where"]['Pname']?>">
-        <input type="text" name="upline" placeholder="上線會員" value="<?=$_SESSION["AT"]["where"]['upline']?>">
+        <input type="text" name="s_num" placeholder="會員編號" value="<?=$_SESSION["AT"]["where"]['s_num']?>">
+        <input type="text" name="s_name" placeholder="會員姓名" value="<?=$_SESSION["AT"]["where"]['s_name']?>">
+        <!-- <input type="text" name="Pname" placeholder="推薦人" value="<?=$_SESSION["AT"]["where"]['Pname']?>">
+        <input type="text" name="upline" placeholder="上線會員" value="<?=$_SESSION["AT"]["where"]['upline']?>"> -->
         <select name="s_type">
           <option value="">請選擇</option>
           <option value="0" <?=($_SESSION["AT"]["where"]['s_type']=='0')?'selected':'';?>>一般會員</option>
@@ -125,7 +125,7 @@
       
     <tr id='member_list_title_tr'>
       <td>編號</td>
-      <td>帳戶</td>
+      <td>帳號</td>
       <td>姓名</td>
       <td>性別</td>
       <td>手機</td>

@@ -32,3 +32,5 @@
 |      application/views/order/order_sale.php       |      |      |
 |      application/views/order/order_back.php       |      |      |
 |    application/views/order/order_supplier.php     |      |      |
+|      application/views/member/buyer_list.php      |      |      |
+|        application/controllers/member.php         |      |      |

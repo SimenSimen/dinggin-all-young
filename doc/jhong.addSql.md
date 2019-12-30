@@ -59,3 +59,12 @@ alter table `order` add column `back_bank_branch` varchar(45) DEFAULT NULL COMME
 ```
 
 
+- 會員 分行名稱
+
+```sql
+alter table `member` add column `bank_branch_name` varchar(45) DEFAULT NULL COMMENT '分行名稱';
+alter table `member` add column `tax_card_no` varchar(45) DEFAULT NULL COMMENT '稅卡編號';
+alter table `member` add column `last_login` datetime DEFAULT NULL, COMMENT '最後登入時間';
+```
+
+
