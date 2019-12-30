@@ -907,32 +907,48 @@ class Order extends MY_Controller
 		//資料庫名稱
 		$data['dbname']=$dbname='order_details';	
 		//預設查詢	
-		$search_default_array=array("ToPage","select_type","txt","date_start","date_end","sort","sort_ad","supplier_id");
+		$search_default_array=array("ToPage","select_type","txt","date_start","date_end","sort","sort_ad","supplier_id","brand_id");
 		$this->omodel->search_session($search_default_array);
 		$where_array=array();
 		$where_array[]="product_flow=4";
 		$where_array[]="status=1";
 		if($_SESSION["AT"]["where"]["txt"]!=""){
-			$where_array[]="prd_name like '%".$_SESSION["AT"]["where"]["txt"]."%'";
+			$where_array[]="o.prd_name like '%".$_SESSION["AT"]["where"]["txt"]."%'";
 		}
 		if($_SESSION["AT"]["where"]["date_start"]!=""){
 			$where_array[]="o.create_time between'".$_SESSION["AT"]["where"]["date_start"]."  00:00:00' and '".$_SESSION["AT"]["where"]["date_end"]." 23:59:59'";
 		}
-		if($_SESSION["AT"]["where"]["supplier_id"]!="" and $_SESSION["AT"]["where"]["supplier_id"]!=0){
-			$where_array[]="o.supplier_id =".$_SESSION["AT"]["where"]["supplier_id"];
+		// if($_SESSION["AT"]["where"]["supplier_id"]!="" and $_SESSION["AT"]["where"]["supplier_id"]!=0){
+		// 	$where_array[]="o.supplier_id =".$_SESSION["AT"]["where"]["supplier_id"];
+		// }
+		
+		if($_SESSION["AT"]["where"]["brand_id"]!="" and $_SESSION["AT"]["where"]["brand_id"]!=0){
+			$where_array[]="pd.prd_cid =".$_SESSION["AT"]["where"]["brand_id"];	
 		}
+
 		$where = !empty($where_array) ? "where ".implode(" and ",$where_array) : "";
 	
 		//分頁程式 start
 		$data['ToPage'] = $Topage= !empty($_POST['ToPage']) ? $_POST['ToPage'] : 1;		
-		$sql="(select sum(number) as number from order_details as o inner join supplier s on s.d_id=o.supplier_id ".$where." group by prd_id,price order by supplier_id,prd_id,price ) a";
+		$sql="(select sum(number) as number from order_details as o inner join supplier s on s.d_id=o.supplier_id LEFT JOIN (
+			SELECT
+				pd.*,
+				pb.prd_cid prd_cid_brand,
+				pb.d_name  d_name_brand
+			FROM
+				products pd
+				LEFT JOIN product_brand pb ON pb.prd_cid = pd.prd_cid 
+				) pd ON o.prd_id = pd.prd_id ".$where." group by o.prd_id,price order by o.supplier_id,o.prd_id,o.price ) a";
 		$qpage=$this->useful->SetPage($sql,'',20);
 		$data['page']=$this->useful->get_page($qpage);
 		//分頁程式 end
 		//訂單資料
 		$data['dbdata']=$this->omodel->get_order_supplier_data($where,$qpage['result']);
 		//撈取供應商名稱
-		$data['supplier']=$supplier=$this->mymodel->select_page_form('providers','','id, chinese_name',array());
+		// $data['supplier']=$supplier=$this->mymodel->select_page_form('providers','','id, chinese_name',array());
+		//撈取品牌名稱
+		$data['brand_list']=$brand_list=$this->mymodel->select_page_form('product_brand','','prd_cid, d_name',array(),'d_name','desc');
+		
 		//view
 		$this->load->view('order/order_supplier', $data);
 	}
@@ -944,19 +960,22 @@ class Order extends MY_Controller
 		//資料庫名稱
 		$data['dbname']=$dbname='order_details';
 		//預設查詢
-		$search_default_array=array("ToPage","select_type","txt","date_start","date_end","sort","sort_ad","supplier_id");
+		$search_default_array=array("ToPage","select_type","txt","date_start","date_end","sort","sort_ad","supplier_id","brand_id");
 		$this->omodel->search_session($search_default_array);
 		$where_array=array();
 		$where_array[]="product_flow=4";
 		$where_array[]="status=1";
 		if($_SESSION["AT"]["where"]["txt"]!=""){
-			$where_array[]="prd_name like '%".$_SESSION["AT"]["where"]["txt"]."%'";
+			$where_array[]="o.prd_name like '%".$_SESSION["AT"]["where"]["txt"]."%'";
 		}
 		if($_SESSION["AT"]["where"]["date_start"]!=""){
 			$where_array[]="o.create_time between'".$_SESSION["AT"]["where"]["date_start"]."  00:00:00' and '".$_SESSION["AT"]["where"]["date_end"]." 23:59:59'";
 		}
-		if($_SESSION["AT"]["where"]["supplier_id"]!="" and $_SESSION["AT"]["where"]["supplier_id"]!=0){
-			$where_array[]="o.supplier_id =".$_SESSION["AT"]["where"]["supplier_id"];
+		// if($_SESSION["AT"]["where"]["supplier_id"]!="" and $_SESSION["AT"]["where"]["supplier_id"]!=0){
+		// 	$where_array[]="o.supplier_id =".$_SESSION["AT"]["where"]["supplier_id"];
+		// }
+		if($_SESSION["AT"]["where"]["brand_id"]!="" and $_SESSION["AT"]["where"]["brand_id"]!=0){
+			$where_array[]="pd.prd_cid =".$_SESSION["AT"]["where"]["brand_id"];	
 		}
 		$where=!empty($where_array)?"where ".implode(" and ",$where_array):"";
 		//訂單資料

@@ -31,3 +31,4 @@
 |   application/views/order/order_member_info.php   |      |      |
 |      application/views/order/order_sale.php       |      |      |
 |      application/views/order/order_back.php       |      |      |
+|    application/views/order/order_supplier.php     |      |      |
