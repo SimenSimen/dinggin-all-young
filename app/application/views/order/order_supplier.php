@@ -100,10 +100,10 @@
   <table >    
     <tr>
       <td>
-      <select name='supplier_id'  >
-        <option value='0'>請選擇供應商</option>
-        <? foreach ($supplier as $value) {?>
-          <option value="<?=$value['id'];?>" <?=($_SESSION["AT"]["where"]["supplier_id"]==$value['id'])?'selected':'';?> ><?=$value['chinese_name'];?></option>
+      <select name='brand_id'  >
+        <option value='0'>請選擇品牌</option>
+        <? foreach ($brand_list as $value) {?>
+          <option value="<?=$value['prd_cid'];?>" <?=($_SESSION["AT"]["where"]["brand_id"]==$value['prd_cid'])?'selected':'';?> ><?=$value['d_name'];?></option>
         <?}?>
       </select>
       <a href="javascript:void(0);" title="清除起始日期" class="clear_date" rel="date_start">訂單起始日期：</a><input name="date_start" id="date_start" value="<?php echo $_SESSION["AT"]["where"]["date_start"];?>" placeholder="訂單起始日期" maxlength='10' class="date-object" type="date" readonly="true"/>
@@ -120,25 +120,25 @@
   </table>
   <!--會員資料列表-->
   <table id='member_list' class='table table-hover table-bordered table-condensed' style="width:80%;">      
-    <tr id='member_list_title_tr'>	 
-      <td>供應商姓名</td>	
-      <td>產品項目</td>
-      <td class="sort" rel="number"><a href="javascript:void(0);" style="color:#FFFFFF">銷量&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="number"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></a></td>
+    <tr id='member_list_title_tr'>	
+      <td>品牌</td>	
+      <td>商品名稱</td>
       <td class="sort" rel="price"><a href="javascript:void(0);" style="color:#FFFFFF">產品單價&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="price"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
-      <td class="sort" rel="total_price"><a href="javascript:void(0);" style="color:#FFFFFF">銷售額&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_price"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
       <td class="sort" rel="total_count"><a href="javascript:void(0);" style="color:#FFFFFF">下單數&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_count"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
-        <td>明細</td>
+      <td class="sort" rel="number"><a href="javascript:void(0);" style="color:#FFFFFF">銷量&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="number"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></a></td>
+      <td class="sort" rel="total_price"><a href="javascript:void(0);" style="color:#FFFFFF">銷售總額&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_price"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
+      <td>明細</td>
     </tr>
     <!--for-->
     <?php if (!empty($dbdata)): ?>
         <?php foreach ($dbdata as $key => $value): ?>
           <tr bgcolor='<?//=$member_auth_color[$key]?>'>
-            <td class='center_td white_td'><?=$value['d_name']?></td>
+            <td class='center_td white_td'><?=$value['brand']?></td>
             <td class='center_td white_td'><?=$value['prd_name']?></td>
-            <td class='center_td white_td'><?=$value['number']?></td>
             <td class='center_td white_td'><?=$value['price']?></td>
-            <td class='center_td white_td'><?=$value['total_price']?></td>
             <td class='center_td white_td'><?=$value['total_count']?></td>
+            <td class='center_td white_td'><?=$value['number']?></td>
+            <td class='center_td white_td'><?=$value['total_price']?></td>
             <td class='center_td white_td'> 
               <a href="javascript:void(0);" onclick="top.frames['content-frame'].location='/order/order_supplier_list/<?=$value['supplier_id']?>/<?=$value['prd_id']?>/<?=$value['price']?>?del_page=Y'">
                 <i class="fa fa-cogs"></i>

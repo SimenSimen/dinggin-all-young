@@ -227,7 +227,7 @@ class Order_model extends MY_Model {
 			//$objPHPExcel->getActiveSheet()->getColumnDimension($word[($i+1)])->setAutoSize(true);//自動寬度
 			//$objPHPExcel->getActiveSheet()->getColumnDimension($word[($i+1)])->setWidth(30);//設定寬度
 		}
-		$title_array=array("d_name"=>"供應商姓名","prd_name"=>"產品項目","number"=>"銷量","price"=>"產品單價","total_price"=>"銷售額","total_count"=>"下單數");
+		$title_array=array("brand"=>"品牌","prd_name"=>"商品名稱","price"=>"產品單價","total_count"=>"下單數","number"=>"銷量","total_price"=>"銷售總額");
 		$i=1;
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.($i), '出貨明細');
 		$objPHPExcel->getActiveSheet()->mergeCells('A'.$i.':'.$word[(count($title_array))].$i);//合併
@@ -677,10 +677,29 @@ class Order_model extends MY_Model {
 	
 	public function get_order_supplier_data($where="",$page=''){//抓取銷貨(供應商)訂單資料*20171228
 		$data=array();
-		$sql="select o.prd_id,o.prd_name,sum(o.number) as number,o.price,sum(o.total_price) as total_price,count(*) as total_count, o.supplier_id ,s.d_name,pd.prd_sn, pd.brand
-			from order_details as o
-			inner join supplier s on s.d_id=o.supplier_id
-			left join products pd on o.prd_id=pd.prd_id
+		$sql="SELECT
+				o.prd_id,
+				o.prd_name,
+				sum( o.number ) AS number,
+				o.price,
+				sum( o.total_price ) AS total_price,
+				count( * ) AS total_count,
+				o.supplier_id,
+				s.d_name,
+				pd.prd_sn,
+				pd.d_name_brand AS brand 
+			FROM
+				order_details AS o
+				INNER JOIN supplier s ON s.d_id = o.supplier_id
+				LEFT JOIN (
+			SELECT
+				pd.*,
+				pb.prd_cid prd_cid_brand,
+				pb.d_name  d_name_brand
+			FROM
+				products pd
+				LEFT JOIN product_brand pb ON pb.prd_cid = pd.prd_cid 
+				) pd ON o.prd_id = pd.prd_id 
 			".$where." group by o.supplier_id,o.prd_id,o.price";
 
 		if(!empty($_SESSION["AT"]["where"]["sort"])){

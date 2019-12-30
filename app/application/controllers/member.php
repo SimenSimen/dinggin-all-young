@@ -139,12 +139,12 @@ class Member extends MY_Controller
 		if($_SESSION["AT"]["where"]['s_type']!=""){
 		    $where_array[]="b.d_is_member = '".$_SESSION["AT"]["where"]['s_type']."'";
 		}
-		if($_SESSION["AT"]["where"]['Pname']!=""){
-		    $where_array[]="b1.name like '%".$_SESSION["AT"]["where"]['Pname']."%'";
-		}
-		if($_SESSION["AT"]["where"]['upline']!=""){
-		    $where_array[]="b2.name like '%".$_SESSION["AT"]["where"]['upline']."%'";
-		}
+		// if($_SESSION["AT"]["where"]['Pname']!=""){
+		//     $where_array[]="b1.name like '%".$_SESSION["AT"]["where"]['Pname']."%'";
+		// }
+		// if($_SESSION["AT"]["where"]['upline']!=""){
+		//     $where_array[]="b2.name like '%".$_SESSION["AT"]["where"]['upline']."%'";
+		// }
 		$where=!empty($where_array)?" where ".implode(" and ",$where_array):"";
 		// 分頁程式 start
 		$this->load->library('/mylib/PageNew');
@@ -157,10 +157,6 @@ class Member extends MY_Controller
         //分頁程式 end
 		// $dbdata=$this->mmodel->GetMember($where,$qpage['result']);
 		$dbdata=$this->mmodel->GetMember($where,$qpage['result']);
-
-
-		
-	
 		// $dbdata=$this->mymodel->get_member_data('',$s_num,$s_name,$s_type,'','',$qpage['result'],$s_account);
 
 		foreach ($dbdata as $key => $value) {
@@ -673,10 +669,12 @@ class Member extends MY_Controller
 		//權限判斷
 		$this->useful->CheckComp('j_member');
 
-		$title_array=array('編號','帳號','姓名','性別','手機','電話','通訊地址','生日','信箱','備註','身分','身份證','戶籍地址','銀行名稱','銀行帳號','入會日','到期日','體系名稱','上線會員','經營狀態','註冊時間');
-		
-		
+		// $title_array=array('編號','帳號','姓名','性別','手機','電話','通訊地址','生日','信箱','備註','身分','身份證','戶籍地址','銀行名稱','銀行帳號','入會日','到期日','體系名稱','上線會員','經營狀態','註冊時間');
+		$title_array=array('帳號','姓名','手機','生日','E-mail','身分證字號','銀行名稱','分行銀行','帳戶名稱','銀行帳號','有無稅卡','稅卡編號','註冊日期','是否接收優惠訊息','最新一次登入日期');
+
 		$dbdata=$this->mymodel->select_page_form('buyer','','*');
+		
+
 		foreach ($dbdata as $value){
 			$deadstatus='';
 			if($value['d_is_member']==1){
@@ -688,6 +686,13 @@ class Member extends MY_Controller
 					$deadstatus="無效";
 				}else
 					$deadstatus="有效";
+
+				// 有無稅卡
+				$tax_card_no_exist = $mdata['tax_card_no'] ? '有' : '無';
+
+				// 最後登入日期
+				$last_login_date = $mdata['last_login'] ? date('Y-m-d',$mdata['last_login']): '-';
+				
 			}			
 			//身分
 			$mtype=$this->mymodel->OneSearchSql('config','d_title',array('d_type'=>'bytype','d_val'=>$value['d_is_member']));
@@ -715,20 +720,22 @@ class Member extends MY_Controller
 			$udata=$this->mymodel->OneSearchSql('member','by_id',array('member_id'=>$mdata['upline']));
 			$upline=$this->mymodel->OneSearchSql('buyer','name',array('by_id'=>$udata['by_id']));
 
-			
-
+						
 			$data_array[]=array(
-				$mdata['member_num'],$value['d_account'],
-				$value['name'],$sex,$value['mobile'],$value['telphone'],
-				$address,$value['birthday'],$value['by_email'],
-				$value['d_content'],$type,$mdata['identity_num'],
-				$raddress,$mdata['bank_name'],$mdata['bank_account_name'],$mdata['bank_account'],
-				$mdata['join_time'],
-
-				date('Y-m-d H:i:s',$mdata['deadline']),
-				$family['d_name'],$upline['name'],
-				$deadstatus,$value['create_time']
-				);						
+				$value['d_account'],$value['name'],$value['mobile'],$value['birthday'],$value['by_email'],
+				$mdata['identity_num'],$mdata['bank_name'],$mdata['bank_branch_name'],$mdata['bank_account_name'],
+				$mdata['bank_account'],$tax_card_no_exist,$mdata['tax_card_no'],$value['create_time'],$value['d_service'],
+				$last_login_date
+				// $mdata['member_num'],$value['d_account'],
+				// $value['name'],$sex,$value['mobile'],$value['telphone'],
+				// $address,$value['birthday'],$value['by_email'],
+				// $value['d_content'],$type,$mdata['identity_num'],
+				// $raddress,$mdata['bank_name'],$mdata['bank_account_name'],$mdata['bank_account'],
+				// $mdata['join_time'],
+				// date('Y-m-d H:i:s',$mdata['deadline']),
+				// $family['d_name'],$upline['name'],
+				// $deadstatus,$value['create_time']
+				);		
 		}
 		$this->export_xls($title_array,$data_array,date('Y-m-d').'會員資料');
 	}
