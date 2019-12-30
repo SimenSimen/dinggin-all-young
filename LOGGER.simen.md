@@ -4,7 +4,7 @@
 - [Ajax 附件](/doc/simen.ajax.md)
 - [須添加的Sql](/doc/simen.addSql.md)
 - [相關備註](/doc/simen.remark.md)
-- [語言相關](/doc/simen.lang.md)
+- [多語系相關](/doc/simen.lang.md)
 
 # 紀錄
 
@@ -70,6 +70,7 @@
 - 發票寫入
 - 註冊頁上方活動
 - 註冊驗證
+- 首頁品牌小圖 品牌hover大圖
 
 # 結案前整理
 
