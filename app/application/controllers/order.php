@@ -644,22 +644,22 @@ class Order extends MY_Controller
 		$search_default_array=array("ToPage","select_type","txt","date_start","date_end","sort","sort_ad","supplier_id");
 		$this->omodel->search_session($search_default_array);
 		$where_array=array();
-		$where_array[]="o.product_flow=5";
-		$where_array[]="o.status=2";
+		$where_array[]="od.product_flow=5";
+		$where_array[]="od.status=2";
 		if($_SESSION["AT"]["where"]["txt"]!=""){
-			$where_array[]="o.prd_name like '%".$_SESSION["AT"]["where"]["txt"]."%'";
+			$where_array[]="od.prd_name like '%".$_SESSION["AT"]["where"]["txt"]."%'";
 		}
 		if($_SESSION["AT"]["where"]["date_start"]!=""){
-			$where_array[]="o.create_time between'".$_SESSION["AT"]["where"]["date_start"]."  00:00:00' and '".$_SESSION["AT"]["where"]["date_end"]." 23:59:59'";
+			$where_array[]="od.create_time between'".$_SESSION["AT"]["where"]["date_start"]."  00:00:00' and '".$_SESSION["AT"]["where"]["date_end"]." 23:59:59'";
 		}
 		if($_SESSION["AT"]["where"]["supplier_id"]!="" and $_SESSION["AT"]["where"]["supplier_id"]!=0){
-			$where_array[]="o.supplier_id =".$_SESSION["AT"]["where"]["supplier_id"];
+			$where_array[]="od.supplier_id =".$_SESSION["AT"]["where"]["supplier_id"];
 		}
 		$where = !empty($where_array) ? "where ".implode(" and ",$where_array) : "";
 		
 		//分頁程式 start
 		$data['ToPage'] = $Topage= !empty($_POST['ToPage']) ? $_POST['ToPage'] : 1;		
-		$sql="(select sum(number) as number from order_details as o inner join supplier s on s.d_id=o.supplier_id ".$where." group by prd_id,price order by supplier_id,prd_id,price ) a";
+		$sql="(select sum(number) as number from order_details as od inner join supplier s on s.d_id=od.supplier_id ".$where." group by prd_id,price order by supplier_id,prd_id,price ) a";
 		$qpage=$this->useful->SetPage($sql,'',20);
 		$data['page']=$this->useful->get_page($qpage);
 		//分頁程式 end
@@ -744,21 +744,34 @@ class Order extends MY_Controller
 		
 		$search_default_array=array("ToPage","select_type","txt","date_start","date_end","sort","sort_ad");
 		$this->omodel->search_session($search_default_array);
-		$where_array=array();
-		$where_array[]="od.product_flow in (2,4)";
-		$where_array[]="od.status=1";
+		// $where_array=array();
+		// // $where_array[]="od.product_flow in (2,4)";
+		// // $where_array[]="od.status=1";
 		
-		if($_SESSION["AT"]["where"]["txt"]!=""){
-			$where_array[]="prd_name like '%".$_SESSION["AT"]["where"]["txt"]."%'";
-		}
+		// if($_SESSION["AT"]["where"]["txt"]!=""){
+		// 	$where_array[]="od.prd_name like '%".$_SESSION["AT"]["where"]["txt"]."%'";
+		// }
 	
-		if($_SESSION["AT"]["where"]["date_start"]!=""){
-			$where_array[]="pd.create_time between'".$_SESSION["AT"]["where"]["date_start"]."  00:00:00' and '".$_SESSION["AT"]["where"]["date_end"]." 23:59:59'";
-		}
+		// if($_SESSION["AT"]["where"]["date_start"]!=""){
+		// 	$where_array[]="pd.create_time between '".$_SESSION["AT"]["where"]["date_start"]."  00:00:00' and '".$_SESSION["AT"]["where"]["date_end"]." 23:59:59'";
+		// }
 		
-		// $where=!empty($where_array)?"where ".implode(" and ",$where_array):"";	
-		$where=!empty($where_array) ? " where ".implode(" and ",$where_array)." and lway_id = 3" : " where lway_id = 3 and od.product_flow in (2, 4) and od.status = 1 ";
+		// // $where=!empty($where_array)?"where ".implode(" and ",$where_array):"";	
+		// $where=!empty($where_array) ? " where ".implode(" and ",$where_array)." and lway_id = 3" : " where lway_id = 3 and od.product_flow in (2, 4) and od.status = 1 ";
 
+
+
+
+
+		$where_array=array();
+		if($_SESSION["AT"]["where"]["txt"]!=""){
+			$where_array[]="(order.order_id like '%".$_SESSION["AT"]["where"]["txt"]."%' or by_id in(select by_id from buyer where concat(name,'|',by_email) like '%".$_SESSION["AT"]["where"]["txt"]."%'))";
+		}
+		if($_SESSION["AT"]["where"]["date_start"]!=""){
+			$where_array[]="order.create_time between'".$_SESSION["AT"]["where"]["date_start"]."  00:00:00' and '".$_SESSION["AT"]["where"]["date_end"]." 23:59:59'";
+		}
+		$where=!empty($where_array) ? "where ".implode(" and ",$where_array)." and lway_id = 3 and product_flow in (0, 2, 4) " : " where lway_id = 3 and product_flow in (0, 2, 4) "; // lway_id=3 表示貨物需寄送
+		
 		//訂單資料
 		$data['dbdata']=$this->omodel->get_order_sale_excel($where);
 	}
@@ -1692,7 +1705,7 @@ class Order extends MY_Controller
 		$data["payment_way"]=$this->omodel->get_payment_way_data('');//付款方式
 		$data["logistics_way"]=$this->omodel->get_logistics_way_data('');//寄送方式
 		$data["status"]=$this->omodel->get_status_data(); //付款狀態
-		$data["product_flow"]=$this->omodel->get_product_flow_data();  //訂單狀態
+		$data["product_flow"]=$this->omodel->get_product_flow_data('3,5,7,9');  //訂單狀態
 	
 		//詳細訂單資料
 		$data["oddata"]=$this->omodel->get_order_details_data($id);
