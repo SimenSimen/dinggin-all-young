@@ -1,6 +1,6 @@
 <?php $menuData = [
-    ['href' => "_inni_products-list.php", 'icon' => 'icon-shopping-cart', 'text' => 'All products', 'trans' => ''],
-    ['href' => "_inni_wishlist.php", 'icon' => 'icon-like', 'text' => 'Wishlist', 'trans' => ''],
+    ['href' => base_url('products'), 'icon' => 'icon-shopping-cart', 'text' => 'All products', 'trans' => ''],
+    ['href' => base_url('member/wishlist'), 'icon' => 'icon-like', 'text' => 'Wishlist', 'trans' => ''],
     ['href' => "_inni_order.php", 'icon' => 'icon-menu2', 'text' => 'Order Inquiry', 'trans' => ''],
     ['href' => base_url('member/dividend'), 'icon' => 'icon-cash', 'text' => 'Bonus Point Query', 'trans' => ''],
     ['href' => base_url('member/member_dividend_fun'), 'icon' => 'icon-analysis', 'text' => 'Shopping Bouns Inquiry', 'trans' => ''],

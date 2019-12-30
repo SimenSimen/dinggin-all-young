@@ -10,7 +10,7 @@
 							<div class="form-group">
 								<div class="control-box02">
 									<label class="control-label"><?= $this->lang1['sms_code_is'] ?></label>
-									<input class="form-control" type="text" name="check_code">
+									<input class="form-control" type="text" name="check_code" required>
 								</div>
 							</div>
 

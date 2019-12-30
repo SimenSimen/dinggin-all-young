@@ -103,7 +103,7 @@
 
 | 設定編號 |  使用到的索引   |
 | :------: | :-------------: |
-|    8     |       ``        |
+|    8     | `upgrade_title` |
 |  &nbsp;  |   `identity`    |
 |  &nbsp;  |    `general`    |
 |  &nbsp;  | `legal_person`  |
@@ -125,7 +125,7 @@
 
 | 設定編號 |     使用到的索引     |
 | :------: | :------------------: |
-|    33    |  share_three_steps   |
+|    33    | `share_three_steps`  |
 |  &nbsp;  | `my_invitation_code` |
 |  &nbsp;  |     `invite_url`     |
 |  &nbsp;  |  `copy_inivte_code`  |

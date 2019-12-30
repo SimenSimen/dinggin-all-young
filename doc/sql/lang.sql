@@ -42,6 +42,7 @@ insert into language_pack (d_type, d_filed, SYS, TW, ENG, JAP, IND, CN) value (8
 insert into language_pack (d_type, d_filed, SYS, TW, ENG, JAP, IND, CN) value (8, 'tax_card_num', '稅卡號碼', '', '', '' ,'Please Enter the Tax Card Number' ,'');
 insert into language_pack (d_type, d_filed, SYS, TW, ENG, JAP, IND, CN) value (8, 'refill', '清除重填', 'Refill', 'Refill', 'Refill', 'Refill', 'Refill');
 insert into language_pack (d_type, d_filed, SYS, TW, ENG, JAP, IND, CN) value (8, 'send_out', '送出', 'Send Out', 'Send Out', 'Send Out', 'Send Out', 'Send Out');
+insert into language_pack (d_type, d_filed, SYS, TW, ENG, JAP, IND, CN) value (8, 'upgrade_title', '升級經營會員', '', '', '' ,'Upgrade Management Member' ,'');
 
 insert into language_pack (d_type, d_filed, SYS, TW, ENG, JAP, IND, CN) value (33, 'qrcode_download', '邀請碼下載', '', '', '' ,'Qrcode download' ,'');
 

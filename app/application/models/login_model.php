@@ -17,7 +17,7 @@ class Login_model extends MY_Model {
 
 		//檢查驗證是否有過(check_code必須為空值)
 		if (!empty($admin['check_code'])){
-			$this->session->set_userdata('create_id', $admin['by_id']);
+			$this->session->set_userdata('revalidate_id', $admin['by_id']);
 			$this->useful->AlertPage('/member_sms_code', '您尚未完成驗證！');
 			return 'LoginError';
 		}

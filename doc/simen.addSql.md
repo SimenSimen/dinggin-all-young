@@ -12,8 +12,18 @@ INSERT INTO `lapack_list`(`d_id`, `d_title`, `d_url`, `d_sort`, `d_enable`) VALU
 ```sql
 ALTER TABLE member ADD COLUMN bank_branch VARCHAR(64) COMMENT '分行名稱';
 ALTER TABLE member ADD COLUMN tax_card VARCHAR(64) COMMENT '稅卡號碼';
-ALTER TABLE member ADD COLUMN tax_card_free TINYINT NULL COMMENT '稅卡/免稅卡';
-ALTER TABLE member ADD COLUMN id_role TINYINT NULL COMMENT '自然人/法人';
+ALTER TABLE member ADD COLUMN tax_card_free TINYINT NULL COMMENT '1稅卡/2免稅卡';
+ALTER TABLE member ADD COLUMN id_role TINYINT NULL COMMENT '1自然人/2法人';
 ```
 
 ## (buyer) 一般會員資料表調整
+
+
+## (member_appy) 經營會員申請資料表調整 
+
+```sql
+ALTER TABLE member_apply ADD COLUMN bank_branch VARCHAR(64) COMMENT '分行名稱';
+ALTER TABLE member_apply ADD COLUMN tax_card VARCHAR(64) COMMENT '稅卡號碼';
+ALTER TABLE member_apply ADD COLUMN tax_card_free TINYINT NULL COMMENT '1稅卡/2免稅卡';
+ALTER TABLE member_apply ADD COLUMN id_role TINYINT NULL COMMENT '1自然人/2法人';
+```

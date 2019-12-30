@@ -113,7 +113,6 @@ class Gold extends MY_Controller
 			$data['remember'] = $remember;
 		}
 
-
 		//依url來決定導向何處 shop=>購物車
 		$data['burl'] = $url;
 
@@ -126,21 +125,16 @@ class Gold extends MY_Controller
 	public function login_set()
 	{
 		@session_start();
-		//初始設定
-		// $this->useful->iconfig($_SESSION['AT']['account']);
-		//語言包
-		$this->lang = $this->lmodel->config('2', $this->setlang);
+		$this->lang = $this->lmodel->config(2, $this->setlang);
 
 		$this->load->model('login_model');
 
 		$url = (!empty($_SESSION['url'])) ? $_SESSION['url'] : '/';
 		// 判斷是否登入
-		if ($_SESSION['MT']['is_login'] == 1) {
-			//$this->useful->AlertPage('/gold/member_list');
-			//$this->useful->AlertPage('/products');
-			$this->useful->AlertPage('/gold/member');
-			//$this->useful->AlertPage("$url");
-			return '';
+
+		if ($this->isLogin()) {
+			$this->useful->AlertPage('/member');
+			return null;
 		} else {
 			$login_data = array(
 				'account' => Comment::SetValue('d_account'),
@@ -155,16 +149,14 @@ class Gold extends MY_Controller
 			//}
 
 			if ($admin == 'NoVer') {
-				@session_start();
 				$_SESSION['AT']['d_account'] = Comment::SetValue('mobile');
-				echo "<script>if(confirm('" . $this->lang['noreg']/*此帳號尚未驗證，是否重新發送簡訊?*/ . "')) window.location.href='/SmsSend';else window.location.href='/gold/login/" . Comment::SetValue('burl') . "'</script>";
-				@session_write_close();
+				echo "<script>if(confirm('" . $this->lang['noreg']/*此帳號尚未驗證，是否重新發送簡訊?*/ . "')) window.location.href='/SmsSend';else window.location.href='/login/" . Comment::SetValue('burl') . "'</script>";
 				return '';
 			} elseif ($admin == 'LoginError') {
-				$this->useful->AlertPage('/gold/login/' . Comment::SetValue('burl') . '', $this->lang['loginerror']/*帳號或密碼錯誤，請重新輸入?*/);
+				$this->useful->AlertPage('/login' . Comment::SetValue('burl') . '', $this->lang['loginerror']/*帳號或密碼錯誤，請重新輸入?*/);
 				return '';
 			} elseif ($admin == 'Nouser') {
-				$this->useful->AlertPage('/gold/login/' . Comment::SetValue('burl') . '', $this->lang['loginerror1']/*無此帳號，請先註冊?*/);
+				$this->useful->AlertPage('/login' . Comment::SetValue('burl') . '', $this->lang['loginerror1']/*無此帳號，請先註冊?*/);
 				return '';
 			} else {
 
@@ -200,11 +192,12 @@ class Gold extends MY_Controller
 				//轉到上頁
 				$url = (!empty($_SESSION['url'])) ? $_SESSION['url'] : '/';
 				if (!empty($this->session->userdata['isapp']) == 'app') { //APP登入後固定在member
-					$url = '/gold/member';
+					$url = '/member';
 				}
 				if ($url == "/products/0/0") {
-					$url = "/gold/member";
+					$url = "/member";
 				}
+
 				$this->useful->AlertPage("$url", $this->lang['loginsu']);
 				return '';
 			}
@@ -248,12 +241,12 @@ class Gold extends MY_Controller
 		//國碼撈取
 		$data['country_num'] = $this->mymodel->get_country_num();
 
-		if ($_SESSION['MT']['upline'] == "" && $_COOKIE['upline'] != '')
-			$_SESSION['MT']['upline'] = $_COOKIE['upline'];
-		if ($_SESSION['MT']['upline'] == "" && $upline != "")
-			$_SESSION['MT']['upline'] = $upline;
-		if ($_SESSION['MT']['upline'] != "" && $upline == "")
-			$upline = $_SESSION['MT']['upline'];
+		// if ($_SESSION['MT']['upline'] == "" && $_COOKIE['upline'] != '')
+		// 	$_SESSION['MT']['upline'] = $_COOKIE['upline'];
+		// if ($_SESSION['MT']['upline'] == "" && $upline != "")
+		// 	$_SESSION['MT']['upline'] = $upline;
+		// if ($_SESSION['MT']['upline'] != "" && $upline == "")
+		// 	$upline = $_SESSION['MT']['upline'];
 
 		if ($upline != "") {
 			//解碼
@@ -261,7 +254,7 @@ class Gold extends MY_Controller
 			$upline_by_id = $this->mymodel->OneSearchSql('buyer', 'by_id', array('d_account' => $upline));
 			$data['upline_by_id'] = $upline_by_id['by_id'];
 		} else {
-			$data['upline_by_id'] = 1;
+			$data['upline_by_id'] = 0;
 		}
 		// 取會員註冊說明
 		$tData = [
@@ -281,7 +274,7 @@ class Gold extends MY_Controller
 	{
 		if (!$this->isLogin()) {
 			$lang = $this->lmodel->config('8', $this->setlang);
-			$this->useful->AlertPage('/login', $lang['Login']); //請先登入或註冊
+			return $this->useful->AlertPage('/login', $lang['Login']); //請先登入或註冊
 		}
 
 		@session_start();
@@ -344,13 +337,15 @@ class Gold extends MY_Controller
 
 		//地區國家撈取
 		$data['country'] = $this->mymodel->get_area_data();
-
 		//城市撈取
-		$data['city']	  =	$this->mymodel->get_area_data($dbdata['country']);
-		//鄉鎮countory
-		$city_category 	  =	$this->mymodel->OneSearchSql('`city_category`', 's_id,s_name', array('s_id' => $dbdata['city']));
+		$data['city'] = empty($dbdata['country']) ? [] : $this->mymodel->get_area_data($dbdata['country']);
 
-		$data['countory'] =	$this->mymodel->get_area_data($city_category['s_id']);
+		//鄉鎮countory
+
+		$city_category = empty($dbdata['city']) ? [] : $this->mymodel->OneSearchSql('`city_category`', 's_id,s_name', array('s_id' => $dbdata['city']));
+
+		$data['countory'] =	empty($city_category) ? [] : $this->mymodel->get_area_data($city_category['s_id']);
+
 		//國碼撈取
 		$data['country_num'] = $this->mymodel->get_country_num();
 
@@ -608,23 +603,21 @@ class Gold extends MY_Controller
 	public function member()
 	{
 		if (!$this->isLogin()) {
-			$this->useful->AlertPage('/login', $this->lang_menu['Login']);
+			return $this->useful->AlertPage('/login', $this->lang_menu['Login']);
 		}
 
 		$this->DataName = 'member';
 		$this->lang = $this->lmodel->config('1', $this->setlang);
-		$data['path_title'] = '<li><a href="/gold/' . $this->DataName . '"><span>' . $this->lang_menu["$this->DataName"] . '</span></a></li>';
-		$data['banner'] = '';
 
 		if ($_SESSION['MT']['by_id'] != "") {
 			$membername = $this->mymodel->get_member_upline_name($_SESSION['MT']['by_id']);
 			$data['membername'] = $membername;
 		}
+
 		$_SESSION['url'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-		$data['banner'] = $this->data['banner'];
+
 		//view
 		$this->load->view($this->indexViewPath . '/header', $data);
-		//$this->load->view('index/member/member_nav', $data);
 		$this->load->view($this->indexViewPath . '/members/index', $data);
 		$this->load->view($this->indexViewPath . '/footer', $data);
 	}
@@ -2275,36 +2268,29 @@ class Gold extends MY_Controller
 						$this->useful->AlertPage('/member/info', $this->lang1['somephone']/*此手機已註冊過，請重新輸入?*/);
 						return '';
 					}
-					$data = $this->useful->UnsetArray($data, array('chk_ok'));
+					$data = $this->useful->UnsetArray($data, array('chk_ok', 'mobile', 'account', 'by_pw'));
+					// $this->debug($data);
 
 					$url = '/member/info';
 					if ($data['is_member'] == 'Y') {
 						$mdata = array(
-							'country' => $data['cen_country'],
-							'city' => $data['cen_city'],
-							'countory' => $data['cen_countory'],
-							'address' => $data['cen_address'],
+							'country' => $data['country'],
+							'city' => $data['city'],
+							'countory' => $data['countory'],
+							'address' => $data['address'],
 							'bank_name' => $data['bank_name'],
 							'bank_account_name' => $data['bank_account_name'],
 							'bank_account' => $data['bank_account'],
-							'bank_address' => $data['bank_address'],
-							'swift_code' => $data['swift_code'],
-							'wowpay_email' => $data['wowpay_email'],
-							'wowpay_cardAsn' => $data['wowpay_cardAsn'],
-							'wowpay_pay_password' => $data['wowpay_pay_password'],
-							'wowpay_login_password' => $data['wowpay_login_password'],
-							'wowpay_country_num' => $data['wowpay_country_num'],
-							'wowpay_mobile' => $data['wowpay_mobile'],
-							'wowpay_signature' => $data['wowpay_signature'],
-							'shop_country' => $data['shop_country'],
-							'shop_city' => $data['shop_city'],
-							'shop_countory' => $data['shop_countory'],
-							'shop_address' => $data['shop_address'],
-							'update_time' => $this->useful->get_now_time()
+							'bank_branch' => $data['bank_branch'],
+							'tax_card' => $data['tax_card'],
+							'tax_card_free' => intval($data['tax_card_free']) > 0 ? $data['tax_card_free'] : null,
+							'update_time' => $this->useful->get_now_time(),
 						);
 						$this->mymodel->update_set('member', $d_id, $id, $mdata);
 						//去除陣列無用值
-						$data = $this->useful->UnsetArray($data, array('wowpay_email', 'wowpay_cardAsn', 'wowpay_pay_password', 'wowpay_login_password', 'wowpay_country_num', 'wowpay_mobile', 'wowpay_signature', 'cen_country', 'cen_city', 'cen_countory', 'cen_address', 'bank_name', 'bank_account_name', 'bank_account', 'bank_address', 'swift_code', 'is_member', 'shop_country', 'shop_city', 'shop_countory', 'shop_address'));
+						$data = $this->useful->UnsetArray($data, [
+							'bank_name', 'bank_account_name', 'bank_account', 'bank_branch', 'tax_card', 'tax_card_free', 'is_member'
+						]);
 					}
 				} else {
 
@@ -2402,12 +2388,39 @@ class Gold extends MY_Controller
 			if ($dbname == 'member_apply') {
 				//語言包
 
-
 				$this->lang = $this->lmodel->config('8', $this->setlang);
 
+				$by_id = $data['by_id'] = $_SESSION['MT']['by_id'];
+
+				$buyer = $this->mymodel->OneSearchSql('buyer', '*', array('by_id' => $by_id));
+
+				/** redirect to info page if member is without setting address */
+				if (
+					empty($buyer['country']) ||
+					empty($buyer['city']) ||
+					empty($buyer['countory']) ||
+					empty($buyer['address'])
+				) {
+					$lang = $this->lmodel->config('22', $this->setlang);
+					return $this->useful->AlertPage('/member/info', $lang['c_63']);
+				}
+
 				/** check if the member is already not the normal member */
-				if ($_SESSION['MT']['d_is_member'] !== Member_model::BUYER_ROLE_NORMAL) {
-					$this->useful->AlertPage('/member', 'Already apply or upgraded.');
+				if ($_SESSION['MT']['d_is_member'] != Member_model::BUYER_ROLE_NORMAL) {
+					return $this->useful->AlertPage('/member', 'Already apply or upgraded.');
+				}
+
+				$check->fname[] = array('_String', Comment::SetValue('identity'), $this->lang['idnum']);	// 身分
+				$check->fname[] = array('_String', Comment::SetValue('identity_num'), $this->lang['idnum']);	//身份證字號
+				$check->fname[] = array('_String', Comment::SetValue('bank_name'), $this->lang['bname']);	//銀行名稱
+				$check->fname[] = array('_String', Comment::SetValue('bank_account'), $this->lang['re_bank_account']);	//銀行帳號
+				$check->fname[] = array('_String', Comment::SetValue('bank_branch'), $this->lang['bank_branch']);	//分行
+				$check->fname[] = array('_String', Comment::SetValue('bank_account_name'), $this->lang['re_bank_account_name']);	//帳戶名稱
+				$error = $check->main(base_url('member/upgrade'));
+
+				if (!is_null($error)) {
+					echo $error;
+					return '';
 				}
 
 				$mdata = $this->mymodel->OneSearchSql('member', 'identity_num', array('identity_num' => Comment::SetValue('identity_num')));
@@ -2417,23 +2430,28 @@ class Gold extends MY_Controller
 					return '';
 				}
 
-				$check->fname[] = array('_String', Comment::SetValue('identity'), $this->lang['idnum']);	//身份證字號
-				$check->fname[] = array('_String', Comment::SetValue('identity_num'), $this->lang['idnum']);	//身份證字號
-				$check->fname[] = array('_String', Comment::SetValue('bank_name'), $this->lang['bname']);	//銀行名稱
-				$check->fname[] = array('_String', Comment::SetValue('bank_account'), $this->lang['bacc']);	//銀行帳號
-
 				$data['upline'] = $_SESSION['AT']['member_id'];
 				//暫時將上線null填空白,新增member_apply會錯誤
 				if ($data['upline'] == null)
 					$data['upline'] = "";
-				$data['by_id'] = $_SESSION['MT']['by_id'];
 
-				/** added the bank info and country @todo 11020 */
-				$data['country'] = 0;
-				$data['city'] = 0;
-				$data['countory'] = 0;
-				$data['address'] = 'asdasd';
-				$data['bank_account_name'] = 'bank_account_name';
+
+				switch (intval($data['identity'])) {
+					case 1:
+					case 2:
+						break;
+					default:
+						$data['identity'] = 1;
+						break;
+				}
+
+				$data['id_role'] = $data['identity'] = intval($data['identity']);
+				$data['country'] = $buyer['country'];
+				$data['city'] = $buyer['city'];
+				$data['countory'] = $buyer['countory'];
+				$data['address'] = $buyer['address'];
+				$data['create_time'] = date('YmdHis');
+
 
 				//去除陣列無用值
 				$data = $this->useful->UnsetArray($data, array('update_time', 'agree'));
@@ -2515,13 +2533,13 @@ class Gold extends MY_Controller
 			}
 		}
 
-		//註冊成功後續動作
+		//註冊成功後續動作 
 		if ($dbname == 'buyer') {
 			$check->lang = $this->lmodel->config('3', $this->setlang);
 
-			if ($id != '')
+			if ($id != '') {
 				$this->useful->AlertPage('/member/info', $msg);
-			else {
+			} else {
 				//抓網頁設定判斷是否自動升級經營會員
 				//host
 				$this->data['host'] = $this->get_host_config();
