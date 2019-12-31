@@ -205,9 +205,10 @@ class Member extends MY_Controller
 		$this->useful->CheckComp('j_member');
 		
 		$data['dbname']=$dbname='buyer';
-		$dbdata=$this->mmodel->select_from($dbname,array('by_id'=>$id));
+		// $dbdata=$this->mmodel->select_from($dbname,array('by_id'=>$id));
+		$dbdata=$this->mmodel->get_buyer_info($id);
 		$dbdata['by_pw']=$this->encrypt->decode($dbdata['by_pw']);
-		$data['dbdata']=$dbdata;
+		$data['dbdata']=$dbdata[0];
 		switch($dbdata['is_alipay']){
 			case '0':
 			$data['alipay']='網站注册';
@@ -247,11 +248,12 @@ class Member extends MY_Controller
 		$data['buyerdata']=$buyerdata;
 		$dbdata['country']=empty($dbdata['country'])?'0':$dbdata['country'];
 		$dbdata['city']	  =empty($dbdata['city'])?'0':$dbdata['city'];
-
+		$data['country_num'] = $this->mymodel->get_country_num();
 		//地區撈取
 		$data['country']=$this->mymodel->get_area_data();
 		//城市撈取
-		$data['city']	  =	$this->mymodel->get_area_data($dbdata['country']);		
+		// $data['city']	  =	$this->mymodel->get_area_data($dbdata['country']);		
+		$data['city']	  =	$this->city();		
 		$city_category 	  =	$this->mymodel->OneSearchSql('`city_category`','s_id,s_name',array('s_id'=>$dbdata['city']));
 		$data['area']	  =	$this->mymodel->get_area_data($city_category['s_id']);
 		//特殊身分
@@ -278,7 +280,6 @@ class Member extends MY_Controller
 
 		//返回鍵
 		$data['back_url']='/member/buyer_list';
-
 		//view
 		$this->load->view('member/'.$dbname.'_info', $data);
 	}
@@ -317,11 +318,11 @@ class Member extends MY_Controller
 			$check->fname[]=array('_String',Comment::SetValue('by_email'),'信箱');
 			if($_POST['d_is_member']=='1'){
 				$check->fname[]=array('_String',Comment::SetValue('identity_num'),'身分證');
-				$check->fname[]=array('_String',Comment::SetValue('cen_address'),'地址');
+				// $check->fname[]=array('_String',Comment::SetValue('cen_address'),'地址');
 				$check->fname[]=array('_String',Comment::SetValue('bank_name'),'銀行名稱');
 				$check->fname[]=array('_String',Comment::SetValue('bank_account_name'),'銀行帳號');
 				$check->fname[]=array('_String',Comment::SetValue('bank_account'),'銀行帳號');
-				$check->fname[]=array('_String',Comment::SetValue('join_time'),'入會日');
+				// $check->fname[]=array('_String',Comment::SetValue('join_time'),'入會日');
 			}
 			if(!empty($check->main())){
 				//記錄密碼
@@ -371,11 +372,11 @@ class Member extends MY_Controller
 				// 更改註冊APP寫入LOG
 				$buyerdata=$this->mymodel->OneSearchSql('buyer','PID',array('by_id'=>$by_id));
 			
-				if($buyerdata['PID']!=Comment::SetValue('PID')){
+				if($buyerdata['PID']!=Comment::SetValue('PID') && $buyerdata['PID'] && Comment::SetValue('PID')){
 					$pdata=$this->mymodel->WriteSQL("
-						SELECT REPLACE(group_concat(if(m.member_id=".$buyerdata['PID'].",m.member_num,'')),',','') as oldid,
+						SELECT REPLACE(group_concat(" . ($buyerdata['PID']?"if(m.member_id=".$buyerdata['PID'].",m.member_num,'')":'') . "),',','') as oldid,
 						REPLACE(group_concat(if(m.member_id=".Comment::SetValue('PID').",m.member_num,'')),',','') as newid FROM member m
-						where m.member_id in (".$buyerdata['PID'].",".Comment::SetValue('PID').")",'1');
+						where m.member_id in (".($buyerdata['PID']?$buyerdata['PID']:'').Comment::SetValue('PID').")",'1');
 
 					$content='管理員'.$_SESSION['AT']['account_name'].'-更改'.Comment::SetValue('d_account').'的註冊APP('.((empty($pdata['oldid']))?'無註冊APP會員':$pdata['oldid']).'->'.((empty($pdata['newid']))?'無註冊APP會員':$pdata['newid']).')';
 					$this->mymodel->WriteLog('4',$content);
@@ -387,12 +388,12 @@ class Member extends MY_Controller
 					// // 更改上線寫入LOG
 					$Memberdata=$this->mymodel->OneSearchSql('member','upline,member_num',array('by_id'=>$by_id));
 
-					if($Memberdata['upline']!=Comment::SetValue('upline')){
+					if($Memberdata['upline']!=Comment::SetValue('upline') && $Memberdata['upline'] && Comment::SetValue('upline')){
 						$Memberdata['upline']=empty($Memberdata['upline'])?0:$Memberdata['upline'];//20170619加入會有錯誤增加檢查
 						$pdata=$this->mymodel->WriteSQL("
 						SELECT REPLACE(group_concat(if(m.member_id=".$Memberdata['upline'].",m.member_num,'')),',','') as oldid,
 						REPLACE(group_concat(if(m.member_id=".Comment::SetValue('upline').",m.member_num,'')),',','') as newid FROM member m
-						where m.member_id in (".$Memberdata['upline'].",".Comment::SetValue('upline').")",'1');
+						where m.member_id in (".$Memberdata['upline']?$Memberdata['upline'].',':''.Comment::SetValue('upline').")",'1');
 					
 						$content='管理員'.$_SESSION['AT']['account_name'].'-更改'.$Memberdata['member_num'].'的上線('.((empty($pdata['oldid']))?'無上線會員':$pdata['oldid']).'->'.((empty($pdata['newid']))?'無上線會員':$pdata['newid']).')';
 				
@@ -2006,7 +2007,17 @@ class Member extends MY_Controller
             }
             $this -> load -> view('gemail/gemail_edit', $data);
         }
-    }
+	}
+	
+	public function city(){
+		$data=array();
+		$sql="select * from city_category where s_city_id = '807'";
+		$query = $this->db->query($sql);
+		foreach($query->result_array() as $key=>$val){
+			$data[$val["s_id"]]=$val;
+		}
+		return $data;
+	}
 	
 		// Ajax 回傳，刪除 Push 紀錄
     public function del_gemail_log()

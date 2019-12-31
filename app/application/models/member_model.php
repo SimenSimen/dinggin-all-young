@@ -78,6 +78,33 @@ class Member_model extends MY_Model
     $query = $this->db->query($sql);
     return $query->result_array();
   }
+  //抓取目前經營會員
+  public function get_buyer_info($id = '')
+  {
+    $sql = "SELECT 
+              m.identity_num,
+              m.bank_name,
+              m.bank_branch_name,
+              m.bank_account_name,
+              m.bank_account,
+              m.tax_card_no,
+              m.deadline,
+              m.by_id,
+              m.member_num,
+              m.member_id,
+              m.GID,
+              m.d_keys,
+              m.upline,
+              b.*,
+              b.name as bname,
+              b.create_time as ctime 
+            FROM buyer b ";
+    $sql .= " left join member m on b.by_id=m.by_id ";
+    $sql .= " where b.by_id=" . $id;
+    $query = $this->db->query($sql);
+
+    return $query->result_array();
+  }
   // 20170426 抓取會員
   public function GetMember($where = '', $page = '')
   {

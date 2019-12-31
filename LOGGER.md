@@ -34,3 +34,5 @@
 |    application/views/order/order_supplier.php     |      |      |
 |      application/views/member/buyer_list.php      |      |      |
 |        application/controllers/member.php         |      |      |
+|        application/models/member_model.php        |      |      |
+|      application/views/member/buyer_info.php      |      |      |

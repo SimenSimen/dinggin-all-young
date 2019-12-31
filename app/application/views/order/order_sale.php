@@ -202,7 +202,7 @@ $(function() {
 	$(".clear_date").click(function(){
 		$("#"+$(this).attr("rel")).val("");
 	});
-  $('#date_start','#date_end').dblclick(function(){
+  $('#date_start,#date_end').on('dblclick',function(){
 		$($(this)).val("");
 	});
 	$("#excel_action").click(function(){
