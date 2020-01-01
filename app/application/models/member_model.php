@@ -185,7 +185,7 @@ class Member_model extends MY_Model
   //抓取單會員組織表
   public function get_member_family($num = '', $page = '')
   {
-    $sql = "SELECT m.by_id,m.member_num,m.GID,m.d_keys,m.upline,b.* FROM member m ";
+    $sql = "SELECT m.join_time, m.account, m.d_name, m.by_id,m.member_num,m.GID,m.d_keys,m.upline,b.* FROM member m ";
     $sql .= " left join buyer b on b.by_id=m.by_id ";
     $sql .= " where m.is_del='N' and m.auth='02'";
     $sql .= " and concat(m.d_keys,',') LIKE '%," . $num . ",%'";

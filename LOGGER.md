@@ -38,3 +38,5 @@
 |        application/controllers/member.php         |      |      |
 |        application/models/member_model.php        |      |      |
 |      application/views/member/buyer_info.php      |      |      |
+|      application/views/member/organ_list.php      |      |      |
+  

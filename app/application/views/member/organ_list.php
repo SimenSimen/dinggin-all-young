@@ -101,8 +101,10 @@
     <tr>
       <td>
         <input type="text" name="s_account" placeholder="會員帳號" value="<?=$s_account?>">
-        <input type="text" name="s_num" placeholder="編號" value="<?=$s_num?>">
+        <!-- <input type="text" name="s_num" placeholder="編號" value="<?=$s_num?>"> -->
         <input type="button" value="搜尋" style=" font-size:14px;"  onclick="$(this).closest('form').submit()"/>
+        <!-- <input type="button" value="匯出" style=" font-size:14px;"  onclick="window.location.href='/member/dl_org/'"/> -->
+        <input id="excel_action" type="button" style="font-size: 14px;" value='匯出'>
       </td>
     </tr>
   </table>
@@ -157,4 +159,11 @@
 function month_total(mnum){
   post_to_url('/member/organ_list','', {'s_num':mnum});
 }
+$(function() {
+	$("#excel_action").click(function(){
+		$("#search_form").attr('action','/member/dl_org');
+		$("#search_form").submit();
+		$("#search_form").attr('action','');
+	});
+});
 </script>
