@@ -5,10 +5,12 @@
 
 # 檔案新增紀錄
 
-|                        更動檔案路徑                        | 說明 |     備註      |
-| :--------------------------------------------------------: | :--: | :-----------: |
-|             application\controllers\brands.php             |      |    &nbsp;     |
-| application\views\brands\brands_list_for_product_brand.php |      | 新增 function |
+|                    新增檔案路徑                     | 說明 | 備註 |
+| :-------------------------------------------------: | :--: | :--: |
+|         application\controllers\brands.php          |      |      |
+| application/views/brands/product_brand_info.php.php |      |      |
+|   application/views/brands/product_brand_sort.php   |      |      |
+|  application/views/products/product_brand_list.php  |      |      |
 
 # 檔案修改紀錄
 
@@ -34,3 +36,7 @@
 |    application/views/order/order_supplier.php     |      |      |
 |      application/views/member/buyer_list.php      |      |      |
 |        application/controllers/member.php         |      |      |
+|        application/models/member_model.php        |      |      |
+|      application/views/member/buyer_info.php      |      |      |
+|      application/views/member/organ_list.php      |      |      |
+  

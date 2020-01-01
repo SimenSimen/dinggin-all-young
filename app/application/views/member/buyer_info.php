@@ -98,6 +98,12 @@
         <legend class="config-border" style="width:160px">會員資料</legend>
 
         <table id="member_list" class="table table-bordered table-condensed">
+          <tr>
+            <td class='member_list_title_td'>會員編號</td>
+            <td class='member_list_input_td'>
+              <input type="text" class="form-control" maxlength="16" name="d_account" value='<?=($dbdata['member_num']!="")?$dbdata['member_num']:''?>' readonly />
+            </td>
+          </tr>
           <?if($dbdata['is_alipay']==0){?>
             <tr>
               <td class='member_list_title_td'>帳號</td>
@@ -113,6 +119,14 @@
               <input type="hidden" name="d_account" id="by_id" value="<?=$dbdata['d_account']?>">
               <input type="hidden" name="by_pw" id="by_id" value="<?=$dbdata['by_pw']?>">
           <?}?>
+          <?if($dbdata['is_alipay']==0){?>
+            <tr>
+                <td class='member_list_title_td'>密碼</td>
+                <td class='member_list_input_td'>
+                  <input type="text" class="form-control"  name="by_pw" value='<?=$dbdata['by_pw']?>'/>                
+                </td>
+            </tr>
+            <?}?>
             <tr>
               <td class='member_list_title_td'>姓名</td>
               <td class='member_list_input_td'>
@@ -133,28 +147,36 @@
               </td>
             </tr>
             <tr>
+                <td class='member_list_title_td'>電話國碼</td>
+                <td class='member_list_input_td'>
+                  <!-- <input type="text" maxlength="11" class="form-control" name="telphone" onKeyUp="value=value.replace(/[^\d]/g,'')" value='<?=$dbdata['country_num']?>'/> -->
+                  <select name="city" id="city" onChange="sel_area(this.value,'','countory')" class="form-control">
+                    <option value=''>請選擇</option>
+                    
+                    <?foreach ($country_num as $cvalue):?>
+                      <option value="<?=$cvalue['country_num']?>" <?=($dbdata['country_num']==$cvalue['country_num'])?'selected':'';?>><?=$cvalue['country_num']?></option>  
+                    <? endforeach;?>
+                  
+                  </select>
+                </td>
+                
+            </tr>
+            <tr>
                 <td class='member_list_title_td'>電話</td>
                 <td class='member_list_input_td'>
                   <input type="text" maxlength="11" class="form-control" name="telphone" onKeyUp="value=value.replace(/[^\d]/g,'')" value='<?=$dbdata['telphone']?>'/>
                 </td>
             </tr>
-            <?if($dbdata['is_alipay']==0){?>
-            <tr>
-                <td class='member_list_title_td'>密碼</td>
-                <td class='member_list_input_td'>
-                  <input type="text" class="form-control"  name="by_pw" value='<?=$dbdata['by_pw']?>'/>                
-                </td>
-            </tr>
-            <?}?>
+          
             <tr>
                 <td class='member_list_title_td'>通訊地址</td>
                 <td class='member_list_input_td'>
-                  <select name="country" id="country" onChange="sel_area(this.value,'','city')" class="form-control">
+                  <!-- <select name="country" id="country" onChange="sel_area(this.value,'','city')" class="form-control">
                 	<option value=''>請選擇</option>
                     <?foreach ($country as $ccvalue):?>
                       <option value="<?=$ccvalue['s_id']?>" <?=($dbdata['country']==$ccvalue['s_id'])?'selected':'';?>><?=$ccvalue['s_name']?></option>  
                     <? endforeach;?>
-                  </select>
+                  </select> -->
                   <select name="city" id="city" onChange="sel_area(this.value,'','countory')" class="form-control">
                 	<option value=''>請選擇</option>
                 	<?if(!empty($dbdata['city'])):?>
@@ -172,6 +194,7 @@
                   <input type="text" class="form-control" name="address" value='<?=$dbdata['address']?>'/>
                 </td>
             </tr>
+            
             <tr>
                 <td class='member_list_title_td'>生日</td>
                 <td class='member_list_input_td'>
@@ -184,12 +207,12 @@
                   <input type="text" class="form-control" name="by_email" value='<?=$dbdata['by_email']?>'/>
                 </td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td class='member_list_title_td'>備註</td>
                 <td class='member_list_input_td'>
                   <input type="text" class="form-control" name="d_content" maxlength="255" value='<?=$dbdata['d_content']?>'/>
                 </td>
-            </tr>
+            </tr> -->
             <tr>
                 <td class='member_list_title_td'>身份</td>
                 <td class='member_list_input_td'>
@@ -200,7 +223,7 @@
                   <? endif;?>
                 </td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td class='member_list_title_td'>特殊身份</td>
                 <td class='member_list_input_td'>
                   <select name="d_spec_type" class="form-control">
@@ -210,8 +233,8 @@
                     <? endforeach;?>
                   </select>
                 </td>
-            </tr>
-            <tr>
+            </tr> -->
+            <!-- <tr>
                 <td class='member_list_title_td'>推薦人</td>
                 <td class='member_list_input_td'>
                   <select name="PID" id="pid" class="pid form-control">
@@ -221,23 +244,23 @@
                     <? endforeach;?>
                   </select>
                 </td>
-            </tr>
+            </tr> -->
             </table>
             <div id="member_div" style="display:none">
               <table class="table table-bordered table-condensed">
                 <tr>
                   <td class='member_list_title_td'>身份證</td>
                   <td class='member_list_input_td'>
-                    <input type="text" class="form-control" name="identity_num" value='<?=$mdbdata['identity_num']?>'/>
+                    <input type="text" class="form-control" name="identity_num" value='<?=$dbdata['identity_num']?>'/>
                   </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                   <td class='member_list_title_td'>戶籍地址</td>
                   <td class='member_list_input_td'>
                     <select name="cen_country" id="cen_country" onChange="sel_area(this.value,'','cen_city')" class="form-control">
                       <option>請選擇</option> 
                       <?foreach ($country as $xccvalue):?>
-                        <option value="<?=$xccvalue['s_id']?>" <?=($mdbdata['country']==$xccvalue['s_id'])?'selected':'';?>><?=$xccvalue['s_name']?></option>  
+                        <option value="<?=$xccvalue['s_id']?>" <?=($dbdata['country']==$xccvalue['s_id'])?'selected':'';?>><?=$xccvalue['s_name']?></option>  
                       <? endforeach;?>
                     </select>
                     <div id="city_select">
@@ -259,26 +282,35 @@
                     <input type="checkbox" value="1" id="somemember">同通訊地址
                     <input type="text" class="form-control" name="cen_address" value='<?=$mdbdata['address']?>'/>
                   </td>
-                </tr>  
+                </tr>   -->
+                
                 <tr>
                   <td class='member_list_title_td'>銀行名稱</td>
                   <td class='member_list_input_td'>
-                    <input type="text" class="form-control" name="bank_name" value='<?=$mdbdata['bank_name']?>'/>
+                    <input type="text" class="form-control" name="bank_name" value='<?=$dbdata['bank_name']?>'/>
                   </td>
                 </tr>
                 <tr>
+                  <td class='member_list_title_td'>分行銀行</td>
+                  <td class='member_list_input_td'>
+                    <input type="text" onkeyup="value=value.replace(/[^\d]/g,'') " class="form-control" name="bank_account" value='<?=$dbdata['bank_account']?>'/>
+                  </td>
+                </tr>
+               
+                <tr>
                   <td class='member_list_title_td'>帳戶名稱</td>
                   <td class='member_list_input_td'>
-                    <input type="text" class="form-control" name="bank_account_name" value='<?=$mdbdata['bank_account_name']?>'/>
+                    <input type="text" class="form-control" name="bank_account_name" value='<?=$dbdata['bank_account_name']?>'/>
                   </td>
                 </tr>
                 <tr>
                   <td class='member_list_title_td'>銀行帳號</td>
                   <td class='member_list_input_td'>
-                    <input type="text" onkeyup="value=value.replace(/[^\d]/g,'') " class="form-control" name="bank_account" value='<?=$mdbdata['bank_account']?>'/>
+                    <input type="text" onkeyup="value=value.replace(/[^\d]/g,'') " class="form-control" name="bank_account" value='<?=$dbdata['bank_account']?>'/>
                   </td>
                 </tr>
-                <?if($this->data['web_config']['is_auto_register_wowpay']==1){?>
+              
+                <!-- <?if($this->data['web_config']['is_auto_register_wowpay']==1){?>
                 <tr>
                   <td class='member_list_title_td'>wowpay帳號</td>
                   <td class='member_list_input_td'>
@@ -375,6 +407,13 @@
                       </select>
                       <input type="text" class="form-control" name="shop_address" value='<?=$mdbdata['shop_address']?>'/>
                     </td>
+                  </tr> -->
+                  <tr>
+                      <td class='member_list_title_td'>是否接受優惠訊息</td>
+                      <td class='member_list_input_td'>
+                        <input type="radio" name="d_service" value='Y' <?=($dbdata['d_service']=='Y')?'checked':'';?> />是
+                        <input type="radio" name="d_service" value='N' <?=($dbdata['d_service']=='N' )?'checked':'';?> />否
+                      </td>
                   </tr>
               </table>              
             </div>
@@ -385,7 +424,7 @@
               <input type="hidden" name="d_id" id="by_id" value="<?=$d_id?>">
               <input type="hidden" name="dbname" value="<?=$dbname?>">
               <input class="btn btn-info btn-large" type="button" id="cancel" style="width: 100px;font-size: 18px;" value='返回'>
-              <input class="btn btn-info btn-large" type="button" id="submit" style="width: 100px;font-size: 18px;" value='儲存'>
+              <input class="btn btn-info btn-large" type="submit" id="submit" style="width: 100px;font-size: 18px;" value='儲存'>
             </td>
           </tr>
     </fieldset>
@@ -443,35 +482,39 @@ $(function() {
             window.location.href = "<?=$back_url?>";
     });
     //送出防呆,一定要選一般會員or經營會員才不會有問題。若選經營會員,要填入會日
-    $('#submit').click(function() {
-        var d_is_member=$("input:radio[name='d_is_member']:checked").val();
-        if(d_is_member==2){
-          alert('請選擇一般會員or經營會員');
-        }else if(d_is_member==1){
-          var join_time=$('#join_time').val();
-          if(join_time==''){
-            alert('請填入會日');
-          }else{
-						$.ajax({
-							url: '/member/get_upline_ajax',
-							type: 'POST',
-							data: {pid: $('#pid').val(),upline:$('#upline').val()},
-							dataType: 'json',
-							success: function (data){
-								if(data['pid']!=data['upline']){
-									alert('推薦人跟上線不同人');
-								}else{
-									$('#submit').prop('type', 'submit');
-									$('#submit').click();
-								}
-							}
-						});
-					}
-        }else if(d_is_member==0){
-					$('#submit').prop('type', 'submit');
-					$('#submit').click();
-				}
-    });
+    // $('#submit').click(function() {
+    //     var d_is_member=$("input:radio[name='d_is_member']:checked").val();
+    //     if(d_is_member==2){
+    //       alert('請選擇一般會員or經營會員');
+    //     } else {
+    //       $('#submit').prop('type', 'submit');
+		// 			$('#submit').click();
+    //     }
+        // else if(d_is_member==1){
+          // var join_time=$('#join_time').val();
+          // if(join_time==''){
+          //   alert('請填入會日');
+          // }else{
+						// $.ajax({
+						// 	url: '/member/get_upline_ajax',
+						// 	type: 'POST',
+						// 	data: {pid: $('#pid').val(),upline:$('#upline').val()},
+						// 	dataType: 'json',
+						// 	success: function (data){
+						// 		if(data['pid']!=data['upline']){
+						// 			alert('推薦人跟上線不同人');
+						// 		}else{
+						// 			$('#submit').prop('type', 'submit');
+						// 			$('#submit').click();
+						// 		}
+						// 	}
+						// });
+					// }
+        // }else if(d_is_member==0){
+				// 	$('#submit').prop('type', 'submit');
+				// 	$('#submit').click();
+				// }
+    // });
 });
 $('#somemember').click(function(){    
   if($('#somemember:checked').val()){
