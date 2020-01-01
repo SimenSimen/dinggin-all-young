@@ -40,18 +40,18 @@ static host http://st.all-young.io/
 |              |      註冊-簡訊驗證       |    done     |        |    **V**    |
 |              |      註冊-註冊完成       |    done     |        |    **V**    |
 |              |        品牌-商店         |   &nbsp;    |        |   &nbsp;    |
-|              |         全部商品         |    done     |        |   &nbsp;    |
-|              |       商品頁(有貨)       |    done     |        |   &nbsp;    |
-|              |       商品頁(缺貨)       |    done     |        |   &nbsp;    |
-|              |          搜尋頁          |    done     |        |   &nbsp;    |
-|              | 購物車 - 二聯式發票 印尼 |    done     |        |   &nbsp;    |
-|              | 購物車 - 三聯式發票 印尼 |    done     |        |   &nbsp;    |
-|              | 購物車 - 二聯式發票確認  |    done     |        |   &nbsp;    |
-|              | 購物車 - 三聯式發票確認  |    done     |        |   &nbsp;    |
-|              |    購物車 - 訂單完成     |    done     |        |   &nbsp;    |
+|              |         全部商品         |    done     |        |    **V**    |
+|              |       商品頁(有貨)       |    done     |        |    **V**    |
+|              |       商品頁(缺貨)       |    done     |        |    **V**    |
+|              |          搜尋頁          |    done     |        |    **V**    |
+|              | 購物車 - 二聯式發票 印尼 |    done     |        |    **V**    |
+|              | 購物車 - 三聯式發票 印尼 |    done     |        |    **V**    |
+|              | 購物車 - 二聯式發票確認  |    done     |        |    **V**    |
+|              | 購物車 - 三聯式發票確認  |    done     |        |    **V**    |
+|              |    購物車 - 訂單完成     |    done     |        |    **V**    |
 | 前台會員專區 |       紅利點數查詢       |    done     |        |    **V**    |
 |              |        購物金查詢        |    done     |        |    **V**    |
-|              |         追蹤清單         |    done     |        |   &nbsp;    |
+|              |         追蹤清單         |    done     |        |    **V**    |
 |              | 基本資料(一般會員)-印尼  |    done     |        |    **V**    |
 |              | 基本資料(經營會員)-印尼  |    done     |        |    **V**    |
 |              |    升級經營會員-印尼     |    done     |        |    **V**    |
@@ -68,4 +68,3 @@ Depends on lapack_list d_id to get language setting
 # css 
 
 - wokiee font path in css/style.css error
-

@@ -7,9 +7,10 @@ class Cart_model extends MY_Model
 		$this->load->database();
 	}
 
-	public function insertOrder($post_arr,$order_data)
-	{		
+	public function insertOrder($post_arr, $order_data)
+	{
 		$by_id	=	$post_arr['by_id'];
+
 		$insert_data = array(
 			'by_id'			=> $by_id,
 			'member_id'		=> $order_data['account'],
@@ -21,17 +22,17 @@ class Cart_model extends MY_Model
 			'use_dividend'	=> $order_data['use_dividend'],
 			'use_dividend_cost'	=> $order_data['use_dividend_cost'],
 			'use_shopping_money' => $order_data['use_shopping_money'],
-			'name'			=> $post_arr['buyer_name'],
-			'email'			=> $post_arr['buyer_email'],
-			'phone'			=> $post_arr['buyer_phone'],
-			'zip'			=> $post_arr['buyer_zip'],
-			'country'		=> $post_arr['country'],
-			'county'		=> $post_arr['county'],
-			'area'			=> $post_arr['area'],
-			'address'		=> $post_arr['buyer_address'],
-			'buyer_note'		=> $post_arr['buyer_note'],
-			'receipt_title'		=> $post_arr['receipt_title'],
-			'receipt_code'		=> $post_arr['receipt_code'],
+			'name'			=> $order_data['name'],
+			'email'			=> $order_data['email'],
+			'phone'			=> $order_data['phone'],
+			'zip'			=> $order_data['zip'],
+			'country'		=> $order_data['country'],
+			'county'		=> $order_data['county'],
+			'area'			=> $order_data['area'],
+			'address'		=> $order_data['address'],
+			'buyer_note'		=> $order_data['buyer_note'],
+			'receipt_title'		=> $order_data['receipt_title'],
+			'receipt_code'		=> $order_data['receipt_code'],
 			'receipt_zip'		=> $post_arr['receipt_zip'],
 			'receipt_address'	=> $post_arr['receipt_address'],
 			'pay_way_id'	=> $post_arr['pway_id'],
@@ -40,16 +41,18 @@ class Cart_model extends MY_Model
 			'lway_id'		=> $post_arr['lway_id'],
 			'shop_id'		=> $post_arr['shop_id'],
 			'date'			=> $post_arr['date'],
+			'invoice_type' => $order_data['invoice_type'],
+			'carrier_type' => $order_data['carrier_type'],
+			'carrier_number' => $order_data['carrier_number'],
 			'create_time'	=> $this->useful->get_now_time()
 		);
 		$data_array1 = array();
-		foreach ($insert_data as $key => $value)
-		{
-			$data_array1[] = $key. " = '". $value ."'";
+		foreach ($insert_data as $key => $value) {
+			$data_array1[] = $key . " = '" . $value . "'";
 		}
-		$sql = 'INSERT INTO `order` SET ' .implode(", ", $data_array1);
+		$sql = 'INSERT INTO `order` SET ' . implode(", ", $data_array1);
 		$this->db->query($sql);
-		$oid =$this->db->insert_id();
+		$oid = $this->db->insert_id();
 		//扣除點數			
 		$use_dividend	=	$order_data['use_dividend'];
 		$use_shopping_money = $order_data['use_shopping_money'];
@@ -59,31 +62,32 @@ class Cart_model extends MY_Model
 
 		$sql = "UPDATE `buyer` SET d_dividend = d_dividend - ?, d_shopping_money = d_shopping_money - ? where `by_id` = ?";
 		$query = $this->db->query($sql, [$use_dividend, $use_shopping_money, $by_id]);
-		
+
 		return $oid;
-	}	
-	public function insertOrderDetail($oid, $order_id, $post_arr, $productList,$priceSum){
+	}
+	public function insertOrderDetail($oid, $order_id, $post_arr, $productList, $priceSum)
+	{
 		foreach ($productList as $key => $value) {
 			$insert_data = array(
-					'oid'			=> $oid,
-					'prd_id'		=> $value['prd_id'],
-					'supplier_id'	=> $value['supplier_id'],
-					'by_id'			=> $post_arr['by_id'],
-					'order_id'		=> $order_id,
-					'prd_name'		=> $value['prd_name'],
-					'prd_spec'		=> $value['spec_name'],
-					'number'		=> $value['num'],
-					'price'			=> $value['price'],
-					'total_price'	=> $value['total'],
-					'date'			=> date("Y-m-d h:i:sa"),
-					'create_time'	=> date("Y-m-d h:i:sa"),
-					'card_owner'	=> ''
-				);
-			$this -> insert_into('order_details', $insert_data);	
+				'oid'			=> $oid,
+				'prd_id'		=> $value['prd_id'],
+				'supplier_id'	=> $value['supplier_id'],
+				'by_id'			=> $post_arr['by_id'],
+				'order_id'		=> $order_id,
+				'prd_name'		=> $value['prd_name'],
+				'prd_spec'		=> $value['spec_name'],
+				'number'		=> $value['num'],
+				'price'			=> $value['price'],
+				'total_price'	=> $value['total'],
+				'date'			=> date("Y-m-d h:i:sa"),
+				'create_time'	=> date("Y-m-d h:i:sa"),
+				'card_owner'	=> ''
+			);
+			$this->insert_into('order_details', $insert_data);
 		}
-		      $sql="UPDATE `order` SET order_id = '$order_id' where `id`= $oid";
-		      $query = $this->db->query($sql);
-		return ;
+		$sql = "UPDATE `order` SET order_id = '$order_id' where `id`= $oid";
+		$query = $this->db->query($sql);
+		return;
 	}
 
 	//-----------------------------------------------------------------------------------
@@ -96,23 +100,21 @@ class Cart_model extends MY_Model
 	public function make_random_cset_code($len)
 	{
 		$string = "0000000000111111111222222223333333444444555556666777888999";
-		$max_num=0;
-		while(strlen($str)<$len)
-		{
-			$str='';
-			do
-			{
+		$max_num = 0;
+		while (strlen($str) < $len) {
+			$str = '';
+			do {
 				$max_num++;
-				for($i = 0; $i < $len; $i++)
-				{
-				    $pos  = rand(0,strlen($string));
-				    $str .= $string{$pos};
+				for ($i = 0; $i < $len; $i++) {
+					$pos  = rand(0, strlen($string));
+					$str .= $string{
+					$pos};
 				}
 
-				$sql='select * from `iqr_cart` where `cset_code`=\''.$str.'\';';
-				$query=$this->db->query($sql);
-				$data=$query->result_array();
-			}while(!empty($data) && $max_num < 1000);
+				$sql = 'select * from `iqr_cart` where `cset_code`=\'' . $str . '\';';
+				$query = $this->db->query($sql);
+				$data = $query->result_array();
+			} while (!empty($data) && $max_num < 1000);
 		}
 		return $str;
 	}
@@ -127,30 +129,25 @@ class Cart_model extends MY_Model
 	// 返回值：data array
 	// 備 注 ：無
 	//-----------------------------------------------------------------------------------
-	public function get_random_data($table, $data_where='', $except='', $num)//資料列表
+	public function get_random_data($table, $data_where = '', $except = '', $num) //資料列表
 	{
-		$sql='select * from `'.$table.'`';
-		if(!empty($data_where))
-		{
-			$index=0;
-			foreach($data_where as $key => $value)
-			{
+		$sql = 'select * from `' . $table . '`';
+		if (!empty($data_where)) {
+			$index = 0;
+			foreach ($data_where as $key => $value) {
 				$mark = ($except[$index] == 0) ? '' : '!';
-				if($index == 0)
-				{
-					$sql.=' WHERE `'.$key.'` '.$mark.'= "'.$value.'"';
-				}
-				else
-				{
-					$sql.=' AND `'.$key.'` '.$mark.'= "'.$value.'"';
+				if ($index == 0) {
+					$sql .= ' WHERE `' . $key . '` ' . $mark . '= "' . $value . '"';
+				} else {
+					$sql .= ' AND `' . $key . '` ' . $mark . '= "' . $value . '"';
 				}
 				$index++;
 			}
 		}
-		$sql.=' order by rand() limit '.$num;
-	
+		$sql .= ' order by rand() limit ' . $num;
+
 		$query = $this->db->query($sql);
-		$data=$query->result_array();
+		$data = $query->result_array();
 		return $data;
 	}
 
@@ -177,7 +174,7 @@ class Cart_model extends MY_Model
 	//-----------------------------------------------------------------------------------
 	public function get_history($by_id)
 	{
-		$sql = 'SELECT * FROM `order` WHERE `by_id` = '.$by_id.' group by `name`, `phone`, `email`, `zip` order by `date` desc';
+		$sql = 'SELECT * FROM `order` WHERE `by_id` = ' . $by_id . ' group by `name`, `phone`, `email`, `zip` order by `date` desc';
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -199,30 +196,25 @@ class Cart_model extends MY_Model
 		$start_id = ($start_id >= 0) ? $start_id : 0;
 		$sql = '
 			SELECT 	 *
-			FROM  	 `'.$table.'`
+			FROM  	 `' . $table . '`
 		';
-		if(!empty($where_array))
-		{
+		if (!empty($where_array)) {
 			$index = 0;
-			foreach($where_array as $key => $value)
-			{
-				if($index > 0)
-				{
-					$sql .= 'AND  `'.$key.'` = '.$value.' ';
-				}
-				else
-				{
-					$sql .= 'WHERE  `'.$key.'` = '.$value.' ';
+			foreach ($where_array as $key => $value) {
+				if ($index > 0) {
+					$sql .= 'AND  `' . $key . '` = ' . $value . ' ';
+				} else {
+					$sql .= 'WHERE  `' . $key . '` = ' . $value . ' ';
 				}
 				$index++;
 			}
 		}
 		$sql .= '
-			ORDER BY `'.$order_by.'` '.$order_type.'
-			Limit	 '.$start_id.', '.$real_per_num.'
+			ORDER BY `' . $order_by . '` ' . $order_type . '
+			Limit	 ' . $start_id . ', ' . $real_per_num . '
 		';
-		$query=$this->db->query($sql);
-		$data=$query->result_array();
+		$query = $this->db->query($sql);
+		$data = $query->result_array();
 		return $data;
 	}
 
@@ -239,33 +231,27 @@ class Cart_model extends MY_Model
 		//允許的副檔名
 		$allowedExts = array("jpg", "png", "jpeg", "gif", "bmp");
 		//檢查檔名合法
-		$chk_file_ext= $this->check_extend_name($pic_file['name'], $allowedExts);
+		$chk_file_ext = $this->check_extend_name($pic_file['name'], $allowedExts);
 
-		if($chk_file_ext == 1)
-		{
+		if ($chk_file_ext == 1) {
 			$lastdot = strrpos($pic_file['name'], "."); //取出.最後出現的位置
 			$extended = substr($pic_file['name'], $lastdot); //取出副檔名
-			if($name == '')
-			{
+			if ($name == '') {
 				$doc_name = md5(uniqid(rand())) . $extended;  /*產生唯一的檔案名稱*/
-			}
-			else
-			{
+			} else {
 				$doc_name = $name . $extended;  /*產生唯一的檔案名稱*/
 			}
-			move_uploaded_file($pic_file["tmp_name"], $path.$doc_name);
+			move_uploaded_file($pic_file["tmp_name"], $path . $doc_name);
 			// chmod($path.$doc_name, 0755);
 
-			$data=array(
-				"path"	=>  $path.$doc_name,
+			$data = array(
+				"path"	=>  $path . $doc_name,
 				"error" => 	''
 			);
 
 			return $data;
-		}
-		else
-		{
-			$data=array(
+		} else {
+			$data = array(
 				"error" => '檔案類型錯誤'
 			);
 			return $data;
@@ -282,28 +268,26 @@ class Cart_model extends MY_Model
 	//-----------------------------------------------------------------------------------
 	function check_extend_name($c_filename, $a_extend)
 	{
-		if(strlen(trim($c_filename)) < 5)
-		{
+		if (strlen(trim($c_filename)) < 5) {
 			return 0; //返回0表示沒上傳圖片
 		}
 
 		$lastdot = strrpos($c_filename, "."); //取出.最後出現的位置
-		$extended = substr($c_filename, $lastdot+1); //取出副檔名
+		$extended = substr($c_filename, $lastdot + 1); //取出副檔名
 
-		for($i=0;$i<count($a_extend);$i++) //進行檢測
+		for ($i = 0; $i < count($a_extend); $i++) //進行檢測
 		{
 			if (trim(strtolower($extended)) == trim(strtolower($a_extend[$i]))) //轉換大小寫並檢測
 			{
-				$flag=1; //加成功標誌
-				$i=count($a_extend); //檢測到了便停止檢測
+				$flag = 1; //加成功標誌
+				$i = count($a_extend); //檢測到了便停止檢測
 			}
 		}
 
-		if($flag<>1)
-		{
-			for($j=0;$j<count($a_extend);$j++) //列出允許上傳的副檔名種類
+		if ($flag <> 1) {
+			for ($j = 0; $j < count($a_extend); $j++) //列出允許上傳的副檔名種類
 			{
-				$alarm .= $a_extend[$j]." ";
+				$alarm .= $a_extend[$j] . " ";
 			}
 			return -1; //返回-1表示上傳圖片的類型不符
 		}
@@ -314,76 +298,74 @@ class Cart_model extends MY_Model
 	//	貨品模糊查詢結果數量
 	//	20180221 新增$d_spec_type(特殊身分才看得到的產品)
 	//	20180511 新增$price_start,$price_end(價錢區間)$prd_sort(排序)$prd_type(類別)$setlang(語系)
-	public function select_from_order_with_like($table, $order_by, $order_type, $data_where = '', $member_id, $d_spec_type, $price_start=0, $price_end=0, $prd_sort='', $prd_type='',$setlang)
+	public function select_from_order_with_like($table, $order_by, $order_type, $data_where = '', $member_id, $d_spec_type, $price_start = 0, $price_end = 0, $prd_sort = '', $prd_type = '', $setlang)
 	{
-		$sql='SELECT * FROM	 `'.$table.'`';
-		if(!empty($data_where))
-		{
+		$sql = 'SELECT * FROM	 `' . $table . '`';
+		if (!empty($data_where)) {
 			$num = 0;
-			foreach ($data_where as $key => $value)
-			{
-				if($value && $num == 0)
-					$value = '\''.'%'.$value.'%'.'\'';
-				if($num == 0)
-					$sql .= ' WHERE `'.$key.'` LIKE '.$value.' ';
+			foreach ($data_where as $key => $value) {
+				if ($value && $num == 0)
+					$value = '\'' . '%' . $value . '%' . '\'';
+				if ($num == 0)
+					$sql .= ' WHERE `' . $key . '` LIKE ' . $value . ' ';
 				else
-					$sql .= ' AND `'.$key.'` = '.$value.' ';
+					$sql .= ' AND `' . $key . '` = ' . $value . ' ';
 				$num++;
 			}
 		}
 
-		$price=($d_spec_type==1)?'d_mprice':'prd_price00';
-		if($d_spec_type==1){
-			$sql.=" AND `lang_type` = '$setlang' AND `d_enable` = 'Y'";
-		}else{
-			$sql.=" AND `lang_type` = '$setlang' AND `is_vip` = 'N' AND `d_enable` = 'Y'";
+		$price = ($d_spec_type == 1) ? 'd_mprice' : 'prd_price00';
+		if ($d_spec_type == 1) {
+			$sql .= " AND `lang_type` = '$setlang' AND `d_enable` = 'Y'";
+		} else {
+			$sql .= " AND `lang_type` = '$setlang' AND `is_vip` = 'N' AND `d_enable` = 'Y'";
 		}
-		if(!empty($price_start) and !empty($price_end)){
-			$sql.=" AND  `$price` between $price_start and $price_end";
-		} else if(!empty($price_start)){
-			$sql.=" AND  `$price` >= $price_start";
-		} else if(!empty($price_end)){
-			$sql.=" AND  `$price` <= $price_end";
+		if (!empty($price_start) and !empty($price_end)) {
+			$sql .= " AND  `$price` between $price_start and $price_end";
+		} else if (!empty($price_start)) {
+			$sql .= " AND  `$price` >= $price_start";
+		} else if (!empty($price_end)) {
+			$sql .= " AND  `$price` <= $price_end";
 		}
-		if(!empty($prd_type)){
-			$sql.=" AND  `prd_cid` = $prd_type";
+		if (!empty($prd_type)) {
+			$sql .= " AND  `prd_cid` = $prd_type";
 		}
-		if($prd_sort=='prd_new'){
-			$order_by='prd_sort';
-			$order_type=' ASC';
-		}else if($prd_sort=='price_acs'){
-			$order_by=$price;
-			$order_type=' ASC';
-		}else if($prd_sort=='price_decs'){
-			$order_by=$price;
-			$order_type=' DESC';
-		}else{
-			$order_by='prd_id';
-			$order_type=' DESC';
+		if ($prd_sort == 'prd_new') {
+			$order_by = 'prd_sort';
+			$order_type = ' ASC';
+		} else if ($prd_sort == 'price_acs') {
+			$order_by = $price;
+			$order_type = ' ASC';
+		} else if ($prd_sort == 'price_decs') {
+			$order_by = $price;
+			$order_type = ' DESC';
+		} else {
+			$order_by = 'prd_id';
+			$order_type = ' DESC';
 		}
 
-		$sql.='	ORDER BY `'.$order_by.'` '.$order_type;
-		$query=$this->db->query($sql);
-		$data=$query->result_array(); 
+		$sql .= '	ORDER BY `' . $order_by . '` ' . $order_type;
+		$query = $this->db->query($sql);
+		$data = $query->result_array();
 		return $data;
 	}
 
-	public function init_pagination($uri, $total_rows, $per_page=10, $uri_segment=3)
+	public function init_pagination($uri, $total_rows, $per_page = 10, $uri_segment = 3)
 	{
 		$this->load->library('pagination');
 		$this->load->helper('url');
 
 		$config['per_page']          = $per_page;
-	    $config['uri_segment']       = $uri_segment;
-	    $config['base_url']          = base_url().$uri;
-	    $config['total_rows']        = $total_rows;
-	    $config['use_page_numbers']  = TRUE;
-    	$config['total_page']		 = ( $config['total_rows'] % $config['per_page'] == 0 ) ? $config['total_rows'] / $config['per_page'] : intval( $config['total_rows'] / $config['per_page'] ) + 1;
+		$config['uri_segment']       = $uri_segment;
+		$config['base_url']          = base_url() . $uri;
+		$config['total_rows']        = $total_rows;
+		$config['use_page_numbers']  = TRUE;
+		$config['total_page']		 = ($config['total_rows'] % $config['per_page'] == 0) ? $config['total_rows'] / $config['per_page'] : intval($config['total_rows'] / $config['per_page']) + 1;
 
-	    $config['first_tag_open'] 	 = $config['last_tag_open'] = $config['next_tag_open'] = $config['prev_tag_open']  = $config['num_tag_open']  = '<li>';
-	    $config['first_tag_close'] 	 = $config['last_tag_close']= $config['next_tag_close']= $config['prev_tag_close'] = $config['num_tag_close'] = '</li>';
-	    $config['cur_tag_open'] 	 = "<li><span><b>";
-	    $config['cur_tag_close'] 	 = "</b></span></li>";
+		$config['first_tag_open'] 	 = $config['last_tag_open'] = $config['next_tag_open'] = $config['prev_tag_open']  = $config['num_tag_open']  = '<li>';
+		$config['first_tag_close'] 	 = $config['last_tag_close'] = $config['next_tag_close'] = $config['prev_tag_close'] = $config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] 	 = "<li><span><b>";
+		$config['cur_tag_close'] 	 = "</b></span></li>";
 
 		$this->pagination->initialize($config);
 
@@ -394,30 +376,25 @@ class Cart_model extends MY_Model
 	{
 		$sql = '
 			SELECT 	 *
-			FROM  	 `'.$table.'`
+			FROM  	 `' . $table . '`
 		';
-		if(!empty($where_array))
-		{
+		if (!empty($where_array)) {
 			$index = 0;
-			foreach($where_array as $key => $value)
-			{
-				if($index > 0)
-				{
-					$sql .= 'AND  `'.$key.'` = '.$value.' ';
-				}
-				else
-				{
-					$sql .= 'WHERE  `'.$key.'` = '.$value.' ';
+			foreach ($where_array as $key => $value) {
+				if ($index > 0) {
+					$sql .= 'AND  `' . $key . '` = ' . $value . ' ';
+				} else {
+					$sql .= 'WHERE  `' . $key . '` = ' . $value . ' ';
 				}
 				$index++;
 			}
 		}
 		$sql .= '
-			ORDER BY `'.$order_by.'` '.$order_type.'
-			Limit	 '.$start_id.', '.$real_per_num.'
+			ORDER BY `' . $order_by . '` ' . $order_type . '
+			Limit	 ' . $start_id . ', ' . $real_per_num . '
 		';
-		$query=$this->db->query($sql);
-		$data=$query->result_array();
+		$query = $this->db->query($sql);
+		$data = $query->result_array();
 		return $data;
 	}
 
@@ -434,11 +411,10 @@ class Cart_model extends MY_Model
 	//-----------------------------------------------------------------------------------
 	public function trigger_prd_detail($user_cart, $oid, $by_id, $order_random_id, $createTime, $card_owner)
 	{
-		foreach ($user_cart as $key => $value)
-		{
+		foreach ($user_cart as $key => $value) {
 			// explode => 0 -> id, 1 -> num
 			$explode = explode("*#", $value);
-			$prd = $this -> mod_cart -> select_from('products', array('prd_id' => $explode[0]));
+			$prd = $this->mod_cart->select_from('products', array('prd_id' => $explode[0]));
 			$insert_data = array(
 				'oid'			=> $oid,
 				'prd_id'		=> $prd['prd_id'],
@@ -451,7 +427,7 @@ class Cart_model extends MY_Model
 				'date'			=> $createTime,
 				'card_owner'	=> $card_owner
 			);
-			$id = $this -> insert_into('order_details', $insert_data);
+			$id = $this->insert_into('order_details', $insert_data);
 		}
 		return $id;
 	}
@@ -463,10 +439,10 @@ class Cart_model extends MY_Model
 					    number as quantity,
 					    total_price as total
 				FROM	`order_details`
-				WHERE	oid = "'. $oid .'"
+				WHERE	oid = "' . $oid . '"
 		';
-		$query = $this -> db -> query($sql);
-		$data = $query -> result_array();
+		$query = $this->db->query($sql);
+		$data = $query->result_array();
 
 		return $data;
 	}
@@ -481,15 +457,13 @@ class Cart_model extends MY_Model
 	//-----------------------------------------------------------------------------------
 	public function products_insert_views($table, $data_array = array())
 	{
-		if(!empty($data_array))
-		{
+		if (!empty($data_array)) {
 			$data_array1 = array();
-			foreach ($data_array as $key => $value)
-			{
-				$data_array1[] = $key. " = '". $value ."'";
+			foreach ($data_array as $key => $value) {
+				$data_array1[] = $key . " = '" . $value . "'";
 			}
-			$sql = 'INSERT INTO '. $table . ' SET ' .implode(", ", $data_array1);
-			$this -> db -> query($sql);
+			$sql = 'INSERT INTO ' . $table . ' SET ' . implode(", ", $data_array1);
+			$this->db->query($sql);
 		}
 	}
 
@@ -503,13 +477,14 @@ class Cart_model extends MY_Model
 	// 	$query = $this -> db -> query($sql);
 	// 	return $query -> row_array();
 	// }
-	public function get_order_num($by_id,$prd_id){
-		$sql='select details from `order` where details like "%++'.$prd_id.'*%" and by_id="'.$by_id.'" and `status` in (0,1) and product_flow in (0,1,2,4,7,6)';
-		$query = $this -> db -> query($sql)-> result_array();
-		$num=0;
+	public function get_order_num($by_id, $prd_id)
+	{
+		$sql = 'select details from `order` where details like "%++' . $prd_id . '*%" and by_id="' . $by_id . '" and `status` in (0,1) and product_flow in (0,1,2,4,7,6)';
+		$query = $this->db->query($sql)->result_array();
+		$num = 0;
 		foreach ($query as $key => $value) {
-			$odata=explode('*#',$value['details']);
-			$num+=$odata[1];
+			$odata = explode('*#', $value['details']);
+			$num += $odata[1];
 		}
 		return $num;
 	}

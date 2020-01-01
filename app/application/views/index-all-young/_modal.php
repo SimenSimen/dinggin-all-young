@@ -1,5 +1,5 @@
 <!-- modal (AddToCartProduct) -->
-<div class="modal  fade" id="modalAddToCartProduct" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalAddToCartProduct" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content ">
             <div class="modal-header">
@@ -20,24 +20,24 @@
                             </div>
                             <div class="tt-modal-product">
                                 <div class="tt-img">
-                                    <img src="images/loader.svg" data-src="images/product/product-01.jpg" alt="">
+                                    <img class="cart-item-image" src="" data-src="" alt="">
                                 </div>
-                                <h2 class="tt-title"><a href="product.html">Flared Shift Dress</a></h2>
+                                <h2 class="tt-title"><a class="cart-item-name" href="product.html">Flared Shift Dress</a></h2>
                                 <div class="tt-qty">
-                                    QTY: <span>1</span>
+                                    QTY: <span class="cart-item-amount">1</span>
                                 </div>
                             </div>
                             <div class="tt-product-total">
                                 <div class="tt-total">
-                                    TOTAL: <span class="tt-price">$324</span>
+                                    TOTAL: <span class="tt-price"><span class="cart-item-price"></span></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <a href="#" class="tt-cart-total">
-                                There are 1 items in your cart
+                                There are <span class="cart-total-amount"></span> items in your cart
                                 <div class="tt-total">
-                                    TOTAL: <span class="tt-price">$324</span>
+                                    TOTAL: <span class="tt-price">$<span class="cart-total-price"></span></span>
                                 </div>
                             </a>
                             <a href="#" class="btn btn-border btn-close-popup">CONTINUE SHOPPING</a>
@@ -49,7 +49,7 @@
     </div>
 </div>
 <!-- modal (quickViewModal) -->
-<div class="modal  fade" id="ModalquickView" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="ModalquickView" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content ">
             <div class="modal-header">
@@ -59,11 +59,11 @@
                 <div class="tt-modal-quickview desctope">
                     <div class="row">
                         <div class="col-12 col-md-5 col-lg-6">
-                            <div class="tt-mobile-product-slider arrow-location-center">
-                                <div><img src="images/loader.svg" data-src="images/product/product-01.jpg" alt=""></div>
-                                <div><img src="images/loader.svg" data-src="images/product/product-01-02.jpg" alt=""></div>
-                                <div><img src="images/loader.svg" data-src="images/product/product-01-03.jpg" alt=""></div>
-                                <div><img src="images/loader.svg" data-src="images/product/product-01-04.jpg" alt=""></div>
+                            <div class="tt-mobile-product-slider arrow-location-center quick-view-image">
+                                <!-- <div><img src="images/loader.svg" data-src="/images/product/product-01.jpg" alt=""></div>
+                                <div><img src="images/loader.svg" data-src="/images/product/product-01-02.jpg" alt=""></div>
+                                <div><img src="images/loader.svg" data-src="/images/product/product-01-03.jpg" alt=""></div>
+                                <div><img src="images/loader.svg" data-src="/images/product/product-01-04.jpg" alt=""></div> -->
                                 <!--
 								//video insertion template
 								<div>
@@ -78,16 +78,16 @@
                             <div class="tt-product-single-info">
                                 <div class="tt-add-info">
                                     <ul>
-                                        <li><span>SKU:</span> 001</li>
-                                        <li><span>Availability:</span> 40 in Stock</li>
+                                        <li><span>SKU:</span> <span class="quick-view-id"></span></li>
+                                        <li><span>Availability:</span> <span class="quick-view-stock"></span> in Stock</li>
                                     </ul>
                                 </div>
-                                <h2 class="tt-title">Cotton Blend Fleece Hoodie</h2>
+                                <h2 class="tt-title"><span class="quick-view-name"></span></h2>
                                 <div class="tt-price">
-                                    <span class="new-price">$29</span>
-                                    <span class="old-price"></span>
+                                    <span class="new-price">$<span class="quick-view-price"></span></span>
+                                    <!-- <span class="old-price"></span> -->
                                 </div>
-                                <div class="tt-review">
+                                <!-- <div class="tt-review">
                                     <div class="tt-rating">
                                         <i class="icon-star"></i>
                                         <i class="icon-star"></i>
@@ -96,11 +96,14 @@
                                         <i class="icon-star-empty"></i>
                                     </div>
                                     <a href="#">(1 Customer Review)</a>
+                                </div> -->
+                                <div class="tt-wrapper quick-view-content">
+
                                 </div>
-                                <div class="tt-wrapper">
-                                    Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+
+                                <div class="tt-wrapper quick-view-spec">
                                 </div>
-                                <div class="tt-swatches-container">
+                                <!-- <div class="tt-swatches-container">
                                     <div class="tt-wrapper">
                                         <div class="tt-title-options">SIZE</div>
                                         <form class="form-default">
@@ -161,17 +164,20 @@
                                         </ul>
                                     </div>
                                 </div>
+                                -->
                                 <div class="tt-wrapper">
+                                    <input id="productID" type="hidden">
                                     <div class="tt-row-custom-01">
                                         <div class="col-item">
                                             <div class="tt-input-counter style-01">
                                                 <span class="minus-btn"></span>
-                                                <input type="text" value="1" size="5">
+                                                <input id="productNum" type="text" value="1" size="5">
                                                 <span class="plus-btn"></span>
                                             </div>
                                         </div>
                                         <div class="col-item">
-                                            <a href="#" class="btn btn-lg"><i class="icon-f-39"></i>ADD TO CART</a>
+                                            <a id="out-of-stock-button" style="display: none;" href="javascript:void(0)" class="btn btn-lg bg-secondary"><i class="icon-f-39"></i>OUT OF STOCK</a>
+                                            <a id="add-cart-button" href="javascript:void(0)" onclick="cart_add_in_quick(productID.value, productNum.value);" class="btn btn-lg add-cart"><i class="icon-f-39"></i>ADD TO CART</a>
                                         </div>
                                     </div>
                                 </div>

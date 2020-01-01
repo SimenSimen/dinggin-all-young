@@ -1,5 +1,6 @@
 <script>
-    $(document).ready(function() {
+    function initAreaInputer() {
+
         var citySelector = $('#city')
         var countorySelector = $('#county')
         var countrySelector = $('#buyer_State')
@@ -28,7 +29,6 @@
         citySelector.on('change', function() {
             var self = $(this);
             var result = getArea(this.value, function(result) {
-                console.log(result);
                 if (result.success) {
                     var area = result.data;
 
@@ -49,5 +49,10 @@
                 callback(result)
             })
         }
-    });
+    }
+
+    /** set to next tick */
+    setTimeout(function() {
+        initAreaInputer();
+    }, 50);
 </script>

@@ -187,13 +187,14 @@ class Products extends MY_Controller
 
 			$dbdata = $pageData['data'];
 		}
-
+		$ajaxData = $dbdata;
 		foreach ($dbdata as $key => &$value) {
-			$value['priceName']	=	($d_spec_type == 1) ? $this->lang['p_price_vip'] : $this->lang['p_price'];
-			$value['price']		=	($d_spec_type == 1) ? $value['d_mprice'] : $value['prd_price00'];
-			$value['prd_describe'] = str_replace('*#', ',', $value['prd_describe']);
+			$ajaxData[$key]['priceName'] = $value['priceName']	=	($d_spec_type == 1) ? $this->lang['p_price_vip'] : $this->lang['p_price'];
+			$ajaxData[$key]['price'] = $value['price']		=	($d_spec_type == 1) ? $value['d_mprice'] : $value['prd_price00'];
+			$ajaxData[$key]['prd_describe'] = $value['prd_describe'] = str_replace('*#', ',', $value['prd_describe']);
 			$image  = explode(',', $value['prd_image']);
 			$value['prd_image'] = $image[0];
+			$ajaxData[$key]['prd_image'] = $this->Spath . $image[0];
 		}
 
 		$data['dbdata'] = $dbdata;
@@ -213,6 +214,9 @@ class Products extends MY_Controller
 		//view
 		if ($data['isAjax'] = $this->isAjax()) {
 			/** return html */
+			if (Comment::params('json')) {
+				return $this->apiResponse(['success' => true, 'data' => $ajaxData]);
+			}
 			$this->load->view($this->indexViewPath . '/products/_item_list', $data);
 			/** return array */
 			// $this->apiResponse($data['dbdata']);
@@ -436,6 +440,7 @@ class Products extends MY_Controller
 			$account_id = $this->mymodel->OneSearchSql('buyer', 'd_account', array('by_id' => $by_id));
 			$account = $account_id['d_account'];
 		}
+		$id = intval($id);
 
 		$_SESSION['url'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$_SESSION['shareUrl'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -492,23 +497,35 @@ class Products extends MY_Controller
 		if (empty($productsDetail['num'])) {
 			$this->useful->AlertPage('/products', $this->lang['p_no_product']); //沒有這個商品or此商品下架
 		}
+		$ajaxData = [];
 		//紅利
 		$config = $this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 73));
 		$config['d_val'] = ($config['d_val']) / 100;
-		$data['priceName']					=	($d_spec_type == 1) ? $this->lang['p_price_vip'] : $this->lang['p_price'];
-		$data['price']						=	($d_spec_type == 1) ? $dbdata['d_mprice'] : $dbdata['prd_price00'];
-		$data['prd_pv']						=	$dbdata['prd_pv'];
-		$data['bonus']						=	$data['price'] * $config['d_val'];
-		$dbdata['prd_content']				=	str_replace("&quot;", "'", $dbdata['prd_content']);	//編輯器圖檔問題
-		$data['dbdata'] 					= 	$dbdata;
-		$data['prd_describe'] 				= 	explode('*#', $dbdata['prd_describe']);
-		$data['prd_specification_name'] 	= 	explode('*#', $dbdata['prd_specification_name']);
-		$data['prd_specification_content']	= 	explode('*#', $dbdata['prd_specification_content']);
-		$data['prd_video_name']				= 	explode('*#', $dbdata['prd_video_name']);
-		$data['prd_video_link']				= 	explode('*#', $dbdata['prd_video_link']);
-		$data['prd_amount']					=	(int) $dbdata['prd_amount'];
+
+		$ajaxData['priceName'] = $data['priceName']					=	($d_spec_type == 1) ? $this->lang['p_price_vip'] : $this->lang['p_price'];
+		$ajaxData['price'] = $data['price']						=	($d_spec_type == 1) ? $dbdata['d_mprice'] : $dbdata['prd_price00'];
+		$ajaxData['prd_pv'] = $data['prd_pv']						=	$dbdata['prd_pv'];
+		$ajaxData['bonus'] = $data['bonus']						=	$data['price'] * $config['d_val'];
+		$ajaxData['prd_content'] = $dbdata['prd_content']				=	str_replace("&quot;", "'", $dbdata['prd_content']);	//編輯器圖檔問題
+		$ajaxData['dbdata'] = $data['dbdata'] 					= 	$dbdata;
+		$ajaxData['prd_describe'] = $data['prd_describe'] 				= 	explode('*#', $dbdata['prd_describe']);
+		$ajaxData['prd_specification_name'] = $data['prd_specification_name'] 	= 	explode('*#', $dbdata['prd_specification_name']);
+		$ajaxData['prd_specification_content'] = $data['prd_specification_content']	= 	explode('*#', $dbdata['prd_specification_content']);
+		$ajaxData['prd_video_name'] = $data['prd_video_name']				= 	explode('*#', $dbdata['prd_video_name']);
+		$ajaxData['prd_video_link'] = $data['prd_video_link']				= 	explode('*#', $dbdata['prd_video_link']);
+		$ajaxData['prd_amount'] = $data['prd_amount']					=	(int) $dbdata['prd_amount'];
+		$ajaxData['prd_lock_amount'] = $data['prd_lock_amount']					=	(int) $dbdata['prd_lock_amount'];
 
 		$data['banner'] = $this->data['banner'] = $this->banner_model->getMyAd();
+
+		if ($this->isAjax()) {
+			$images = explode(',', $dbdata['prd_image']);
+			foreach ($images as $key => $value) {
+				$images[$key] = base_url($this->Spath . $value);
+			}
+			$ajaxData['images'] = $images;
+			return $this->apiResponse(['success' => true, 'data' => $ajaxData]);
+		}
 
 		if ($this->data['web_config']['cart_spec_status'] == 1) {
 			$car_id 							= 	$id . '##*' . $data['prd_specification_content'][1];
@@ -548,9 +565,10 @@ class Products extends MY_Controller
 		$data['ship_rule'] = $ship_rule["$cset_ship"];
 		//猜你喜歡
 		$data['dbdataLike'] = $this->products_model->productsList($dbdata['prd_cid'], 6, 1, $d_spec_type);
+
 		foreach ($data['dbdataLike'] as $key => $value) {
 			$image = explode(',', $value['prd_image']);
-			$data['dbdataLike'][$key]['prd_image'] = $img_url . $image['0'];
+			$data['dbdataLike'][$key]['prd_image'] = !empty($image) ? $this->Spath . $image[0] : '';
 		}
 		//APP分享
 		$data['share_url'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -558,14 +576,14 @@ class Products extends MY_Controller
 		$data['body_class'] = 'products';
 		$data['banner'] = '';
 
+		/** Get favorite product id array */
+		$this->load->model('favorite_model', 'favoModel');
+		$data['faIds'] = $this->favoModel->getFavoriteIds($by_id);
+
 		//view
-		if ($this->isAjax()) {
-			$this->apiResponse($data);
-		} else {
-			$this->load->view($this->indexViewPath . '/header', $data);
-			$this->load->view($this->indexViewPath . '/products/info', $data);
-			$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
-		}
+		$this->load->view($this->indexViewPath . '/header', $data);
+		$this->load->view($this->indexViewPath . '/products/info', $data);
+		$this->load->view($this->indexViewPath . '/footer' . $this->style, $data);
 	}
 
 	//購物車
@@ -589,6 +607,10 @@ class Products extends MY_Controller
 						return $this->apiResponse(['success' => false, 'msg' => $this->lang['no_item']]);
 					}
 
+					if (intval($itemData['data']['prd_amount']) == 0) {
+						return $this->apiResponse(['success' => false, 'msg' => $this->lang['no_item']]);
+					}
+
 					$_SESSION['join_car'] = !empty($_SESSION['join_car']) ? $_SESSION['join_car'] : [];
 
 					$price = ($buyer['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
@@ -607,7 +629,7 @@ class Products extends MY_Controller
 					$_SESSION['join_car'][$uuid] = $tempData;
 
 					return $this->apiResponse(['success' => true, 'msg' => $this->lang['p_carok'], 'data' => [
-						'item' => $itemData['data'],
+						'item' => $tempData,
 						'uuid' => $uuid
 					]]);
 				} else {

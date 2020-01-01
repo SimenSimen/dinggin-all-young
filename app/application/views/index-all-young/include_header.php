@@ -117,7 +117,7 @@
 													<ul class="tt-megamenu-submenu">
 														<?php foreach ($brandList as $brand) : ?>
 															<li><a href="<?= base_url('/brands\/') . $brand['prd_cid'] ?>"><?= $brand['d_name'] ?>
-																	<img src="images/loader.svg" data-src="images/custom/tt-layout-img-01.png" alt="Example 1">
+																	<img src="images/loader.svg" data-src="" alt="Example 1">
 																	<!-- <span class="tt-badge tt-fatured">Popular</span> -->
 																</a></li>
 														<?php endforeach ?>
@@ -390,88 +390,31 @@
 							</button>
 							<div class="tt-dropdown-menu">
 								<div class="container">
-									<form>
+									<form action="<?= base_url('/products') ?>" method="GET">
 										<div class="tt-col">
-											<input type="text" class="tt-search-input" placeholder="Search Products...">
+											<input name="keyword" type="text" class="tt-search-input" placeholder="Search Products...">
 											<button class="tt-btn-search" type="submit"></button>
 										</div>
 										<div class="tt-col">
 											<button class="tt-btn-close icon-g-80"></button>
 										</div>
 										<div class="search-results">
-											<ul>
+											<template id="search-item-template">
 												<li>
-													<a href="_inni_products.php">
-														<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-03.jpg" alt=""></div>
+													<a href="<?= base_url('/products/detail') ?>/{item-id}">
+														<div class="thumbnail"><img src="{item-image}" data-src="{item-image}" alt=""></div>
 														<div class="tt-description">
-															<div class="tt-title">Product Name</div>
+															<div class="tt-title">{item-name}</div>
 															<div class="tt-price">
-																<span class="new-price">$14</span>
-																<span class="old-price">$24</span>
+																<span class="new-price {new-price-remover}">${item-new-price}</span>
+																<span class="old-price {old-price-remover}">${item-old-price}</span>
+																<span class="price {price-remover}">${item-price}</span>
 															</div>
 														</div>
 													</a>
 												</li>
-												<li>
-													<a href="_inni_products.php">
-														<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-02.jpg" alt=""></div>
-														<div class="tt-description">
-															<div class="tt-title">Product Name</div>
-															<div class="tt-price">
-																<span class="new-price">$14</span>
-																<span class="old-price">$24</span>
-															</div>
-														</div>
-													</a>
-												</li>
-												<li>
-													<a href="_inni_products.php">
-														<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-01.jpg" alt=""></div>
-														<div class="tt-description">
-															<div class="tt-title">Product Name</div>
-															<div class="tt-price">
-																<span class="new-price">$14</span>
-																<span class="old-price">$24</span>
-															</div>
-														</div>
-													</a>
-												</li>
-												<li>
-													<a href="_inni_products.php">
-														<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-04.jpg" alt=""></div>
-														<div class="tt-description">
-															<div class="tt-title">Product Name</div>
-															<div class="tt-price">
-																<span class="new-price">$14</span>
-																<span class="old-price">$24</span>
-															</div>
-														</div>
-													</a>
-												</li>
-												<li>
-													<a href="_inni_products.php">
-														<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-05.jpg" alt=""></div>
-														<div class="tt-description">
-															<div class="tt-title">Product Name</div>
-															<div class="tt-price">
-																<span class="new-price">$14</span>
-																<span class="old-price">$24</span>
-															</div>
-														</div>
-													</a>
-												</li>
-												<li>
-													<a href="_inni_products.php">
-														<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-06.jpg" alt=""></div>
-														<div class="tt-description">
-															<div class="tt-title">Product Name</div>
-															<div class="tt-price">
-																<span class="new-price">$14</span>
-																<span class="old-price">$24</span>
-															</div>
-														</div>
-													</a>
-												</li>
+											</template>
+											<ul id="search-result-header">
 											</ul>
 											<button type="button" class="tt-view-all">View all products</button>
 											<? //【See All Products】連結至search-page.php//
@@ -488,7 +431,7 @@
 						<div class="tt-cart tt-dropdown-obj" data-tooltip="Cart" data-tposition="bottom">
 							<button class="tt-dropdown-toggle">
 								<i class="icon-f-39"></i>
-								<span class="tt-badge-cart b_green"><?= count($cartItems) ?></span>
+								<span class="cart-count-total tt-badge-cart b_green"><?= count($cartItems) ?></span>
 							</button>
 							<div class="tt-dropdown-menu">
 								<div class="tt-mobile-add">
@@ -499,7 +442,26 @@
 									<div class="tt-cart-layout">
 										<div class="tt-cart-content">
 											<div class="tt-cart-list">
+												<!-- cart item template -->
+												<template id="cart-header-item-template">
+													<div class="tt-item">
+														<a href="<?= base_url('products/detail') ?>/{item-id}">
+															<div class="tt-item-img">
+																<img src="<?= base_url('/') ?>{item-image}" data-src="<?= base_url('products/detail') ?>/{item-image}" alt="">
+															</div>
+															<div class="tt-item-descriptions">
+																<h2 class="tt-title">{item-name}</h2>
+																<div class="tt-quantity"><span>{item-amount}</span> X</div>
+																<div class="tt-price"><span>${item-price}</span></div>
+															</div>
+														</a>
+														<div class="tt-item-close">
+															<a onclick="header_remove_cart('{cart-uuid}', this)" data-key="{cart-uuid}" href="javascript:void(0);" class="delete-cart tt-btn-close"></a>
+														</div>
+													</div>
+												</template>
 												<?php $totalAmount = 0; ?>
+												<!-- remember to update template if you update here  -->
 												<?php foreach (!empty($_SESSION['join_car']) ? $_SESSION['join_car'] : [] as $uuid => $item) : ?>
 													<?php $totalAmount += floatval($item['amount']) * floatval($item['price']); ?>
 													<div class="tt-item">
@@ -509,8 +471,8 @@
 															</div>
 															<div class="tt-item-descriptions">
 																<h2 class="tt-title"><?= $item['prd_name'] ?></h2>
-																<div class="tt-quantity"><?= $item['amount'] ?> X</div>
-																<div class="tt-price">$<?= $item['price'] ?></div>
+																<div class="tt-quantity"><span><?= $item['amount'] ?></span> X</div>
+																<div class="tt-price">$<span><?= $item['price'] ?></span></div>
 															</div>
 														</a>
 														<div class="tt-item-close">
@@ -521,13 +483,13 @@
 											</div>
 											<div class="tt-cart-total-row">
 												<div class="tt-cart-total-title">SUBTOTAL:</div>
-												<div class="tt-cart-total-price">$<?= number_format($totalAmount) ?></div>
+												<div class="tt-cart-total-price">$<span><?= number_format($totalAmount) ?></span></div>
 											</div>
 											<div class="tt-cart-btn">
 												<div class="tt-item">
 													<a href="<?= base_url('cart') ?>" class="btn-link-02 tt-hidden-mobile">View Cart</a>
 
-													<a href="#" class="btn btn-border btn-pink-bg tt-hidden-desctope">Continue Shopping</a>
+													<a href="javascript:void(0);" class="btn btn-border btn-pink-bg tt-hidden-desctope">Continue Shopping</a>
 													<a href="<?= base_url('cart') ?>" class="btn btn-border tt-hidden-desctope">View Cart</a>
 												</div>
 											</div>
