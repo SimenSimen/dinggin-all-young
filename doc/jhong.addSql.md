@@ -10,7 +10,7 @@ INSERT INTO `lapack_list`(`d_id`, `d_title`, `d_url`, `d_sort`, `d_enable`) VALU
 
 ```sql
 INSERT INTO `jur_action` VALUES (null, '0', 'j_brands', '品牌管理', '', '11', 'N', 'N');
-INSERT INTO `jur_action` (d_id, d_p_id, d_code, d_name, d_link, sort, is_del, is_super ) SELECT NULL AS col1 , d_id AS col2, 'j_brands' AS col3, '品牌管理' AS col4, '/corporate/main/7' AS col5, '1' AS col6, 'N' AS col7, 'N' AS col8 FROM `jur_action` WHERE d_p_id = 0 AND d_name = '品牌管理';
+INSERT INTO `jur_action` (d_id, d_p_id, d_code, d_name, d_link, sort, is_del, is_super ) SELECT NULL AS col1 , d_id AS col2, 'j_brands' AS col3, '品牌管理' AS col4, '/brands/product_brand_list' AS col5, '1' AS col6, 'N' AS col7, 'N' AS col8 FROM `jur_action` WHERE d_p_id = 0 AND d_name = '品牌管理';
 UPDATE `jurisdicer` set d_action_list = CONCAT ( d_action_list  , ',j_brands') where d_name = '給客戶展示';
 ALTER TABLE `ckeditor` MODIFY COLUMN `type` enum('1','2','3','4','5','6','7');
 ```
@@ -66,5 +66,18 @@ alter table `member` add column `bank_branch_name` varchar(45) DEFAULT NULL COMM
 alter table `member` add column `tax_card_no` varchar(45) DEFAULT NULL COMMENT '稅卡編號';
 alter table `member` add column `last_login` datetime DEFAULT NULL, COMMENT '最後登入時間';
 ```
+
+
+
+- 品牌管理
+
+```sql
+alter table product_brand add column brand_image text COMMENT "品牌圖片";
+alter table product_brand add column brand_image_s text COMMENT "品牌圖片 縮圖";
+alter table product_brand add column brand_content text COMMENT "品牌故事";
+```
+
+
+
 
 

@@ -708,6 +708,176 @@ class Upload_model extends MY_Model {
 		}
 	}
 
+	//上傳多個品牌圖
+	public function upload_brand_arr($imgFile, $path, $count, $r_width=600, $r_height=600)
+	{
+		$imagePathDir = '.'.$path;
+
+		/*上傳圖片文件類型列表 */
+		$uptypes = array (
+			'image/jpg',
+			'image/jpeg',
+			'image/pjpeg',
+			'image/gif',
+			'image/png'
+		);
+		
+		/*檢查文件類型 */
+		if(in_array($imgFile['type']['0'], $uptypes))
+		{
+			$i=0;
+			while ($i<$count) {
+				/*產生唯一的檔案名稱*/
+				$imgName = md5(uniqid(rand()));
+				/*上傳圖片類型為jpg,pjpeg,jpeg */
+				if (strstr($imgFile['type']["$i"], "jp"))
+				{		
+					if(!($source = @ imageCreatefromjpeg($imgFile['tmp_name']["$i"])))
+					{
+						$data=array(
+							"error" => '檔案類型錯誤'
+						);
+						return $data;
+					}
+				    /*上傳圖片類型為jp */
+
+					$w = imagesx($source); /*取得圖片的寬 */
+					$h = imagesy($source); /*取得圖片的高 */
+
+					$imgName .= '.jpg';
+					
+					/* 儲存到檔案目錄(JPG) */
+					imagejpeg($source, $imagePathDir.$imgName);
+					/* 檔案resize */
+					//$newImage=$this->resizeImage($imagePathDir.$imgName, $r_width, $r_height, 'jpg');
+					$x1=$_POST['x1d_Files'.$i];
+					$y1=$_POST['y1d_Files'.$i];
+					$widthd_Files=$_POST['widthd_Files'.$i];
+					$heightd_Files=$_POST['heightd_Files'.$i];
+					$newImage = $this->cutimg($imagePathDir.$imgName, $x1, $y1, $widthd_Files, $heightd_Files, 'jpg');
+
+					/* 檔案resize存檔 */
+					imagejpeg($newImage, $imagePathDir.'p'.$imgName);
+
+					/* 儲存到檔案目錄(JPG) */
+					imagejpeg($source, $imagePathDir.$imgName);
+					/* 檔案resize */
+					//$newImage=$this->setImage_w($imagePathDir.$imgName, 300, 'jpg');
+					//$newImage = $this->cutimg($imagePathDir.$imgName, $x1, $y1, 300, 225, 'jpg');
+					/* 檔案resize存檔 */
+					//imagejpeg($newImage, $imagePathDir.'set_'.$imgName);
+				}
+				elseif(strstr($imgFile['type']["$i"], "png"))
+				{
+					if(!($source = @ imagecreatefrompng($imgFile['tmp_name']["$i"])))
+					{
+						$data=array(
+							"error" => '檔案類型錯誤'
+						);
+						return $data;
+					}
+					/*上傳圖片類型為png */
+					imagealphablending( $source, false );
+					imagesavealpha( $source, true );
+
+					$w = imagesx($source); /*取得圖片的寬 */
+					$h = imagesy($source); /*取得圖片的高 */
+
+					$imgName .= '.png';
+					
+					/* 儲存到檔案目錄(JPG) */
+					imagepng($source, $imagePathDir.$imgName);
+					/* 檔案resize */
+					// $newImage=$this->resizeImage($imagePathDir.$imgName, $r_width, $r_height, 'png');
+					$x1=$_POST['x1d_Files'.$i];
+					$y1=$_POST['y1d_Files'.$i];
+					$widthd_Files=$_POST['widthd_Files'.$i];
+					$heightd_Files=$_POST['heightd_Files'.$i];
+					$newImage = $this->cutimg($imagePathDir.$imgName, $x1, $y1, $widthd_Files, $heightd_Files, 'png');
+					/* 檔案resize存檔 */
+					imagepng($newImage, $imagePathDir.'p'.$imgName);
+
+					/* 儲存到檔案目錄(JPG) */
+					imagepng($source, $imagePathDir.$imgName);
+					/* 檔案resize */
+					// $newImage=$this->setImage_w($imagePathDir.$imgName, 300, 'png');
+					//$newImage = $this->cutimg($imagePathDir.$imgName, $x1, $y1, 300, 225, 'png');
+					/* 檔案resize存檔 */
+					//imagepng($newImage, $imagePathDir.'set_'.$imgName);
+				}
+				elseif(strstr($imgFile['type']["$i"], "gif"))
+				{
+					if(!($source = @ imagecreatefromgif($imgFile['tmp_name']["$i"])))
+					{
+						$data=array(
+							"error" => '檔案類型錯誤'
+						);
+						return $data;
+					}
+					/*上傳圖片類型為gif */
+					imagealphablending( $source, false );
+					imagesavealpha( $source, true );
+
+					$w = imagesx($source); /*取得圖片的寬 */
+					$h = imagesy($source); /*取得圖片的高 */
+
+					$imgName .= '.gif';
+					
+					/* 儲存到檔案目錄(JPG) */
+					imagegif($source, $imagePathDir.$imgName);
+					/* 檔案resize */
+					// $newImage=$this->resizeImage($imagePathDir.$imgName, $r_width, $r_height, 'gif');
+					$x1=$_POST['x1d_Files'.$i];
+					$y1=$_POST['y1d_Files'.$i];
+					$widthd_Files=$_POST['widthd_Files'.$i];
+					$heightd_Files=$_POST['heightd_Files'.$i];
+					$newImage = $this->cutimg($imagePathDir.$imgName, $x1, $y1, $widthd_Files, $heightd_Files, 'gif');
+					/* 檔案resize存檔 */
+					imagegif($newImage, $imagePathDir.'p'.$imgName);
+
+					/* 儲存到檔案目錄(JPG) */
+					imagegif($source, $imagePathDir.$imgName);
+					/* 檔案resize */
+					// $newImage=$this->setImage_w($imagePathDir.$imgName, 300, 'gif');					
+					//$newImage = $this->cutimg($imagePathDir.$imgName, $x1, $y1, 300, 225, 'gif');
+					/* 檔案resize存檔 */
+					//imagegif($newImage, $imagePathDir.'set_'.$imgName);
+				}
+				else
+				{
+				  	$data=array(
+						"error" => '檔案類型錯誤'
+					);
+				 	return $data;
+				}
+				/* 刪除原始圖檔 */
+				unlink($imagePathDir . $imgName);
+				/* 最後儲存檔名 */
+				$result_name='p'.$imgName;
+				$result_name2 = 'set_'.$imgName;
+
+				//圖檔資訊回傳
+				$data=array(
+					"path"	=>  $result_name,
+					"width" =>	$r_width,
+					"height"=>	$r_height,
+					"error" => 	''
+				);
+				//return $data;
+				$i++;
+				$test[]=$data;
+			}
+				return $test;
+		}
+		else
+		{
+			$data=array(
+				"error" => '檔案類型錯誤'
+			);
+			return $data;
+		}
+	}
+
 
 	public function cutimg($fromimgname, $fromimg_startx, $fromimg_starty, $newimg_width, $newimg_height, $type='')
 	{

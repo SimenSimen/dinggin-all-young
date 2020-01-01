@@ -976,6 +976,8 @@ class Products extends MY_Controller
 		//view
 		$this->load->view('' . $this->DataName . '/product_list', $data);
 	}
+
+	
 	private function select_products_data($limit = '', $lang_type = 'TW', $class = '', $status = '', $hot = '', $new = '', $name = '', $prd_no = '')
 	{
 		$sql  = 'SELECT products.*, SUM(products_views.page_view) AS view';
@@ -1114,6 +1116,8 @@ class Products extends MY_Controller
 		$this->load->view('' . $this->DataName . '/product_info', $data);
 		//print_r($dbdata);
 	}
+
+	
 
 	public function ajax_product()
 	{ //讀取產品分類
