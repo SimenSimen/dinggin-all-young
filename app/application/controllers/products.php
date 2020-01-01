@@ -207,13 +207,15 @@ class Products extends MY_Controller
 		$data['share_url'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$data['share_prd_image'] = 'http://' . $_SERVER['HTTP_HOST'] . "/images/logo_s.png";
 
+		/** Get favorite product id array */
+		$this->load->model('favorite_model', 'favoModel');
+		$data['faIds'] = $this->favoModel->getFavoriteIds($by_id);
 		//view
-
-		if ($this->isAjax()) {
+		if ($data['isAjax'] = $this->isAjax()) {
 			/** return html */
-			// $this->load->view($this->indexViewPath . '/products/_item_list', $data);
+			$this->load->view($this->indexViewPath . '/products/_item_list', $data);
 			/** return array */
-			$this->apiResponse($data['dbdata']);
+			// $this->apiResponse($data['dbdata']);
 		} else {
 
 			$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
@@ -596,7 +598,7 @@ class Products extends MY_Controller
 						'amount' => $shop_count,
 						'prd_name' => $itemData['data']['prd_name'],
 						'price' => $itemData['data'][$price],
-						'prd_image' => $itemData['data']['prd_image'],
+						'prd_image' => $this->Spath . explode(',', $itemData['data']['prd_image'])[0],
 					];
 
 					$this->data['web_config']['cart_spec_status'] == 1 ? $tempData['spec'] = $spec : '';
@@ -632,7 +634,7 @@ class Products extends MY_Controller
 			unset($_SESSION['join_car'][$id]);
 		}
 
-		return $this->apiResponse(['success' => true, 'msg' => $this->lang['del_true']]);
+		return $this->apiResponse(['success' => true, 'msg' => $this->lang['del_true'], 'data' => $_SESSION['join_car']]);
 	}
 
 	//加入最愛

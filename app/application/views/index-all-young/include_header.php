@@ -488,7 +488,7 @@
 						<div class="tt-cart tt-dropdown-obj" data-tooltip="Cart" data-tposition="bottom">
 							<button class="tt-dropdown-toggle">
 								<i class="icon-f-39"></i>
-								<span class="tt-badge-cart b_green" data-count="<?= count($cartItems) ?>"><?= count($cartItems) ?></span>
+								<span class="tt-badge-cart b_green"><?= count($cartItems) ?></span>
 							</button>
 							<div class="tt-dropdown-menu">
 								<div class="tt-mobile-add">
@@ -500,7 +500,7 @@
 										<div class="tt-cart-content">
 											<div class="tt-cart-list">
 												<?php $totalAmount = 0; ?>
-												<?php foreach (!empty($_SESSION['join_car']) ? $_SESSION['join_car'] : [] as $item) : ?>
+												<?php foreach (!empty($_SESSION['join_car']) ? $_SESSION['join_car'] : [] as $uuid => $item) : ?>
 													<?php $totalAmount += floatval($item['amount']) * floatval($item['price']); ?>
 													<div class="tt-item">
 														<a href="<?= base_url('products/detail/' . $item['prd_id']) ?>">
@@ -514,7 +514,7 @@
 															</div>
 														</a>
 														<div class="tt-item-close">
-															<a data-key="<?= $item['uuid'] ?>" href="#" class="delete-cart tt-btn-close"></a>
+															<a onclick="header_remove_cart('<?= $uuid ?>', this)" data-key="<?= $uuid ?>" href="javascript:void(0);" class="delete-cart tt-btn-close"></a>
 														</div>
 													</div>
 												<?php endforeach ?>

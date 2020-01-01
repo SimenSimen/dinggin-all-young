@@ -1,8 +1,8 @@
 <div class="container">
 	<main class="main-content wow fadeInUp" data-wow-delay="0.4s">
 		<div class="container-indent center">
-			<form action="<?= base_url('member/login') ?>" class="j-forms" method="post" onSubmit="return check_form(this)">
-				<section class="content c_green02H">
+			<form action="<?= base_url('member/login') ?>" class="j-forms" method="post">
+				<section class=" content c_green02H">
 					<div class="title"><?= $lang['login'] ?></div>
 
 					<div class="editor mg" name="loginbox">
@@ -11,14 +11,14 @@
 								<div class="control-box">
 									<i name="icon02" class="icon-id"></i>
 									<label class="control-label"><?= $lang['account'] ?></label>
-									<input class="form-control" type="text" placeholder="" name="d_account" value="">
+									<input class="form-control" type="text" placeholder="" name="d_account" value="" required>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="control-box">
 									<i name="icon02" class="icon-lock"></i>
 									<label class="control-label"><?= $lang['password'] ?></label>
-									<input class="form-control" type="password" placeholder="<?= $lang['worderror'] ?>" name="password" value="" maxlength="16">
+									<input class="form-control" type="password" placeholder="<?= $lang['worderror'] ?>" name="password" value="" maxlength="16" required>
 								</div>
 							</div>
 							<div class="form-group checbox">

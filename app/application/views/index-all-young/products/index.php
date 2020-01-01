@@ -29,10 +29,10 @@
                         <h3 class="tt-collapse-title"><?= $this->lang['p_price'] ?></h3>
                         <div class="tt-collapse-content">
                             <ul class="tt-list-row">
-                                <li class="active"><a href="#">$0 — $50</a></li>
-                                <li><a href="#">$50 — $100</a></li>
-                                <li><a href="#">$100 — $150</a></li>
-                                <li><a href="#">$150 — $200</a></li>
+                                <li class="<?= intval($_GET['minPrice']) == 0 && intval($_GET['maxPrice']) == 50 ? 'active' : '' ?>"><a href="javascript:void(0);" onclick="forwardWithFilters({minPrice:0, maxPrice: 50 });">>$0 — $50</a></li>
+                                <li class="<?= intval($_GET['minPrice']) == 50 && intval($_GET['maxPrice']) == 100 ? 'active' : '' ?>"><a href="javascript:void(0);" onclick="forwardWithFilters({minPrice: 50, maxPrice: 100});">$50 — $100</a></li>
+                                <li class="<?= intval($_GET['minPrice']) == 100 && intval($_GET['maxPrice']) == 150 ? 'active' : '' ?>"><a href="javascript:void(0);" onclick="forwardWithFilters({minPrice: 100, maxPrice: 150});">$100 — $150</a></li>
+                                <li class="<?= intval($_GET['minPrice']) == 150 && intval($_GET['maxPrice']) == 200 ? 'active' : '' ?>"><a href="javascript:void(0);" onclick="forwardWithFilters({minPrice: 150, maxPrice: 200});">$150 — $200</a></li>
                             </ul>
                         </div>
                     </div>
@@ -41,10 +41,12 @@
                         <div class="tt-collapse-content">
                             <ul class="tt-list-row">
                                 <?php foreach ($suppliers as $supplier) : ?>
-                                    <li><a href="#"><?= $supplier['english_name'] ?></a></li>
+                                    <li class="<?= @$_GET['providerId'] == $supplier['id'] ? 'active' : '' ?>">
+                                        <a href="javascript:void(0);" onclick="forwardWithFilters({providerId: <?= $supplier['id'] ?>});"><?= $supplier['english_name'] ?></a>
+                                    </li>
                                 <?php endforeach ?>
                             </ul>
-                            <a href="#" class="btn-link-02">+ More</a>
+                            <!-- <a href="#" class="btn-link-02">+ More</a> -->
                         </div>
                     </div>
                 </div>
@@ -58,10 +60,10 @@
                                 <a href="#">FILTER</a>
                             </div>
                             <div class="tt-sort">
-                                <select>
-                                    <option value="Default Sorting"><?= $this->lang['d_sort'] ?></option>
-                                    <option value="Default Sorting"><?= $this->lang['p_high'] ?></option>
-                                    <option value="Default Sorting"><?= $this->lang['p_low'] ?></option>
+                                <select onchange="forwardWithFilters({sortType: this.value == 0 ? null : this.value})">
+                                    <option value="0"><?= $this->lang['d_sort'] ?></option>
+                                    <option value="2" <?= @$_GET['sortType'] == 2 ? 'selected' : '' ?>><?= $this->lang['p_high'] ?></option>
+                                    <option value="1" <?= @$_GET['sortType'] == 1 ? 'selected' : '' ?>><?= $this->lang['p_low'] ?></option>
                                 </select>
                             </div>
                             <div class="tt-quantity">
@@ -76,7 +78,7 @@
                             <?= $this->load->view($indexViewPath . '/products/_item_list', ['dbdata' => $dbdata]) ?>
                         </div>
                         <div class="text-center tt_product_showmore">
-                            <a id="load-more" href="#" class="btn btn-green"><?= $this->lang['load_more'] ?></a>
+                            <a id="load-more" href="javascript:void(0);" class="btn btn-green"><?= $this->lang['load_more'] ?></a>
                         </div>
                     </div>
                 </div>
@@ -84,18 +86,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    /** Handle loading the items temp @todo 2200*/
-    // $(document).ready(function() {
-    //     var loadButton = $('#load-more');
-    //     var currentPage = parseInt(qs('pageNumber')) || 1;
-
-    //     loadButton.on('click', function() {
-    //         var url = updateUrlParameter(window.location.href, 'pageNumber', currentPage += 1);
-    //         $.get(url, function(result) {
-    //             $('#items-area').append(result);
-    //         });
-    //     });
-    // })
-</script>

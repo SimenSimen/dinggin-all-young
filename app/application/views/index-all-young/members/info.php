@@ -55,7 +55,7 @@
                                         <div class="control-box">
                                             <i name="icon02" class="icon-phone-call"></i>
                                             <label class="control-label ml-2"><span></span><?= $this->lang['phone'] ?></label>
-                                            <input class="form-control" type="text" maxlength="11" name="telphone" value="<?= $dbdata['telphone'] ?>" onkeyup="value=value.replace(/[^\d]/g,'')">
+                                            <input class="form-control" type="text" maxlength="11" name="telphone" value="<?= !empty($dbdata['telphone']) ? $dbdata['telphone'] : '' ?>" onkeyup="value=value.replace(/[^\d]/g,'')">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -83,7 +83,20 @@
                                         <div class="control-box">
                                             <i name="icon02" class="icon-placeholder"></i>
                                             <label class="control-label"></label>
-                                            <select name="city" id="city" onChange="sel_area(this.value,'','countory')" class="form-control selectBg" style="padding-left:50px">
+                                            <select name="countory" id="county" class="form-control selectBg" style="padding-left:50px">
+                                                <option value="" selected><?= $this->lang['county'] ?></option>
+                                                <? foreach ($countory as $cvalue) : ?>
+                                                    <option value="<?= $cvalue['s_id'] ?>" <?= ($dbdata['countory'] == $cvalue['s_id']) ? 'selected' : ''; ?>><?= $cvalue['s_name'] ?></option>
+                                                <? endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="control-box">
+                                            <i name="icon02" class="icon-placeholder"></i>
+                                            <label class="control-label"></label>
+                                            <select name="city" id="city" class="form-control selectBg" style="padding-left:50px">
                                                 <option value="" selected><?= $this->lang['city'] ?></option>
                                                 <? foreach ($city as $cvalue) : ?>
                                                     <option value="<?= $cvalue['s_id'] ?>" <?= ($dbdata['city'] == $cvalue['s_id']) ? 'selected' : ''; ?>><?= $cvalue['s_name'] ?></option>
@@ -96,23 +109,10 @@
                                         <div class="control-box">
                                             <i name="icon02" class="icon-placeholder"></i>
                                             <label class="control-label"></label>
-                                            <select name="countory" id="countory" class="form-control selectBg" style="padding-left:50px">
-                                                <option value="0" selected><?= $this->lang['county'] ?></option>
-                                                <? foreach ($countory as $cvalue) : ?>
-                                                    <option value="<?= $cvalue['s_id'] ?>" <?= ($dbdata['city'] == $cvalue['s_id']) ? 'selected' : ''; ?>><?= $cvalue['s_name'] ?></option>
-                                                <? endforeach; ?>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="control-box">
-                                            <i name="icon02" class="icon-placeholder"></i>
-                                            <label class="control-label"></label>
                                             <select name="country" id="buyer_State" class="form-control selectBg" style="padding-left:50px">
-                                                <option value="0" selected><?= $this->lang['country'] ?></option>
+                                                <option value="" selected><?= $this->lang['country'] ?></option>
                                                 <? foreach ($country as $cvalue) : ?>
-                                                    <option value="<?= $cvalue['s_id'] ?>" <?= ($dbdata['city'] == $cvalue['s_id']) ? 'selected' : ''; ?>><?= $cvalue['s_name'] ?></option>
+                                                    <option value="<?= $cvalue['s_id'] ?>" <?= ($dbdata['country'] == $cvalue['s_id']) ? 'selected' : ''; ?>><?= $cvalue['s_name'] ?></option>
                                                 <? endforeach; ?>
                                             </select>
                                         </div>
@@ -135,7 +135,7 @@
                                                 <div class="control-box">
                                                     <i name="icon02" class="icon-name"></i>
                                                     <label class="control-label"><span>*</span><?= $this->lang['idnum'] ?></label>
-                                                    <input class="form-control w200" type="text" name="id-number" value="<?= $mdbdata['member_num'] ?>" disabled>
+                                                    <input class="form-control w200" type="text" value="<?= $mdbdata['identity_num'] ?>" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -146,32 +146,32 @@
                                             <div class="form-group">
                                                 <div class="control-box">
                                                     <i name="icon02" class="icon-id"></i>
-                                                    <label class="control-label"><?= $this->lang['bankname'] ?></label>
-                                                    <input class="form-control w200" type="text" name="bank" value="<?= $mdbdata['bank_name'] ?>">
+                                                    <label class="control-label"><span>*</span><?= $this->lang['bankname'] ?></label>
+                                                    <input class="form-control w200" type="text" name="bank_name" value="<?= $mdbdata['bank_name'] ?>">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <div class="control-box">
                                                     <i name="icon02" class="icon-id"></i>
-                                                    <label class="control-label"><?= $this->lang['bank_branch'] ?></label>
-                                                    <input class="form-control w200" type="text" name="branch" value="<?= $mdbdata['bank_branch'] ?>">
+                                                    <label class="control-label"><span>*</span><?= $this->lang['bank_branch'] ?></label>
+                                                    <input class="form-control w200" type="text" name="bank_branch" value="<?= $mdbdata['bank_branch'] ?>">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <div class="control-box">
                                                     <i name="icon02" class="icon-id"></i>
-                                                    <label class="control-label"><?= $this->lang['accountname'] ?></label>
-                                                    <input class="form-control w200" type="text" name="ccountTit" value="<?= $mdbdata['bank_account_name'] ?>">
+                                                    <label class="control-label"><span>*</span><?= $this->lang['accountname'] ?></label>
+                                                    <input class="form-control w200" type="text" name="bank_account_name" value="<?= $mdbdata['bank_account_name'] ?>">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <div class="control-box">
                                                     <i name="icon02" class="icon-id"></i>
-                                                    <label class="control-label"><?= $this->lang['bankaccount'] ?></label>
-                                                    <input class="form-control w200" type="text" name="bankAccount" value="<?= $mdbdata['bank_account'] ?>">
+                                                    <label class="control-label"><span>*</span><?= $this->lang['bankaccount'] ?></label>
+                                                    <input class="form-control w200" type="text" name="bank_account" value="<?= $mdbdata['bank_account'] ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -180,12 +180,18 @@
                                             <div class="form-group">
                                                 <div class="control-box">
                                                     <div class="radio-box">
-                                                        <label class="form-radio"><input type="radio" name="tax" value="tax-free"><i></i><?= $this->lang['tax_free_card'] ?></label>
-                                                        <label class="form-radio" style="margin-left:20px;"><input type="radio" name="tax" value="tax"><i></i><?= $this->lang['tax_card'] ?></label>
+                                                        <label class="form-radio">
+                                                            <input type="radio" name="tax_card_free" value="2" <?= $mdbdata['tax_card_free'] == 2 ? 'checked' : '' ?>>
+                                                            <i></i><?= $this->lang['tax_free_card'] ?>
+                                                        </label>
+                                                        <label class="form-radio" style="margin-left:20px;">
+                                                            <input type="radio" name="tax_card_free" value="1" <?= $mdbdata['tax_card_free'] == 1 ? 'checked' : '' ?>>
+                                                            <i></i><?= $this->lang['tax_card'] ?>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="control-box">
-                                                    <input class="form-control form-control03" type="text" name="tax_number" id="tax-number" placeholder="<?= $this->lang['tax_card_num'] ?>">
+                                                    <input class="form-control form-control03" value="<?= $mdbdata['tax_card'] ?>" type="text" name="tax_card" id="tax-number" placeholder="<?= $this->lang['tax_card_num'] ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -193,7 +199,7 @@
                                         <input type="hidden" name="is_member" value="Y">
                                     <?php endif ?>
                                     <div class="form-group checbox">
-                                        <input type="checkbox" name="chk_sale_ok" value="1" id="checkbox02" <?= $mdbdata['d_service'] == 'Y' ? 'checked' : '' ?>>
+                                        <input type="checkbox" name="d_service" value="1" id="checkbox02" <?= $dbdata['d_service'] == 'Y' ? 'checked' : '' ?>>
                                         <label for="checkbox"><?= $this->lang['agree_offers'] ?></label>
                                     </div>
 
@@ -205,7 +211,6 @@
                                         <input type="reset" class="btn simple" value="<?= $this->lang['refill'] ?>">
                                         <input type="submit" class="btn simple bg2 btn-green-bg" value="<?= $this->lang['send_out'] ?>">
                                     </div>
-
                                 </div>
                             </div>
                         </section>
@@ -215,3 +220,5 @@
         </div>
     </div>
 </div>
+
+<? $this->load->view($indexViewPath . '/include_ajax_area') ?>

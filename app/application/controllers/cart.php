@@ -629,7 +629,7 @@ class Cart extends MY_Controller
 
 		$by_id = $_SESSION['MT']['by_id'];
 
-		$favorite = $this->mymodel->OneSearchSql('product_favorite', 'd_product_id', array('d_member_id' => $by_id, 'd_product_id' => $$id));
+		$favorite = $this->mymodel->OneSearchSql('product_favorite', 'd_product_id', array('d_member_id' => $by_id, 'd_product_id' => $id));
 
 		if (!empty($favorite['d_product_id'])) { //移除最愛
 			$this->mmodel->delete_where('product_favorite', array('d_member_id' => $by_id, 'd_product_id' => $id));

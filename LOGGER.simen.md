@@ -8,6 +8,15 @@
 
 # 紀錄
 
+## 2019-12-30
+
+|                更動檔案路徑                 |                           說明                           |  備註  |
+| :-----------------------------------------: | :------------------------------------------------------: | :----: |
+|      application/controllors/gold.php       | rigster<br>member_info<br>data_AED<br>member_upgrade<br> | &nbsp; |
+| application/controllors/member_register.php |                    rigster ,sms_code                     | &nbsp; |
+| application/libraries/mylib/CheckInput.php  |                        checkDate                         |  新增  |
+|    application/models/favorite_model.php    |                      getFavoriteIds                      | &nbsp; |
+
 ## 2019-12-29
 
 |             更動檔案路徑             |          說明          |  備註  |

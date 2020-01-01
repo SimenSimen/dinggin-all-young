@@ -66,9 +66,11 @@ class member_register extends MY_Controller
 	public function register()
 	{
 		// 語言包
-		$lang = $this->lmodel->config('3', $this->setlang);
+		$lang = $this->lmodel->config(3, $this->setlang);
 
+		$this->_check->fname[] = array('_checkDate', Comment::SetValue('birthday'), $lang['plsday']);
 		$this->_check->fname[] = array('_CheckEmail', Comment::SetValue('by_email'), 'E-mail');
+		$this->_check->fname[] = array('_CheckSome', [Comment::SetValue('by_pw'), Comment::SetValue('confirm_pw')], $lang['confirmpassworong']);
 		//$this->_check->fname[] = array('_String', Comment::SetValue('mobile'), $this->lang1['mobile'] /* 帳號 */);
 		$this->_check->fname[] = array('_String', Comment::SetValue('name'), $lang['dname'] /* 姓名 */);
 		$this->_check->fname[] = array('_String', Comment::SetValue('by_pw'), $lang['password'] /* 密碼 */);
@@ -95,32 +97,10 @@ class member_register extends MY_Controller
 			return '';
 		}
 
+		$data = [];
+
 		$data['by_pw'] = $this->encrypt->encode(Comment::SetValue('by_pw'));
 		$data['d_is_member'] = '0';
-		if (Comment::SetValue('PID') != "") {
-			$rule = $this->mymodel->GetConfig('rule');
-			$data['PID'] = Comment::SetValue('PID');
-			$data['d_dividend'] = $rule[6]['d_val']; // 接受推薦送100點紅利
-			//推薦人也送100點紅利
-			$d_dividend_data = $this->mymodel->OneSearchSql('buyer', 'd_dividend', array('by_id' => 4));
-			$d_dividend = $d_dividend_data['d_dividend'] + $rule[7]['d_val'];
-			$this->mymodel->update_set('buyer', 'by_id', Comment::SetValue('PID'), array('d_dividend' => $d_dividend));
-			// 推薦人寫入紅利說明
-			$didata = array(
-				'buyer_id' => Comment::SetValue('PID'),
-				'd_type' => '19',
-				'd_val' => $rule[7]['d_val'],
-				'd_des' => $this->lang1['mem_bouns_get'], // 推薦註冊成功發送紅利
-				'is_send' => 'Y',
-				'create_time' => $this->useful->get_now_time(),
-				'update_time' => $this->useful->get_now_time(),
-				'send_dt' => $this->useful->get_now_time()
-			);
-			$this->mymodel->insert_into('dividend', $didata);
-		} else {
-			$data['PID'] = $_SESSION['AT']['member_id'];
-			if ($data['PID'] == null) $data['PID'] = "0";
-		}
 		// 去除陣列無用值
 		$data = $this->useful->UnsetArray($data, array('chk_ok', 'member_register'));
 		//新增資料
@@ -129,12 +109,12 @@ class member_register extends MY_Controller
 			return '';
 		}
 
-		//簡訊寄送驗證碼
+		$data['PID'] = Comment::SetValue('PID');
+		if (empty($data['PID'])) {
+			$data['PID'] = !is_null(@$_SESSION['AT']['member_id']) ? @$_SESSION['AT']['member_id'] : 0;
+		}
+
 		$checkCode = $this->sms_tools->getCode(8, 3);
-		$this->sms_tools->subject = $this->lang1['sms_code_is'];
-		$this->sms_tools->content = $this->lang1['sms_code_is'] . '：' . $checkCode;
-		$this->sms_tools->mobile = $this->input->post('d_account');
-		$this->sms_tools->sendSms();
 
 		$myData = array(
 			'PID'					=> $data['PID'],
@@ -149,13 +129,43 @@ class member_register extends MY_Controller
 			'check_code'		=> $checkCode,
 			'mobile'				=> $this->input->post('d_account'),
 			'd_content'		=> $this->input->post('d_content'),
-			'd_service'			=> $this->input->post('d_service'),
+			'd_service'			=> $this->input->post('d_service') ? 'Y' : 'N',
 			'create_time'		=> date('YmdHis'),
 			'update_time'	=> date('YmdHis')
 		);
+
 		$create_id = $this->mymodel->insert_into('buyer', $myData);
 		$this->session->set_userdata('create_id', $create_id);
 		$this->session->set_userdata('ld', array('account' => $this->input->post('d_account'), 'password' => $this->input->post('by_pw')));
+
+		//簡訊寄送驗證碼
+		$this->sms_tools->subject = $lang['sms_code_is'];
+		$this->sms_tools->content = $lang['sms_code_is'] . '：' . $checkCode;
+		$this->sms_tools->mobile = $this->input->post('d_account');
+		$this->sms_tools->sendSms();
+
+		if (Comment::SetValue('PID') != "") {
+			$rule = $this->mymodel->GetConfig('rule');
+			$data['PID'] = Comment::SetValue('PID');
+			$data['d_dividend'] = $rule[6]['d_val']; // 接受推薦送100點紅利
+			//推薦人也送100點紅利
+			$d_dividend_data = $this->mymodel->OneSearchSql('buyer', 'd_dividend', array('by_id' => 4));
+			$d_dividend = $d_dividend_data['d_dividend'] + $rule[7]['d_val'];
+			$this->mymodel->update_set('buyer', 'by_id', Comment::SetValue('PID'), array('d_dividend' => $d_dividend));
+			// 推薦人寫入紅利說明
+			$didata = array(
+				'buyer_id' => Comment::SetValue('PID'),
+				'd_type' => '19',
+				'd_val' => $rule[7]['d_val'],
+				'd_des' => $lang['mem_bouns_get'], // 推薦註冊成功發送紅利
+				'is_send' => 'Y',
+				'create_time' => $this->useful->get_now_time(),
+				'update_time' => $this->useful->get_now_time(),
+				'send_dt' => $this->useful->get_now_time()
+			);
+			$this->mymodel->insert_into('dividend', $didata);
+		}
+
 		//進行簡訊驗證
 		redirect(base_url('member_sms_code'));
 	}
@@ -249,31 +259,36 @@ class member_register extends MY_Controller
 	{
 		$this->lang1 = $this->lmodel->config('3', $this->setlang);
 		if ($this->input->post('action') == 'check_code') {
-
-			$user_data = $this->mymodel->select_page_form('buyer', '', 'by_id, name, check_code', array('by_id' => $this->session->userdata('create_id')));
+			$user_data = $this->mymodel->select_page_form('buyer', '', 'by_id, name, check_code', array('by_id' => $this->session->userdata('ready_id')));
 			if ($user_data[0]['check_code'] == $this->input->post('check_code')) {
 				//解除帳號限制
 				$this->load->model('login_model');
-				$this->mymodel->update_set('buyer', 'by_id', $this->session->userdata('create_id'), array('check_code' => ''));
-				//$this->session->set_userdata('create_id', '');
+				$this->mymodel->update_set('buyer', 'by_id', $this->session->userdata('ready_id'), array('check_code' => ''));
+				$this->session->unset_userdata('ready_id');
+				$this->session->set_userdata('create_id', $user_data[0]['by_id']);
+				//$this->session->set_userdata('create_id', $);
 				//$this->login_model->login_chekc($this->session->userdata('ld'));
 				//$this->session->set_userdata('ld', '');
 				//$this->useful->AlertPage('/gold/login', $this->lang1['sms_ok_join']);
-				redirect(base_url('member_register_ok'));
+				return redirect(base_url('member_register_ok'));
 			} else {
 				$this->session->set_userdata('create_id', '');
-				$this->useful->AlertPage('/gold/login', $this->lang1['sms_error_time']);
+				$this->session->unset_userdata('ready_id');
+				return $this->useful->AlertPage('/login', $this->lang1['sms_error_time']);
 			}
 		}
-		if ($this->session->userdata('create_id') > 0) {
+		/** useless set false */
+		if ($this->session->userdata('revalidate_id')) {
 			//再重新寄送驗證碼
-			$user_data = $this->mymodel->select_page_form('buyer', '', 'by_id, d_account, name, check_code', array('by_id' => $this->session->userdata('create_id')));
+			$user_data = $this->mymodel->select_page_form('buyer', '', 'by_id, d_account, name, check_code', array('by_id' => $this->session->userdata('revalidate_id')));
 			$checkCode = $this->sms_tools->getCode(8, 3);
 			$this->sms_tools->subject = $this->lang1['sms_code_is'];
 			$this->sms_tools->content = $this->lang1['sms_code_is'] . '：' . $checkCode;
 			$this->sms_tools->mobile = $user_data[0]['d_account'];
 			$this->sms_tools->sendSms();
 			$this->mymodel->update_set('buyer', 'by_id', $user_data[0]['by_id'], array('check_code' => $checkCode));
+			$this->session->unset_userdata('revalidate_id');
+			$this->session->set_userdata('ready_id', $user_data[0]['by_id']);
 		}
 
 		$this->lang = $this->lmodel->config('3', $this->setlang);
@@ -304,7 +319,7 @@ class member_register extends MY_Controller
 		$this->data['web_config'] = $this->get_web_config($this->data['domain_id']);
 
 		// 是否自動升級經營會員
-		if ($this->data['web_config']['is_auto_upgrade_member'] == 1) {
+		if ($this->data['web_config']['is_auto_upgrade_member'] == 1 && false) {
 			$member_data = array(
 				'by_id' => $user_data[0]['by_id'],
 				'domain_id' => '1',
@@ -409,7 +424,6 @@ class member_register extends MY_Controller
 			// $this->mod_index->send_mail('jcymall.com','jcymall',
 			// Comment::SetValue('by_email'), $subject, $message);
 		}
-
 		// $this->useful->AlertPage('/gold/login',$check->lang['regsucc']);//註冊成功,請重新登入
 		// 註冊者受邀請紅利100點請寫入紅利說明
 		$rule = $this->mymodel->GetConfig('rule');
