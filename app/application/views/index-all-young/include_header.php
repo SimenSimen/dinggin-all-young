@@ -117,7 +117,7 @@
 													<ul class="tt-megamenu-submenu">
 														<?php foreach ($brandList as $brand) : ?>
 															<li><a href="<?= base_url('/brands\/') . $brand['prd_cid'] ?>"><?= $brand['d_name'] ?>
-																	<img src="images/loader.svg" data-src="" alt="Example 1">
+																	<img src="images/loader.svg" data-src="<?= base_url($brandPath . $brand['brand_image']) ?>" alt="<?= $brand['d_name'] ?>">
 																	<!-- <span class="tt-badge tt-fatured">Popular</span> -->
 																</a></li>
 														<?php endforeach ?>

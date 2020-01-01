@@ -1161,10 +1161,6 @@ class CI_DB_driver {
 	 */
 	function display_error($error = '', $swap = '', $native = FALSE)
 	{
-		/** @todo 3329 remove the error print */
-		echo '<pre>';
-		var_dump($error);
-		exit;
 		$LANG =& load_class('Lang', 'core');
 		$LANG->load('db');
 

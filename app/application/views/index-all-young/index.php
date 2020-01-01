@@ -40,10 +40,10 @@
 					<div class="col-6 col-md-4 col-lg-3">
 						<div class="tt-product thumbprod-center">
 							<div class="tt-image-box">
-								<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView" data-tooltip="Quick View" data-tposition="left"></a>
-								<a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
-								<a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
-								<a href="product.html">
+								<a href="javascript:void(0);" onclick="quickView('<?= $product['prd_id'] ?>');" class="tt-btn-quickview" data-toggle="modal" data-tooltip="Quick View" data-tposition="left"></a>
+								<a href="javascript:void(0);" onclick="ajax_add_favorate('<?= $product['prd_id'] ?>');" class="tt-btn-wishlist <?= in_array($product['prd_id'], $faIds) ? 'active' : '' ?>" data-tooltip="Add to Wishlist" data-tposition="left"></a>
+								<a href="javascript:void(0);" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
+								<a href="<?= base_url('/products/detail/' . $product['prd_id']) ?>">
 									<?php $image = explode(',', $product['prd_image'])[0] ?>
 									<span class="tt-img"><img src="<?= base_url('images/loader.svg') ?>" data-src="<?= base_url($productPath . $image) ?>" alt=""></span>
 									<span class="tt-img-roll-over"><img src="<?= base_url('images/loader.svg') ?>" data-src="<?= base_url($productPath . $image)  ?>" alt=""></span>
@@ -57,10 +57,10 @@
 								</div>
 								<div class="tt-product-inside-hover">
 									<div class="tt-row-btn">
-										<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct"><?= $indexLang['add_cart'] ?></a>
+										<a href="javascript:void(0);" class="tt-btn-addtocart thumbprod-button-bg b_green02" data-toggle="modal" onclick="cart_add_in_list('<?= $product['prd_id'] ?>',1);"><?= $indexLang['add_cart'] ?></a>
 									</div>
 									<div class="tt-row-btn">
-										<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
+										<a href="javascript:void(0);" class="tt-btn-quickview" data-toggle="modal" onclick="quickView('<?= $product['prd_id'] ?>');"></a>
 										<a href="#" class="tt-btn-wishlist"></a>
 										<a href="#" class="tt-btn-compare"></a>
 									</div>
@@ -171,7 +171,7 @@
 						<?php foreach ($brandList as $brand) : ?>
 							<div class="col-6 col-sm-4 col-md-2">
 								<a href="<?= base_url('/brands/' . $brand['prd_cid']) ?>" class="tt-btn-info tt-layout-03">
-									<img src="images/custom/brand-img-07.png" alt="">
+									<img src="<?= base_url('/' . $brandsPath . $brand['brand_image_s']) ?>" alt="">
 								</a>
 							</div>
 						<?php endforeach ?>
@@ -193,48 +193,59 @@
 				<div class="col-sm-12 col-md-6">
 					<div class="row">
 						<div class="col-6">
-							<a href="listing-left-column.html" class="tt-promo-box tt-one-child hover-type-2">
-								<img src="images/loader.svg" data-src="images/promo/index-promo-img-01.jpg" alt="">
-								<div class="tt-description">
-								</div>
-							</a>
-							<a href="listing-left-column.html" class="tt-promo-box tt-one-child hover-type-2">
-								<img src="images/loader.svg" data-src="images/promo/index-promo-img-02.jpg" alt="">
-								<div class="tt-description">
-								</div>
-							</a>
+							<?php for ($i = 0; $i < 2; $i++) : ?>
+								<?php if (@$productCategorys[$i]) : ?>
+									<a href="<?= base_url('products/' . $productCategorys[$i]['prd_cid']) ?>" class="tt-promo-box tt-one-child hover-type-2">
+										<img src="images/loader.svg" data-src="<?= base_url($catePath . $productCategorys[$i]['prd_cimage']) ?>" alt="">
+										<div class="tt-description">
+										</div>
+									</a>
+								<?php endif ?>
+							<?php endfor ?>
 						</div>
 						<div class="col-6">
-							<a href="listing-left-column.html" class="tt-promo-box tt-one-child hover-type-2">
-								<img src="images/loader.svg" data-src="images/promo/index-promo-img-03.jpg" alt="">
-								<div class="tt-description">
-								</div>
-							</a>
+							<?php $i = 2 ?>
+							<?php if (@$productCategorys[$i]) : ?>
+								<a href="<?= base_url('products/' . $productCategorys[$i]['prd_cid']) ?>" class="tt-promo-box tt-one-child hover-type-2">
+									<img src="images/loader.svg" data-src="<?= base_url($catePath . $productCategorys[$i]['prd_cimage']) ?>" alt="">
+									<div class="tt-description">
+									</div>
+								</a>
+							<?php endif ?>
 						</div>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md-6">
 					<div class="row">
 						<div class="col-6">
-							<a href="listing-left-column.html" class="tt-promo-box tt-one-child hover-type-2">
-								<img src="images/loader.svg" data-src="images/promo/index-promo-img-04.jpg" alt="">
-								<div class="tt-description">
-								</div>
-							</a>
+							<?php $i = 3 ?>
+							<?php if (@$productCategorys[$i]) : ?>
+								<a href="<?= base_url('products/' . $productCategorys[$i]['prd_cid']) ?>" class="tt-promo-box tt-one-child hover-type-2">
+									<img src="images/loader.svg" data-src="<?= base_url($catePath . $productCategorys[$i]['prd_cimage']) ?>" alt="">
+									<div class="tt-description">
+									</div>
+								</a>
+							<?php endif ?>
 						</div>
 						<div class="col-6">
-							<a href="listing-left-column.html" class="tt-promo-box tt-one-child hover-type-2">
-								<img src="images/loader.svg" data-src="images/promo/index-promo-img-05.jpg" alt="">
-								<div class="tt-description">
-								</div>
-							</a>
+							<?php $i = 4 ?>
+							<?php if (@$productCategorys[$i]) : ?>
+								<a href="<?= base_url('products/' . $productCategorys[$i]['prd_cid']) ?>" class="tt-promo-box tt-one-child hover-type-2">
+									<img src="images/loader.svg" data-src="<?= base_url($catePath . $productCategorys[$i]['prd_cimage']) ?>" alt="">
+									<div class="tt-description">
+									</div>
+								</a>
+							<?php endif ?>
 						</div>
 						<div class="col-sm-12">
-							<a href="listing-left-column.html" class="tt-promo-box tt-one-child">
-								<img src="images/loader.svg" data-src="images/promo/index-promo-img-06.jpg" alt="">
-								<div class="tt-description">
-								</div>
-							</a>
+							<?php $i = 5 ?>
+							<?php if (@$productCategorys[$i]) : ?>
+								<a href="<?= base_url('products/' . $productCategorys[$i]['prd_cid']) ?>" class="tt-promo-box tt-one-child hover-type-2">
+									<img src="images/loader.svg" data-src="<?= base_url($catePath . $productCategorys[$i]['prd_cimage']) ?>" alt="">
+									<div class="tt-description">
+									</div>
+								</a>
+							<?php endif ?>
 						</div>
 					</div>
 				</div>

@@ -41,3 +41,9 @@ ALTER TABLE `order` ADD COLUMN carrier_type TINYINT NULL COMMENT '載具種類 0
 ALTER TABLE `order` ADD COLUMN carrier_number VARCHAR(128) NULL COMMENT '載具號碼';
 ALTER TABLE `order` ADD COLUMN invoice_type TINYINT NULL COMMENT '發票種類 0: 電子發票 1: 二聯式 2: 三聯式';
 ```
+
+## (products) 商品資料表調整
+
+```sql
+ALTER TABLE products ADD COLUMN prd_bid int(10) NULL COMMENT '品牌編號';
+```

@@ -29,22 +29,23 @@
                         <h3 class="tt-collapse-title">Price Range</h3>
                         <div class="tt-collapse-content">
                             <ul class="tt-list-row">
-                                <li class="active"><a href="<?= base_url('brands?maxPrice=50') ?>">$0 — $50</a></li>
-                                <li><a href="<?= base_url('brands?minPrice=50&maxPrice=100') ?>">$50 — $100</a></li>
-                                <li><a href="<?= base_url('brands?minPrice=100&maxPrice=150') ?>">$100 — $150</a></li>
-                                <li><a href="<?= base_url('brands?minPrice=150&maxPrice=200') ?>">$150 — $200</a></li>
+
+                                <li class="<?= intval($_GET['minPrice']) == 0 && intval($_GET['maxPrice']) == 50 ? 'active' : '' ?>"><a href="javascript:void(0);" onclick="forwardWithFilters({minPrice:0, maxPrice: 50 });">>$0 — $50</a></li>
+                                <li class="<?= intval($_GET['minPrice']) == 50 && intval($_GET['maxPrice']) == 100 ? 'active' : '' ?>"><a href="javascript:void(0);" onclick="forwardWithFilters({minPrice: 50, maxPrice: 100});">$50 — $100</a></li>
+                                <li class="<?= intval($_GET['minPrice']) == 100 && intval($_GET['maxPrice']) == 150 ? 'active' : '' ?>"><a href="javascript:void(0);" onclick="forwardWithFilters({minPrice: 100, maxPrice: 150});">$100 — $150</a></li>
+                                <li class="<?= intval($_GET['minPrice']) == 150 && intval($_GET['maxPrice']) == 200 ? 'active' : '' ?>"><a href="javascript:void(0);" onclick="forwardWithFilters({minPrice: 150, maxPrice: 200});">$150 — $200</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-9 col-xl-9">
-                    <div class="title02">Brand name</div>
+                    <div class="title02"><?= $brandData['d_name'] ?></div>
                     <div class="tt-post-single">
                         <div class="tt-post-content">
                             <div class="title03">Commodity story</div>
-                            <h2 class="tt-title02">This is title, This is title</h2>
+                            <h2 class="tt-title02"><?= $brandData['d_title'] ?></h2>
                             <span class="line b_green"></span>
-                            <p>Pellentesque tempor ut dui a sollicitudin. Quisque diam lectus, dignissim et vestibulum fringilla, dictum et metus. Quisque condimentum dui augue, quis pellentesque ipsum interdum ultrices. Phasellus tempor aliquet molestie. Nulla pellentesque finibus risus, a mattis magna fermentum id. Cras dictum egestas diam, non interdum tortor blandit sit amet. Praesent aliquam nulla at diam vehicula, vel eleifend felis rutrum. Curabitur velit tortor, ultrices eu turpis ac, imperdiet luctus enim. Fusce sit amet diam sed felis feugiat sagittis sit amet et elit. Phasellus dapibus dolor ac mi ultrices, vel auctor lorem sollicitudin. Nullam congue velit ac nibh fermentum, quis egestas ante laoreet. Morbi tempus magna eu vehicula eleifend.</p>
+                            <p> <?= $brandData['brand_content'] ?></p>
                             <img src="images/loader.svg" data-src="images/blog/blog-single-img-01.jpg" alt="">
                         </div>
                     </div>
@@ -71,16 +72,16 @@
                     <div class="content-indent container-fluid-custom-mobile-padding-02">
                         <div class="tt-filters-options" id="js-tt-filters-options">
                             <h1 class="tt-title text-center">
-                                Brand name <span class="tt-title-total">(69)</span>
+                                <?= $brandData['d_name'] ?> <span class="tt-title-total">(<?= $pageData['total_rows'] ?>)</span>
                             </h1>
                             <div class="tt-btn-toggle">
                                 <a href="#">FILTER</a>
                             </div>
                             <div class="tt-sort">
-                                <select>
-                                    <option value="Default Sorting">Sort</option>
-                                    <option value="Default Sorting">Low to high price</option>
-                                    <option value="Default Sorting">High to low price</option>
+                                <select onchange="forwardWithFilters({sortType: this.value == 0 ? null : this.value})">
+                                    <option value="0"><?= $this->lang['d_sort'] ?></option>
+                                    <option value="2" <?= @$_GET['sortType'] == 2 ? 'selected' : '' ?>><?= $this->lang['p_high'] ?></option>
+                                    <option value="1" <?= @$_GET['sortType'] == 1 ? 'selected' : '' ?>><?= $this->lang['p_low'] ?></option>
                                 </select>
                             </div>
                             <div class="tt-quantity">
@@ -92,41 +93,10 @@
                             </div>
                         </div>
                         <div class="tt-product-listing row">
-                            <?php for ($i = 0; $i < 4; $i++) { ?>
-                                <div class="col-6 col-md-3 tt-col-item">
-                                    <div class="tt-product thumbprod-center">
-                                        <div class="tt-image-box">
-                                            <a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView" data-tooltip="Quick View" data-tposition="left"></a>
-                                            <a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
-                                            <a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
-                                            <a href="product.html">
-                                                <span class="tt-img"><img src="images/loader.svg" data-src="images/product/product-15.jpg" alt=""></span>
-                                                <span class="tt-img-roll-over"><img src="images/loader.svg" data-src="images/product/product-15-01.jpg" alt=""></span>
-                                            </a>
-                                        </div>
-                                        <div class="tt-description">
-                                            <h2 class="tt-title"><a href="product.html">Product Name</a></h2>
-                                            <div class="tt-price">
-                                                <span class="new-price">$14</span>
-                                                <span class="old-price">$24</span>
-                                            </div>
-                                            <div class="tt-product-inside-hover">
-                                                <div class="tt-row-btn">
-                                                    <a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>
-                                                </div>
-                                                <div class="tt-row-btn">
-                                                    <a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
-                                                    <a href="#" class="tt-btn-wishlist"></a>
-                                                    <a href="#" class="tt-btn-compare"></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php } ?>
+                            <?= $this->load->view($indexViewPath . '/products/_item_list', ['dbdata' => $dbdata]) ?>
                         </div>
                         <div class="text-center tt_product_showmore">
-                            <a href="#" class="btn btn-green">LOAD MORE</a>
+                            <a id="load-more" href="javascript:void(0);" class="btn btn-green"><?= $this->lang['load_more'] ?></a>
                         </div>
                     </div>
                 </div>

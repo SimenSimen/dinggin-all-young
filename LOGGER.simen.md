@@ -73,22 +73,11 @@
 | application/language/ind/views/index-all-young/\* |       &nbsp;        |               &nbsp;               |
 |         application/controllors/index.php         | index, member_login |               &nbsp;               |
 
-# 待辦
-
-- @todo 11020 申請經銷會員必填欄位
-- 發票寫入
-- 註冊頁上方活動
-- 註冊驗證
-- 首頁品牌小圖 品牌hover大圖
-
 # 結案前整理
 
 - @todo 10 註解掉 註冊成功 email 發送，因為會報錯。須復原。
 - @todo 1001 強制轉語系，須移除。
 - @todo 1121 移除開啟錯誤訊息。
-- @todo 3329 顯示錯誤訊息 CI loading 語言的時候會報錯 先exit，結案後移除。
-- @todo 2200 load 商品 js 有寫好的 記得請對方移過去 ajax(/products)
-- @todo 110002 購物車送出先不檢查必填，測試用
  
 - 前台 view 都放在 index-all-young 資料夾名稱可以改(須改My_controller::indexViewPath)。
 
@@ -97,3 +86,8 @@
 - My controller 新增 $indexViewPath 指定前台 view 資料夾，之後有需求修改名稱即可
 - 前台所有 view 目前放在 index-all-young 資料夾裡
 
+# src bundle
+
+```bash
+yarn bundle
+```
