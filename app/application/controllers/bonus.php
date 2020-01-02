@@ -42,7 +42,12 @@ class Bonus extends MY_Controller
         $this->load->library('/mylib/comment');
         $this->load->library('/mylib/useful');
         $this->data['banner'] = $this->banner_model->getMyAd();
-        $this->setlang=(!empty($_SESSION['LA']))?$_SESSION['LA']['lang']:'TW';        
+        $this->setlang=(!empty($_SESSION['LA']))?$_SESSION['LA']['lang']:'TW';     
+        
+        $this->load->model('language_model', 'mod_language');
+		// language
+		$lang = $this -> mod_language -> converter('20', $this->session-> userdata('lang'));
+		$this ->data = array_merge($this -> data, $lang);
     }
     //前台紅利
     public function dividend(){        
@@ -1645,6 +1650,7 @@ class Bonus extends MY_Controller
     public function sendbonus(){
          //權限判斷
         $this->useful->CheckComp('j_sendbonus');
+        $data['lang'] = $this->data;
         //view
         $this->load->view('bonus/sendbonus', $data);
     }

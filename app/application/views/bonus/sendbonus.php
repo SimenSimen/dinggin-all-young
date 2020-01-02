@@ -90,7 +90,7 @@
     <tr style="text-align:right;">
       <td style="width:96%;">
         <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/bonus/sendbonus_list'">
-          紅利發送記錄
+          <?=$lang['BonusSendRecord']?>
         </button>
       </td>
     </tr>
@@ -99,11 +99,11 @@
 
   <div class="config-div">
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">紅利項目</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['BonusItem']?></legend>
 
         <table id="member_list" class="table table-bordered table-condensed">
             <tr>
-                <td class='member_list_title_td'>會員帳號</td>
+                <td class='member_list_title_td'><?=$lang['MemberAccount']?></td>
                 <td class='member_list_input_td'>
                   <? if($dbdata['d_id']!=''):
                       echo $dbdata['sName'].'['.$dbdata['account'].']';
@@ -115,26 +115,26 @@
             </tr>
 
             <tr>
-                <td class='member_list_title_td'>項目類型</td>
+                <td class='member_list_title_td'><?=$lang['ItemType']?></td>
                 <td class='member_list_input_td'>
                   <? if($dbdata['d_id']!=''):
                     echo $dbdata['d_type'];
                   else:?>
                   <input type="radio" value="1" name="d_type" id="iClass0" />
-                  <label for="iClass0" id="iClassLabel0" class="CheckLabel">新增紅利</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <label for="iClass0" id="iClassLabel0" class="CheckLabel"><?=$lang['AddBonus']?></label>&nbsp;&nbsp;&nbsp;&nbsp;
                   <input type="radio" value="2" name="d_type" id="iClass1" />
-                  <label for="iClass1" id="iClassLabel1" class="CheckLabel">扣除紅利</label>
+                  <label for="iClass1" id="iClassLabel1" class="CheckLabel"><?=$lang['DeductBonus']?></label>
                   <?endif;?>
                 </td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>點數</td>
+                <td class='member_list_title_td'><?=$lang['Point']?></td>
                 <td class='member_list_input_td'>
                   <input type="number" min='0' value="<? echo $dbdata['d_bonus']?>" name="d_bonus"/>
                 </td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>說明</td>
+                <td class='member_list_title_td'><?=$lang['Description']?></td>
                 <td class='member_list_input_td'>
                   <textarea name="d_content"><? echo $dbdata['d_content']?></textarea>
                 </td>
@@ -144,7 +144,7 @@
               <input type="hidden" name="dbname" value="dividend_log">
 
               <input type="hidden" name="d_id" value="<?=$dbdata['d_id']?>">
-              <input class="btn btn-info btn-large" type="submit" style="width: 100px;font-size: 18px;" value='確定'>
+              <input class="btn btn-info btn-large" type="submit" style="width: 100px;font-size: 18px;" value='<?=$lang['Confirm']?>'>
             </td>
           </tr>       
         </table>
