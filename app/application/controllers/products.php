@@ -30,6 +30,12 @@ class Products extends MY_Controller
 		$this->load->model('language_model', 'mod_language');
 		$lang = $this->mod_language->converter('14', $this->session->userdata('lang'));
 		$this->data = array_merge($this->data, $lang);
+
+		// language
+		$lang = $this -> mod_language -> converter('20', $this->session-> userdata('lang'));
+		$this ->data = array_merge($this -> data, $lang);
+
+
 		//helper
 		$this->load->helper('url');
 		//library
@@ -792,7 +798,7 @@ class Products extends MY_Controller
 	{
 		//權限判斷
 		$this->useful->CheckComp('j_comlist');
-
+		$data['lang'] = $this->data;
 		//資料庫名稱
 		$data['dbname'] = $dbname = 'product_class';
 

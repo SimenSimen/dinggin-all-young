@@ -92,10 +92,10 @@
       <td style="width:1%;">
         <!-- <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/bonus/invoice_info'"> -->
         <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_info'">
-          新增分類
+          <?=$lang['AddClass']?>
         </button>
         <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/<?=$DataName?>/products_theme_sort'">
-          分類排序
+          <?=$lang['SortClass']?>
         </button>
       </td>
     </tr>
@@ -106,13 +106,13 @@
   <table >
     <tr>
       <td>
-        <input type="text" name="prd_cname" placeholder="請輸入分類名稱">
+        <input type="text" name="prd_cname" placeholder="<?=$lang['InputClassNamePlease']?>">
         <select name="d_enable" >
-          <option value="" <?=($d_enable=='')?'selected':'';?>>請選擇狀態...</option>
-          <option value="Y" <?=($d_enable=='Y')?'selected':'';?>>公開</option>
-          <option value="N" <?=($d_enable=='N')?'selected':'';?>>隱藏</option>
+          <option value="" <?=($d_enable=='')?'selected':'';?>><?=$lang['ChooseStatusPlease']?>...</option>
+          <option value="Y" <?=($d_enable=='Y')?'selected':'';?>><?=$lang['Show']?></option>
+          <option value="N" <?=($d_enable=='N')?'selected':'';?>><?=$lang['Hide']?></option>
         </select>
-        <input type="submit" value="搜尋" id="search_action" style=" font-size:14px;">
+        <input type="submit" value="<?=$lang['Search']?>" id="search_action" style=" font-size:14px;">
       </td>
     </tr>
   </table>
@@ -121,12 +121,12 @@
   <table id='member_list' class='table table-hover table-bordered table-condensed' style="width:80%;">
       
     <tr id='member_list_title_tr'>
-      <td>分類名稱</td>
-      <td>搶購時間</td>
-      <td>設定限時搶購</td>
-      <td>修改</td>
-      <td>複製</td>
-      <td>刪除</td>
+      <td><?=$lang['ClassName']?></td>
+      <td><?=$lang['SnapUp']?></td>
+      <td><?=$lang['SetSnapUp']?></td>
+      <td><?=$lang['Modify']?></td>
+      <td><?=$lang['Copy']?></td>
+      <td><?=$lang['Delete']?></td>
     </tr>
 
     <!--for-->
@@ -136,18 +136,18 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">限時搶購時間設定</h5>
+              <h5 class="modal-title" id="exampleModalLabel"><?=$lang['SnapUpEdit']?></h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              開始時間<input type="datetime-local" id="start_at"><br>
-              結束時間<input type="datetime-local" id="end_at">
+              <?=$lang['StartTime']?><input type="datetime-local" id="start_at"><br>
+              <?=$lang['EndTime']?><input type="datetime-local" id="end_at">
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-              <button type="button" class="btn btn-primary" onclick="enable()">確定</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"><?=$lang['Cancel']?></button>
+              <button type="button" class="btn btn-primary" onclick="enable()"><?=$lang['Confirm']?></button>
             </div>
           </div>
         </div>
@@ -158,18 +158,18 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">限時搶購時間編輯</h5>
+              <h5 class="modal-title" id="exampleModalLabel"><?=$lang['SnapUpEdit']?></h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              開始時間<input type="datetime-local" id="start_at_2"><br>
-              結束時間<input type="datetime-local" id="end_at_2">
+              <?=$lang['StartTime']?><input type="datetime-local" id="start_at_2"><br>
+              <?=$lang['EndTime']?><input type="datetime-local" id="end_at_2">
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-              <button type="button" class="btn btn-primary" onclick="edit()">確定</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"><?=$lang['Cancel']?></button>
+              <button type="button" class="btn btn-primary" onclick="edit()"><?=$lang['Confirm']?></button>
             </div>
           </div>
         </div>
@@ -187,18 +187,18 @@
               </td> 
               <td class='center_td white_td'> 
               <?if ($value['is_hot'] == 1) {?>
-                <a href="javascript:void(0);" class="btn btn-default" onclick="cancel(<?=$prd_cid?>)">關閉</a>
+                <a href="javascript:void(0);" class="btn btn-default" onclick="cancel(<?=$prd_cid?>)"><?=$lang['Close']?></a>
 
                 <a href="javascript:void(0);" class="btn btn-warning" data-toggle="modal"
                   data-target="#exampleModal2" 
                   onclick="setID(<?=$prd_cid?>);"
                 >
-                  編輯
+                <?=$lang['Edit']?>
                 </a>
               <?} else {?>
                 <!-- Button trigger modal -->
                 <a href="javascript:void(0);" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="setID(<?=$prd_cid?>)">
-                  開啟
+                  <?=$lang['Open']?>
                 </a>
               <? } ?>
             </td>       
@@ -236,12 +236,12 @@
                     data-target="#exampleModal2" 
                     onclick="setID(<?=$value_sub['prd_cid']?>);"
                   >
-                    編輯
+                    <?=$lang['Edit']?>
                   </a>
                 <?} else {?>
                   <!-- Button trigger modal -->
                   <a href="javascript:void(0);" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="setID(<?=$value_sub['prd_cid']?>)">
-                    開啟
+                    <?=$lang['Open']?>
                   </a>
                 <? } ?>
             </td>
@@ -266,7 +266,7 @@
     <?php endif; ?>
   <input type="hidden" name="ToPage" id="ToPage" value="<?=$ToPage?>">
   </table>
-  <?=str_replace('筆','大分類, 全部'.$total.'筆',$page)?>
+  <?=str_replace('筆',' ' . $lang['BigClass'] . ', '.$lang['Total'].$total.$lang['Records'],$page)?>
   </form>
 <p style="height:200px;"></p>
 
@@ -306,12 +306,12 @@
   }
 
   const cancel = (id) => {
-    if (confirm('確定要結束限時搶購？')) {
+    if (confirm('<?=$lang['ConfirmToStopSnapUp']?>')) {
       $.ajax({
         url: `/products/cancel_buying/${id}`,
         dataType: 'JSON',
         success: response => {
-          alert('取消成功');
+          alert('<?=$lang['DeleteSuccess']?>');
           location.reload();
         }
       })

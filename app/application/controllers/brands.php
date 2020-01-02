@@ -29,6 +29,8 @@ class Brands extends MY_Controller
 		$this->load->model('language_model', 'mod_language');
 		$lang = $this->mod_language->converter('14', $this->session->userdata('lang'));
 		$this->data = array_merge($this->data, $lang);
+
+
 		//helper
 		$this->load->helper('url');
 		//library
@@ -106,6 +108,12 @@ class Brands extends MY_Controller
 		$this->useful->CheckComp('j_brands');
 		$img_url = '/uploads/000/000/0000/0000000000/brands/';
 		$img_s_url = '/uploads/000/000/0000/0000000000/brands-s/';
+
+		// var_dump($this->setlang);
+		// $lang = $this->lmodel->config('9999', $this->setlang);
+		// var_dump($lang);
+		// var_dump($this->data);
+		
 
 		//資料庫名稱
 		$data['dbname'] = $dbname = 'product_brand';
