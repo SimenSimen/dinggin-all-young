@@ -102,15 +102,15 @@
     <tr>
       <td>
         <select name="member_d_is_member">
-          <option value="">請選擇會員身份...</option>
+          <option value=""><?=$lang['SelectMemberRolePlease']?>...</option>
           <?php foreach($bytype as $key=>$val):?>
           	<option value="<?=$key;?>" <?=((string)$key==(string)$_SESSION["AT"]["where"]["member_d_is_member"])?'selected':'';?>><?=$val;?></option>
           <?php endforeach;?>
         </select><BR><BR>
-        <a href="javascript:void(0);" title="清除起始日期" class="clear_date" rel="date_start">訂單起始日期：</a><input name="date_start_member" id="date_start_member" value="<?php echo $_SESSION["AT"]["where"]["date_start_member"];?>" placeholder="訂單起始日期" maxlength='10' class="date-object" type="date" readonly="true"/>
-     	<a href="javascript:void(0);" title="清除結束日期" class="clear_date" rel="date_end">訂單結束日期：</a><input name="date_end_member" id="date_end_member" value="<?php echo $_SESSION["AT"]["where"]["date_end_member"];?>" placeholder="訂單結束日期" maxlength='10' class="date-object" type="date" readonly="true"/>
-        <input type="text" name="txt_member" placeholder="關鍵字" value="<?=$_SESSION["AT"]["where"]["txt_member"];?>">
-        <input type="submit" value="搜尋" style=" font-size:14px;"  onclick="$(this).closest('form').submit()"/>
+        <a href="javascript:void(0);" title="<?=$lang['CleanDateStart']?>" class="clear_date" rel="date_start"><?=$lang['OrdersDateStart']?>：</a><input name="date_start_member" id="date_start_member" value="<?php echo $_SESSION["AT"]["where"]["date_start_member"];?>" placeholder="訂單起始日期" maxlength='10' class="date-object" type="date" readonly="true"/>
+     	<a href="javascript:void(0);" title="<?=$lang['CleanDateEnd']?>" class="clear_date" rel="date_end"><?=$lang['OrdersDateEnd']?>：</a><input name="date_end_member" id="date_end_member" value="<?php echo $_SESSION["AT"]["where"]["date_end_member"];?>" placeholder="訂單結束日期" maxlength='10' class="date-object" type="date" readonly="true"/>
+        <input type="text" name="txt_member" placeholder="<?=$lang['Keyword']?>" value="<?=$_SESSION["AT"]["where"]["txt_member"];?>">
+        <input type="submit" value="<?=$lang['Search']?>" style=" font-size:14px;"  onclick="$(this).closest('form').submit()"/>
         <?php /*?><input id="excel_action" type="button" style="font-size: 14px;" value='匯出'><?php */?>
       </td>
     </tr>
@@ -120,12 +120,12 @@
   <table id='member_list' class='table table-hover table-bordered table-condensed' style="width:80%;">
       
     <tr id='member_list_title_tr'>		
-      <td>會員姓名</td>
-      <td>會員帳號</td>
-      <td>會員身份</td>
-      <td class="sort" rel="total_count"><a href="javascript:void(0);" style="color:#FFFFFF">下單數&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_count"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
-      <td class="sort" rel="total_price"><a href="javascript:void(0);" style="color:#FFFFFF">銷售額&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_price"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
-      <td>明細</td>
+      <td><?=$lang['MemberName']?></td>
+      <td><?=$lang['MemberAccount']?></td>
+      <td><?=$lang['MemberRole']?></td>
+      <td class="sort" rel="total_count"><a href="javascript:void(0);" style="color:#FFFFFF"><?=$lang['OrderAmount']?>&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_count"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
+      <td class="sort" rel="total_price"><a href="javascript:void(0);" style="color:#FFFFFF"><?=$lang['Sales']?>&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_price"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
+      <td><?=$lang['Detail']?></td>
     </tr>
 
     <!--for-->
