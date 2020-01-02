@@ -108,7 +108,11 @@
 
 #### 回傳說明
 
-修改後的數量
+|   參數   |  型態   | 說明  |
+| :------: | :-----: | :---: |
+| `total`  | `float` | 總額  |
+| `amount` |  `int`  | 數量  |
+| `price`  | `float` | 價錢  |
 
 <hr>
 
@@ -126,11 +130,16 @@
 
 #### 回傳說明
 
-|     參數     |   型態    |    說明    |
-| :----------: | :-------: | :--------: |
-| `dataTotal`  |   `int`   |   總金額   |
-| `only_money` |   `int`   |    現金    |
-| `dataBonus`  | `decimal` | 可獲得紅利 |
+|         參數         |   型態    |    說明    |
+| :------------------: | :-------: | :--------: |
+|     `dataTotal`      |   `int`   |   總金額   |
+|     `only_money`     |   `int`   |    現金    |
+|     `dataBonus`      | `decimal` | 可獲得紅利 |
+|    `use_dividend`    | `decimal` |  紅利折抵  |
+| `use_shopping_money` | `decimal` | 使用購物金 |
+
+
+
 
 <hr>
 

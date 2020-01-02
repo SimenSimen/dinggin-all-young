@@ -67,10 +67,10 @@
                                 </select>
                             </div>
                             <div class="tt-quantity">
-                                <a href="#" class="tt-col-one" data-value="tt-col-one"></a>
-                                <a href="#" class="tt-col-two" data-value="tt-col-two"></a>
-                                <a href="#" class="tt-col-three" data-value="tt-col-three"></a>
-                                <a href="#" class="tt-col-four" data-value="tt-col-four"></a>
+                                <a href="javascript:void(0);" class="tt-col-one" data-value="tt-col-one"></a>
+                                <a href="javascript:void(0);" class="tt-col-two" data-value="tt-col-two"></a>
+                                <a href="javascript:void(0);" class="tt-col-three" data-value="tt-col-three"></a>
+                                <a href="javascript:void(0);" class="tt-col-four" data-value="tt-col-four"></a>
                                 <!-- <a href="#" class="tt-col-six" data-value="tt-col-six"></a> -->
                             </div>
                         </div>

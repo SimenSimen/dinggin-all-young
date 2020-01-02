@@ -74,12 +74,16 @@ class Index extends MY_Controller
 			$data['indexLang'] = $this->lmodel->config(1, $this->setlang);
 
 			$data['isSaleMember'] = false;
-
+			$data['faIds'] = [];
 			if ($data['isLogin']) {
 				$this->load->model('member_model', 'memberModel');
 				$buyerId = $_SESSION['MT']['by_id'];
 				$data['userData'] = $this->mymodel->OneSearchSql('buyer', '*', array('by_id' => $buyerId));
 				$data['isSaleMember'] = $_SESSION['MT']['d_is_member'] == Member_model::BUYER_ROLE_SALE;
+
+				/** Get favorite product id array */
+				$this->load->model('favorite_model', 'favoModel');
+				$data['faIds'] = $this->favoModel->getFavoriteIds($buyerId);
 			}
 
 			/** turn off breadcrumbs */
@@ -88,7 +92,9 @@ class Index extends MY_Controller
 			$data['productPath'] = $this->productPath;
 			$data['newProducts'] = $this->productsModel->pageData(['prd_new' => 'Y'], 1, 100)['data'];
 
-			$data['productCategorys'] = $this->productsClassModel->getList($this->setlang, ['is_hot' => '1']);
+			$data['productCategorys'] = $this->productsClassModel->getList($this->setlang, ['is_hot' => '1'], 6);
+
+			$data['catePath'] = '/uploads/000/000/0000/0000000000/products_class/';
 
 			$this->load->view($this->indexViewPath . '/header', $data);
 			$this->load->view($this->indexViewPath . '/index', $data);

@@ -9,9 +9,9 @@
                         <ul class="products-list list-h">
 
                             <?php foreach ($favorite_data as $item) : ?>
-                                <li class="item wow fadeIn" data-wow-delay="0.1s">
+                                <li class="wishlist-item item wow fadeIn" data-wow-delay="0.1s">
                                     <div class="box">
-                                        <a class="btn delete" title="" id="" name="" value="" ref="">
+                                        <a class="btn delete" onclick="ajax_add_favorate_wishlist('<?= $item['prd_id'] ?>',this)">
                                             <i name="icon02" class="icon-close"></i>
                                         </a>
                                         <a href="<?= base_url('/products/detail/' . $item['prd_id']) ?>">
@@ -21,7 +21,7 @@
                                             <div class="offers offers-pink">$<?= $item['price'] ?></div>
                                         </a>
                                         <div class="wish-btn green">
-                                            <a href="#">ADD TO CART</a>
+                                            <a href="javascript:void(0);" data-toggle="modal" onclick="cart_add_in_list('<?= $item['prd_id'] ?>',1);">ADD TO CART</a>
                                         </div>
                                     </div>
                                 </li>

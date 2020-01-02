@@ -126,6 +126,10 @@ class MY_Controller extends CI_Controller
 		/** nav element start*/
 		/** register the brand list */
 		$this->load->vars(['brandList' => $this->productModel->brandList($this->setlang)]);
+		$this->load->vars([
+			'brandPath' => '/uploads/000/000/0000/0000000000/brands/',
+			'brandsPath' => '/uploads/000/000/0000/0000000000/brands-s/',
+		]);
 
 		/** register cart info */
 		$cartItems = !empty($_SESSION['join_car']) ? $_SESSION['join_car'] : [];

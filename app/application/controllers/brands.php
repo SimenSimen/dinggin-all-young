@@ -96,7 +96,7 @@ class Brands extends MY_Controller
 			$dbdata['prd_cid'] = '';
 			$dbdata['brand_image'] = '';
 		}
-		
+
 		$data['dbdata'] = $dbdata;
 		//KV
 		$kv = $this->mymodel->GetConfig('', '3');
@@ -129,10 +129,10 @@ class Brands extends MY_Controller
 
 		//echo json_encode($qpage);exit;
 		//$dbdata = $this -> mod_admin -> select_from_group_by($qpage['result'],$this->setlang);
-		
+
 		$data['brand_content'] = $brand_content = !empty($_POST['brand_content']) ? $_POST['brand_content'] : '';
-		$dbdata = $this->select_product_brand_data($qpage['result'], $this->session->userdata('lang'), $status,'',$brand_content);
-		
+		$dbdata = $this->select_product_brand_data($qpage['result'], $this->session->userdata('lang'), $status, '', $brand_content);
+
 
 		foreach ($dbdata as $key => $value) {
 			$image = explode(',', $value['brand_image']);
@@ -212,9 +212,9 @@ class Brands extends MY_Controller
 	 * @param integer $id
 	 * @return void
 	 */
-	public function index($id = 0)
+	public function index($brandId = null)
 	{
-		$langPage = $this->lmodel->config('9', $this->setlang);
+		$this->lang = $this->lmodel->config('9', $this->setlang);
 
 		/**
 		 * load necessary package
@@ -223,20 +223,75 @@ class Brands extends MY_Controller
 		$this->load->model('product_class_model', 'productClassModel');
 		$this->load->library('/mylib/comment');
 
-		$data = [];
+		$brandList = @$this->load->get_var('brandList');
 
-		extract(Comment::params(['classId', 'maxPrise', 'minPrise', 'sortType', 'pageNumber'], ['classId' => 0]));
+		if (is_null($brandId)) {
+			$brandData = @$brandList[0];
+		} else {
+			$key = array_search($brandId, array_column($brandList, 'prd_cid'));
+			$key = $key === false ? -1 : $key;
+			$brandData = @$brandList[$key];
+		}
+
+		if (is_null($brandData)) {
+			return $this->useful->AlertPage('/', 'no brand data');
+		}
+
+		$data = [];
+		$data['brandData'] = $brandData;
+
+		extract(Comment::params(['classId', 'maxPrice', 'minPrice', 'sortType', 'pageNumber', 'pageSize'], ['pageNumber' => 1, 'pageSize' => 8]));
 
 		/** product class list */
 		$data['productClasses'] = $this->productClassModel->getList($this->setlang);
 		$data['activeClass'] = $classId;
 
+		/** Product query filter start */
+		$qpage_arr = [
+			'lang_type' => $this->setlang,
+			'd_enable' => 'Y',
+			'prd_active' => 1,
+			'prd_bid' => $brandData['prd_cid'],
+		];
 
-		if ($this->isAjax()) {
-			/** return html */
-			// $this->load->view($this->indexViewPath . '/products/_item_list', $data);
-			/** return array */
-			$this->apiResponse($data);
+		$classId > 0 ? $qpage_arr['prd_cid'] = $classId : '';
+		$keyword ? $qpage_arr['prd_name like'] = ('%' . $keyword . '%') : '';
+		$providerId ? $qpage_arr['supplier_id'] = $providerId : '';
+
+		$priceColumn = 'prd_price00';
+
+		if ($d_spec_type == 1) {
+			$qpage_arr['is_bonus'] = 'N';
+			$priceColumn = 'd_mprice';
+			$sort = $sortType == 1 ? products_model::SORT_M_PRICE_ASC : products_model::SORT_M_PRICE_DESC;
+		} else {
+			$qpage_arr['is_vip'] = 'N';
+			$qpage_arr['is_bonus'] = 'N';
+			$sort = $sortType == 1 ? products_model::SORT_00_PRICE_ASC : products_model::SORT_00_PRICE_DESC;
+		}
+		$minPrice ? $qpage_arr[$priceColumn . ' >='] = $minPrice : '';
+		$maxPrice ? $qpage_arr[$priceColumn . ' <='] = $maxPrice : '';
+
+		$pageData = $this->products_model->pageData($qpage_arr, $pageNumber, $pageSize, $sortType ? $sort : null);
+		$data['pageData'] = $pageData;
+		$data['dbdata'] = $pageData['data'];
+		$ajaxData = $data['dbdata'];
+
+		foreach ($data['dbdata'] as $key => &$value) {
+			$ajaxData[$key]['priceName'] = $value['priceName']	=	($d_spec_type == 1) ? $this->lang['p_price_vip'] : $this->lang['p_price'];
+			$ajaxData[$key]['price'] = $value['price']		=	($d_spec_type == 1) ? $value['d_mprice'] : $value['prd_price00'];
+			$ajaxData[$key]['prd_describe'] = $value['prd_describe'] = str_replace('*#', ',', $value['prd_describe']);
+			$image  = explode(',', $value['prd_image']);
+			$value['prd_image'] = $image[0];
+			$ajaxData[$key]['prd_image'] = $this->Spath . $image[0];
+		}
+
+		/** Get favorite product id array */
+		$this->load->model('favorite_model', 'favoModel');
+		$data['faIds'] = $this->favoModel->getFavoriteIds($by_id);
+
+		if ($data['isAjax'] = $this->isAjax()) {
+			$this->load->view($this->indexViewPath . '/products/_item_list', $data);
 		} else {
 
 			$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
@@ -251,7 +306,7 @@ class Brands extends MY_Controller
 		$d_id = 'd_id';
 		$img_url = '/uploads/000/000/0000/0000000000/brands/';
 		$img_s_url = '/uploads/000/000/0000/0000000000/brands-s/';
-		
+
 		if (!is_dir('.' . $img_url))
 			mkdir('.' . $img_url, 0777);
 		if (!is_dir('.' . $img_s_url))
@@ -293,19 +348,19 @@ class Brands extends MY_Controller
 				//圖檔上傳
 				//model
 				$this->load->model('upload_model', 'mod_upload');
-		
-				if ($_FILES['brand_image']['error']['0'] != 4 ) {
+
+				if ($_FILES['brand_image']['error']['0'] != 4) {
 					unset($_POST['ck_id']);
 					$count = count($_FILES['brand_image']['name']);
 					$count_s = count($_FILES['brand_image_s']['name']);
 					$img = $this->mod_upload->upload_brand_arr($_FILES['brand_image'], $img_url, $count);
-				
+
 					foreach ($img as $key => $value) {
 						if (!empty($value['path'])) {
 							$img_path[] = $value['path'];
 						}
-						
-						if ($_FILES['brand_image_s']['error']['0'] == 4 ) {
+
+						if ($_FILES['brand_image_s']['error']['0'] == 4) {
 							unset($_POST['x1d_Files' . $key]);
 							unset($_POST['y1d_Files' . $key]);
 							unset($_POST['x2d_Files' . $key]);
@@ -325,8 +380,6 @@ class Brands extends MY_Controller
 							}
 						}
 					}
-
-					
 				} else {
 					$_POST['brand_image'] = $_POST['brand_image_hide'];
 
@@ -342,7 +395,7 @@ class Brands extends MY_Controller
 					unset($_POST['ck_id_s']);
 					$count_s = count($_FILES['brand_image_s']['name']);
 					$img_s = $this->mod_upload->upload_brand_arr($_FILES['brand_image_s'], $img_s_url, $count_s);
-					
+
 					foreach ($img_s as $key => $value) {
 						if (!empty($value['path'])) {
 							$img_s_path[] = $value['path'];
@@ -376,7 +429,7 @@ class Brands extends MY_Controller
 
 				unset($_POST['brand_image_hide']);
 				unset($_POST['brand_image_hide_s']);
-				
+
 				//內容
 				$_POST['prd_content'] = str_replace(array("\"", 'youtube.com/watch?v='), array("&quot;", 'youtube.com/embed/'), $_POST['prd_content']);
 
@@ -412,7 +465,7 @@ class Brands extends MY_Controller
 			} else {
 				$data['lang_type'] = $this->session->userdata('lang');
 				$create_id = $this->mmodel->insert_into($dbname, $data);
-				
+
 				if ($create_id)
 					$msg = '新增成功';
 				else

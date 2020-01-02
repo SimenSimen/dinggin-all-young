@@ -186,6 +186,24 @@ class products_model extends CI_Model
 	}
 
 	/**
+	 * get brand data
+	 *
+	 * @param string|int $id
+	 * @param string lang 
+	 * @return array
+	 */
+	public function getBrand($id, $lang)
+	{
+
+		$this->db->where([
+			'prd_cid' => $id,
+			'lang_type' => $lang,
+		]);
+		$query = $this->db->get('product_brand');
+		return $query->result_array();
+	}
+
+	/**
 	 * get product page data
 	 *
 	 * @param array $where

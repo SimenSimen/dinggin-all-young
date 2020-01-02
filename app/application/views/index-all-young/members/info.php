@@ -204,7 +204,7 @@
                                     </div>
 
                                     <input type="hidden" name="dbname" value="<?= $dbname ?>">
-                                    <p class="ml-3"><?= $this->lang['current_have'] ?><span class="color01"><?= number_format(intval($dbdata['d_bonus'])) ?></span><?= $this->lang['dividend'] ?> <span class="color01"><?= number_format(intval($dbdata['d_shopping_money'])) ?></span><?= $this->lang['shopping_gold'] ?></p>
+                                    <p class="ml-3"><?= $this->lang['current_have'] ?><span class="color01"><?= number_format(intval($dbdata['d_dividend'])) ?></span><?= $this->lang['dividend'] ?> <span class="color01"><?= number_format(intval($dbdata['d_shopping_money'])) ?></span><?= $this->lang['shopping_gold'] ?></p>
 
                                     <div class="pagination_box">
                                         <input type="hidden" name="dbname" value="buyer">
@@ -220,5 +220,3 @@
         </div>
     </div>
 </div>
-
-<? $this->load->view($indexViewPath . '/include_ajax_area') ?>

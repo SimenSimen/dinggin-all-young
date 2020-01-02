@@ -44,8 +44,13 @@ class Webpay extends MY_Controller
 		$language = $this->language;
 		$this->lang = $this->lmodel->config('26', $this->setlang);
 
-		$data['use_dividend']	=	$use_dividend	=	$_SESSION['use_dividend'];
-		$data['use_shopping_money']	=	$use_shopping_money	=	$_SESSION['use_shopping_money'];
+		$orderInfo = @$_SESSION['order_info'];
+		if (is_null($orderInfo)) {
+			return $this->useful->AlertPage('/cart');
+		}
+
+		$data['use_dividend'] =	$use_dividend =	$_SESSION['use_dividend'];
+		$data['use_shopping_money']	= $use_shopping_money =	$_SESSION['use_shopping_money'];
 		$by_id = $_SESSION['MT']['by_id'];
 		$buyer = $this->mymodel->OneSearchSql('buyer', 'PID,d_is_member', array('by_id' => $by_id));
 		$PID = $buyer['PID'];
@@ -102,6 +107,7 @@ class Webpay extends MY_Controller
 		}
 
 		$products = '';
+
 		foreach (array_values($productList) as $key => $item) {
 
 			$key = $item['prd_id'];
@@ -160,6 +166,25 @@ class Webpay extends MY_Controller
 		$order_data['shipCost'] = $shipCost;
 		$order_data['atmpayment'] =	'';
 
+		$order_data['zip'] = $orderInfo['zip'];
+		$order_data['country'] = $orderInfo['country'];
+		$order_data['county'] = $orderInfo['county'];
+		$order_data['area'] = $orderInfo['area'];
+		$order_data['address'] = $orderInfo['buyer_address'];
+		$order_data['buyer_note'] = $orderInfo['buyer_note'];
+
+		$order_data['name'] = $orderInfo['buyer_name'];
+		$order_data['email'] = $orderInfo['buyer_email'];
+		$order_data['phone'] = $orderInfo['buyer_phone'];
+
+		$order_data['buyer_note'] = $orderInfo['buyer_note'];
+
+		$order_data['receipt_title'] = @$orderInfo['triple_letter_head'] ? $orderInfo['triple_letter_head'] : '';
+		$order_data['receipt_code'] = @$orderInfo['triple_uniform_numbers'] ? $orderInfo['triple_uniform_numbers'] : '';
+		$order_data['invoice_type'] = $orderInfo['invoice_type'];
+		$order_data['carrier_type'] = @$orderInfo['carrier_type'];
+		$order_data['carrier_number'] = @$orderInfo['vehicle_number'];
+
 		if (!empty($priceSum)) {
 			$oid = $this->cart_model->insertOrder($post_arr, $order_data);
 			$order_id =	$this->useful->get_order_num($oid);
@@ -215,6 +240,7 @@ class Webpay extends MY_Controller
 		// $this->order_mail_store($order_id, $_POST['buyer_email']);
 		$_SESSION['oid'] = $oid;
 
+		unset($_SESSION['order_info']);
 		// 若實際付款金額大於0 導向至智付通；否則直接導向至訂單成立頁面
 		if ($price_money > 0) {
 			$_SESSION['payment_info'] = [

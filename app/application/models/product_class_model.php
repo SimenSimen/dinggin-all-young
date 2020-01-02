@@ -37,10 +37,11 @@ class Product_class_model extends My_Model
      *
      * @param string $lang
      * @param array $where
+     * @param int $limit
      * @param boolean $deep
      * @return array
      */
-    public function getList($lang, $where = [], $deep = false)
+    public function getList($lang, $where = [], $limit = null, $deep = false)
     {
 
         if ($deep) {
@@ -51,8 +52,11 @@ class Product_class_model extends My_Model
                 'lang_type' => $lang,
                 'PID' => 0
             ]);
-            
+
             $this->db->where($where);
+            if ($limit) {
+                $this->db->limit($limit);
+            }
 
             $this->db->order_by("prd_csort", "asc");
         }

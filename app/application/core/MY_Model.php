@@ -2,12 +2,12 @@
 class MY_Model extends CI_Model
 {
 	//語系id
-	public $lang_id='';
+	public $lang_id = '';
 
-    function __construct()
-    {
-        parent::__construct();
-    }
+	function __construct()
+	{
+		parent::__construct();
+	}
 
 	//----------------------------------------------------------------------------------- 
 	// 函數名：lang_lists($lang_id='')
@@ -16,19 +16,16 @@ class MY_Model extends CI_Model
 	// 返回值：DB語言資料表或語言名稱
 	// 備 注 ：無 
 	//----------------------------------------------------------------------------------- 
-	public function lang_lists($lang_id='')
+	public function lang_lists($lang_id = '')
 	{
-		if($id=='')
-		{
+		if ($id == '') {
 			$query = $this->db->get('lang_list');
-			$lang_list=$query->result_array();
+			$lang_list = $query->result_array();
 			return $lang_list;
-		}
-		else
-		{
-			$sql='SELECT name FROM lang_list where lang_id='.$id;	
+		} else {
+			$sql = 'SELECT name FROM lang_list where lang_id=' . $id;
 			$query = $this->db->query($sql);
-			$name=$query->row_array();
+			$name = $query->row_array();
 			return $name;
 		}
 	}
@@ -41,16 +38,13 @@ class MY_Model extends CI_Model
 	// 返回值：data陣列
 	// 備 注 ：無 
 	//----------------------------------------------------------------------------------- 
-	public function select_from($table, $data_where='')
+	public function select_from($table, $data_where = '')
 	{
-		if($data_where != '')
-		{
+		if ($data_where != '') {
 			$this->db->where($data_where);
 			$query = $this->db->get($table);
 			return $query->row_array();
-		}
-		else
-		{
+		} else {
 			$query = $this->db->get($table);
 			return $query->result_array();
 		}
@@ -65,15 +59,12 @@ class MY_Model extends CI_Model
 	// 返回值：多筆data陣列
 	// 備 注 ：無 
 	//----------------------------------------------------------------------------------- 
-	public function select_from_array($table, $data_where, $select_where='')
+	public function select_from_array($table, $data_where, $select_where = '')
 	{
-		if($select_where != '')
-		{
+		if ($select_where != '') {
 			$this->db->select($select_where);
 			$query = $this->db->get_where($table, $data_where);
-		}
-		else
-		{
+		} else {
 			$query = $this->db->get_where($table, $data_where);
 		}
 
@@ -89,7 +80,7 @@ class MY_Model extends CI_Model
 	// 返回值：data陣列
 	// 備 注 ：無 
 	//----------------------------------------------------------------------------------- 
-	public function select_from_where($table, $select_columns, $data_where='')
+	public function select_from_where($table, $select_columns, $data_where = '')
 	{
 		$this->db->select($select_columns);
 		$this->db->where($data_where);
@@ -107,13 +98,13 @@ class MY_Model extends CI_Model
 	// 返回值：data陣列
 	// 備 注 ：無 
 	//----------------------------------------------------------------------------------- 
-	public function select_from_order($table, $order, $o_type, $data_where='')
+	public function select_from_order($table, $order, $o_type, $data_where = '')
 	{
-		if(!empty($data_where))
+		if (!empty($data_where))
 			$this->db->where($data_where);
 		$this->db->order_by($order, $o_type);
-		$query=$this->db->get($table);
-		$data=$query->result_array();
+		$query = $this->db->get($table);
+		$data = $query->result_array();
 		return $data;
 	}
 
@@ -131,15 +122,15 @@ class MY_Model extends CI_Model
 	//----------------------------------------------------------------------------------- 
 	public function select_from_order_limit($table, $select_columns = '', $order, $o_type, $limit_num = '', $data_where = '')
 	{
-		if($select_columns != '')
+		if ($select_columns != '')
 			$this->db->select($select_columns);
-		if(!empty($data_where))
+		if (!empty($data_where))
 			$this->db->where($data_where);
 		$this->db->order_by($order, $o_type);
-		if(!empty($limit_num))
+		if (!empty($limit_num))
 			$this->db->limit($limit_num);
-		$query=$this->db->get($table);
-		$data=$query->result_array();
+		$query = $this->db->get($table);
+		$data = $query->result_array();
 		return $data;
 	}
 
@@ -153,16 +144,15 @@ class MY_Model extends CI_Model
 	//----------------------------------------------------------------------------------- 
 	public function insert_into($table, $data, $data_where = '')
 	{
-		if($data_where != '')
+		if ($data_where != '')
 			$this->db->where($data_where);
 		$query = $this->db->get($table);
 		$exists_check = $query->row_array();
-		if((empty($exists_check) && $data_where != '') || $data_where == '') // 存在檢查 or 不檢查
+		if ((empty($exists_check) && $data_where != '') || $data_where == '') // 存在檢查 or 不檢查
 		{
 
 			$this->db->insert($table, $data);
 			return $this->db->insert_id();
-
 		}
 	}
 
@@ -181,7 +171,6 @@ class MY_Model extends CI_Model
 
 		$this->db->where($target_name, $target_id);
 		return $this->db->update($table, $data);
-
 	}
 	//設定所有資料 慎用
 	public function update_set_all($table, $data)
@@ -217,7 +206,7 @@ class MY_Model extends CI_Model
 		$this->db->where($data_where);
 
 
-		$this->db->delete($table); 
+		$this->db->delete($table);
 	}
 
 	//----------------------------------------------------------------------------------- 
@@ -230,27 +219,23 @@ class MY_Model extends CI_Model
 	//----------------------------------------------------------------------------------- 
 	public function get_next_sort_num($table, $data_where)
 	{
-		$sql='
+		$sql = '
 			SELECT *
-			FROM  `'.$table.'`';
-		foreach ($data_where as $key => $value)
-		{
-			if($key == 0)
-			{
-				$val=(is_numeric($value)) ? $value : '\''.$value.'\'';
-				$sql.=' WHERE `'.$key.'` = '.$val.' ';
-			}
-			else
-			{
-				$sql.=' AND `'.$key.'` = '.$val.' ';
+			FROM  `' . $table . '`';
+		foreach ($data_where as $key => $value) {
+			if ($key == 0) {
+				$val = (is_numeric($value)) ? $value : '\'' . $value . '\'';
+				$sql .= ' WHERE `' . $key . '` = ' . $val . ' ';
+			} else {
+				$sql .= ' AND `' . $key . '` = ' . $val . ' ';
 			}
 		}
-		$sql.=' ORDER BY  `prd_csort` DESC';
+		$sql .= ' ORDER BY  `prd_csort` DESC';
 
-		$query=$this->db->query($sql);
-		$data=$query->result_array();
+		$query = $this->db->query($sql);
+		$data = $query->result_array();
 
-		if(empty($data))
+		if (empty($data))
 			return 0;
 		else
 			return ($data[0]['prd_csort'] + 1);
@@ -265,8 +250,7 @@ class MY_Model extends CI_Model
 	//-----------------------------------------------------------------------------------
 	public function verify_domain($table, $data_where, $table2, $field_name, $direct_name = '')
 	{
-		if($data_where != '')
-		{
+		if ($data_where != '') {
 			$this->db->where($data_where);
 			$query = $this->db->get($table);
 			// return $query->row_array();
@@ -274,33 +258,29 @@ class MY_Model extends CI_Model
 			$this->db->where(array($field_name => $row[$field_name]));
 			$query = $this->db->get($table2);
 			$row = $query->row_array();
-			
-			if($direct_name == '')
+
+			if ($direct_name == '')
 				$url = $row[$table2];
 			else
 				$url = $row[$direct_name];
 
 			$x_url = substr(base_url(), 7, -1);
 
-			if(strnatcmp($url, $x_url) == 0)
+			if (strnatcmp($url, $x_url) == 0)
 				return true;
 			else
 				return false;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
 
 	static function SetValue($var)
 	{
-		if(isset($var))
-		{
-			if(!is_array($var))
-			{
+		if (isset($var)) {
+			if (!is_array($var)) {
 				$var = htmlentities($var);
-				if(get_magic_quotes_gpc())
+				if (get_magic_quotes_gpc())
 					$var = stripcslashes($var);
 
 
@@ -324,14 +304,14 @@ class MY_Model extends CI_Model
 	//----------------------------------------------------------------------------------- 
 	public function inner_join($Table1, $Table2, $select_where = '', $data_where, $relation)
 	{
-		if($select_where != '')
+		if ($select_where != '')
 			$this->db->select($select_where);
 		else
 			$this->db->select('*');
 
 		$this->db->from($Table1);
-		$this->db->join($Table2, $Table1 .".". $relation ."=". $Table2 .".". $relation, 'inner');
-		$this->db->where($data_where); 
+		$this->db->join($Table2, $Table1 . "." . $relation . "=" . $Table2 . "." . $relation, 'inner');
+		$this->db->where($data_where);
 		$query = $this->db->get();
 
 		return $query->result_array();
@@ -344,9 +324,9 @@ class MY_Model extends CI_Model
 	// 返回值：data陣列
 	// 備 注 ：無 
 	//----------------------------------------------------------------------------------- 
-	public function select_query($sql='',$data_where='',$endotherstr='') 
+	public function select_query($sql = '', $data_where = '', $endotherstr = '')
 	{
-		$sql=$sql.' '.$data_where.' '.$endotherstr;
+		$sql = $sql . ' ' . $data_where . ' ' . $endotherstr;
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -366,6 +346,6 @@ class MY_Model extends CI_Model
 		$data = $this->db->count_all_results();
 		return $data;
 	}
-// other methods here....
+	// other methods here....
 
-} 
+}

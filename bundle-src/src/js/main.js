@@ -485,6 +485,9 @@
 	if (blocks.modalAddToCart.length) {
 		modalAddToCart();
 	}
+	if (blocks.ttModalQuickView.length) {
+		modalQuickView();
+	}
 	// Mobile Menu
 	if (blocks.mobileMenuToggle.length) {
 		blocks.mobileMenuToggle.initMM({
@@ -1366,12 +1369,149 @@
 
 	// modal Add ToCart(*close)
 	function modalAddToCart() {
-		blocks.modalAddToCart.on('click', '.btn-close-popup', function(e) {
+		var modal = blocks.modalAddToCart;
+		modal.on('click', '.btn-close-popup', function(e) {
 			$(this)
 				.closest('.modal-content')
 				.find('.modal-header .close')
 				.trigger('click');
 			return false;
+		});
+
+		/** modal show event : render the modal page*/
+		modal.on('shown.bs.modal', function() {
+			var product = blocks.modalAddToCart.data('product');
+
+			if (product) {
+				var uuid = product.uuid;
+				product = product.item;
+				/** add image to moal */
+				modal
+					.find('.cart-item-image')
+					.attr('src', product.prd_image)
+					.attr('data-src', product.prd_image);
+
+				/** add name to moal */
+				modal.find('.cart-item-name').html(product.prd_name);
+				/** add amount to moal */
+				modal.find('.cart-item-amount').html(product.amount);
+				/** add price to moal */
+				modal.find('.cart-item-price').html(product.price);
+
+				var result = topCartProductAdd(product, uuid);
+
+				var itemAmount = result.itemAmount;
+				var itemSum = result.itemSum;
+
+				$('.cart-total-amount').html(itemAmount);
+				$('.cart-total-price').html(itemSum);
+			} else {
+				modal.modal('hide');
+			}
+		});
+	}
+
+	/**
+	 * Added the item to the top cart area
+	 *
+	 * @param object product
+	 * @param string uuid
+	 *
+	 * @return object;
+	 */
+	function topCartProductAdd(product, uuid) {
+		var itemSum = parseFloat(product.price) * parseInt(product.amount);
+
+		var topCartItemTemplate = $('#cart-header-item-template').html();
+
+		var parentSelect =
+			$('#js-tt-stuck-nav').find('.tt-cart-list').length == 0 ? '.tt-desctop-parent-cart' : '#js-tt-stuck-nav';
+
+		/** render teplate */
+		topCartItemTemplate = topCartItemTemplate
+			.replace('{item-id}', product.prd_id)
+			.replace('{item-image}', product.prd_image)
+			.replace('{item-amount}', product.amount)
+			.replace('{item-name}', product.prd_name)
+			.replace('{cart-uuid}', uuid)
+			.replace('{item-price}', product.price);
+
+		$(parentSelect)
+			.find('.tt-cart-list')
+			.append(topCartItemTemplate);
+
+		var topTotalPrice = $(parentSelect).find('.tt-cart-total-price span');
+		topTotalPrice.html((itemSum += parseFloat(topTotalPrice.html())));
+
+		var itemAmount = 0;
+
+		$(parentSelect)
+			.find('.tt-quantity')
+			.each(function(index, ele) {
+				itemAmount += 1;
+			});
+
+		$(parentSelect)
+			.find('.cart-count-total')
+			.html(itemAmount);
+
+		return {
+			itemAmount: itemAmount,
+			itemSum: itemSum,
+		};
+	}
+
+	/** modal quick view open handler */
+	function modalQuickView() {
+		var modal = blocks.ttModalQuickView;
+		/** modal show handler */
+		modal.on('shown.bs.modal', function() {
+			var product = modal.data('product');
+
+			if (product) {
+				var imagesArea = modal.find('.quick-view-image');
+
+				for (var i = 0, length = product.images.length; i < length; i++) {
+					var url = product.images[i];
+					imagesArea.append('<div><img src="' + url + '" data-src="' + url + '" alt=""></div>');
+				}
+
+				/** id  */
+				modal.find('.quick-view-id').html(product.dbdata.prd_id);
+				modal.find('#productID').val(product.dbdata.prd_id);
+
+				/** stock */
+				modal.find('.quick-view-stock').html(product.prd_amount);
+				modal.find('#productNum').size =
+					parseInt(product.dbdata.prd_lock_amount) > parseInt(product.prd_amount)
+						? parseInt(product.prd_amount)
+						: parseInt(product.dbdata.prd_lock_amount);
+
+				/** price */
+				modal.find('.quick-view-price').html(product.price);
+
+				if (parseInt(product.prd_amount) <= 0) {
+					modal.find('#out-of-stock-button').show();
+					modal.find('#add-cart-button').hide();
+				} else {
+					modal.find('#out-of-stock-button').hide();
+					modal.find('#add-cart-button').show();
+				}
+
+				/** spec */
+				var specString = '';
+
+				for (var i = 0, length = product.prd_specification_name.length; i < length; i++) {
+					var name = product.prd_specification_name[i];
+					var content = product.prd_specification_content[i];
+
+					specString += '<div><span>' + name + '</span>' + content + '</div>';
+				}
+
+				modal.find('.quick-view-spec').html(specString);
+
+				/** description */
+			}
 		});
 	}
 
@@ -3745,11 +3885,63 @@ jQuery(function($) {
 		$ttSearch2Results = $ttdesktopHeader.find('.search-results');
 
 	if ($ttsearch2Input.length && $ttSearch2Results.length) {
-		$ttsearch2Input.on('input', function(ev) {
-			if ($(ev.target).val()) {
-				$ttSearch2Results.fadeIn('200');
-			}
+		var counter = 0;
+		var timers = [];
+		$ttsearch2Input.on('keydown', function() {
+			counter += 1;
+			$.each(timers, function(index, value) {
+				clearTimeout(value);
+			});
 		});
+
+		$ttsearch2Input.on('keyup', function(ev) {
+			var tempCounter = counter;
+			timers.push(
+				setTimeout(function() {
+					if (tempCounter === counter) {
+						if ($(ev.target).val()) {
+							if (itemSearch) {
+								itemSearch($(ev.target).val(), function(item) {
+									var itemTemplate = $('#search-item-template').html();
+									var appendHtml = '';
+
+									for (var i = 0, length = item.length; i < length; i++) {
+										var tempString = itemTemplate
+											.replace(/{item-image}/g, item[i].prd_image)
+											.replace(/{item-id}/g, item[i].prd_id)
+											.replace(/{item-name}/g, item[i].prd_name);
+										if (item[i].prd_new === 'Y') {
+											tempString = tempString
+												.replace(/{item-new-price}/g, item[i].price)
+												.replace(/{item-old-price}/g, item[i].prd_price01)
+												.replace(/{price-remover}/g, 'need-remove')
+												.replace(/{new-price-remover}/g, '')
+												.replace(/{old-price-remover}/g, '');
+										} else {
+											tempString = tempString
+												.replace(/{item-price}/g, item[i].price)
+												.replace(/{price-remover}/g, '')
+												.replace(/{new-price-remover}/g, 'need-remove')
+												.replace(/{old-price-remover}/g, 'need-remove');
+										}
+										appendHtml += tempString;
+									}
+
+									$('#search-result-header').html(appendHtml);
+
+									/** remove useless elements */
+									$('#search-result-header')
+										.find('.need-remove')
+										.remove();
+								});
+							}
+							$ttSearch2Results.fadeIn('200');
+						}
+					}
+				}, 300)
+			);
+		});
+
 		$ttsearch2Input.blur(function() {
 			$ttSearch2Results.fadeOut('200');
 		});

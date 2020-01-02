@@ -83,4 +83,6 @@ $route['member/order/(:any)'] = 'gold/order_info/$1';
 $route['forget_pass'] = 'gold/forgot';
 
 $route['cart/checkout'] = 'cart/cart_checkout';
-$route['cart/finish'] = '/cart/cart_checkout_ok';
+$route['cart/finish'] = 'cart/cart_checkout_ok';
+
+$route['brands/(:num)'] = 'brands/index/$1';

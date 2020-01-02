@@ -43,7 +43,7 @@ class Cart extends MY_Controller
 
 	public function index()
 	{
-		$language = $this->language;
+		// $language = $this->language;
 		//語言包
 		$this->lang = $this->lmodel->config('22', $this->setlang);
 		$data['commonsLang'] = $this->lmodel->config('9999', $this->setlang);
@@ -64,8 +64,6 @@ class Cart extends MY_Controller
 				$this->useful->AlertPage('/member/info', $this->lang['c_63']);
 			}
 
-			$data['d_dividend']	= $buyer['d_dividend'];
-			$data['d_shopping_money'] = $buyer['d_shopping_money'];
 			$PID	=	$buyer['PID'];
 
 			if ($by_id <> 4) {
@@ -88,18 +86,44 @@ class Cart extends MY_Controller
 
 			unset($_SESSION['join_car']['']);
 
-			$cartSum = 0;
+			/** summary */
+			$cartRecheck = [];
 
 			foreach ($join_car as $uuid => $item) {
 				$key = $item['prd_id'];
-				$value = $item['amount'];
+				if (!@$cartRecheck[$key]) {
+					$cartRecheck[$key] = $item;
+				} else {
+					$cartRecheck[$key]['amount'] = intval($cartRecheck[$key]['amount']) + intval($item['amount']);
+				}
+			}
+
+			$uuidArray = [];
+			for ($i = 0; $i < count($cartRecheck); $i++) {
+				$uuidArray[] = uniqid('cart_');
+			}
+
+			$cartRecheck = array_combine($uuidArray, array_values($cartRecheck));
+
+			/** overwitre the cart*/
+			$join_car = $cartRecheck;
+			$cartSum = 0;
+			foreach ($join_car as $uuid => $item) {
+				$key = $item['prd_id'];
 
 				$productsDetail 					= 	$this->products_model->productsDetail($key, $bdata['d_spec_type']);
 				$dbdata								= 	$productsDetail['data'];
+
+				$value = intval($item['amount']) > intval($dbdata['prd_lock_amount']) ? intval($dbdata['prd_lock_amount']) : intval($item['amount']);
+				$value = $value > intval($dbdata['prd_amount']) ? intval($dbdata['prd_amount']) : $value;
+				if ($value <= 0) {
+					unset($join_car[$uuid]);
+					continue;
+				}
 				$productList[$uuid]['num']			=	$value;
 				$productList[$uuid]['prd_id']		=	$dbdata['prd_id'];
 				$productList[$uuid]['prd_amount']	=	$dbdata['prd_amount'];
-				$productList[$uuid]['prd_lock_amount']	=	$dbdata['prd_lock_amount'];
+				$productList[$uuid]['prd_lock_amount']	= $dbdata['prd_lock_amount'];
 				$productList[$uuid]['spec']			=	$key;
 				$productList[$uuid]['spec_rename']	=	str_replace('##*', '_', $key);
 				$productList[$uuid]['spec_name']		=	substr($key, strpos($key, '##*') + 3);
@@ -112,6 +136,11 @@ class Cart extends MY_Controller
 
 				$cartSum += $value * $dbdata[$price];
 			}
+
+			$_SESSION['join_car'] = $join_car;
+
+			/** fixed the top icon */
+			$this->load->vars(['cartItems' => $join_car]);
 
 			//地區撈取
 			$data['country'] = $this->mymodel->get_area_data();
@@ -161,9 +190,33 @@ class Cart extends MY_Controller
 			$cost =	$this->mymodel->OneSearchSql('logistics_way', 'business_account', array('lway_id' => 4));
 			$data['freeShip']		=	$cost['business_account'];
 
+			/** dividend and shopping gold */
+			$d_dividend	= floatval($buyer['d_dividend']);
+			$d_shopping_money = floatval($buyer['d_shopping_money']);
+
+			$use_dividend = @$_SESSION['use_dividend'] ? $_SESSION['use_dividend'] : 0;
+			$use_shopping_money = @$_SESSION['use_shopping_money'] ? $_SESSION['use_shopping_money'] : 0;
+
+			$config = $this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 76));
+			$dividendTurn =	(int) $config['d_val'];
+			$use_dividend_cost = $use_dividend / $dividendTurn;
+
+			$only_money = floatval($cartSum - $use_dividend_cost - $use_shopping_money);
+			$only_money = $only_money > 0 ? $only_money : 0;
+
+			if ($only_money === 0) {
+				$use_shopping_money = $cartSum - $use_dividend_cost;
+			}
+
 			$config = $this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 73));
 			$config['d_val'] = ($config['d_val']) / 100;
-			$data['dataBonus'] = $cartSum * $config['d_val'];
+			$data['dataBonus'] = $only_money * $config['d_val'];
+
+			/** dividend and shopping gold */
+
+			$data['d_dividend'] = $d_dividend;
+			$data['d_shopping_money'] = $d_shopping_money;
+			$data['only_money'] = $only_money;
 
 			//view
 			$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
@@ -203,14 +256,20 @@ class Cart extends MY_Controller
 		$itemDetail = $this->products_model->productsDetail($cart[$key]['prd_id'], $bdata['d_spec_type'])['data'];
 
 		$locked = isset($itemDetail['prd_lock_amount']) ? intval($itemDetail['prd_lock_amount']) : 0;
+		$stock = intval($itemDetail['prd_amount']);
 
 		$qty = intval($qty) > 0 ? intval($qty) : 1;
 		$qty = $qty > $locked ? $locked : $qty;
+		$qty = $qty > $stock ? $stock : $qty;
 
 		$cart[$key]['amount'] = $qty;
 		$_SESSION['join_car'][$key] = $cart[$key];
 
-		return $this->apiResponse(['success' => true, 'data' => $cart[$key]['amount']]);
+		return $this->apiResponse(['success' => true, 'data' => [
+			'amount' => $cart[$key]['amount'],
+			'total' => $qty * floatval($cart[$key]['price']),
+			'price' => $cart[$key]['price']
+		]]);
 	}
 
 	/**
@@ -229,10 +288,18 @@ class Cart extends MY_Controller
 
 		extract(Comment::params(['use_dividend', 'use_shopping_money']));
 
-		$joinProducts	=	$this->getCart();
+		if (is_null($use_dividend)) {
+			$use_dividend = @$_SESSION['use_dividend'] ? $_SESSION['use_dividend'] : 0;
+		}
+
+		if (is_null($use_shopping_money)) {
+			$use_shopping_money = @$_SESSION['use_shopping_money'] ? $_SESSION['use_shopping_money'] : 0;
+		}
+
+		$joinProducts = $this->getCart();
 
 		$by_id = $_SESSION['MT']['by_id'];
-		$bdata = $this->mymodel->OneSearchSql('buyer', 'd_spec_type', array('by_id' => $by_id));
+		$bdata = $this->mymodel->OneSearchSql('buyer', '*', array('by_id' => $by_id));
 		$price = ($bdata['d_spec_type'] == 1) ? 'd_mprice' : 'prd_price00';
 		$dataTotal = 0;
 
@@ -246,19 +313,51 @@ class Cart extends MY_Controller
 			$dataTotal = ($totalData[$price] * $value) + $dataTotal;
 		}
 
-		$data['dataTotal'] =	$dataTotal;
-		$config = $this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 76));
-		$dividendTurn =	(int) $config['d_val'];
-		$_SESSION['use_dividend'] =	$use_dividend;
-		$_SESSION['use_shopping_money']	= $use_shopping_money;
-		$use_dividend_cost = $use_dividend / $dividendTurn;
-		$data['only_money'] = number_format($dataTotal - $use_dividend_cost - $use_shopping_money, 2);
+		/** dividend and shopping gold */
+		$d_dividend	= floatval($bdata['d_dividend']);
+		$d_shopping_money = floatval($bdata['d_shopping_money']);
 
-		//紅利
+		$use_dividend  = floatval($use_dividend);
+		$use_shopping_money = floatval($use_shopping_money);
+
+		$_SESSION['use_dividend'] = $use_dividend = $use_dividend > $d_dividend ? $d_dividend : $use_dividend;
+		$_SESSION['use_shopping_money'] = $use_shopping_money = $use_shopping_money > $d_shopping_money ? $d_shopping_money : $use_shopping_money;
+
+		$config = $this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 76));
+
+		$dividendTurn =	(int) $config['d_val'];
+		$use_dividend_cost = $use_dividend / $dividendTurn;
+
+		$only_money = 0;
+
+		if ($dataTotal - $use_dividend_cost > 0) {
+			$only_money = $dataTotal - $use_dividend_cost;
+			$_SESSION['use_dividend'] =	floatval($use_dividend);
+		} else {
+			$only_money = 0;
+			$_SESSION['use_dividend'] =	$dataTotal;
+		}
+
+
+		if ($only_money - $use_shopping_money > 0) {
+			$only_money -= $use_shopping_money;
+			$_SESSION['use_shopping_money']	= floatval($use_shopping_money);
+		} else {
+			$_SESSION['use_shopping_money']	= $only_money;
+			$only_money = 0;
+		}
+
 		$config = $this->mymodel->OneSearchSql('config', 'd_val', array('d_id' => 73));
 		$config['d_val'] = ($config['d_val']) / 100;
-		$data['dataBonus'] = $dataTotal * $config['d_val'];
+		/** dividend and shopping gold */
+		$data['dataTotal'] = $dataTotal;
+		$data['dataBonus'] = $only_money * $config['d_val'];
 
+		$data['only_money'] = number_format($only_money, 2);
+		$data['use_dividend'] = $_SESSION['use_dividend'];
+		$data['use_shopping_money'] = $_SESSION['use_shopping_money'];
+
+		//紅利
 		return $this->apiResponse(['success' => true, 'data' => $data]);
 	}
 
@@ -353,7 +452,7 @@ class Cart extends MY_Controller
 
 		$by_id = $_SESSION['MT']['by_id'];
 
-		$address = $this->mymodel->OneSearchSql('address', 'name,telphone,country,city,countory,address,zip', array('d_id' => $address_id, 'by_id' => $by_id));
+		$address = $this->mymodel->OneSearchSql('address', 'name,telphone,country,city,countory,address,zip,email', array('d_id' => $address_id, 'by_id' => $by_id));
 
 		if (empty($address)) {
 			return $this->apiResponse(['success' => false, 'msg' => 'No address']);
@@ -393,12 +492,10 @@ class Cart extends MY_Controller
 			'by_id',
 			'buyer_name',
 			'buyer_email',
+			'recipient',
+			'select_address',
 			'buyer_phone',
-			'receipt_title',
-			'receipt_code',
-			'receipt_zip',
-			'receipt_address',
-			'buyer_zip',
+			'buyer_postcode',
 			'buyer_address',
 			'shop_id',
 			'buyer_note',
@@ -412,19 +509,17 @@ class Cart extends MY_Controller
 			'carrier_type'
 		]));
 
-		/** check required columns @todo 110002 先不檢查必填*/
-		$required = ['buyer_name', 'buyer_email', 'buyer_phone', 'buyer_zip', 'buyer_address', 'lway_id', 'pway_id', 'country', 'city', 'countory'];
-		$required = [];
-
-		foreach ($required as $variable) {
-			if (is_null($$variable)) {
-				return $this->useful->AlertPage('/cart', 'Please finish the form.');
-			}
-		}
+		$required = ['buyer_name', 'buyer_email', 'buyer_phone', 'buyer_postcode', 'buyer_address', 'lway_id', 'pway_id', 'country', 'city', 'countory', 'invoice_type'];
 
 		//防呆, 直接點入此頁面會跳轉購物車
 		if (empty($by_id)) {
 			$this->useful->AlertPage('/cart');
+		}
+
+		foreach ($required as $variable) {
+			if (is_null($variable)) {
+				return $this->useful->AlertPage('/cart', 'Please finish the form.');
+			}
 		}
 
 		/** invoice handler start */
@@ -432,16 +527,26 @@ class Cart extends MY_Controller
 			case 0:
 				/** electrict invoice */
 				$data['carrier_type'] = intval($carrier_type);
-				$data['vehicle_number'] = $vehicle_number;
+
+				/** member carrier */
+				if ($data['carrier_type'] !== 0) {
+					if (!$vehicle_number) {
+						return $this->useful->AlertPage('/cart', 'Please finish the form.');
+					}
+					$data['vehicle_number'] = $vehicle_number;
+				}
 				break;
 			case 1:
 				/** two-way inovice */
-				$data['carrier_type'] = intval($carrier_type);
-				$data['vehicle_number'] = $vehicle_number;
 				break;
 			case 2:
 				/** triple-way inovice */
 				extract(Comment::params(['triple_letter_head', 'triple_uniform_numbers']));
+
+				if (is_null($triple_letter_head) || is_null($triple_uniform_numbers)) {
+					return $this->useful->AlertPage('/cart', 'Please finish the form.');
+				}
+
 				$data['triple_letter_head'] = $triple_letter_head;
 				$data['triple_uniform_numbers'] = $triple_uniform_numbers;
 				break;
@@ -454,28 +559,52 @@ class Cart extends MY_Controller
 		$data['buyer_name']		 =	$buyer_name;
 		$data['buyer_email']	 =	$buyer_email;
 		$data['buyer_phone']	 =	$buyer_phone;
-		$data['receipt_title']	 =	$receipt_title;
-		$data['receipt_code']	 =	$receipt_code;
-		$data['receipt_zip']	 =	$receipt_zip;
-		$data['receipt_address'] =	$receipt_address;
-		$data['buyer_zip']	 	 =	$buyer_zip;
-		$country				=	$this->mymodel->OneSearchSql('city_category', 's_name', array('s_id' => $country));
-		$data['country']		=	$country['s_name'];
-		$county 				=	$this->mymodel->OneSearchSql('city_category', 's_name', array('s_id' => $city));
-		$data['county']			=	$county['s_name'];
-		$area 					=	$this->mymodel->OneSearchSql('city_category', 's_name', array('s_id' => $countory));
-		$data['area']			=	$area['s_name'];
+		$data['buyer_zip']	 	 =	$buyer_postcode;
+		$countryData				=	$this->mymodel->OneSearchSql('city_category', 's_name', array('s_id' => $country));
+		$data['country']		=	$countryData['s_name'];
+		$countyData 				=	$this->mymodel->OneSearchSql('city_category', 's_name', array('s_id' => $city));
+		$data['county']			=	$countyData['s_name'];
+		$areaData 					=	$this->mymodel->OneSearchSql('city_category', 's_name', array('s_id' => $countory));
+		$data['area']			=	$areaData['s_name'];
 		$data['buyer_address']	=	$buyer_address;
 		$data['shop_id']		=	$shop_id;
 		$use_dividend	=	$_SESSION['use_dividend'];
 		$use_shopping_money	=	$_SESSION['use_shopping_money'];
 		$data['buyer_note']		=	$buyer_note;
 
-		//推薦人
 		$data['by_id'] = $by_id = $_SESSION['MT']['by_id'];
+
+		/** commom address */
+		if (!is_null($recipient) && !is_null($select_address)) {
+
+			$address = $this->mymodel->OneSearchSql('address', '*', array('d_id' => $select_address, 'by_id' => $by_id));
+
+			$adressData = [
+				'by_id' => $by_id,
+				'name' => $buyer_name,
+				'telphone' => $buyer_phone,
+				'zip' => $buyer_postcode,
+				'country' => $country,
+				'city' => $city,
+				'countory' => $countory,
+				'address' => $buyer_address,
+				'update_time' => date('YmdHis'),
+				'create_time' => date('YmdHis'),
+				'email' => $buyer_email,
+			];
+			if (!empty($address)) {
+				unset($adressData['create_time']);
+				$this->mymodel->update_set('address', 'd_id', $select_address, $adressData);
+			} else {
+				$this->mymodel->insert_into('address', $adressData);
+			}
+		}
+
+		//推薦人
 		$buyer = $this->mymodel->OneSearchSql('buyer', 'PID, d_dividend', array('by_id' => $by_id));
 		$data['d_dividend']	= $buyer['d_dividend'];
 		$PID = $buyer['PID'];
+
 		if ($by_id <> 4) {
 			$memberName	= $this->mymodel->OneSearchSql('buyer', 'name', array('by_id' => $PID));
 			$data['memberName']	=	$this->lang['yourAccount'] . '<b>' . $memberName['name'] . '</b>';
@@ -549,6 +678,8 @@ class Cart extends MY_Controller
 			$data['shop_address'] = $member['shop_address'];
 		}
 
+		$_SESSION['order_info'] = $data;
+
 		//view
 		$this->load->view($this->indexViewPath . '/header' . $this->style, $data);
 		$this->load->view($this->indexViewPath . '/cart/process', $data);
@@ -562,7 +693,7 @@ class Cart extends MY_Controller
 		$this->lang = $this->lmodel->config('22', $this->setlang);
 		if ($this->isLogin()) {
 			if (empty($_SESSION['oid'])) { //防呆,直接點入此頁面會跳轉購物車
-				$this->useful->AlertPage('/index/');
+				$this->useful->AlertPage('/');
 			}
 
 			$id = $_SESSION['oid'];
