@@ -713,6 +713,7 @@ class Order extends MY_Controller
 		$this->useful->CheckComp('j_orderinfo');
 		//資料庫名稱
 		$data['dbname']=$dbname='order_details';	
+		$data['lang'] = $this->data;
 		//預設查詢	
 		$search_default_array=array("ToPage","select_type","txt","date_start","date_end","sort","sort_ad","supplier_id");
 		$this->omodel->search_session($search_default_array);

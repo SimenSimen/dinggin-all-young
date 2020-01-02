@@ -100,11 +100,11 @@
   <table >
     <tr>
       <td>
-        <a href="javascript:void(0);" title="清除起始日期" class="clear_date" rel="date_start">訂單起始日期：</a><input  name="date_start" id="date_start" value="<?php echo $_SESSION["AT"]["where"]["date_start"];?>" placeholder="訂單起始日期" maxlength='10' class="date-object" type="date" readonly="true"/>
-     	<a href="javascript:void(0);" title="清除結束日期" class="clear_date" rel="date_end">訂單結束日期：</a><input name="date_end" id="date_end" value="<?php echo $_SESSION["AT"]["where"]["date_end"];?>" placeholder="訂單結束日期" maxlength='10' class="date-object" type="date" readonly="true"/>
-        <input type="text" name="txt" placeholder="關鍵字" value="<?=$_SESSION["AT"]["where"]["txt"];?>">
-        <input type="submit" value="搜尋" style=" font-size:14px;"  onclick="$(this).closest('form').submit()"/>
-        <input id="excel_action" type="button" style="font-size: 14px;" value='匯出'>
+        <a href="javascript:void(0);" title="<?=$lang['CleanDateStart']?>" class="clear_date" rel="date_start"><?=$lang['OrdersDateStart']?>：</a><input  name="date_start" id="date_start" value="<?php echo $_SESSION["AT"]["where"]["date_start"];?>" placeholder="<?=$lang['OrdersDateStart']?>" maxlength='10' class="date-object" type="date" readonly="true"/>
+     	<a href="javascript:void(0);" title="<?=$lang['CleanDateEnd']?>" class="clear_date" rel="date_end"><?=$lang['OrdersDateEnd']?>：</a><input name="date_end" id="date_end" value="<?php echo $_SESSION["AT"]["where"]["date_end"];?>" placeholder="<?=$lang['OrdersDateEnd']?>" maxlength='10' class="date-object" type="date" readonly="true"/>
+        <input type="text" name="txt" placeholder="<?=$lang['Keyword']?>" value="<?=$_SESSION["AT"]["where"]["txt"];?>">
+        <input type="submit" value="<?=$lang['Search']?>" style=" font-size:14px;"  onclick="$(this).closest('form').submit()"/>
+        <input id="excel_action" type="button" style="font-size: 14px;" value='<?=$lang['Export']?>'>
       </td>
     </tr>
   </table>
@@ -112,12 +112,12 @@
   <!--會員資料列表-->
   <table id='member_list' class='table table-hover table-bordered table-condensed' style="width:80%;">
     <tr id='member_list_title_tr'>		
-      <td>品牌</td>
-      <td>商品名稱</td>
-      <td class="sort" rel="price"><a href="javascript:void(0);" style="color:#FFFFFF">商品單價&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="price"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
-      <td class="sort" rel="total_count"><a href="javascript:void(0);" style="color:#FFFFFF">退單數&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_count"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
-      <td class="sort" rel="number"><a href="javascript:void(0);" style="color:#FFFFFF">退貨數&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="number"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></a></td>
-      <td class="sort" rel="total_price"><a href="javascript:void(0);" style="color:#FFFFFF">銷退總額&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_price"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
+      <td><?=$lang['Brand']?></td>
+      <td><?=$lang['ProductName']?></td>
+      <td class="sort" rel="price"><a href="javascript:void(0);" style="color:#FFFFFF"><?=$lang['UnitPrice']?>&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="price"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
+      <td class="sort" rel="total_count"><a href="javascript:void(0);" style="color:#FFFFFF"><?=$lang['BackOrderCount']?>&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_count"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
+      <td class="sort" rel="number"><a href="javascript:void(0);" style="color:#FFFFFF"><?=$lang['BackProductCount']?>&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="number"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></a></td>
+      <td class="sort" rel="total_price"><a href="javascript:void(0);" style="color:#FFFFFF"><?=$lang['BackAmount']?>&nbsp;<i class="fa fa-sort<?php if($_SESSION["AT"]["where"]["sort"]=="total_price"):echo "-".$_SESSION["AT"]["where"]["sort_ad"];endif;?>" aria-hidden="true"></i></td>
       
     </tr>
 
