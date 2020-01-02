@@ -91,120 +91,120 @@
 
   <div class="config-div">
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">訂單資料</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['OrderData']?></legend>
         <table id="member_list" class="table table-bordered table-condensed">
         	<tr>
-              <td class='member_list_title_td'>訂單編號</td>
+              <td class='member_list_title_td'><?=$lang['OrderNo']?></td>
               <td class='member_list_input_td'><?=$dbdata['order_id']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>訂單時間</td>
+              <td class='member_list_title_td'><?=$lang['OrderDate']?></td>
               <td class='member_list_input_td'><?=$dbdata['create_time']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>訂購人姓名</td>
+              <td class='member_list_title_td'><?=$lang['BuyerName']?></td>
               <td class='member_list_input_td'><?=$dbdata['name']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>訂購人手機</td>
+              <td class='member_list_title_td'><?=$lang['BuyerPhone']?></td>
               <td class='member_list_input_td'><?=$dbdata['phone']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>付款狀態</td>
+              <td class='member_list_title_td'><?=$lang['PaymentStatus']?></td>
               <td class='member_list_input_td'><?=isset($status[$dbdata['status']])?$status[$dbdata['status']]:""?>
-                <?php echo ($dbdata['status']=="3")?"&nbsp;&nbsp;匯款後五碼:".$dbdata['atmno']:"";?>
+                <?php echo ($dbdata['status']=="3")?"&nbsp;&nbsp;".$lang['RemitLastFiveYards'].":".$dbdata['atmno']:"";?>
               </td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>訂單狀態</td>
+                <td class='member_list_title_td'><?=$lang['OrderStatus']?></td>
                 <td class='member_list_input_td'><?=isset($product_flow[$dbdata['product_flow']])?$product_flow[$dbdata['product_flow']]:""?></td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>付款方式</td>
+                <td class='member_list_title_td'><?=$lang['Payment']?></td>
                 <td class='member_list_input_td'><?=isset($payment_way[$dbdata['pay_way_id']])?$payment_way[$dbdata['pay_way_id']]:""?></td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>寄送方式</td>
+                <td class='member_list_title_td'><?=$lang['DeliveryMethod']?></td>
                 <td class='member_list_input_td'><?=isset($logistics_way[$dbdata['lway_id']])?$logistics_way[$dbdata['lway_id']]:""?></td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>訂購人信箱</td>
+                <td class='member_list_title_td'><?=$lang['BuyerEmail']?></td>
                 <td class='member_list_input_td'><?=$dbdata['email']?></td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>訂購人地址</td>
+                <td class='member_list_title_td'><?=$lang['BuyerAddress']?></td>
                 <td class='member_list_input_td'><?=$dbdata['county'].$dbdata['area'].$dbdata['address']?></td>
             </tr>
         </table>
     </fieldset>
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">收件人資料</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['ReceiverInfo']?></legend>
         <table id="member_list" class="table table-bordered table-condensed">
             <tr>
-              <td class='member_list_title_td'>收件人姓名</td>
+              <td class='member_list_title_td'><?=$lang['ReceiverName']?></td>
               <td class='member_list_input_td'><?=$dbdata['name_buy']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>收件人手機</td>
+              <td class='member_list_title_td'><?=$lang['ReceiverPhone']?></td>
               <td class='member_list_input_td'><?=$dbdata['phone_buy']?></td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>收件人信箱</td>
+                <td class='member_list_title_td'><?=$lang['ReceiverEmail']?></td>
                 <td class='member_list_input_td'><?=$dbdata['email_buy']?></td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>收件人地址</td>
+                <td class='member_list_title_td'><?=$lang['ReceiverAddress']?></td>
                 <td class='member_list_input_td'><?=$dbdata['zip_buy']." ".$dbdata['county_buy'].$dbdata['area_buy'].$dbdata['address_buy']?></td>
             </tr>
         </table>
     </fieldset>
     <?php if($dbdata['product_flow']=="3" || $dbdata['product_flow']=="5" || $dbdata['product_flow']=="7" || $dbdata['product_flow']=="9"):?>
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">退款資訊</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['RefundInfo']?></legend>
         <table id="member_list" class="table table-bordered table-condensed">
             <tr>
-                <td style="width:120px;" class='center_td white_td'>退款狀態</td>
+                <td style="width:120px;" class='center_td white_td'><?=$lang['RefundStatus']?></td>
                 <td class='center_td white_td'><?=$product_flow[$dbdata['product_flow']]?></td>
             </tr>
             <tr>
-                <td style="width:120px;" class='center_td white_td'>預計退款日</td>
+                <td style="width:120px;" class='center_td white_td'><?=$lang['ExpectedRefundDate']?></td>
                 <td class='center_td white_td'><?=($dbdata["back_date"]=="0000-00-00")?"":$dbdata["back_date"];?></td>
             </tr>
             <tr>
-                <td class='center_td white_td'>退款銀行</td>
+                <td class='center_td white_td'><?=$lang['RefundBank']?></td>
                 <td class='center_td white_td'><?=$dbdata["back_bank"];?></td>
             </tr>
             <tr>
-                <td class='center_td white_td'>退款分行</td>
+                <td class='center_td white_td'><?=$lang['RefundBankBranch']?></td>
                 <td class='center_td white_td'><?=$dbdata["back_bank_branch"];?></td>
             </tr>
             <tr>
-                <td class='center_td white_td'>匯款帳戶</td>
+                <td class='center_td white_td'><?=$lang['RemitAccount']?></td>
                 <td class='center_td white_td'><?=$dbdata["back_name"];?></td>
             </tr>
             <tr>
-                <td class='center_td white_td'>匯款帳號</td>
+                <td class='center_td white_td'><?=$lang['RemitAccountNo']?></td>
                 <td class='center_td white_td'><?=$dbdata["back_account"];?></td>
             </tr>
             <tr>
-                <td class='center_td white_td'>有無稅卡</td>
-                <td class='center_td white_td'><?=$dbdata['tax_card_no'] ? '有' : '無'?></td>
+                <td class='center_td white_td'><?=$lang['HasTaxCard']?></td>
+                <td class='center_td white_td'><?=$dbdata['tax_card_no'] ? $lang['Y'] : $lang['N']?></td>
             </tr>
             <tr>
-                <td class='center_td white_td'>稅卡編號</td>
+                <td class='center_td white_td'><?=$lang['TaxCardNo']?></td>
                 <td class='center_td white_td'><?=$dbdata['tax_card_no']?></td>
             </tr>
          </table>
     </fieldset>
     <?php endif;?>
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">訂購商品明細</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['OrderDetail']?></legend>
         <table id="member_list" class="table table-bordered table-condensed">
             <tr id='member_list_title_tr'>		
-      			<td>商品名稱</td>
-      			<td>價錢</td>
-      			<td>數量</td>
-      			<td>小計</td>
+      			<td><?=$lang['ProductName']?></td>
+      			<td><?=$lang['Price']?></td>
+      			<td><?=$lang['Amount']?></td>
+      			<td><?=$lang['Total']?></td>
     		</tr>
     		<?php if (!empty($oddata)): ?>
         		<?php foreach ($oddata as $key => $value): ?>
@@ -226,7 +226,7 @@
             	</tr>
             <?php endif;?>
     		<tr bgcolor='<?//=$member_auth_color[$key]?>' align='right'>
-            	<td colspan="4" class='center_td white_td'>紅利折抵 <b><?=$dbdata['use_dividend_cost'];?></b> 元，購物金折抵 <b><?=$dbdata['use_shopping_money'];?></b> 元，付款總金額 ：<span style="color:red;font-weight:bold;"><?=number_format($dbdata['price_money'],2)?> 元</span><br>總金額：<span style="color:red;font-weight:bold;"><?=number_format($dbdata['total_price'],2)?> 元</span></td>
+            	<td colspan="4" class='center_td white_td'><?=$lang['BounsDiscount']?> <b><?=$dbdata['use_dividend_cost'];?></b> <?=$lang['Dollar']?>，<?=$lang['Discount']?> <b><?=$dbdata['use_shopping_money'];?></b><?=$lang['Dollar']?> ，<?=$lang['PaymentTotal']?> ：<span style="color:red;font-weight:bold;"><?=number_format($dbdata['price_money'],2)?> <?=$lang['Dollar']?></span><br><?=$lang['PaymentTotal']?>：<span style="color:red;font-weight:bold;"><?=number_format($dbdata['total_price'],2)?> <?=$lang['Dollar']?></span></td>
             </tr>
         </table>
     </fieldset>
@@ -260,7 +260,7 @@
     </fieldset>
   -->
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">備註</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['Note']?></legend>
         <table id="member_list" class="table table-bordered table-condensed">
             <tr bgcolor='<?//=$member_auth_color[$key]?>'>
               <td colspan='3' class='center_td white_td'><textarea readonly name="note" rows="3" cols="75"><?=$dbdata['note']?></textarea></td>
@@ -276,7 +276,7 @@
               		<input type="hidden" name="dbname" value="order">
                   <!-- <input class="btn btn-info btn-large" id="rebuy_order_action" type="button" style="width: 100px;font-size: 18px;" value='建立新訂單'> -->
                   <!-- <input class="btn btn-info btn-large" id="fix_data_action" type="button" style="width: 100px;font-size: 18px;" value='儲存'> -->
-              		<input class="btn btn-info btn-large" id="return_now_action" type="button" style="width: 100px;font-size: 18px;" value='返回列表'>
+              		<input class="btn btn-info btn-large" id="return_now_action" type="button" style="width: 100px;font-size: 18px;" value='<?=$lang['GoBackList']?>'>
             	</td>
           	</tr>
           	</table></div>
