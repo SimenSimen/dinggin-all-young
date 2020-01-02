@@ -855,6 +855,7 @@ class Order extends MY_Controller
 		$this->useful->CheckComp('j_orderinfo');
 		//資料庫名稱
 		$data['dbname']=$dbname='`order`';
+		$data['lang'] = $this->data;
 		
 		//預設查詢
 		$search_default_array=array("ToPage","select_type","txt","product_flow_select","payment_way_select","status_select","logistics_way_select","date_start","date_end","warehouse_select");
