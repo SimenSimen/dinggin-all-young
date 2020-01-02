@@ -82,9 +82,9 @@ class MY_Controller extends CI_Controller
 
 
 		/** temp add @todo 1001*/
-		$this->session->set_userdata('lang', 'ENG');
-		$this->set_language = $this->setlang = 'ENG';
-		$_SESSION['lang'] = 'ENG';
+		// $this->session->set_userdata('lang', 'ENG');
+		// $this->set_language = $this->setlang = 'ENG';
+		// $_SESSION['lang'] = 'ENG';
 
 		//語言包
 		$this->lang_menu = $this->lmodel->config('1', $this->setlang);

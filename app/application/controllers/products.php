@@ -872,6 +872,7 @@ class Products extends MY_Controller
 		$this->useful->CheckComp('j_comlist');
 
 		$data['dbname'] = $dbname = 'product_class';
+		$data['lang'] = $this->data;
 
 		$dbdata = $this->mmodel->select_from($dbname, array('prd_cid' => $id));
 		//20180223
@@ -1184,6 +1185,7 @@ class Products extends MY_Controller
 		$this->useful->CheckComp('j_comdata');
 
 		$data['dbname'] = $dbname = 'product_class';
+		$data['lang'] = $this->data;
 		if (!empty($_POST['sort'])) {
 			foreach ($_POST['sort'] as $key => $value) {
 				$this->mmodel->update_set($dbname, 'prd_cid', $value, ['prd_csort' => $key]);
