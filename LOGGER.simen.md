@@ -79,7 +79,6 @@
 - @todo 1001 強制轉語系，須移除。
 - @todo 1121 移除開啟錯誤訊息。
  
-- 前台 view 都放在 index-all-young 資料夾名稱可以改(須改My_controller::indexViewPath)。
 
 # Remark
 
