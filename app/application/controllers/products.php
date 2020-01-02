@@ -905,6 +905,7 @@ class Products extends MY_Controller
 
 		//資料庫名稱
 		$data['dbname'] = $dbname = 'products';
+		$data['lang'] = $this->data;
 
 		if ((!empty($_POST['product_class']) or !empty($_POST['product_status']) or !empty($_POST['product_hot']) or !empty($_POST['product_new'])) or !empty($_POST['prd_name']) and $_POST['product_status'] != 3 or !empty($_POST['prd_no'])) {
 			if ($_POST['product_status'] == 4) $_POST['product_status'] = 0;
@@ -948,13 +949,13 @@ class Products extends MY_Controller
 		foreach ($dbdata as $key => $value) {
 			$image = explode(',', $value['prd_image']);
 			$dbdata[$key]['prd_image'] = $img_url . $image[0];
-			$dbdata[$key]['prd_new'] = ($value['prd_new'] == 'N') ? '否' : '是';
-			$dbdata[$key]['prd_prebuy'] = ($value['prd_prebuy'] == 'N') ? '否' : '是';
-			$dbdata[$key]['prd_hot'] = ($value['prd_hot'] == 'fa fa-heart-o') ? '否' : '是';
+			$dbdata[$key]['prd_new'] = ($value['prd_new'] == 'N') ? $this->data['N'] : $this->data['Y'];
+			$dbdata[$key]['prd_prebuy'] = ($value['prd_prebuy'] == 'N') ? $this->data['N'] : $this->data['Y'];
+			$dbdata[$key]['prd_hot'] = ($value['prd_hot'] == 'fa fa-heart-o') ? $this->data['N'] : $this->data['Y'];
 			if ($value['prd_active'] == '2')
-				$act = "商品下架";
+				$act = $this->data['Remove'];
 			elseif ($value['prd_active'] == '1')
-				$act = "尚有庫存";
+				$act = $this->data['Sell'];
 			else
 				$act = "商品補貨";
 			$dbdata[$key]['prd_active'] = $act;
@@ -1070,6 +1071,7 @@ class Products extends MY_Controller
 		}
 
 		$data['dbname'] = $dbname = 'products';
+		$data['lang'] = $this->data;
 		$dbdata = $this->mmodel->select_from($dbname, array('prd_id' => $id));
 		//商品特點
 		$data['prd_describe'] = $this->String_Array($dbdata['prd_describe']);

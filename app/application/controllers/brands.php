@@ -30,6 +30,12 @@ class Brands extends MY_Controller
 		$lang = $this->mod_language->converter('14', $this->session->userdata('lang'));
 		$this->data = array_merge($this->data, $lang);
 
+		
+		// language
+		$lang = $this -> mod_language -> converter('20', $this->session-> userdata('lang'));
+		$this ->data = array_merge($this -> data, $lang);
+
+
 
 		//helper
 		$this->load->helper('url');
@@ -82,6 +88,7 @@ class Brands extends MY_Controller
 			$this->useful->AlertPage('/index/login');
 		}
 
+		$data['lang'] = $this->data;
 		$data['dbname'] = $dbname = 'product_brand';
 		$dbdata = $this->mmodel->select_from($dbname, array('prd_cid' => $id));
 
@@ -109,15 +116,9 @@ class Brands extends MY_Controller
 		$img_url = '/uploads/000/000/0000/0000000000/brands/';
 		$img_s_url = '/uploads/000/000/0000/0000000000/brands-s/';
 
-		// var_dump($this->setlang);
-		// $lang = $this->lmodel->config('9999', $this->setlang);
-		// var_dump($lang);
-		// var_dump($this->data);
-		
-
 		//資料庫名稱
 		$data['dbname'] = $dbname = 'product_brand';
-
+		$data['lang'] = $this->data;
 		$data['status'] = $status = !empty($_POST['d_enable']) ? $_POST['d_enable'] : '';
 
 		//分頁程式 start
@@ -136,13 +137,13 @@ class Brands extends MY_Controller
 		foreach ($dbdata as $key => $value) {
 			$image = explode(',', $value['brand_image']);
 			$dbdata[$key]['brand_image'] = $img_url . $image[0];
-			$dbdata[$key]['prd_new'] = ($value['prd_new'] == 'N') ? '否' : '是';
-			$dbdata[$key]['prd_prebuy'] = ($value['prd_prebuy'] == 'N') ? '否' : '是';
-			$dbdata[$key]['prd_hot'] = ($value['prd_hot'] == 'fa fa-heart-o') ? '否' : '是';
+			$dbdata[$key]['prd_new'] = ($value['prd_new'] == 'N') ? $this->data['N'] : $this->data['Y'];
+			$dbdata[$key]['prd_prebuy'] = ($value['prd_prebuy'] == 'N') ? $this->data['N'] : $this->data['Y'];
+			$dbdata[$key]['prd_hot'] = ($value['prd_hot'] == 'fa fa-heart-o') ? $this->data['N'] : $this->data['Y'];
 			if ($value['d_enable'] == 'Y')
-				$act = "上架";
+				$act = $this->data['Sell'];
 			else
-				$act = "下架";
+				$act = $this->data['Remove'];
 			$dbdata[$key]['prd_active'] = $act;
 
 			$dbdata[$key]['setview'] = $value['view'];
@@ -179,6 +180,8 @@ class Brands extends MY_Controller
 		$this->useful->CheckComp('j_brands');
 
 		$data['dbname'] = $dbname = 'product_brand';
+		$data['lang'] = $this->data;
+
 		if (!empty($_POST['sort'])) {
 			foreach ($_POST['sort'] as $key => $value) {
 				$this->mmodel->update_set($dbname, 'prd_cid', $value, ['prd_csort' => $key]);
@@ -403,9 +406,11 @@ class Brands extends MY_Controller
 			}
 
 			if ($id) {
+				$data['lang_type'] = $this->session->userdata('lang');
 				$this->mmodel->update_set($dbname, $d_id, $id, $data);
 				$msg = '修改成功';
 			} else {
+				$data['lang_type'] = $this->session->userdata('lang');
 				$create_id = $this->mmodel->insert_into($dbname, $data);
 				
 				if ($create_id)

@@ -111,28 +111,28 @@
 
   <div class="config-div">
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">商品資料</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['ProductData']?></legend>
 
         <table id="member_list" class="table table-bordered table-condensed">
             <? //if($dbdata['prd_id']!=''):?>
               <tr>
-                <td class='member_list_title_td'>商品狀態</td>
+                <td class='member_list_title_td'><?=$lang['ProductStatus']?></td>
                 <td class="member_list_input_td">
                   <select name='prd_active'  style="width: 66%;">
-                    <option>請選擇變更狀態</option>
-                    <option value='1' <?=($dbdata['prd_active']==1)?'selected':'';?>>尚有庫存</option>
+                    <option><?=$lang['ChooseStatusPlease']?></option>
+                    <option value='1' <?=($dbdata['prd_active']==1)?'selected':'';?>><?=$lang['Sell']?></option>
                     <!--<option value='1' <?=($dbdata['prd_active']==1)?'selected':'';?>>商品補貨</option>-->
-                    <option value='2' <?=($dbdata['prd_active']==2)?'selected':'';?>>商品下架</option>
+                    <option value='2' <?=($dbdata['prd_active']==2)?'selected':'';?>><?=$lang['Remove']?></option>
                   </select>
                 </td>
               </tr>
             <? //endif;?>
             <tr>
               <? if (!$_SESSION['provider']) { ?>
-                <td class='member_list_title_td'>商品供應商</td>
+                <td class='member_list_title_td'><?=$lang['Supplier']?></td>
                 <td class="member_list_input_td">
                   <select name='supplier_id'  style="width: 66%;">
-                    <option>請選擇供應商</option>
+                    <option><?=$lang['ChooseSupplierPlease']?></option>
                     <? foreach ($supplier as $value) {?>
                       <? if ($value['is_provider']) { ?>
                         <option value="<?=$value['id'];?>" <?=($dbdata['supplier_id']==$value['id'])?'selected':'';?> ><?=stripslashes($value['chinese_name']);?></option>
@@ -145,10 +145,10 @@
               <? } ?>
             </tr>
             <tr>
-              <td class='member_list_title_td'>商品分類</td>
+              <td class='member_list_title_td'><?=$lang['ProductClass']?></td>
               <td class='member_list_input_td'>
                 <select name="prd_cid" id="prd_cid">
-                  <option value="0">請選擇</option>
+                  <option value="0"><?=$lang['PleaseChoose']?></option>
                   <?foreach ($protype as $pvalue):?>
                     <option value="<?=$pvalue['prd_cid']?>" <?=($dbdata['prd_cid']==$pvalue['prd_cid'])?'selected':'';?>><?=stripslashes($pvalue['prd_cname'])?></option>
                   <? endforeach;?>
@@ -166,30 +166,30 @@
               </td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>商品條碼</td>
+                <td class='member_list_title_td'><?=$lang['ProductCode']?></td>
                 <td class='member_list_input_td'>
                   <input type="text" class="form-control" name="prd_sn" value='<?=$dbdata['prd_sn']?>'/>
                 </td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>商品編號</td>
+                <td class='member_list_title_td'><?=$lang['ProductNo']?></td>
                 <td class='member_list_input_td'>
                   <input type="text" class="form-control" name="prd_no" value='<?=$dbdata['prd_no']?>'/>
                 </td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>商品名稱</td>
+              <td class='member_list_title_td'><?=$lang['ProductName']?></td>
               <td class='member_list_input_td'>
-                <input type="text" class="form-control" placeholder='最多255個字' name="prd_name" value="<?=stripslashes($dbdata['prd_name'])?>"/>
+                <input type="text" class="form-control" placeholder='<?=$lang['WordLimit']?>' name="prd_name" value="<?=stripslashes($dbdata['prd_name'])?>"/>
               </td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>商品圖片</td>
+              <td class='member_list_title_td'><?=$lang['ProductImage']?></td>
               <td class='member_list_input_td'>
-               <span style="color: red;">請將圖片剪裁至800px*600px再進行上傳，滑鼠左鍵拖曳選擇要的範圍<br>僅允許 png, jpg, gif 檔上傳</span>
+               <span style="color: red;"><?=$lang['ImageLimit']?><br><?=$lang['ImageTypeLimit']?></span>
                 <input type="file" name="prd_image[]" multiple="multiple" id="imgInp"/>
                 <div id="fileList2"></div>
-                <br>原始圖檔:<br>
+                <br><?=$lang['OriginImage']?>:<br>
                 <div id="sort">
                 <? if($dbdata['prd_image']!=''){
                       $image=explode(',',$dbdata['prd_image']);
@@ -206,16 +206,16 @@
             </tr>
 
             <tr>
-              <td class='member_list_title_td'>庫存數量</td>
+              <td class='member_list_title_td'><?=$lang['Stock']?></td>
               <td class='member_list_input_td'>
                 <input type="number" min="1" required class="form-control" name="prd_amount" value='<?=($dbdata['prd_amount']!="")?$dbdata['prd_amount']:"1";?>'/>
               </td>
             </tr>
             <? if (empty($_SESSION['provider'])) { ?>
               <tr>
-                  <td class='member_list_title_td'>單次購買最大數量</td>
+                  <td class='member_list_title_td'><?=$lang['LockNum']?></td>
                   <td class='member_list_input_td'>
-                    <input type="number" min="1" required class="form-control" placeholder='每筆訂單允許的數量(預設值 10)' name="prd_lock_amount" value='<?=($dbdata['prd_lock_amount']!="")?$dbdata['prd_lock_amount']:"10";?>'/>
+                    <input type="number" min="1" required class="form-control" placeholder='<?=$lang['LimitOnEveryOrder']?>' name="prd_lock_amount" value='<?=($dbdata['prd_lock_amount']!="")?$dbdata['prd_lock_amount']:"10";?>'/>
                   </td>
               </tr>
             <? } ?>
@@ -229,39 +229,39 @@
               </tr>
             <? } ?> -->
 			<tr>
-                <td class='member_list_title_td'>安全庫存量</td>
+                <td class='member_list_title_td'><?=$lang['SaftyStock']?></td>
                 <td class='member_list_input_td'>
                   <input type="number" min="1" required class="form-control" name="prd_safe_amount" value='<?=($dbdata['prd_safe_amount']!="")?$dbdata['prd_safe_amount']:"1";?>'/>
                 </td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>建議售價</td>
+                <td class='member_list_title_td'><?=$lang['SalePrice']?></td>
                 <td class='member_list_input_td'>
-                  <input type="number"  min="0.01" step="0.01" required class="form-control" name="prd_price01" placeholder='新臺幣' value='<?=$dbdata['prd_price01']?>' required/>
+                  <input type="number"  min="0.01" step="0.01" required class="form-control" name="prd_price01" placeholder='<?=$lang['NTD']?>' value='<?=$dbdata['prd_price01']?>' required/>
                 </td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>設定售價</td>
+                <td class='member_list_title_td'><?=$lang['SettingPrice']?></td>
                 <td class='member_list_input_td'>
-                  <input type="number" min="0.01" step="0.01" required class="form-control" placeholder='新臺幣' name="prd_price00" value='<?=$dbdata['prd_price00']?>' required/>
+                  <input type="number" min="0.01" step="0.01" required class="form-control" placeholder='<?=$lang['NTD']?>' name="prd_price00" value='<?=$dbdata['prd_price00']?>' required/>
                 </td>
             </tr>
 
             <? if (empty($_SESSION['provider'])) { ?>
               <tr>
-                  <td class='member_list_title_td'>員工價</td>
+                  <td class='member_list_title_td'><?=$lang['EmployeePrice']?></td>
                   <td class='member_list_input_td'>
-                    <input type="number"  min="0.01" step="0.01" required class="form-control" name="d_mprice" placeholder='新臺幣' value='<?=$dbdata['d_mprice']?>' />
+                    <input type="number"  min="0.01" step="0.01" required class="form-control" name="d_mprice" placeholder='<?=$lang['NTD']?>' value='<?=$dbdata['d_mprice']?>' />
                   </td>
               </tr>
             <? } ?>
 
             <? if (empty($_SESSION['provider'])) { ?>
               <tr>
-                  <td class='member_list_title_td'>PV值</td>
+                  <td class='member_list_title_td'><?=$lang['PV']?></td>
                   <td class='member_list_input_td'>
                     <input type="number" min="0" step="0.1" required class="form-control" name="prd_pv" value='<?=$dbdata['prd_pv']?>' />
-                    台幣金額:<span id="bonus"><?=$bonus?></span>
+                    <?=$lang['NTDPrice']?>:<span id="bonus"><?=$bonus?></span>
                   </td>
               </tr>
             <? } ?>
@@ -278,20 +278,20 @@
           <input type="number" class="form-control" min="0" name="market_price" value="<?=$dbdata['market_price']?>" required/>
         </td>
       </tr> -->
-                <td class='member_list_title_td'>成本</td>
+                <td class='member_list_title_td'><?=$lang['Cost']?></td>
                 <td class='member_list_input_td'>
                   <input type="number" min="0" step="1" required class="form-control" name="prd_cost" value='<?=($dbdata['prd_cost']!='' )?$dbdata['prd_cost']:'';?>' />
                 </td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>商品內容</td>
+                <td class='member_list_title_td'><?=$lang['ProductContent']?></td>
                 <td class='member_list_input_td'>
                   <textarea name='prd_content' id=''><?=$dbdata['prd_content']?></textarea>
                 </td>
             </tr>
 
             <tr>
-                <td class='member_list_title_td'>商品特點<br><button type="button" class="btn btn-default" id='add_prd_describe_col'>增加</button></td>
+                <td class='member_list_title_td'><?=$lang['Features']?><br><button type="button" class="btn btn-default" id='add_prd_describe_col'><?=$lang['Add']?></button></td>
                 <td class='table-cell-left' style="vertical-align: top;">
                 <table id='prd_describe_table'>
                   <tbody id='prd_describe_table_tbody'>
@@ -310,7 +310,7 @@
               </td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>介紹影片<br><button type="button" class="btn btn-default" id='add_prd_video_col'>增加</button></td>
+              <td class='member_list_title_td'><?=$lang['IntroVideo']?><br><button type="button" class="btn btn-default" id='add_prd_video_col'><?=$lang['Add']?></button></td>
               <td class='table-cell-left' style="vertical-align: top;">
                   <table id='prd_video_table' style="width: 100%;">
                     <tbody id='prd_video_table_tbody'>
@@ -331,7 +331,7 @@
             </tr>
 
             <tr>
-            <td class='member_list_title_td'>商品規格<br><button type="button" class="btn btn-default" id='add_prd_specification_col'>增加</button></td>
+            <td class='member_list_title_td'><?=$lang['Format']?><br><button type="button" class="btn btn-default" id='add_prd_specification_col'><?=$lang['Add']?></button></td>
             <td class='table-cell-left' style="vertical-align: top;">
               <table id='prd_specification_table' style="width: 100%;">
                 <tbody id='prd_specification_table_tbody'>
@@ -351,15 +351,15 @@
             </td>
           </tr>
           <tr>
-            <td class='member_list_title_td'>保固範圍</td>
+            <td class='member_list_title_td'><?=$lang['WarrantyCoverage']?></td>
             <td class='member_list_input_td'>
-              <input type="text" placeholder='例如：產品功能故障、新品瑕疵等' class="form-control" name="prd_assurance_range" value='<?=$dbdata['prd_assurance_range']?>'/>
+              <input type="text" placeholder='<?=$lang['ExWarrent']?>' class="form-control" name="prd_assurance_range" value='<?=$dbdata['prd_assurance_range']?>'/>
             </td>
           </tr>
           <tr>
-            <td class='member_list_title_td'>保固期限</td>
+            <td class='member_list_title_td'><?=$lang['WarrantyPeriod']?></td>
             <td class='member_list_input_td'>
-              <input type="text"  placeholder='例如：一年' class="form-control" name="prd_assurance_date" value='<?=$dbdata['prd_assurance_date']?>'/>
+              <input type="text"  placeholder='<?=$lang['ExPeriod']?>' class="form-control" name="prd_assurance_date" value='<?=$dbdata['prd_assurance_date']?>'/>
              </td>
           </tr>
 
@@ -467,13 +467,13 @@
 
           <? if (empty($_SESSION['provider'])) { ?>
             <tr>
-                  <td class='member_list_title_td'>是否為特殊商品</td>
+                  <td class='member_list_title_td'><?=$lang['IsSpecial']?></td>
                   <td class='member_list_input_td'>
                     <label class="form-radio">
-                      <input type="radio" name="is_vip" value="Y" <? echo ($dbdata['is_vip']=='Y')?'checked':'';?> > 是
+                      <input type="radio" name="is_vip" value="Y" <? echo ($dbdata['is_vip']=='Y')?'checked':'';?> > <?=$lang['Y']?>
                     </label>
                     <label class="form-radio">
-                      <input type="radio" name="is_vip" value="N" <? echo ($dbdata['is_vip']<>'Y')?'checked':'';?> > 否
+                      <input type="radio" name="is_vip" value="N" <? echo ($dbdata['is_vip']<>'Y')?'checked':'';?> > <?=$lang['N']?>
                     </label>
                   </td>
             </tr>
@@ -481,13 +481,13 @@
 
           <? if (empty($_SESSION['provider'])) { ?>
             <tr>
-                  <td class='member_list_title_td'>是否為紅利商品</td>
+                  <td class='member_list_title_td'><?=$lang['IsBonus']?></td>
                   <td class='member_list_input_td'>
                     <label class="form-radio">
-                      <input type="radio" name="is_bonus" value="Y" <? echo ($dbdata['is_bonus']=='Y')?'checked':'';?> > 是
+                      <input type="radio" name="is_bonus" value="Y" <? echo ($dbdata['is_bonus']=='Y')?'checked':'';?> > <?=$lang['Y']?>
                     </label>
                     <label class="form-radio">
-                      <input type="radio" name="is_bonus" value="N" <? echo ($dbdata['is_bonus']<>'Y')?'checked':'';?> > 否
+                      <input type="radio" name="is_bonus" value="N" <? echo ($dbdata['is_bonus']<>'Y')?'checked':'';?> > <?=$lang['N']?>
                     </label>
                   </td>
             </tr>
@@ -498,7 +498,7 @@
               <input type="hidden" name="d_id" value="<?=$dbdata['prd_id']?>">
               <input type="hidden" name="dbname" value="<?=$dbname?>">
               <input type="hidden" name="lang_type" value="<?=$_SESSION['lang']?>">
-              <input class="btn btn-info btn-large" type="submit" style="width: 100px;font-size: 18px;" value='儲存'>
+              <input class="btn btn-info btn-large" type="submit" style="width: 100px;font-size: 18px;" value='<?=$lang['Save']?>'>
             </td>
           </tr>
         </table>
