@@ -259,7 +259,8 @@ class member_register extends MY_Controller
 	{
 		$this->lang1 = $this->lmodel->config('3', $this->setlang);
 		if ($this->input->post('action') == 'check_code') {
-			$user_data = $this->mymodel->select_page_form('buyer', '', 'by_id, name, check_code', array('by_id' => $this->session->userdata('ready_id')));
+			$by_id = !empty($this->session->userdata('create_id')) ? $this->session->userdata('create_id') : $this->session->userdata('ready_id');
+			$user_data = $this->mymodel->select_page_form('buyer', '', 'by_id, name, check_code', array('by_id' => $by_id));
 			if ($user_data[0]['check_code'] == $this->input->post('check_code')) {
 				//解除帳號限制
 				$this->load->model('login_model');
