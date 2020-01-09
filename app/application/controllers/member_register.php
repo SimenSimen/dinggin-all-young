@@ -264,7 +264,7 @@ class member_register extends MY_Controller
 			if ($user_data[0]['check_code'] == $this->input->post('check_code')) {
 				//解除帳號限制
 				$this->load->model('login_model');
-				$this->mymodel->update_set('buyer', 'by_id', $this->session->userdata('ready_id'), array('check_code' => ''));
+				$this->mymodel->update_set('buyer', 'by_id', $by_id, array('check_code' => ''));
 				$this->session->unset_userdata('ready_id');
 				$this->session->set_userdata('create_id', $user_data[0]['by_id']);
 				//$this->session->set_userdata('create_id', $);
