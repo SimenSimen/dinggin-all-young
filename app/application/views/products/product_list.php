@@ -93,7 +93,7 @@
       <td style="width:1%;">
         <!-- <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/bonus/invoice_info'"> -->
         <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_info'">
-          新增產品
+          <?=$lang['AddProduct']?>
         </button>
         <!-- <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/products/commits'">
           商品提交紀錄
@@ -104,7 +104,7 @@
         -->
         <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_type_sort'">
           <!-- 優選好物排序 -->
-          排序
+          <?=$lang['Sort']?>
         </button>
         <!--
         <button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/<?=$DataName?>/<?=$dbname?>_new_sort'">
@@ -118,7 +118,7 @@
           預購商品排序
         </button> -->
 		<button class="btn btn-default" type="button" onclick="window.location.href='/products/dl_products'">
-          匯出
+          <?=$lang['Export']?>
         </button>
 		
       </td>
@@ -128,8 +128,8 @@
   <table >
     <tr>
       <td>
-        <input type="text" name="prd_no" placeholder="請輸入商品編號">
-        <input type="text" name="prd_name" placeholder="請輸入商品名稱">
+        <input type="text" name="prd_no" placeholder="<?=$lang['InputProductNo']?>">
+        <input type="text" name="prd_name" placeholder="<?=$lang['InputProductName']?>">
        <!-- <select name="product_class">
           <option value="">請選擇商品系列...</option>
           <? foreach ($cdata as $cvalue):?>
@@ -137,9 +137,9 @@
           <?endforeach;?>
         </select> -->
        <select name="product_status" >
-          <option value="" <?=($product_status=='')?'selected':'';?>>請選擇商品狀態...</option>
-          <option value="1" <?=($product_status==1)?'selected':'';?>>上架</option>
-          <option value="2" <?=($product_status==2)?'selected':'';?>>下架</option>
+          <option value="" <?=($product_status=='')?'selected':'';?>><?=$lang['ChooseStatusPlease']?>...</option>
+          <option value="1" <?=($product_status==1)?'selected':'';?>><?=$lang['Sell']?></option>
+          <option value="2" <?=($product_status==2)?'selected':'';?>><?=$lang['Remove']?></option>
           <!-- <option value="1" <?=($product_status==1)?'selected':'';?>>尚有庫存</option>
           <option value="2" <?=($product_status==2)?'selected':'';?>>商品下架</option> -->
           <!--<option value="1" <?=($product_status==1)?'selected':'';?>>商品補貨</option>
@@ -160,7 +160,7 @@
       <option value="N" <?=($product_new=='N')?'selected':'';?>>非新品推薦</option>
     </select> -->
 	   
-        <input type="submit" value="搜尋" id="search_action" style=" font-size:14px;">
+        <input type="submit" value="<?=$lang['Search']?>" id="search_action" style=" font-size:14px;">
        
       </td>
     </tr>
@@ -168,11 +168,11 @@
   <table>
   <tr>
       <td>
-         商品狀態
+         <?=$lang['ProductStatus']?>
          <select name="show_num" id="show_num" >
-          <option value="no">請選擇</option>
-          <option value="1" id="1">上架</option>
-          <option value="2" id="2">下架</option>
+          <option value="no"><?=$lang['PleaseChoose']?></option>
+          <option value="1" id="1"><?=$lang['Sell']?></option>
+          <option value="2" id="2"><?=$lang['Remove']?></option>
           <!-- <option value="1" id="1">尚有庫存</option>
           <option value="2" id="2">商品下架</option> -->
           <!-- <option value="Y" id="Y">加到新品推薦</option>
@@ -184,7 +184,7 @@
           <!-- <option value="del" id="del">刪除</option> -->
           <!--<option value="1">商品補貨</option>-->
         </select>
-        <input type="button" value="修改" style=" font-size:14px;"  onclick="allcheck1()"/>
+        <input type="button" value="<?=$lang['Modify']?>" style=" font-size:14px;"  onclick="allcheck1()"/>
       </td>
     </tr>
   </table>
@@ -193,19 +193,18 @@
   <table id='member_list' class='table table-hover table-bordered table-condensed' style="width:80%;">
       
     <tr id='member_list_title_tr'>
-      <td>選取<input type="checkbox" onclick="check_all(this,'allid[]')"></td>
-      <td>狀態</td>
-      <td>新品推薦</td>
-      <td>好物精選</td>
-      <td>預購商品</td>
-      <td>品名</td>
-      <td>照片</td>
-      <td>價錢</td>
-      <td>庫存量</td>
-      <td>瀏覽人數</td>
-      <td>修改</td>
-      <td>複製</td>
-      <td>刪除</td>
+      <td><?=$lang['Choose']?><input type="checkbox" onclick="check_all(this,'allid[]')"></td>
+      <td><?=$lang['Status']?></td>
+      <td><?=$lang['New']?></td>
+      <td><?=$lang['Choice']?></td>
+      <td><?=$lang['PreOrder']?></td>
+      <td><?=$lang['Name']?></td>
+      <td><?=$lang['Photo']?></td>
+      <td><?=$lang['Price']?></td>
+      <td><?=$lang['Stock']?></td>
+      <td><?=$lang['Edit']?></td>
+      <td><?=$lang['Copy']?></td>
+      <td><?=$lang['Delete']?></td>
     </tr>
 
     <!--for-->
@@ -259,17 +258,17 @@ function allcheck1(){
   var name=$("#"+show).html();
 
   if(show=='no'){
-    alert("請選擇動作");
+    alert("<?=$lang['ChooseActionPlease']?>");
     return '';
   }
   $("input[name='allid[]']:checked").each(function(){   
       str+=$(this).val()+';';   
   })   
   if(str==''){
-      alert('請選取項目');
+      alert('<?=$lang['ChooseItemPlease']?>');
       return  '';
   }
-  if(confirm('確定將勾選的資料變更為'+name+'?')){
+  if(confirm('<?=$lang['ConfirmChange']?>'+name+'?')){
     $.ajax({
         url:'/products/oc_data',
         type:'POST',
@@ -284,7 +283,7 @@ function allcheck1(){
   }
 }
   function del_file(name,id){
-    if(confirm('確定刪除['+name+']資料?'))
+    if(confirm('<?=$lang['ConfirmDelete']?>['+name+']?'))
       window.location.href='/<?=$DataName?>/data_AED/<?=$DataName?>/'+id;
   }
 </script>

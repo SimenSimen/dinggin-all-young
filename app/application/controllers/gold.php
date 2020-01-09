@@ -2805,6 +2805,7 @@ class Gold extends MY_Controller
 	public function setlang()
 	{
 		@session_start();
+		var_dump($_SESSION['lang']);
 		$lang = $_POST['lang'];
 		$type = $_POST['type'];
 		if ($type == 'admin') {
@@ -2813,6 +2814,7 @@ class Gold extends MY_Controller
 		} else {
 			$_SESSION['LA']['lang'] = $lang;
 		}
+		var_dump($_SESSION['lang']);
 	}
 
 	public function qa()

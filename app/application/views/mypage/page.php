@@ -2,8 +2,8 @@
 <div id="pagination">
 	<ul>
 		<?php if($CurrectPage>1):?>
-		<li><a href = "javascript:void(0);" onclick="changepage(1)">&lt;&lt; 第一頁</a></li>
-		<li><a href="javascript:void(0);" onclick="changepage(<?=$CurrectPage-1?>)">&lt;上一頁</a></li>
+		<li><a href = "javascript:void(0);" onclick="changepage(1)">&lt;&lt; <?=isset($lang['FirstPage'])?$lang['FirstPage']:'第一頁'?></a></li>
+		<li><a href="javascript:void(0);" onclick="changepage(<?=$CurrectPage-1?>)">&lt;<?=isset($lang['PrePage'])?$lang['PrePage']:'上一頁'?></a></li>
 		<?php endif;?>
 		<li>
 		<?php if($TotalPage==0):?>
@@ -17,8 +17,8 @@
 		<?php endif;?>
 		</select></li>
 		<?php if($CurrectPage<$TotalPage):?>
-		<li><a href="javascript:void(0);" onclick="changepage(<?=$CurrectPage+1?>)">下一頁 &gt;</a></li>
-		<li><a href="javascript:void(0);" onclick="changepage(<?=$TotalPage?>)" rel="<?php echo $TotalPage;?>">最後一頁 &gt;&gt;</a></li>
+		<li><a href="javascript:void(0);" onclick="changepage(<?=$CurrectPage+1?>)"><?=isset($lang['NextPage'])?$lang['NextPage']:'下一頁'?> &gt;</a></li>
+		<li><a href="javascript:void(0);" onclick="changepage(<?=$TotalPage?>)" rel="<?php echo $TotalPage;?>"><?=isset($lang['LastPage'])?$lang['LastPage']:'最後一頁'?> &gt;&gt;</a></li>
 		<?php endif;?>
 		<li><?php echo $PageView; ?></li>
 	</ul>

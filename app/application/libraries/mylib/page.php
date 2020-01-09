@@ -7,8 +7,14 @@ class Page extends MY_Controller {
 	private $mysql;
 	private $MaxNum=5;  	//顯示頁數
 	private $CenterNum=3;	//中間第幾位
+	
 	public function __construct(){
 		$this->CI =& get_instance();
+
+		parent::__construct();
+		$this->load->model('language_model', 'mod_language');
+		$lang = $this->mod_language->converter('20', $this->session->userdata('lang'));
+		$this->data = array_merge($this->data, $lang);
 		//$this->cf=$cf;
 	}
 	//設定每頁筆數
@@ -98,7 +104,7 @@ class Page extends MY_Controller {
 		//sql語法
 		$PageBox["result"]=" limit ".$PageStar.",".$this->m_pagesize."";
 		//顯示資訊
-		$PageBox["PageView"]="共".$PageBox["TotalPage"]."頁  共 ".$PageBox["TotalRecord"]."筆  目前在第".$PageBox["CurrectPage"]."頁";
+		$PageBox["PageView"]=$this->data['Total'].$PageBox["TotalPage"].$this->data['Pages'] . "  ". $this->data['Total'] .$PageBox["TotalRecord"].$this->data['Records'] . " " . $this->data['Current'] .$PageBox["CurrectPage"].$this->data['Pages'];
 		//到第幾頁內容
 		//$PageBox["PageTo"]=$this->PageTo($PageBox["TotalRecord"]);
         $pt=$this->PageTo($PageBox["TotalRecord"]);

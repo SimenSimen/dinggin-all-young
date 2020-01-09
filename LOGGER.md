@@ -2,6 +2,7 @@
 
 - [須添加的 Sql](/doc/jhong.addSql.md)
 - [相關備註](/doc/jhong.remark.md)
+- [語系sql](/doc/lang_backend.sql)
 
 # 檔案新增紀錄
 

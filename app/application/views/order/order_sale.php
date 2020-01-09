@@ -101,19 +101,19 @@
   <table >
     <tr>
       <td>
-        <a href="javascript:void(0);" title="清除起始日期" class="clear_date" rel="date_start">訂單起始日期：</a><input name="date_start" id="date_start" value="<?php echo $_SESSION["AT"]["where"]["date_start"];?>" placeholder="訂單起始日期" maxlength='10' class="date-object" type="date" readonly="true"/>
-     	<a href="javascript:void(0);" title="清除結束日期" class="clear_date" rel="date_end">訂單結束日期：</a><input name="date_end" id="date_end" value="<?php echo $_SESSION["AT"]["where"]["date_end"];?>" placeholder="訂單結束日期" maxlength='10' class="date-object" type="date" readonly="true"/>
-        <input type="text" name="txt" placeholder="關鍵字" value="<?=$_SESSION["AT"]["where"]["txt"];?>">
-        <input type="submit" value="搜尋" style=" font-size:14px;"  onclick="$(this).closest('form').submit()"/>
-        <input id="excel_action" type="button" style="font-size: 14px;" value='匯出'>
+        <a href="javascript:void(0);" title="<?=$lang['CleanDateStart']?>" class="clear_date" rel="date_start"><?=$lang['OrdersDateStart']?>：</a><input name="date_start" id="date_start" value="<?php echo $_SESSION["AT"]["where"]["date_start"];?>" placeholder="<?=$lang['OrdersDateStart']?>" maxlength='10' class="date-object" type="date" readonly="true"/>
+     	<a href="javascript:void(0);" title="<?=$lang['CleanDateEnd']?>" class="clear_date" rel="date_end"><?=$lang['OrdersDateEnd']?>：</a><input name="date_end" id="date_end" value="<?php echo $_SESSION["AT"]["where"]["date_end"];?>" placeholder="<?=$lang['OrdersDateEnd']?>" maxlength='10' class="date-object" type="date" readonly="true"/>
+        <input type="text" name="txt" placeholder="<?=$lang['Keyword']?>" value="<?=$_SESSION["AT"]["where"]["txt"];?>">
+        <input type="submit" value="<?=$lang['Search']?>" style=" font-size:14px;"  onclick="$(this).closest('form').submit()"/>
+        <input id="excel_action" type="button" style="font-size: 14px;" value='<?=$lang['Export']?>'>
       </td>
     </tr>
     <tr>
       <td>
         <form action="/order/import_order_sale" method="post" enctype="multipart/form-data" id="excel_form" onsubmit="return false;">
-          <span>請上傳欲匯入之excel</span><input type="file" style="font-size: 14px;" name="file" form="excel_form" id="excel">
-          <input type="submit" style="font-size: 14px;" id="import_excel" form="excel_form" value="確認匯入">
-          <a href="<?=base_url().'images/出貨明細範本.xlsx'?>">點我下載範本</a>
+          <span><?=$lang['UploadExcelPlease']?></span><input type="file" style="font-size: 14px;" name="file" form="excel_form" id="excel">
+          <input type="submit" style="font-size: 14px;" id="import_excel" form="excel_form" value="<?=$lang['ImportConfirm']?>">
+          <a href="<?=base_url().'images/'.$lang['Example'].'.xlsx'?>"><?=$lang['ClickToDownloadExample']?></a>
         </form>
       </td>
     </tr>
@@ -123,19 +123,19 @@
   <table id='member_list' class='table table-hover table-bordered table-condensed' style="width:80%;">
       
     <tr id='member_list_title_tr'>	
-      <td>訂單狀態</td>
-      <td>訂單編號</td>
-      <td>訂單日期</td>
-      <td>訂購人</td>
+      <td><?=$lang['OrderStatus']?></td>
+      <td><?=$lang['OrderNo']?></td>
+      <td><?=$lang['OrderDate']?></td>
+      <td><?=$lang['Buyer']?></td>
       <!--<td>訂購人信箱</td>-->
-      <td>付款方式</td>
+      <td><?=$lang['Payment']?></td>
 <!--      <td>寄送方式</td>-->
-      <td>發票資訊</td>
-      <td>物流編號</td>
-      <td>物流公司名稱</td>
-      <td>出貨日期</td>
-      <td>付款狀態</td>
-      <td>明細</td>
+      <td><?=$lang['InvoiceInfo']?></td>
+      <td><?=$lang['DeliveryNo']?></td>
+      <td><?=$lang['DeliveryName']?></td>
+      <td><?=$lang['DeliveryDate']?></td>
+      <td><?=$lang['PaymentStatus']?></td>
+      <td><?=$lang['Detail']?></td>
       <!-- <td>修改</td> -->
       <!--<td>退刷</td>-->
 

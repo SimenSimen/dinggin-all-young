@@ -97,7 +97,7 @@
         </button><?php */?>
       </td>
     </tr>
-    訂購單明細
+    <?=$lang['OrderInfo']?>
   </table>
   
   <table >
@@ -110,44 +110,44 @@
           <?php endforeach;?>
         </select> -->
        <select name="product_flow_select">
-          <option value="">請選擇訂單狀態...</option>
+          <option value=""><?=$lang['SelectOrderStatusPlease']?>...</option>
           <?php foreach($product_flow_search as $key=>$val):?>
           	<option value="<?=$key;?>" <?=((string)$key==(string)$_SESSION["AT"]["where"]["product_flow_select"])?'selected':'';?>><?=$val;?></option>
           <?php endforeach;?>
         </select>
        <select name="payment_way_select">
-          <option value="">請選擇付款方式...</option>
+          <option value=""><?=$lang['SelectPaymentPlease']?>...</option>
           <?php foreach($payment_way as $key=>$val):?>
           	<option value="<?=$key;?>" <?=($key==$_SESSION["AT"]["where"]["payment_way_select"])?'selected':'';?>><?=$val;?></option>
           <?php endforeach;?>
         </select>
        
        <select name="status_select">
-          <option value="">請選擇付款狀態...</option>
+          <option value=""><?=$lang['SelectPayStatusPlease']?>...</option>
           <?php foreach($status as $key=>$val):?>
           	<option value="<?=$key;?>" <?=((string)$key==(string)$_SESSION["AT"]["where"]["status_select"])?'selected':'';?>><?=$val;?></option>
           <?php endforeach;?>
         </select>
 
         <select name="logistics_way_select">
-          <option value="">請選擇寄送方式...</option>
+          <option value=""><?=$lang['SelectDeliveryMethodPlease']?>...</option>
           <?php foreach($logistics_way as $key=>$val):?>
           	<option value="<?=$key;?>" <?=($key==$_SESSION["AT"]["where"]["logistics_way_select"])?'selected':'';?>><?=$val;?></option>
           <?php endforeach;?>
         </select>
 
         <BR><BR>
-        <a href="javascript:void(0);" title="清除起始日期" class="clear_date" rel="date_start">訂單起始日期：</a><input name="date_start" id="date_start" value="<?php echo $_SESSION["AT"]["where"]["date_start"];?>" placeholder="訂單起始日期" maxlength='10' class="date-object" type="date" readonly="true"/>
-     	<a href="javascript:void(0);" title="清除結束日期" class="clear_date" rel="date_end">訂單結束日期：</a><input name="date_end" id="date_end" value="<?php echo $_SESSION["AT"]["where"]["date_end"];?>" placeholder="訂單結束日期" maxlength='10' class="date-object" type="date" readonly="true"/>
+        <a href="javascript:void(0);" title="<?=$lang['CleanDateStart']?>" class="clear_date" rel="date_start"><?=$lang['OrdersDateStart']?></a><input name="date_start" id="date_start" value="<?php echo $_SESSION["AT"]["where"]["date_start"];?>" placeholder="訂單起始日期" maxlength='10' class="date-object" type="date" readonly="true"/>
+     	<a href="javascript:void(0);" title="<?=$lang['CleanDateEnd']?>" class="clear_date" rel="date_end"><?=$lang['OrdersDateEnd']?></a><input name="date_end" id="date_end" value="<?php echo $_SESSION["AT"]["where"]["date_end"];?>" placeholder="訂單結束日期" maxlength='10' class="date-object" type="date" readonly="true"/>
        <select name="txt_type">
-          <option value="">請選擇關鍵字類別...</option>
-          <option value="order_id" <?=('order_id'==$_SESSION["AT"]["where"]["txt_type"])?'selected':'';?>>訂單編號</option>
-          <option value="prd_id" <?=('prd_id'==$_SESSION["AT"]["where"]["txt_type"])?'selected':'';?>>商品編號</option>
-          <option value="prd_name" <?=('prd_name'==$_SESSION["AT"]["where"]["txt_type"])?'selected':'';?>>商品名稱</option>
+          <option value=""><?=$lang['SelectKeywordTypePlease']?>...</option>
+          <option value="order_id" <?=('order_id'==$_SESSION["AT"]["where"]["txt_type"])?'selected':'';?>><?=$lang['OrderNo']?></option>
+          <option value="prd_id" <?=('prd_id'==$_SESSION["AT"]["where"]["txt_type"])?'selected':'';?>><?=$lang['ProductNo']?></option>
+          <option value="prd_name" <?=('prd_name'==$_SESSION["AT"]["where"]["txt_type"])?'selected':'';?>><?=$lang['ProductName']?></option>
         </select> 
-       <input type="text" name="txt" placeholder="關鍵字" value="<?=$_SESSION["AT"]["where"]["txt"];?>">
-        <input type="button" value="搜尋" id="search_action" style=" font-size:14px;">
-        <input id="excel_action" type="button" style="font-size: 14px;" value='匯出'>
+       <input type="text" name="txt" placeholder="<?=$lang['Keyword']?>" value="<?=$_SESSION["AT"]["where"]["txt"];?>">
+        <input type="button" value="<?=$lang['Search']?>" id="search_action" style=" font-size:14px;">
+        <input id="excel_action" type="button" style="font-size: 14px;" value='<?=$lang['Export']?>'>
       </td>
     </tr>
   </table>
@@ -156,25 +156,25 @@
   <table id='member_list' class='table table-hover table-bordered table-condensed' style="width:90%;">
       
     <tr id='member_list_title_tr'>
-   	  <td>訂單狀態<BR>
+   	  <td><?=$lang['OrderStatus']?><BR>
    	    <select name="chang_product_flow" id="chang_product_flow">
-          <option value="">更改狀態..</option>
+          <option value=""><?=$lang['ChangeOrderStatus']?>..</option>
           <? foreach ($product_flow as $key=>$value):?>
             <option value="<?=$key?>"><?=$value?></option>
           <? endforeach;?>
         </select>
       </td>
-      <td>訂單編號</td>
-      <td>訂單日期</td>
-      <td>訂購人</td>
+      <td><?=$lang['OrderNo']?></td>
+      <td><?=$lang['OrderDate']?></td>
+      <td><?=$lang['Buyer']?></td>
       <!--<td>訂購人信箱</td>-->
-      <td>付款方式</td>
+      <td><?=$lang['Payment']?></td>
 <!--      <td>寄送方式</td>-->
-      <td>發票資訊</td>
-      <td>物流資訊</td>
-      <td>出貨日期</td>
-      <td>付款狀態</td>
-      <td>修改</td>
+      <td><?=$lang['InvoiceInfo']?></td>
+      <td><?=$lang['DeliveryInfo']?></td>
+      <td><?=$lang['DeliveryDate']?></td>
+      <td><?=$lang['PaymentStatus']?></td>
+      <td><?=$lang['Modify']?></td>
       <!--<td>退刷</td>-->
     </tr>
     <!--for-->

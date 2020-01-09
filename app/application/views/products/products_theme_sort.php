@@ -28,7 +28,7 @@
 </head>
 <body scroll="yes" style="overflow-x: hidden;overflow: -moz-scrollbars-vertical;">
 <div id="container"><div class="_width">
-   <p style="font-size:20px;">主題推薦排序
+   <p style="font-size:20px;"><?=$lang['ProductClassSort']?>
     <a href="#" class="why">?</a>
     <div class='prompt-box'>
       <p>請拖拉您要排序的主題，然後點選「儲存」</p>
@@ -40,8 +40,8 @@
   <!--主介面區-->
   <form action='/products/products_theme_sort' method='post' name='form_product_hot_order' id='form_product_hot_order'>
   <p style="width: 100%; border-radius: 5px; margin-left: 4px; vertical-align: middle;">
-    <input style="background: #CCC; color: black;" class="aa3" type="button" value="主題推薦筆數 (<?=$total?>)">
-    <input class="aa3" type="submit" value="儲存編輯">
+    <input style="background: #CCC; color: black;" class="aa3" type="button" value="<?=$lang['ProductClassRecords']?> (<?=$total?>)">
+    <input class="aa3" type="submit" value="<?=$lang['SaveEdited']?>">
   </p>
     <div id="sortable">
       <?php foreach ($dbdata as $key => $value): ?>

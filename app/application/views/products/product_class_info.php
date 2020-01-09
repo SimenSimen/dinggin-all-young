@@ -87,20 +87,20 @@
 
 <left>
 <body background="<?=$web_config['admin_background_image']?>" bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<button type="button" id="cancel" class="btn btn-default" onclick="javascript:history.back(1);" >返回列表</button>
+<button type="button" id="cancel" class="btn btn-default" onclick="javascript:history.back(1);" ><?=$lang['GoBackList']?></button>
 
 <form method="post" action="/<?=$DataName?>/data_AED" enctype="multipart/form-data" onsubmit="return check(this)">
 
   <div class="config-div">
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">商品分類設定</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['ProductClassSetting']?></legend>
 
         <table id="member_list" class="table table-bordered table-condensed">
             <tr>
-              <td class='member_list_title_td'>分類層級(若為最上層可不用選)</td>
+              <td class='member_list_title_td'><?=$lang['ClassLevel']?></td>
               <td class='member_list_input_td'>
                 <select name="PID" id="PID">
-                  <option value="0">請選擇</option>
+                  <option value="0"><?=$lang['PleaseChoose']?></option>
                   <?foreach ($protype as $pvalue):?>
                     <option value="<?=$pvalue['prd_cid']?>" <?=($dbdata['PID']==$pvalue['prd_cid'])?'selected':'';?>><?=stripslashes($pvalue['prd_cname'])?></option>  
                   <? endforeach;?>
@@ -108,26 +108,26 @@
               </td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>狀態</td>
+              <td class='member_list_title_td'><?=$lang['Status']?></td>
               <td class='member_list_input_td'>
                 <select name="d_enable" id="d_enable">
-                  <option value="#">請選擇狀態</option>
-                  <option value="Y" <?=$pvalue['d_enable'] == 'Y' ? 'selected' : ''?>>公開</option>
-                  <option value="N" <?=$pvalue['d_enable'] == 'N' ? 'selected' : ''?>>隱藏</option>
+                  <option value="#"><?=$lang['ChooseStatusPlease']?></option>
+                  <option value="Y" <?=$pvalue['d_enable'] == 'Y' ? 'selected' : ''?>><?=$lang['Show']?></option>
+                  <option value="N" <?=$pvalue['d_enable'] == 'N' ? 'selected' : ''?>><?=$lang['Hide']?></option>
                 </select>
               </td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>分類名稱</td>
+              <td class='member_list_title_td'><?=$lang['ClassName']?></td>
               <td class='member_list_input_td'>
                 <input type="text" class="form-control" name="prd_cname" value= "<?=stripslashes($dbdata['prd_cname'])?>" />
               </td>
             </tr>
             <? if($this->data['web_config']['prd_class_img']==1){?>            
             <tr>
-              <td class='member_list_title_td'>分類圖片</td>
+              <td class='member_list_title_td'><?=$lang['ClassImage']?></td>
               <td class='member_list_input_td'>
-                (建議圖片長寬為 600px，僅允許 png, jpg, gif 檔上傳)
+                <?=$lang['SuggestedImage']?>
                 <input type="file" name="prd_cimage"/>
                 <? if($dbdata['prd_cimage1']!=''):?>
                 <img id="blah" src="<?=$dbdata['prd_cimage']?>" style="max-width: 175px;"/>
@@ -142,7 +142,7 @@
               <input type="hidden" name="d_id" value="<?=$dbdata['prd_cid']?>">
               <input type="hidden" name="lang_type" value="<?=$_SESSION['lang']?>">
               <input type="hidden" name="dbname" value="<?=$dbname?>">
-              <input class="btn btn-info btn-large" type="submit" style="width: 100px;font-size: 18px;" value='儲存'>
+              <input class="btn btn-info btn-large" type="submit" style="width: 100px;font-size: 18px;" value='<?=$lang['Save']?>'>
             </td>
           </tr>       
         </table>

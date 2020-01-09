@@ -40,7 +40,17 @@ class Order extends MY_Controller
 		$this->load->model('My_Model/mymodel','mymodel');
 		$this->load->model('banner_model');
 		//語言包設置
-        $this->load->model('lang_model','lmodel');
+		$this->load->model('lang_model','lmodel');
+		
+		
+		$this->load->model('language_model', 'mod_language');
+		$lang = $this->mod_language->converter('14', $this->session->userdata('lang'));
+		$this->data = array_merge($this->data, $lang);
+
+		// language
+		$lang = $this -> mod_language -> converter('20', $this->session-> userdata('lang'));
+		$this ->data = array_merge($this -> data, $lang);
+
 		//檔案名
 		$this->DataName='order';
 		$this->data['banner'] = $this->banner_model->getMyAd();
@@ -703,6 +713,7 @@ class Order extends MY_Controller
 		$this->useful->CheckComp('j_orderinfo');
 		//資料庫名稱
 		$data['dbname']=$dbname='order_details';	
+		$data['lang'] = $this->data;
 		//預設查詢	
 		$search_default_array=array("ToPage","select_type","txt","date_start","date_end","sort","sort_ad","supplier_id");
 		$this->omodel->search_session($search_default_array);
@@ -845,6 +856,7 @@ class Order extends MY_Controller
 		$this->useful->CheckComp('j_orderinfo');
 		//資料庫名稱
 		$data['dbname']=$dbname='`order`';
+		$data['lang'] = $this->data;
 		
 		//預設查詢
 		$search_default_array=array("ToPage","select_type","txt","product_flow_select","payment_way_select","status_select","logistics_way_select","date_start","date_end","warehouse_select");
@@ -905,7 +917,8 @@ class Order extends MY_Controller
 		//權限判斷
 		$this->useful->CheckComp('j_orderinfo');
 		//資料庫名稱
-		$data['dbname']=$dbname='order_details';	
+		$data['dbname']=$dbname='order_details';
+		$data['lang'] = $this->data;	
 		//預設查詢	
 		$search_default_array=array("ToPage","select_type","txt","date_start","date_end","sort","sort_ad","supplier_id","brand_id");
 		$this->omodel->search_session($search_default_array);
@@ -992,7 +1005,8 @@ class Order extends MY_Controller
 			}
 		}
 		//資料庫名稱
-		$data['dbname']=$dbname='`order`';		
+		$data['dbname']=$dbname='`order`';	
+		$data['lang'] = $this->data;	
 		//預設查詢
 		$search_default_array=array("ToPage","select_type","txt","product_flow_select","payment_way_select","status_select","logistics_way_select","date_start","date_end","warehouse_select");
 		$this->omodel->search_session($search_default_array);	
@@ -1100,6 +1114,7 @@ class Order extends MY_Controller
 		//權限判斷
 		$this->useful->CheckComp('j_orderinfo');
 		$data['dbname']=$dbname='`order`';
+		$data['lang'] = $this->data;
 		if(empty($id)){
 			echo '<script>alert("ID錯誤");history.go(-1);</script>';
 			return '';
@@ -1144,6 +1159,7 @@ class Order extends MY_Controller
 		$this->useful->CheckComp('j_orderinfo');
 		//資料庫名稱
 		$data['dbname']=$dbname='order_details';
+		$data['lang'] = $this->data;
 	
 		//預設查詢
 	
@@ -1198,6 +1214,7 @@ class Order extends MY_Controller
 		$this->useful->CheckComp('j_orderinfo');
 		//資料庫名稱
 		$data['dbname']=$dbname='`order`';
+		$data['lang'] = $this->data;
 		
 		if(empty($by_id)){
 			echo '<script>alert("ID錯誤");history.go(-1);</script>';
@@ -1263,6 +1280,7 @@ class Order extends MY_Controller
 		//權限判斷
 		$this->useful->CheckComp('j_orderinfo');
 		$data['dbname']=$dbname='`order`';
+		$data['lang'] = $this->data;
 		if(empty($id)){
 			echo '<script>alert("ID錯誤");history.go(-1);</script>';
 			return '';
@@ -1296,6 +1314,7 @@ class Order extends MY_Controller
 		$this->useful->CheckComp('j_orderinfo');
 		//資料庫名稱
 		$data['dbname']=$dbname='`order`';
+		$data['lang'] = $this->data;
 		//預設查詢		
 		$search_default_array=array("ToPage","select_type","txt","date_start","date_end");
 		$this->omodel->search_session($search_default_array);		
@@ -1355,6 +1374,7 @@ class Order extends MY_Controller
 		$this->useful->CheckComp('j_orderinfo');
 		//資料庫名稱
 		$data['dbname']=$dbname='`order`';
+		$data['lang'] = $this->data; 
 		
 		//預設查詢
 		$search_default_array=array("ToPage","select_type","txt","txt_type","product_flow_select","payment_way_select","status_select","logistics_way_select","date_start","date_end","warehouse_select");
@@ -1472,6 +1492,7 @@ class Order extends MY_Controller
 		//權限判斷
 		$this->useful->CheckComp('j_orderinfo');
 		$data['dbname']=$dbname='`order`';
+		$data['lang'] = $this->data;
 		if(empty($id)){
 			echo '<script>alert("ID錯誤");history.go(-1);</script>';
 			return '';
@@ -1516,6 +1537,7 @@ class Order extends MY_Controller
 		//權限判斷
 		$this->useful->CheckComp('j_orderinfo');
 		$data['dbname']=$dbname='`order`';
+		$data['lang'] = $this->data;
 		if(empty($id)){
 			echo '<script>alert("ID錯誤");history.go(-1);</script>';
 			return '';
@@ -1714,6 +1736,7 @@ class Order extends MY_Controller
 		//權限判斷
 		$this->useful->CheckComp('j_orderinfo');
 		$data['dbname']=$dbname='`order`';
+		$data['lang'] = $this->data;
 		if(empty($id)){
 			echo '<script>alert("ID錯誤");history.go(-1);</script>';
 			return '';

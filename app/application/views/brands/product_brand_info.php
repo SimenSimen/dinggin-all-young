@@ -111,39 +111,39 @@
 
   <div class="config-div">
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">品牌設定</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['BrandSetting']?></legend>
         <table id="member_list" class="table table-bordered table-condensed">
           <tr>
-            <td class='member_list_title_td'>品牌名稱</td>
+            <td class='member_list_title_td'><?=$lang['BrandName']?></td>
             <td class='member_list_input_td'>
               <input type="text" class="form-control" name="d_name" value='<?=$dbdata['d_name']?>'/>
             </td>
           </tr>
             
           <tr>
-            <td class='member_list_title_td'>品牌狀態</td>
+            <td class='member_list_title_td'><?=$lang['BrandStatus']?></td>
             <td class="member_list_input_td">
               <select name='d_enable'  style="width: 66%;">
-                <option>請選擇變更狀態</option>
-                <option value='Y' <?=($dbdata['d_enable']=='Y')?'selected':'';?>>上架</option>
+                <option><?=$lang['ChooseStatusPlease']?></option>
+                <option value='Y' <?=($dbdata['d_enable']=='Y')?'selected':'';?>><?=$lang['Sell']?></option>
                 <!--<option value='1' <?=($dbdata['prd_active']==1)?'selected':'';?>>商品補貨</option>-->
-                <option value='N' <?=($dbdata['d_enable']=='N')?'selected':'';?>>下架</option>
+                <option value='N' <?=($dbdata['d_enable']=='N')?'selected':'';?>><?=$lang['Remove']?></option>
               </select>
             </td>
           </tr>
           <tr>
-                <td class='member_list_title_td'>品牌故事</td>
+                <td class='member_list_title_td'><?=$lang['BrandStory']?></td>
                 <td class='member_list_input_td'>
                   <textarea name='prd_content' id=''><?=$dbdata['brand_content']?></textarea>
                 </td>
           </tr>
           <tr>
-            <td class='member_list_title_td'>品牌縮圖</td>
+            <td class='member_list_title_td'><?=$lang['BrandThumbnail']?></td>
             <td class='member_list_input_td'>
-              <span style="color: red;">請將圖片剪裁至800px*600px再進行上傳，滑鼠左鍵拖曳選擇要的範圍<br>僅允許 png, jpg, gif 檔上傳</span>
+            <span style="color: red;"><?=$lang['ImageLimit']?><br><?=$lang['ImageTypeLimit']?></span>
               <input type="file" name="brand_image_s[]" multiple="multiple" id="imgInpS"/>
               <div id="fileList3"></div>
-              <br>原始圖檔:<br>
+              <br><?=$lang['OriginImage']?>:<br>
               <div id="sortS">
               <? if($dbdata['brand_image_s']!=''){
                     $image=explode(',',$dbdata['brand_image_s']);
@@ -159,12 +159,12 @@
             </td>
           </tr>
           <tr>
-            <td class='member_list_title_td'>品牌圖片</td>
+            <td class='member_list_title_td'><?=$lang['BrandImage']?></td>
             <td class='member_list_input_td'>
-              <span style="color: red;">請將圖片剪裁至800px*600px再進行上傳，滑鼠左鍵拖曳選擇要的範圍<br>僅允許 png, jpg, gif 檔上傳</span>
+              <span style="color: red;"><?=$lang['ImageLimit']?><br><?=$lang['ImageTypeLimit']?></span>
               <input type="file" name="brand_image[]" multiple="multiple" id="imgInp"/>
               <div id="fileList2"></div>
-              <br>原始圖檔:<br>
+              <br><?=$lang['OriginImage']?>:<br>
               <div id="sort">
               <? if($dbdata['brand_image']!=''){
                     $image=explode(',',$dbdata['brand_image']);
@@ -185,8 +185,8 @@
               <input type="hidden" name="prd_cid" value="<?=$dbdata['prd_cid']?>">
               <input type="hidden" name="dbname" value="<?=$dbname?>">
               <input type="hidden" name="lang_type" value="<?=$_SESSION['lang']?>">
-              <input class="btn btn-default" type="button" style="width: 100px;font-size: 18px;" value='返回列表' onclick="top.frames['content-frame'].location='/brands/product_brand_list'">
-              <input class="btn btn-info btn-large" type="submit" style="width: 100px;font-size: 18px;" value='儲存'>
+              <input class="btn btn-default" type="button" style="width: 100px;font-size: 18px;" value='<?=$lang['GoBackList']?>' onclick="top.frames['content-frame'].location='/brands/product_brand_list'">
+              <input class="btn btn-info btn-large" type="submit" style="width: 100px;font-size: 18px;" value='<?=$lang['Save']?>'>
             </td>
           </tr>
 

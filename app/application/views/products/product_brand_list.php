@@ -92,11 +92,11 @@
  			<tr style="text-align:right;">
  				<td style="width:1%;">
  					<button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/brands/<?= $dbname ?>_info'">
- 						新增品牌
+ 						<?=$lang['AddBrand']?>
  					</button>
  					<button class="btn btn-default" type="button" onclick="top.frames['content-frame'].location='/brands/product_brand_sort'">
  						<!-- 優選好物排序 -->
- 						排序
+ 						<?=$lang['Sort']?>
  					</button>
  				</td>
  			</tr>
@@ -104,13 +104,13 @@
  		<table>
  			<tr>
  				<td>
- 					<input type="text" name="brand_content" placeholder="請輸入品牌故事..." <?=$brand_content?' value="'.$brand_content.'"':''?>>
+ 					<input type="text" name="brand_content" placeholder="<?=$lang['AddBrandStory']?>..." <?=$brand_content?' value="'.$brand_content.'"':''?>>
  					<select name="d_enable">
- 						<option value="" <?= ($status == '') ? 'selected' : ''; ?>>請選擇狀態...</option>
- 						<option value="Y" <?= ($status == 'Y') ? 'selected' : ''; ?>>上架</option>
- 						<option value="N" <?= ($status == 'N') ? 'selected' : ''; ?>>下架</option>
+ 						<option value="" <?= ($status == '') ? 'selected' : ''; ?>><?=$lang['ChooseStatusPlease']?>...</option>
+ 						<option value="Y" <?= ($status == 'Y') ? 'selected' : ''; ?>><?=$lang['Sell']?></option>
+ 						<option value="N" <?= ($status == 'N') ? 'selected' : ''; ?>><?=$lang['Remove']?></option>
  					</select>
- 					<input type="submit" value="搜尋" id="search_action" style=" font-size:14px;">
+ 					<input type="submit" value="<?=$lang['Search']?>" id="search_action" style=" font-size:14px;">
  				</td>
  			</tr>
  		</table>
@@ -121,13 +121,13 @@
  		<table id='member_list' class='table table-hover table-bordered table-condensed' style="width:80%;">
 
  			<tr id='member_list_title_tr'> 
-				<td>編號</td> 
-				<td>品牌名稱</td> 
- 				<td>狀態</td>
- 				<td>照片</td>
- 				<td>修改</td>
- 				<td>複製</td>
- 				<td>刪除</td>
+				<td><?=$lang['No']?></td> 
+				<td><?=$lang['BrandName']?></td> 
+ 				<td><?=$lang['Status']?></td>
+ 				<td><?=$lang['Photo']?></td>
+ 				<td><?=$lang['Modify']?></td>
+ 				<td><?=$lang['Copy']?></td>
+ 				<td><?=$lang['Delete']?></td>
  			</tr>
 
  			<!--for-->

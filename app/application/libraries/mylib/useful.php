@@ -1,6 +1,14 @@
 <?
 class Useful extends MY_Model
 {
+	public function __construct()//初始化
+	{
+		parent::__construct();
+	
+		$this->load->model('language_model', 'mod_language');
+		$lang = $this->mod_language->converter('20', $this->session->userdata('lang'));
+		$this->data = array_merge($this->data, $lang);
+	}
 
 	//前台基本設定
 	public function iconfig()
@@ -38,6 +46,7 @@ class Useful extends MY_Model
 
 	public function get_page($qpage)
 	{
+		$qpage['lang'] = $this->data;
 		$data = $this->load->view('mypage/page.php', $qpage, true);
 		return $data;
 	}

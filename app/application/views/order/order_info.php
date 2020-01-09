@@ -91,37 +91,37 @@
 
   <div class="config-div">
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">訂單資料</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['OrderData']?></legend>
         <table id="member_list" class="table table-bordered table-condensed">
         	<tr>
-              <td class='member_list_title_td'>訂單編號</td>
+              <td class='member_list_title_td'><?=$lang['OrderNo']?></td>
               <td class='member_list_input_td'><?=$dbdata['order_id']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>訂單時間</td>
+              <td class='member_list_title_td'><?=$lang['OrderDate']?></td>
               <td class='member_list_input_td'><?=$dbdata['create_time']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>訂購人姓名</td>
+              <td class='member_list_title_td'><?=$lang['BuyerName']?></td>
               <td class='member_list_input_td'><?=$dbdata['bname']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>訂購人手機</td>
+              <td class='member_list_title_td'><?=$lang['BuyerPhone']?></td>
               <td class='member_list_input_td'><?=$dbdata['bphone']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>付款狀態</td>
+              <td class='member_list_title_td'><?=$lang['PaymentStatus']?></td>
               <td class='member_list_input_td'>
               	<select name="status">
                     <? foreach ($status as $key=>$value):?>
                       <option value="<?=$key?>" <?=($dbdata['status']==$key)?'selected':'';?>><?=$value?></option>
                     <? endforeach;?>
                 </select>
-                <?php echo ($dbdata['atmno']<>'')?"匯款後五碼:".$dbdata['atmno']:"";?>
+                <?php echo ($dbdata['atmno']<>'')? $RemitLastFiveYards.":".$dbdata['atmno']:"";?>
               </td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>訂單狀態</td>
+                <td class='member_list_title_td'><?=$lang['OrderStatus']?></td>
                 <td class='member_list_input_td'>
                   <select name="product_flow" <?if (in_array($dbdata['product_flow'], [3, 4, 5, 6, 8])) { echo 'disabled'; }?>>
                     <? foreach ($product_flow as $key=>$value):?>
@@ -131,27 +131,27 @@
                 </td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>付款方式</td>
+                <td class='member_list_title_td'><?=$lang['Payment']?></td>
                 <td class='member_list_input_td'><?=isset($payment_way[$dbdata['pay_way_id']])?$payment_way[$dbdata['pay_way_id']]:""?></td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>寄送方式</td>
+                <td class='member_list_title_td'><?=$lang['DeliveryMethod']?></td>
                 <td class='member_list_input_td'><?=isset($logistics_way[$dbdata['lway_id']])?$logistics_way[$dbdata['lway_id']]:""?>
                   <?=($dbdata['lway_id']==5)? $shop_address:'';?></td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>訂購人信箱</td>
+                <td class='member_list_title_td'><?=$lang['BuyerEmail']?></td>
                 <td class='member_list_input_td'><?=$dbdata['bemail']?></td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>訂購人地址</td>
+                <td class='member_list_title_td'><?=$lang['BuyerAddress']?></td>
                 <td class='member_list_input_td'><?=$dbdata['bcounty'].$dbdata['barea'].$dbdata['baddress']?></td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>出貨倉庫</td>
+                <td class='member_list_title_td'><?=$lang['WarehouseId']?></td>
                 <td class='member_list_input_td'>
                   <select name='warehouse_id'  style="width: 66%;">
-                    <option>請選擇出貨倉庫</option>
+                    <option><?=$lang['SelectWarehouseIdPlease']?></option>
                     <? foreach ($warehouse as $value) {?>
                       <option value="<?=$value['d_id'];?>" <?=($dbdata['warehouse_id']==$value['d_id'])?'selected':'';?> ><?=$value['d_name'];?></option>
                     <?}?>
@@ -161,49 +161,49 @@
         </table>
     </fieldset>
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">收件人資料</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['ReceiverInfo']?></legend>
         <table id="member_list" class="table table-bordered table-condensed">
             <tr>
-              <td class='member_list_title_td'>收件人姓名</td>
+              <td class='member_list_title_td'><?=$lang['ReceiverName']?></td>
               <td class='member_list_input_td'><?=$dbdata['name_buy']?></td>
             </tr>
             <tr>
-              <td class='member_list_title_td'>收件人手機</td>
+              <td class='member_list_title_td'><?=$lang['ReceiverPhone']?></td>
               <td class='member_list_input_td'><?=$dbdata['phone_buy']?></td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>收件人信箱</td>
+                <td class='member_list_title_td'><?=$lang['ReceiverEmail']?></td>
                 <td class='member_list_input_td'><?=$dbdata['email_buy']?></td>
             </tr>
             <tr>
-                <td class='member_list_title_td'>收件人地址</td>
+                <td class='member_list_title_td'><?=$lang['ReceiverAddress']?></td>
                 <td class='member_list_input_td'><?=$dbdata['zip_buy']." ".$dbdata['county_buy'].$dbdata['area_buy'].$dbdata['address_buy']?></td>
             </tr>
         </table>
     </fieldset>
     <?php if($dbdata['product_flow']=="3" || $dbdata['product_flow']=="5" || $dbdata['product_flow']=="7"):?>
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">退款資訊</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['RefundInfo']?></legend>
         <table id="member_list" class="table table-bordered table-condensed">
             <tr>
-                <td style="width:120px;" class='center_td white_td'>退款日</td>
+                <td style="width:120px;" class='center_td white_td'><?=$lang['RefundDate']?></td>
                 <td class='center_td white_td'><?=($dbdata["back_date"]=="0000-00-00")?"":$dbdata["back_date"];?></td>
             </tr>
             <tr>
-                <td class='center_td white_td'>退款銀行</td>
+                <td class='center_td white_td'><?=$lang['RefundBank']?></td>
                 <td class='center_td white_td'><?=$dbdata["back_bank"];?></td>
             </tr>
             <tr>
-                <td class='center_td white_td'>退款帳戶</td>
+                <td class='center_td white_td'><?=$lang['RefundAccount']?></td>
                 <td class='center_td white_td'><?=$dbdata["back_account"];?></td>
             </tr>
             <tr>
-                <td class='center_td white_td'>退款備註</td>
+                <td class='center_td white_td'><?=$lang['RefundNote']?></td>
                 <td class='center_td white_td'><?=$dbdata['back_note']?></td>
             </tr>
             <?if(!empty($dbdata['back_pic'])){?>
            <tr>
-                <td class='center_td white_td'>附圖</td>
+                <td class='center_td white_td'><?=$lang['Photo']?></td>
                 <td class='center_td white_td'><img src='<?=$dbdata['back_pic']?>'></td>
             </tr>
             <?}?>
@@ -226,14 +226,14 @@
     </fieldset>
     <?php endif;*/?>
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">訂購商品明細</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['OrderDetail']?></legend>
         <table id="member_list" class="table table-bordered table-condensed">
             <tr id='member_list_title_tr'>
-            <td>商品條碼</td>
-      			<td>商品名稱</td>
-      			<td>價錢</td>
-      			<td>數量</td>
-      			<td>小計</td>
+            <td><?=$lang['ProductCode']?></td>
+      			<td><?=$lang['ProductName']?></td>
+      			<td><?=$lang['Price']?></td>
+      			<td><?=$lang['Amount']?></td>
+      			<td><?=$lang['Total']?></td>
             
     		</tr>
     		<?php if (!empty($oddata)): ?>
@@ -258,18 +258,18 @@
             	</tr>
     		<?php endif; ?>
     		<tr bgcolor='<?//=$member_auth_color[$key]?>' align='right'>
-            	<td colspan="5" class='center_td white_td'>紅利折抵 <b><?=$dbdata['use_dividend_cost'];?></b> 元，購物金折抵 <b><?=$dbdata['use_shopping_money'];?></b> 元，付款總金額：<span style="color:red;font-weight:bold;"><?=number_format($dbdata['price_money'],2)?> 元</span><br>總金額：<span style="color:red;font-weight:bold;"><?=number_format($dbdata['total_price'],2)?> 元</span></td>
+            	<td colspan="5" class='center_td white_td'><?=$lang['BounsDiscount']?> <b><?=$dbdata['use_dividend_cost'];?></b> 元，購物金折抵 <b><?=$dbdata['use_shopping_money'];?></b> 元，付款總金額：<span style="color:red;font-weight:bold;"><?=number_format($dbdata['price_money'],2)?> 元</span><br>總金額：<span style="color:red;font-weight:bold;"><?=number_format($dbdata['total_price'],2)?> 元</span></td>
             </tr>
         </table>
     </fieldset>
     
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">發票資訊</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['InvoiceInfo']?></legend>
         <table id="member_list" class="table table-bordered table-condensed">
             <tr id='member_list_title_tr'>		
-      			<td>發票抬頭		</td>
-      			<td>統編</td>
-      			<td>發票地址</td>
+      			<td><?=$lang['ReceiptTitle']?>		</td>
+      			<td><?=$lang['TaxID']?></td>
+      			<td><?=$lang['ReceiptAddress']?></td>
     		</tr>
           	<tr bgcolor='<?//=$member_auth_color[$key]?>'>
             	<td class='center_td white_td'><?=$dbdata['receipt_title']?></td>
@@ -277,44 +277,44 @@
             	<td class='center_td white_td'><?=$dbdata['receipt_zip']." ".$dbdata['receipt_county'].$dbdata['receipt_area'].$dbdata['receipt_address']?></td>
             </tr>
             <tr bgcolor='<?//=$member_auth_color[$key]?>'>
-            	<td align='center' class='center_td white_td' style='color:red;'>物流公司名稱</td>
+            	<td align='center' class='center_td white_td' style='color:red;'><?=$lang['DeliveryName']?></td>
             	<?$tracking_name=(!empty($dbdata['tracking_name']))?$dbdata['tracking_name']:Comment::SetValue("tracking_name");?>
             	<td colspan='2' class='center_td white_td'><input type='text' name="tracking_name" id="tracking_name" value="<?=$tracking_name?>" maxlength="45"></td>
             </tr>
             <tr bgcolor='<?//=$member_auth_color[$key]?>'>
-            	<td align='center' class='center_td white_td' style='color:red;'>物流編號</td>
+            	<td align='center' class='center_td white_td' style='color:red;'><?=$lang['DeliveryNo']?></td>
             	<?$tracking_num=(!empty($dbdata['tracking_num']))?$dbdata['tracking_num']:Comment::SetValue("tracking_num");?>
             	<td colspan='2' class='center_td white_td'><input type='text' name="tracking_num" id="tracking_num" value="<?=$tracking_num?>" maxlength="45"></td>
             </tr>
             <tr bgcolor='<?//=$member_auth_color[$key]?>'>
-            	<td align='center' class='center_td white_td' style='color:red;'>出貨日期</td>
+            	<td align='center' class='center_td white_td' style='color:red;'><?=$lang['DeliveryDate']?></td>
             	<?$sale_out_date=!is_null($dbdata['sale_out_date']) ? $dbdata['sale_out_date'] : ''?>
             	<td colspan='2' class='center_td white_td'><input type='date' name="sale_out_date" id="sale_out_date" value="<?=$sale_out_date?>" maxlength="10"></td>
             </tr>
             <tr>
-              <td align='center' class='center_td white_td' style='color:red;'>會員載具</td>
+              <td align='center' class='center_td white_td' style='color:red;'><?=$lang['MemberVehicle']?></td>
               <td colspan='2' class='member_list_input_td'>
                   <select name='vehicle_type'  style="width: 66%;">
-                    <option>請選擇會員載具</option>
-                    <option value='0' <?=$dbdata['vehicle_type'] == '0' ? 'selected' : ''?>>手機載具</option>
-                    <option value='1' <?=$dbdata['vehicle_type'] == '1' ? 'selected' : ''?>>自然人載具</option>
+                    <option><?=$lang['SlectMemberVehiclePlease']?></option>
+                    <option value='0' <?=$dbdata['vehicle_type'] == '0' ? 'selected' : ''?>><?=$lang['MobileVehicle']?></option>
+                    <option value='1' <?=$dbdata['vehicle_type'] == '1' ? 'selected' : ''?>><?=$lang['NaturalPersonVehicle']?></option>
                   </select>
                 </td>
             </tr>
             <tr>
-              <td align='center' class='center_td white_td' style='color:red;'>載具號碼</td>
+              <td align='center' class='center_td white_td' style='color:red;'><?=$lang['VehicleNo']?></td>
               <td colspan='2' class='center_td white_td'><input type="text" value=<?=$dbdata['vehicle_no']?> name='vehicle_no'></input></td>
             </tr>
             <tr bgcolor='<?//=$member_auth_color[$key]?>'>
-            	<td align='center' class='center_td white_td' style='color:red;'>發票日期</td>
+            	<td align='center' class='center_td white_td' style='color:red;'><?=$lang['ReceiptDate']?></td>
             	<?$receuot_date=($dbdata['receipt_date']!="0000-00-00")?$dbdata['receipt_date']:"";?>
             	<td colspan='2' class='center_td white_td'><input type='date' name="receipt_date" id="receipt_date" value="<?=$receuot_date?>" maxlength="10"></td>
             </tr>
             <tr bgcolor='<?//=$member_auth_color[$key]?>'>
-            	<td align='center' class='center_td white_td' style='color:red;'>發票號碼</td>
+            	<td align='center' class='center_td white_td' style='color:red;'><?=$lang['ReceiptNo']?></td>
             	<td colspan='2' class='center_td white_td'>
             	  <select name="get_sInvoice" id="get_sInvoice">
-              	    <option value="">自動選擇發票號碼...</option>
+              	    <option value=""><?=$lang['AutoReceiptNo']?>...</option>
               	    <?php $get_sInvoice_value="";
               	  		foreach($get_sInvoice as $key=>$val):
               	  			$d_num=($val["d_now_num"]<$val["d_start"])?$val["d_start"]:($val["d_now_num"]+1);
@@ -334,16 +334,16 @@
             </tr>
         </table>
     </fieldset>
-    <fieldset class="config-border"><legend class="config-border" style="width:160px">消費者備註</legend><?=$dbdata['buyer_note']?></fieldset>
+    <fieldset class="config-border"><legend class="config-border" style="width:160px"><?=$lang['BuyerNote']?></legend><?=$dbdata['buyer_note']?></fieldset>
     <fieldset class="config-border">
-        <legend class="config-border" style="width:160px">備註</legend>
+        <legend class="config-border" style="width:160px"><?=$lang['Note']?></legend>
         <table id="member_list" class="table table-bordered table-condensed">
             <tr bgcolor='<?//=$member_auth_color[$key]?>'>
             	<td colspan='3' class='center_td white_td'><textarea name="note" rows="3" cols="75"><?=$dbdata['note']?></textarea></td>
             </tr>
             <tr>
               <?if($subbonus['is_return']=='Y'):?>
-              <td>  退還紅利紀錄:<?=$subbonus['return_time'].'由'.$subbonus['d_operator'].'操作退還紅利'?></td>
+              <td> <?=$lang['BonusBackRecord']?>:<?=$subbonus['return_time'].$lang['From'].$subbonus['d_operator'].$lang['DoBonusBack']?></td>
               <? endif;?>
             </tr>
          </table>
@@ -359,7 +359,7 @@
               		<input class="btn btn-info btn-large" id="out_print_action" type="button" style="width: 120px;font-size: 18px;" value='出貨單列印'>
           			<?php */?>
                   <? if(!empty($receipt_num)): //20160624-有發票號才顯示?>
-              		  <input class="btn btn-info btn-large" id="invoice_print_action" type="button" style="width: 100px;font-size: 18px;" value='發票列印'>
+              		  <input class="btn btn-info btn-large" id="invoice_print_action" type="button" style="width: 100px;font-size: 18px;" value='<?=$lang['PrintReceipt']?>'>
                   <? endif;?>
                   <?/* if($dbdata['status']==2): //20160624-退款才顯示?>
               		  <input class="btn btn-info btn-large" id="discount_print_action" type="button" style="width: 110px;font-size: 18px;" value='折讓單列印'>
@@ -367,11 +367,11 @@
                   <!-- 20160623-新增功能-退還紅利 --> 
                   <? if(!empty($subbonus) and $subbonus['is_return']!='Y'):?>
                     <input type="hidden" value="<?=$subbonus['bonus_sub']?>" name="subbonus">
-                    <input class="btn btn-info btn-large" id="return_bonus" type="button" style="width: 100px;font-size: 18px;" value='退還紅利'>
+                    <input class="btn btn-info btn-large" id="return_bonus" type="button" style="width: 100px;font-size: 18px;" value='<?=$lang['BonusBack']?>'>
                   <? endif;?>
-              		<input class="btn btn-info btn-large" id="fix_data_action" type="button" style="width: 100px;font-size: 18px;" value='儲存'>
+              		<input class="btn btn-info btn-large" id="fix_data_action" type="button" style="width: 100px;font-size: 18px;" value='<?=$lang['Save']?>'>
 
-              		<input class="btn btn-info btn-large" id="return_now_action" type="button" style="width: 100px;font-size: 18px;" value='返回列表'>
+              		<input class="btn btn-info btn-large" id="return_now_action" type="button" style="width: 100px;font-size: 18px;" value='<?=$lang['GoBackList']?>'>
                   
             	</td>
           	</tr>
